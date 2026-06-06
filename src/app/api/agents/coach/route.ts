@@ -14,14 +14,8 @@ export async function POST(request: Request) {
     }
 
     let resumeText = "No resume provided.";
-    if (resumeUrl) {
-      try {
-        const fullPath = path.join(process.cwd(), "public", resumeUrl);
-        const fileBuffer = await readFile(fullPath);
-        resumeText = fileBuffer.toString("base64");
-      } catch (err) {
-        console.error("Failed to read resume for coach:", err);
-      }
+    if (resumeUrl && resumeUrl.length > 100) {
+      resumeText = resumeUrl;
     }
 
     // Prepare system instruction

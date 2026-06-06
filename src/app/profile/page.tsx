@@ -25,9 +25,28 @@ export default function ProfilePage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+      setLoading(true);
+      
+      try {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          const base64Data = base64String.split(',')[1];
+          
+          setFormData(prev => ({ ...prev, resumeUrl: base64Data }));
+          alert("Resume converted and prepared for save!");
+          setLoading(false);
+        };
+        reader.readAsDataURL(selectedFile);
+      } catch (error) {
+        console.error(error);
+        alert("Failed to read resume file.");
+        setLoading(false);
+      }
     }
   };
 
@@ -35,29 +54,8 @@ export default function ProfilePage() {
     e.preventDefault();
     setLoading(true);
     try {
-      let currentResumeUrl = formData.resumeUrl;
-
-      // If a new file is selected, upload it to our local API route
-      if (file) {
-        const uploadData = new FormData();
-        uploadData.append("file", file);
-        
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: uploadData,
-        });
-        
-        const result = await response.json();
-        if (result.success) {
-          currentResumeUrl = result.url;
-        } else {
-          throw new Error(result.error);
-        }
-      }
-
       const finalProfileData = {
         ...formData,
-        resumeUrl: currentResumeUrl,
         updatedAt: new Date().toISOString()
       };
 
@@ -65,7 +63,6 @@ export default function ProfilePage() {
       localStorage.setItem("my_profile", JSON.stringify(finalProfileData));
       
       alert("Profile and Resume Saved Successfully!");
-      setFormData(prev => ({ ...prev, resumeUrl: currentResumeUrl }));
     } catch (error) {
       console.error("Error saving profile:", error);
       alert("Failed to save profile or resume. Please check console.");

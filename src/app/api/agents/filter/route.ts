@@ -18,10 +18,11 @@ export async function POST(request: Request) {
     }
 
     // 1. Read the local PDF file
-    // resumeUrl looks like "/resumes/my_resume_1234_file.pdf"
-    const fullPath = path.join(process.cwd(), "public", resumeUrl);
-    const fileBuffer = await readFile(fullPath);
-    const base64Pdf = fileBuffer.toString("base64");
+    let resumeText = "No resume provided.";
+    // The frontend now passes the base64 string directly in resumeUrl
+    if (resumeUrl && resumeUrl.length > 100) {
+      resumeText = resumeUrl;
+    }
 
     // 2. Format the jobs for the prompt
     const jobsList = jobs.map((j: any) => ({
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
           parts: [
             {
               inlineData: {
-                data: base64Pdf,
+                data: resumeText,
                 mimeType: "application/pdf"
               }
             },

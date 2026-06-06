@@ -17,11 +17,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Resume URL is required." }, { status: 400 });
     }
 
-    // 1. Read the local PDF file
-    const fullPath = path.join(process.cwd(), "public", resumeUrl);
-    const fileBuffer = await readFile(fullPath);
-    const base64Pdf = fileBuffer.toString("base64");
-
     // 2. Ask Gemini to write a cover letter
     const prompt = `
       You are an expert career coach and professional copywriter.
@@ -50,7 +45,7 @@ export async function POST(request: Request) {
           parts: [
             {
               inlineData: {
-                data: base64Pdf,
+                data: resumeUrl,
                 mimeType: "application/pdf"
               }
             },
