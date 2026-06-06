@@ -10,6 +10,7 @@ interface Job {
   title: string;
   company: string;
   location: string;
+  description?: string;
   salary?: string;
   postedAt: string;
   matchScore: number;
