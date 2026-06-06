@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 AI Job Search Agent Pipeline
 
-## Getting Started
+An autonomous, end-to-end AI agent pipeline designed to automate the grueling process of finding, filtering, applying, and preparing for jobs. Built with Next.js, Tailwind CSS, Google Gemini, and SerpApi.
 
-First, run the development server:
+![Dashboard Preview](https://via.placeholder.com/1200x600.png?text=AI+Job+Search+Agent+Dashboard)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features & The 5-Agent Architecture
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This application operates using five specialized AI agents that seamlessly hand off tasks to one another via an interactive Kanban Board:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Agent A (Scout):** 
+   - Scrapes Google Jobs in real-time via **SerpApi**.
+   - Bypasses duplicates and pulls in live job postings tailored to your desired role and location.
+   - Cleans and formats results natively into your "New Matches" column.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Agent B (Filter):** 
+   - Reads your uploaded **PDF Resume** and compares it against unscored Job Descriptions.
+   - Uses **Google Gemini 2.5 Flash** to generate a highly accurate "Match Score" (%) to help you prioritize your applications.
 
-## Learn More
+3. **Agent C (Factory):** 
+   - Dynamically writes highly compelling, professional **Cover Letters**.
+   - Extracts your *actual* Name, Email, and Phone Number from your PDF resume (no `[Your Name]` placeholders).
+   - Tailors the tone to be human-like, avoiding robotic AI clichés.
 
-To learn more about Next.js, take a look at the following resources:
+4. **Agent D (Submission):** 
+   - Acts as a smart workflow manager. 
+   - Automatically copies your tailored cover letter to your clipboard and opens the direct application portal. 
+   - Falls back to a targeted Google search if the company hides their direct link.
+   - Moves the job seamlessly across your Kanban board (e.g., from "New Matches" to "Applied").
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. **Agent E (Coach):** 
+   - A fully interactive **Mock Interview Chatbot**.
+   - Gemini adopts the persona of the Hiring Manager for the specific company you are applying to.
+   - Context-aware: Asks you technical and behavioral questions based on *both* the Job Description and your Resume.
+   - Evaluates your typed answers in real-time and provides feedback.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
 
-## Deploy on Vercel
+* **Frontend:** Next.js (App Router), React, TypeScript, Tailwind CSS
+* **Backend:** Next.js Route Handlers (Serverless APIs)
+* **AI Engine:** Google Gemini (`@google/genai` SDK)
+* **Web Scraping:** SerpApi (Google Jobs API)
+* **State Management:** React Hooks + LocalStorage
+* **File Uploads:** Local file system handling for PDF parsing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Getting Started
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+* Node.js 18+
+* A [Gemini API Key](https://aistudio.google.com/)
+* A [SerpApi Key](https://serpapi.com/)
+
+### Installation
+
+1. Clone the repository:
+   \`\`\`bash
+   git clone https://github.com/jagadeesvarrao-design/ai-job-search-agent.git
+   cd ai-job-search-agent
+   \`\`\`
+
+2. Install dependencies:
+   \`\`\`bash
+   npm install
+   \`\`\`
+
+3. Set up environment variables:
+   Create a \`.env.local\` file in the root directory and add your keys:
+   \`\`\`env
+   GEMINI_API_KEY=your_gemini_key_here
+   SERP_API_KEY=your_serpapi_key_here
+   \`\`\`
+
+4. Run the development server:
+   \`\`\`bash
+   npm run dev
+   \`\`\`
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 💡 How to Use
+
+1. **Setup Profile:** Navigate to the `/profile` page, enter your desired role, location, and upload your PDF resume.
+2. **Scout Jobs:** Go to the `/dashboard` and click **"Run Scout Agent"**.
+3. **Filter & Score:** Click **"Run Filter Agent"** to score your matches.
+4. **Prepare & Apply:** Click on any job card to generate a Cover Letter, practice an Interview, or directly Apply!
+
+## 📜 License
+This project is open-source and available under the MIT License.
