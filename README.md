@@ -34,6 +34,60 @@ This application operates using five specialized AI agents that seamlessly hand 
    - Context-aware: Asks you technical and behavioral questions based on *both* the Job Description and your Resume.
    - Evaluates your typed answers in real-time and provides feedback.
 
+## 🔄 Agent Pipeline Workflow
+
+The flowchart below demonstrates the autonomous execution, user data parsing, and sequential agent task handoffs that occur dynamically via the local Kanban Board:
+
+```mermaid
+graph TD
+    %% Styling
+    classDef scout fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a;
+    classDef filter fill:#fef2f2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d;
+    classDef factory fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#064e3b;
+    classDef submission fill:#faf5ff,stroke:#a855f7,stroke-width:2px,color:#581c87;
+    classDef coach fill:#fffbeb,stroke:#f59e0b,stroke-width:2px,color:#78350f;
+    classDef system fill:#f8fafc,stroke:#64748b,stroke-width:2px,color:#0f172a;
+
+    %% Elements
+    User["👤 User Profile<br/>(Desired Role, Location, Resume PDF)"]
+    Kanban["📋 Interactive Kanban Board<br/>(Local Storage State)"]
+
+    subgraph Pipeline ["5-Agent Pipeline & Kanban Flow"]
+        AgentA["🔍 Agent A: Scout<br/>(SerpApi Google Jobs)"]
+        AgentB["🎯 Agent B: Filter<br/>(Gemini 2.5 Flash Match Scoring)"]
+        AgentC["🏭 Agent C: Factory<br/>(Gemini 2.5 Cover Letter Creator)"]
+        AgentD["⚡ Agent D: Submission<br/>(Clipboard & Direct Link Redirect)"]
+        AgentE["💬 Agent E: Coach<br/>(Gemini Mock Interview Bot)"]
+    end
+
+    %% Flow
+    User -->|Define Targets & Upload Resume| Kanban
+    Kanban -->|Trigger Scout| AgentA
+    AgentA -->|Scrapes & Cleans Postings| Kanban
+
+    Kanban -->|Trigger Filter| AgentB
+    AgentB -->|Analyzes Resume & Job Details| AgentB
+    AgentB -->|Calculates Match Score %| Kanban
+
+    Kanban -->|Trigger Factory| AgentC
+    AgentC -->|Extracts Personal Info & Drafts Tailored Cover Letter| Kanban
+
+    Kanban -->|Apply for Job| AgentD
+    AgentD -->|Auto-copies Cover Letter & Opens Portal| Kanban
+    AgentD -->|Move Card to Applied Column| Kanban
+
+    Kanban -->|Practice Interview| AgentE
+    AgentE -->|Acts as Hiring Manager using Resume & Job Context| AgentE
+    AgentE -->|Interactive Chat & Real-Time Feedback| User
+
+    class AgentA scout;
+    class AgentB filter;
+    class AgentC factory;
+    class AgentD submission;
+    class AgentE coach;
+    class User,Kanban system;
+```
+
 ## 🛠️ Tech Stack
 
 * **Frontend:** Next.js (App Router), React, TypeScript, Tailwind CSS
