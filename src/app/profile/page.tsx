@@ -10,7 +10,7 @@ export default function ProfilePage() {
     location: "",
     salary: "",
     experience: "Fresher",
-    resumeUrl: ""
+    resumeBase64: ""
   });
 
   // Load profile from localStorage on mount
@@ -37,7 +37,7 @@ export default function ProfilePage() {
           const base64String = reader.result as string;
           const base64Data = base64String.split(',')[1];
           
-          setFormData(prev => ({ ...prev, resumeUrl: base64Data }));
+          setFormData(prev => ({ ...prev, resumeBase64: base64Data }));
           alert("Resume converted and prepared for save!");
           setLoading(false);
         };

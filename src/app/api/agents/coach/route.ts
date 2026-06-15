@@ -10,15 +10,15 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { job, resumeUrl, messages } = await request.json();
+    const { job, resumeBase64, messages } = await request.json();
 
     if (!job || !messages) {
       return NextResponse.json({ success: false, error: "Job details and messages are required." }, { status: 400 });
     }
 
     let resumeText = "No resume provided.";
-    if (resumeUrl && resumeUrl.length > 100) {
-      resumeText = resumeUrl;
+    if (resumeBase64 && resumeBase64.length > 100) {
+      resumeText = resumeBase64;
     }
 
     // Prepare system instruction

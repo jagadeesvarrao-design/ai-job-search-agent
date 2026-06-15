@@ -17,7 +17,20 @@ export async function POST(request: Request) {
     const query = `${role} in ${location}`;
     const url = `https://serpapi.com/search.json?engine=google_jobs&q=${encodeURIComponent(query)}&api_key=${apiKey}`;
 
-    const response = await fetch(url, { cache: "no-store" });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10-second timeout
+
+    const response = await fetch(url, { 
+      cache: "no-store",
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`SerpApi responded with status: ${response.status}`);
+    }
+
     const data = await response.json();
 
     console.log("Scout API called URL:", url);

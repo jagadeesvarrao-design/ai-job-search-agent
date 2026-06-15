@@ -10,13 +10,13 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { job, resumeUrl } = await request.json();
+    const { job, resumeBase64 } = await request.json();
 
     if (!job) {
       return NextResponse.json({ success: false, error: "Job details are required." }, { status: 400 });
     }
 
-    if (!resumeUrl) {
+    if (!resumeBase64) {
       return NextResponse.json({ success: false, error: "Resume URL is required." }, { status: 400 });
     }
 
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
           parts: [
             {
               inlineData: {
-                data: resumeUrl,
+                data: resumeBase64,
                 mimeType: "application/pdf"
               }
             },

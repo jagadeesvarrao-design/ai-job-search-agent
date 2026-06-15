@@ -10,21 +10,21 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const { jobs, resumeUrl } = await request.json();
+    const { jobs, resumeBase64 } = await request.json();
 
     if (!jobs || jobs.length === 0) {
       return NextResponse.json({ success: true, jobs: [] });
     }
 
-    if (!resumeUrl) {
+    if (!resumeBase64) {
       return NextResponse.json({ success: false, error: "Resume URL is required to filter jobs." }, { status: 400 });
     }
 
     // 1. Read the local PDF file
     let resumeText = "No resume provided.";
-    // The frontend now passes the base64 string directly in resumeUrl
-    if (resumeUrl && resumeUrl.length > 100) {
-      resumeText = resumeUrl;
+    // The frontend now passes the base64 string directly in resumeBase64
+    if (resumeBase64 && resumeBase64.length > 100) {
+      resumeText = resumeBase64;
     }
 
     // 2. Format the jobs for the prompt

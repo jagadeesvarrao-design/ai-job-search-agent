@@ -130,7 +130,7 @@ export default function DashboardPage() {
       }
 
       const profileDoc = JSON.parse(savedProfile);
-      if (!profileDoc.resumeUrl) {
+      if (!profileDoc.resumeBase64) {
         alert("Please upload your PDF resume in your profile first.");
         return;
       }
@@ -146,7 +146,7 @@ export default function DashboardPage() {
       const response = await fetch("/api/agents/filter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jobs: jobsToScore, resumeUrl: profileDoc.resumeUrl })
+        body: JSON.stringify({ jobs: jobsToScore, resumeBase64: profileDoc.resumeBase64 })
       });
 
       const result = await response.json();
@@ -190,7 +190,7 @@ export default function DashboardPage() {
       const response = await fetch("/api/agents/factory", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ job: selectedJob, resumeUrl: profileDoc.resumeUrl })
+        body: JSON.stringify({ job: selectedJob, resumeBase64: profileDoc.resumeBase64 })
       });
 
       const result = await response.json();
@@ -265,7 +265,7 @@ export default function DashboardPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           job: selectedJob, 
-          resumeUrl: profileDoc.resumeUrl,
+          resumeBase64: profileDoc.resumeBase64,
           messages: [initialMessage] 
         })
       });
@@ -300,7 +300,7 @@ export default function DashboardPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           job: selectedJob, 
-          resumeUrl: profileDoc.resumeUrl,
+          resumeBase64: profileDoc.resumeBase64,
           messages: newMessages 
         })
       });
