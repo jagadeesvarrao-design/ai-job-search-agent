@@ -142,23 +142,38 @@ export default function DashboardPage() {
         return;
       }
 
-      // Call Filter Agent
-      const response = await fetch("/api/agents/filter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jobs: jobsToScore, resumeBase64: profileDoc.resumeBase64 })
-      });
+      // Vercel Serverless free tier times out after 10-15s. 
+      // Scoring 15 jobs against a PDF takes too long for a single request.
+      // We will process them sequentially in chunks of 3.
+      const CHUNK_SIZE = 3;
+      let allScoredJobs: any[] = [];
 
-      const result = await response.json();
-      if (!result.success) {
-        throw new Error(result.error);
+      for (let i = 0; i < jobsToScore.length; i += CHUNK_SIZE) {
+        const chunk = jobsToScore.slice(i, i + CHUNK_SIZE);
+        
+        const response = await fetch("/api/agents/filter", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ jobs: chunk, resumeBase64: profileDoc.resumeBase64 })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status} - ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        if (!result.success) {
+          throw new Error(result.error);
+        }
+        
+        allScoredJobs = [...allScoredJobs, ...result.jobs];
       }
 
       // Update local storage with new scores
       const savedJobsString = localStorage.getItem("jobs");
       let currentJobs: Job[] = savedJobsString ? JSON.parse(savedJobsString) : [];
       
-      for (const scoredJob of result.jobs) {
+      for (const scoredJob of allScoredJobs) {
         const index = currentJobs.findIndex(j => j.id === scoredJob.id);
         if (index !== -1) {
           currentJobs[index].matchScore = scoredJob.matchScore;
@@ -192,6 +207,10 @@ export default function DashboardPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ job: selectedJob, resumeBase64: profileDoc.resumeBase64 })
       });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status} - ${response.statusText}. The generation might have taken too long (Vercel 10s limit). Try again.`);
+      }
 
       const result = await response.json();
       if (!result.success) throw new Error(result.error);
@@ -270,6 +289,10 @@ export default function DashboardPage() {
         })
       });
 
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status} - ${response.statusText}. The generation might have taken too long.`);
+      }
+
       const result = await response.json();
       if (!result.success) throw new Error(result.error);
       
@@ -304,6 +327,10 @@ export default function DashboardPage() {
           messages: newMessages 
         })
       });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status} - ${response.statusText}. The generation might have taken too long.`);
+      }
 
       const result = await response.json();
       if (!result.success) throw new Error(result.error);
