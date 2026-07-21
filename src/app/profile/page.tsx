@@ -184,7 +184,7 @@ export default function ProfilePage() {
                 </div>
               )}
             </label>
-            {formData.resumeUrl && !file && (
+            {formData.resumeBase64 && !file && (
                <p className="text-sm text-teal-400 flex items-center gap-2">
                  <CheckCircle2 className="w-4 h-4"/> A resume is already uploaded to your profile.
                </p>
@@ -195,7 +195,7 @@ export default function ProfilePage() {
         <div className="flex justify-end">
           <button 
             type="submit"
-            disabled={loading || (!file && !formData.resumeUrl)}
+            disabled={loading || (!file && !formData.resumeBase64)}
             className="bg-teal-600 hover:bg-teal-500 disabled:opacity-50 text-white px-8 py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40"
           >
             {loading ? "Uploading & Saving..." : <><Save className="w-5 h-5" /> Save Profile</>}
