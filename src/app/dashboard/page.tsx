@@ -181,7 +181,7 @@ export default function DashboardPage() {
       }
 
       localStorage.setItem("jobs", JSON.stringify(currentJobs));
-      alert(`Agent Filter successfully analyzed ${result.jobs.length} jobs against your resume!`);
+      alert(`Agent Filter successfully analyzed ${allScoredJobs.length} jobs against your resume!`);
       fetchJobs();
 
     } catch (error) {
