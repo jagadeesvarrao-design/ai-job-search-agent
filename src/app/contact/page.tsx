@@ -38,7 +38,7 @@ export default function ContactPage() {
             <div>
               <h3 className="text-lg font-bold mb-1">Email Support</h3>
               <p className="text-slate-400 text-sm mb-2">For technical issues or general inquiries.</p>
-              <a href="mailto:support@jobagent.com" className="text-teal-400 hover:underline">support@jobagent.com</a>
+              <a href="mailto:support.zenresume@gmail.com" className="text-teal-400 hover:underline">support.zenresume@gmail.com</a>
             </div>
           </div>
           
