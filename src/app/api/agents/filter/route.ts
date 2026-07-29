@@ -1,16 +1,31 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
-import { readFile } from "fs/promises";
-import path from "path";
+import { checkRateLimit } from "@/lib/rate-limit";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
+    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
+    if (!checkRateLimit(ip, 10, 60000)) {
+      return NextResponse.json({ success: false, error: "Too many requests. Please try again in a minute." }, { status: 429 });
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json({ success: false, error: "AI Service is not configured." }, { status: 500 });
+    }
+
     const { jobs, resumeBase64 } = await request.json();
+
+    if (resumeBase64 && resumeBase64.length > 5 * 1024 * 1024) { 
+      return NextResponse.json({ success: false, error: "Resume file is too large." }, { status: 413 });
+    }
+    if (jobs && jobs.length > 100) {
+      return NextResponse.json({ success: false, error: "Too many jobs submitted for filtering." }, { status: 413 });
+    }
 
     if (!jobs || jobs.length === 0) {
       return NextResponse.json({ success: true, jobs: [] });

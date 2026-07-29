@@ -1,8 +1,21 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   try {
+    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
+    if (!checkRateLimit(ip, 10, 60000)) {
+      return NextResponse.json({ success: false, error: "Too many requests. Please try again in a minute." }, { status: 429 });
+    }
+
     const { role, location } = await request.json();
+
+    if (role && role.length > 500) {
+      return NextResponse.json({ success: false, error: "Role too long." }, { status: 413 });
+    }
+    if (location && location.length > 500) {
+      return NextResponse.json({ success: false, error: "Location too long." }, { status: 413 });
+    }
 
     if (!role || !location) {
       return NextResponse.json({ success: false, error: "Role and location are required." }, { status: 400 });
