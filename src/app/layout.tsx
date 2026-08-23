@@ -89,7 +89,7 @@ export default function RootLayout({
         ],
         "contactPoint": {
           "@type": "ContactPoint",
-          "email": "support.zenresume@gmail.com",
+          "email": "aneevarpsolutions@gmail.com",
           "contactType": "customer support"
         }
       },

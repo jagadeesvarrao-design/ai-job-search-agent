@@ -109,8 +109,8 @@ export default function ContactPage() {
             <div>
               <h3 className="text-base font-bold text-[#171D1C] mb-1">Direct Support</h3>
               <p className="text-[#545F73] text-xs mb-2">For technical assistance or questions.</p>
-              <a href="mailto:support.zenresume@gmail.com" className="text-[#00685F] text-sm font-semibold hover:underline">
-                support.zenresume@gmail.com
+              <a href="mailto:aneevarpsolutions@gmail.com" className="text-[#00685F] text-sm font-semibold hover:underline">
+                aneevarpsolutions@gmail.com
               </a>
             </div>
           </div>

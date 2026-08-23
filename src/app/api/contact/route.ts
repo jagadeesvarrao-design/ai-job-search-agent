@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
         const mailOptions = {
           from: process.env.GMAIL_USER,
-          to: 'support.zenresume@gmail.com',
+          to: 'aneevarpsolutions@gmail.com',
           replyTo: email,
           subject: `New Contact Form Submission from ${name} [ZenScout AI]`,
           text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
