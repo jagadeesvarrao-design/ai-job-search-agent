@@ -9,6 +9,7 @@ export interface UserUsageQuota {
   coverLettersGeneratedToday: number;
   lastLetterDate: string;
   interviewMessagesSent: number;
+  lastInterviewDate: string;
 }
 
 export interface UserTierState {
@@ -18,12 +19,40 @@ export interface UserTierState {
   expiresAt?: string;
   vipBadge: boolean;
   prioritySpeed: boolean;
+  deepAtsGaps: boolean;
+  salaryIntel: boolean;
 }
 
-export const FREE_LIMITS = {
-  maxScoutsPerDay: 5,
-  maxCoverLettersPerDay: 2,
-  maxInterviewRounds: 3,
+// Apple & Samsung Value Ladder Quota Limits
+export const TIER_LIMITS = {
+  free: {
+    maxScoutsPerDay: 5,
+    maxCoverLettersPerDay: 2,
+    maxInterviewRounds: 3,
+    isUnlimited: false,
+    label: "Free Tier",
+  },
+  monthly: {
+    maxScoutsPerDay: 25,
+    maxCoverLettersPerDay: 10,
+    maxInterviewRounds: 15,
+    isUnlimited: false,
+    label: "1-Month Starter Pro",
+  },
+  quarterly: {
+    maxScoutsPerDay: 99999,
+    maxCoverLettersPerDay: 99999,
+    maxInterviewRounds: 99999,
+    isUnlimited: true,
+    label: "3-Month Career Pass",
+  },
+  annual: {
+    maxScoutsPerDay: 99999,
+    maxCoverLettersPerDay: 99999,
+    maxInterviewRounds: 99999,
+    isUnlimited: true,
+    label: "Annual Pro VIP",
+  }
 };
 
 export function getUserTierState(): UserTierState {
@@ -34,6 +63,8 @@ export function getUserTierState(): UserTierState {
       billingCycle: "monthly",
       vipBadge: false,
       prioritySpeed: false,
+      deepAtsGaps: false,
+      salaryIntel: false
     };
   }
 
@@ -46,6 +77,8 @@ export function getUserTierState(): UserTierState {
         billingCycle: "monthly",
         vipBadge: false,
         prioritySpeed: false,
+        deepAtsGaps: false,
+        salaryIntel: false
       };
     }
     return JSON.parse(saved);
@@ -56,6 +89,8 @@ export function getUserTierState(): UserTierState {
       billingCycle: "monthly",
       vipBadge: false,
       prioritySpeed: false,
+      deepAtsGaps: false,
+      salaryIntel: false
     };
   }
 }
@@ -68,6 +103,14 @@ export function isProSubscriber(): boolean {
   return getUserPlan() === "pro";
 }
 
+export function getCurrentTierLimits() {
+  const tier = getUserTierState();
+  if (tier.plan === "free") return TIER_LIMITS.free;
+  if (tier.billingCycle === "quarterly") return TIER_LIMITS.quarterly;
+  if (tier.billingCycle === "annual") return TIER_LIMITS.annual;
+  return TIER_LIMITS.monthly;
+}
+
 export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthly") {
   if (typeof window === "undefined") return;
   const isIndia = Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Calcutta") ||
@@ -76,7 +119,6 @@ export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthl
   
   const currency = isIndia ? "INR" : "USD";
   
-  // Calculate expiration based on plan model
   let daysValid = 30;
   if (billingCycle === "quarterly") daysValid = 90;
   if (billingCycle === "annual") daysValid = 365;
@@ -87,7 +129,9 @@ export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthl
     billingCycle,
     expiresAt: new Date(Date.now() + daysValid * 24 * 60 * 60 * 1000).toISOString(),
     vipBadge: billingCycle === "annual",
-    prioritySpeed: billingCycle === "quarterly" || billingCycle === "annual"
+    prioritySpeed: billingCycle === "quarterly" || billingCycle === "annual",
+    deepAtsGaps: billingCycle === "quarterly" || billingCycle === "annual",
+    salaryIntel: billingCycle === "quarterly" || billingCycle === "annual"
   };
 
   localStorage.setItem("user_tier", JSON.stringify(state));
@@ -106,6 +150,7 @@ export function getUsageQuota(): UserUsageQuota {
       coverLettersGeneratedToday: 0,
       lastLetterDate: getTodayDateString(),
       interviewMessagesSent: 0,
+      lastInterviewDate: getTodayDateString()
     };
   }
 
@@ -119,6 +164,7 @@ export function getUsageQuota(): UserUsageQuota {
         coverLettersGeneratedToday: 0,
         lastLetterDate: today,
         interviewMessagesSent: 0,
+        lastInterviewDate: today
       };
     }
     const quota: UserUsageQuota = JSON.parse(saved);
@@ -130,6 +176,10 @@ export function getUsageQuota(): UserUsageQuota {
       quota.coverLettersGeneratedToday = 0;
       quota.lastLetterDate = today;
     }
+    if (quota.lastInterviewDate !== today) {
+      quota.interviewMessagesSent = 0;
+      quota.lastInterviewDate = today;
+    }
     return quota;
   } catch (e) {
     return {
@@ -138,41 +188,64 @@ export function getUsageQuota(): UserUsageQuota {
       coverLettersGeneratedToday: 0,
       lastLetterDate: getTodayDateString(),
       interviewMessagesSent: 0,
+      lastInterviewDate: getTodayDateString()
     };
   }
 }
 
-export function recordScoutRun(): { allowed: boolean; remaining: number } {
-  if (isProSubscriber()) return { allowed: true, remaining: 9999 };
+export function recordScoutRun(): { allowed: boolean; remaining: number; max: number; isUnlimited: boolean } {
+  const limits = getCurrentTierLimits();
+  if (limits.isUnlimited) return { allowed: true, remaining: 99999, max: 99999, isUnlimited: true };
+  
   const quota = getUsageQuota();
-  if (quota.scoutRunsToday >= FREE_LIMITS.maxScoutsPerDay) {
-    return { allowed: false, remaining: 0 };
+  if (quota.scoutRunsToday >= limits.maxScoutsPerDay) {
+    return { allowed: false, remaining: 0, max: limits.maxScoutsPerDay, isUnlimited: false };
   }
   quota.scoutRunsToday += 1;
   quota.lastScoutDate = getTodayDateString();
   localStorage.setItem("user_usage_quota", JSON.stringify(quota));
-  return { allowed: true, remaining: FREE_LIMITS.maxScoutsPerDay - quota.scoutRunsToday };
+  return { 
+    allowed: true, 
+    remaining: limits.maxScoutsPerDay - quota.scoutRunsToday, 
+    max: limits.maxScoutsPerDay,
+    isUnlimited: false 
+  };
 }
 
-export function recordCoverLetterRun(): { allowed: boolean; remaining: number } {
-  if (isProSubscriber()) return { allowed: true, remaining: 9999 };
+export function recordCoverLetterRun(): { allowed: boolean; remaining: number; max: number; isUnlimited: boolean } {
+  const limits = getCurrentTierLimits();
+  if (limits.isUnlimited) return { allowed: true, remaining: 99999, max: 99999, isUnlimited: true };
+  
   const quota = getUsageQuota();
-  if (quota.coverLettersGeneratedToday >= FREE_LIMITS.maxCoverLettersPerDay) {
-    return { allowed: false, remaining: 0 };
+  if (quota.coverLettersGeneratedToday >= limits.maxCoverLettersPerDay) {
+    return { allowed: false, remaining: 0, max: limits.maxCoverLettersPerDay, isUnlimited: false };
   }
   quota.coverLettersGeneratedToday += 1;
   quota.lastLetterDate = getTodayDateString();
   localStorage.setItem("user_usage_quota", JSON.stringify(quota));
-  return { allowed: true, remaining: FREE_LIMITS.maxCoverLettersPerDay - quota.coverLettersGeneratedToday };
+  return { 
+    allowed: true, 
+    remaining: limits.maxCoverLettersPerDay - quota.coverLettersGeneratedToday, 
+    max: limits.maxCoverLettersPerDay,
+    isUnlimited: false 
+  };
 }
 
-export function recordInterviewMessage(): { allowed: boolean; remaining: number } {
-  if (isProSubscriber()) return { allowed: true, remaining: 9999 };
+export function recordInterviewMessage(): { allowed: boolean; remaining: number; max: number; isUnlimited: boolean } {
+  const limits = getCurrentTierLimits();
+  if (limits.isUnlimited) return { allowed: true, remaining: 99999, max: 99999, isUnlimited: true };
+  
   const quota = getUsageQuota();
-  if (quota.interviewMessagesSent >= FREE_LIMITS.maxInterviewRounds) {
-    return { allowed: false, remaining: 0 };
+  if (quota.interviewMessagesSent >= limits.maxInterviewRounds) {
+    return { allowed: false, remaining: 0, max: limits.maxInterviewRounds, isUnlimited: false };
   }
   quota.interviewMessagesSent += 1;
+  quota.lastInterviewDate = getTodayDateString();
   localStorage.setItem("user_usage_quota", JSON.stringify(quota));
-  return { allowed: true, remaining: FREE_LIMITS.maxInterviewRounds - quota.interviewMessagesSent };
+  return { 
+    allowed: true, 
+    remaining: limits.maxInterviewRounds - quota.interviewMessagesSent, 
+    max: limits.maxInterviewRounds,
+    isUnlimited: false 
+  };
 }

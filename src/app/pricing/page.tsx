@@ -11,15 +11,13 @@ import {
   ArrowRight, 
   Crown,
   TrendingUp,
-  Award,
-  Clock,
-  ExternalLink
+  Star,
+  Lock
 } from "lucide-react";
-import { setUserPlan, getUserPlan } from "@/lib/user-tier";
+import { setUserPlan, getUserTierState } from "@/lib/user-tier";
 
 export default function PricingPage() {
   const [currency, setCurrency] = useState<"INR" | "USD">("INR");
-  const [selectedPlan, setSelectedPlan] = useState<"monthly" | "quarterly" | "annual">("monthly");
   const [isUpgrading, setIsUpgrading] = useState(false);
   const [upgradeSuccess, setUpgradeSuccess] = useState(false);
 
@@ -53,13 +51,13 @@ export default function PricingPage() {
       <div className="mb-8">
         <div className="inline-flex items-center gap-1.5 bg-[#00685F]/10 dark:bg-teal-900/30 text-[#00685F] dark:text-[#2DD4BF] text-xs font-black px-4 py-1.5 rounded-full mb-3">
           <Crown className="w-4 h-4 text-amber-500" />
-          <span>ZENScout PRO CAREER ACCELERATOR</span>
+          <span>ZENScout PRO CAREER SUITE</span>
         </div>
         <h1 className="text-3xl md:text-5xl font-black text-black dark:text-white tracking-tight mb-3">
           Invest in Your Dream Career
         </h1>
         <p className="text-base md:text-lg text-[#0F172A] dark:text-[#CBD5E1] font-medium max-w-2xl mx-auto">
-          One callback from a top company changes everything. Unlock unlimited AI autonomy & an ad-free workspace.
+          One callback from a top company changes everything. Unlock autonomous AI scouting, deep ATS audits, and an ad-free workspace.
         </p>
       </div>
 
@@ -89,7 +87,6 @@ export default function PricingPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-4 pt-5 text-xs relative z-10">
-          {/* The Daily Routine Trap */}
           <div className="bg-white/5 p-4 rounded-2xl border border-white/5 space-y-2">
             <span className="text-[11px] font-black uppercase tracking-wider text-rose-400 flex items-center gap-1">
               <span>❌ The Status Quo (Lost Momentum)</span>
@@ -99,14 +96,13 @@ export default function PricingPage() {
             </p>
           </div>
 
-          {/* The Pro Transformation */}
           <div className="bg-teal-950/40 p-4 rounded-2xl border border-teal-500/30 space-y-2">
             <span className="text-[11px] font-black uppercase tracking-wider text-teal-300 flex items-center gap-1">
-              <span>⚡ The 30-Day Pro Advantage</span>
+              <span>⚡ The Pro Multi-Agent Advantage</span>
             </span>
             <p className="text-teal-100 leading-relaxed font-normal text-xs md:text-sm">
-              For that exact {isINR ? "₹299" : "$9.99"}, your 4 AI agents work <strong>24/7 scouting live openings, beating ATS parsers, drafting tailored letters, and coaching mock interviews</strong>. 
-              Just <strong>one</strong> offer upgrade easily yields {isINR ? "₹5,00,000+ LPA" : "$20,000+/yr"} in career upside.
+              Your 4 AI agents work <strong>24/7 scouting live openings, beating ATS parsers, drafting tailored letters, and coaching mock interviews</strong>. 
+              Just <strong>one</strong> offer upgrade yields {isINR ? "₹5,00,000+ LPA" : "$20,000+/yr"} in career upside.
             </p>
           </div>
         </div>
@@ -139,15 +135,16 @@ export default function PricingPage() {
         </div>
       </div>
 
-      {/* PRICING CARDS */}
+      {/* APPLE / SAMSUNG TIERED VALUE LADDER CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-        {/* 1. MONTHLY PLAN */}
+        
+        {/* 1. 1-MONTH STARTER */}
         <div className="p-8 rounded-3xl border-2 border-[#E2E8F0] dark:border-[#232D36] bg-white dark:bg-[#141B20] shadow-soft hover:shadow-soft-hover transition-all flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">1-Month Starter</h3>
               <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-full font-bold">
-                Quick Boost
+                Light Hunt
               </span>
             </div>
             
@@ -159,7 +156,7 @@ export default function PricingPage() {
             </div>
 
             <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-              Perfect to test the waters and land quick interview calls this month.
+              5x boost over free tier. Ideal for rapid single-role applications.
             </p>
 
             <ul className="space-y-3 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
@@ -169,15 +166,19 @@ export default function PricingPage() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
-                <span>Unlimited Automated Job Scouting</span>
+                <span><strong>25 Scout Runs / day</strong> (vs 5 on Free)</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
-                <span>Unlimited 1-Click PDF Cover Letters</span>
+                <span><strong>10 PDF Cover Letters / day</strong></span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
-                <span>Voice AI Mock Interview Simulation</span>
+                <span><strong>15 Voice Coach Exchanges / day</strong></span>
+              </li>
+              <li className="flex items-center gap-2.5 text-slate-400">
+                <Lock className="w-4 h-4 text-slate-300 dark:text-slate-600 flex-shrink-0" />
+                <span>Deep ATS Keyword Gap Analyzer</span>
               </li>
             </ul>
           </div>
@@ -187,15 +188,15 @@ export default function PricingPage() {
             disabled={isUpgrading}
             className="mt-8 w-full bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-black py-4 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5"
           >
-            <span>Get 1-Month Pro Access</span>
+            <span>Get 1-Month Starter</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* 2. 3-MONTH CAREER PASS (MOST POPULAR) */}
+        {/* 2. 3-MONTH CAREER PASS (BEST VALUE) */}
         <div className="p-8 rounded-3xl border-2 border-amber-500 dark:border-amber-400 bg-amber-50/20 dark:bg-amber-950/20 shadow-xl relative flex flex-col justify-between md:-translate-y-2">
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-full shadow-md">
-            ⭐ Most Popular (Full Job Hunt)
+            ⭐ BEST VALUE • FULL HIRING CYCLE
           </div>
 
           <div>
@@ -214,7 +215,7 @@ export default function PricingPage() {
             </div>
 
             <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-              Matches the typical 60–90 day hiring lifecycle until offer letter signing.
+              Matches the typical 60–90 day hiring lifecycle from scouting to offer letter.
             </p>
 
             <ul className="space-y-3 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
@@ -224,15 +225,27 @@ export default function PricingPage() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                <span>Unlimited AI Agent Operations</span>
+                <span><strong>⚡ UNLIMITED Job Scouting</strong></span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                <span>Priority Server Processing Speed</span>
+                <span><strong>⚡ UNLIMITED 1-Click PDF Letters</strong></span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                <span>Dedicated Technical Support</span>
+                <span><strong>⚡ UNLIMITED Voice AI Coach</strong></span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                <span><strong>🎯 Deep ATS Keyword Gap Analyzer</strong></span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                <span><strong>⚡ Priority 2x Server Speed</strong></span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                <span><strong>📄 1-Click ZenResume Sync</strong></span>
               </li>
             </ul>
           </div>
@@ -242,18 +255,18 @@ export default function PricingPage() {
             disabled={isUpgrading}
             className="mt-8 w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black py-4 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5"
           >
-            <span>Get 3-Month Pass</span>
+            <span>Get 3-Month Pass (Recommended)</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* 3. ANNUAL PRO PLAN */}
+        {/* 3. ANNUAL PRO VIP */}
         <div className="p-8 rounded-3xl border-2 border-[#E2E8F0] dark:border-[#232D36] bg-white dark:bg-[#141B20] shadow-soft hover:shadow-soft-hover transition-all flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-2">
-              <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">Annual Pro</h3>
+              <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">Annual Pro VIP</h3>
               <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 px-2.5 py-1 rounded-full font-bold">
-                Best Long-term
+                Ultimate Savings
               </span>
             </div>
             
@@ -261,11 +274,11 @@ export default function PricingPage() {
               <span className="text-4xl font-black text-black dark:text-white">
                 {isINR ? "₹1,999" : "$69.99"}
               </span>
-              <span className="text-xs text-slate-500 font-semibold"> / year</span>
+              <span className="text-xs text-slate-500 font-semibold"> / yr ({isINR ? "₹166/mo" : "$5.83/mo"})</span>
             </div>
 
             <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-              Continuous career growth, salary negotiation, and future opportunity alerts.
+              Continuous career growth, active recruiter scouting, & future AI releases.
             </p>
 
             <ul className="space-y-3 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
@@ -275,11 +288,19 @@ export default function PricingPage() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
-                <span>All Future Multi-Agent Upgrades</span>
+                <span><strong>Everything in 3-Month Pass</strong></span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
-                <span>VIP Badge & Early Features Access</span>
+                <span><strong>👑 VIP Member Badge in App</strong></span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                <span><strong>📊 Salary Insights & Recruiter Intel</strong></span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                <span><strong>🚀 Lifetime Access to New Agents</strong></span>
               </li>
             </ul>
           </div>
@@ -289,7 +310,7 @@ export default function PricingPage() {
             disabled={isUpgrading}
             className="mt-8 w-full bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-black py-4 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5"
           >
-            <span>Get 1-Year Pass</span>
+            <span>Get Annual VIP Access</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

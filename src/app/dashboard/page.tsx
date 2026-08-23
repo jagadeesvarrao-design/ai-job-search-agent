@@ -466,8 +466,10 @@ export default function DashboardPage() {
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               {isPro 
-                ? `Active through ${new Date(tierInfo.expiresAt || "").toLocaleDateString()} • Zero Ads Enabled`
-                : `Daily Free Usage: ${usageQuota.scoutRunsToday}/${FREE_LIMITS.maxScoutsPerDay} Scouts • ${usageQuota.coverLettersGeneratedToday}/${FREE_LIMITS.maxCoverLettersPerDay} Cover Letters • ${usageQuota.interviewMessagesSent}/${FREE_LIMITS.maxInterviewRounds} Coach Q&As`}
+                ? (tierInfo.billingCycle === "monthly"
+                    ? `Monthly Starter Plan: ${usageQuota.scoutRunsToday}/25 Daily Scouts • ${usageQuota.coverLettersGeneratedToday}/10 Letters • 100% Ad-Free`
+                    : `Active through ${new Date(tierInfo.expiresAt || "").toLocaleDateString()} • ⚡ Truly Unlimited AI & 100% Ad-Free`)
+                : `Daily Free Usage: ${usageQuota.scoutRunsToday}/5 Scouts • ${usageQuota.coverLettersGeneratedToday}/2 Cover Letters • ${usageQuota.interviewMessagesSent}/3 Coach Q&As`}
             </p>
           </div>
         </div>
@@ -478,12 +480,12 @@ export default function DashboardPage() {
             className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-black py-2.5 px-4 rounded-xl shadow-sm active:scale-95 transition-all"
           >
             <Crown className="w-3.5 h-3.5" />
-            <span>Upgrade to Pro (Ad-Free & Unlimited)</span>
+            <span>Upgrade to Pro (Compare Plans)</span>
           </button>
         ) : (
           <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-900">
             <CheckCircle2 className="w-4 h-4" />
-            <span>All AI Agents Operating on Pro Mode</span>
+            <span>{tierInfo.billingCycle === "annual" ? "👑 VIP Unlimited Access Active" : "⚡ Pro Workspace Active"}</span>
           </div>
         )}
       </div>
