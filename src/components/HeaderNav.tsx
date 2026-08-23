@@ -1,11 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Briefcase, User, Sparkles, Menu, X, ExternalLink, ArrowRight, ShieldCheck, Flame } from "lucide-react";
+import { 
+  Briefcase, 
+  User, 
+  Sparkles, 
+  Menu, 
+  X, 
+  ExternalLink, 
+  ArrowRight, 
+  Flame,
+  Sun,
+  Moon
+} from "lucide-react";
 
 export default function HeaderNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+
+  // Initialize theme from localStorage or system preferences
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
+    } else {
+      setIsDark(false);
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDark(true);
+    }
+  };
 
   return (
     <>
@@ -58,14 +94,25 @@ export default function HeaderNav() {
           </nav>
 
           {/* Right Action Buttons (Desktop) */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Light / Dark Mode Toggle Button */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-xl border border-[#E2E8F0] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-black dark:text-amber-300 focus:outline-none active:scale-95"
+              aria-label="Toggle Light and Dark Mode"
+              title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-slate-700" />}
+            </button>
+
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
+              className="hidden sm:inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              Launch Dashboard
+              Dashboard
             </Link>
+
             <Link
               href="/profile"
               className="w-9 h-9 rounded-full bg-[#D5E0F8] hover:bg-[#C2D3F5] text-[#00685F] flex items-center justify-center transition-all active:scale-95 shadow-sm"
@@ -73,16 +120,16 @@ export default function HeaderNav() {
             >
               <User className="w-4 h-4" />
             </Link>
-          </div>
 
-          {/* Mobile Hamburger Toggle */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-black hover:bg-slate-100 transition-colors focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            {/* Mobile Hamburger Toggle */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-xl text-black hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation Drawer */}
