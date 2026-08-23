@@ -15,7 +15,8 @@ import {
   Lock, 
   Star, 
   Crown,
-  HeartHandshake
+  HeartHandshake,
+  TrendingUp
 } from "lucide-react";
 import { setUserPlan, getUserPlan } from "@/lib/user-tier";
 
