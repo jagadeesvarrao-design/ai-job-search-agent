@@ -35,15 +35,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    if (!auth || typeof window === "undefined") {
       setLoading(false);
-    });
+      return;
+    }
 
-    return () => unsubscribe();
+    try {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+        setLoading(false);
+      });
+
+      return () => unsubscribe();
+    } catch (e) {
+      console.warn("Auth state observer skipped:", e);
+      setLoading(false);
+    }
   }, []);
 
   const signInWithGoogle = async () => {
+    if (!auth) throw new Error("Authentication is not initialized.");
     try {
       await signInWithPopup(auth, googleProvider);
     } catch (error: any) {
@@ -53,6 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signInWithEmail = async (email: string, pass: string) => {
+    if (!auth) throw new Error("Authentication is not initialized.");
     try {
       await signInWithEmailAndPassword(auth, email, pass);
     } catch (error: any) {
@@ -62,6 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUpWithEmail = async (email: string, pass: string, name?: string) => {
+    if (!auth) throw new Error("Authentication is not initialized.");
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, pass);
       if (name && cred.user) {
@@ -74,6 +87,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
+    if (!auth) return;
     try {
       await fbSignOut(auth);
     } catch (error: any) {
