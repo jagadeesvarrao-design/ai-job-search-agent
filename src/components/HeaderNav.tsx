@@ -14,16 +14,21 @@ import {
   Sun,
   Moon,
   Crown,
-  Zap
+  Zap,
+  LogIn
 } from "lucide-react";
 import { getUserTierState, isProSubscriber } from "@/lib/user-tier";
+import { useAuth } from "@/lib/auth-context";
 import PricingModal from "@/components/PricingModal";
+import AuthModal from "@/components/AuthModal";
 
 export default function HeaderNav() {
+  const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [isPro, setIsPro] = useState(false);
   const [pricingModalOpen, setPricingModalOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   // Initialize theme and Pro subscription status
   useEffect(() => {
@@ -146,14 +151,29 @@ export default function HeaderNav() {
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-slate-700 dark:text-slate-300" />}
             </button>
 
-            {/* User Profile Avatar */}
-            <Link
-              href="/profile"
-              className="w-9 h-9 rounded-xl bg-[#D5E0F8] dark:bg-slate-800 hover:bg-[#C2D3F5] dark:hover:bg-slate-700 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-center transition-all active:scale-95 shadow-sm"
-              aria-label="Profile Settings"
-            >
-              <User className="w-4 h-4" />
-            </Link>
+            {/* User Account Button (Auth Trigger / Profile Avatar) */}
+            {user ? (
+              <button
+                onClick={() => setAuthModalOpen(true)}
+                className="w-9 h-9 rounded-xl bg-teal-100 dark:bg-teal-900/40 hover:bg-teal-200 dark:hover:bg-teal-900/60 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-center transition-all active:scale-95 shadow-sm overflow-hidden"
+                aria-label="Account Settings"
+                title={user.displayName || user.email || "Account"}
+              >
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt={user.displayName || "User"} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="font-bold text-xs">{user.displayName ? user.displayName.charAt(0).toUpperCase() : "U"}</span>
+                )}
+              </button>
+            ) : (
+              <button
+                onClick={() => setAuthModalOpen(true)}
+                className="inline-flex items-center gap-1 bg-white dark:bg-[#1A2228] hover:bg-slate-100 dark:hover:bg-slate-800 text-black dark:text-white border border-[#E2E8F0] dark:border-[#232D36] text-xs font-bold py-2 px-3 rounded-xl transition-all shadow-sm active:scale-95"
+              >
+                <LogIn className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" />
+                <span className="hidden sm:inline">Sign In</span>
+              </button>
+            )}
 
             {/* Mobile Hamburger Toggle */}
             <button
@@ -180,6 +200,21 @@ export default function HeaderNav() {
                 <span className="flex items-center gap-1.5">
                   <Crown className="w-4 h-4" />
                   {isPro ? "ZenScout Pro Active (Manage Plan)" : "Upgrade to Pro (Ad-Free & 2x Turbo Speed)"}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+
+              {/* Mobile Auth Button */}
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setAuthModalOpen(true);
+                }}
+                className="w-full bg-slate-100 dark:bg-slate-800 text-black dark:text-white font-bold p-3 rounded-xl flex items-center justify-between text-xs mb-1"
+              >
+                <span className="flex items-center gap-2">
+                  <User className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+                  <span>{user ? `Signed in as ${user.displayName || user.email}` : "Sign In / Create Account"}</span>
                 </span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
@@ -256,6 +291,12 @@ export default function HeaderNav() {
       <PricingModal 
         isOpen={pricingModalOpen} 
         onClose={() => setPricingModalOpen(false)} 
+      />
+
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)} 
       />
     </>
   );

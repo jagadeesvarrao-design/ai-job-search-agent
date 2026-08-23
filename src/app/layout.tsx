@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Briefcase, User, Sparkles } from "lucide-react";
 import CookieConsent from "@/components/CookieConsent";
 import HeaderNav from "@/components/HeaderNav";
+import { AuthProvider } from "@/lib/auth-context";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
@@ -140,13 +141,16 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#F5FAF8] text-[#09090B] font-sans antialiased selection:bg-[#00685F] selection:text-white">
-        {/* Top Header & Ecosystem Navigation */}
-        <HeaderNav />
+        {/* Authentication Context Provider */}
+        <AuthProvider>
+          {/* Top Header & Ecosystem Navigation */}
+          <HeaderNav />
 
-        {/* Main Workspace */}
-        <main className="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-6 md:py-8">
-          {children}
-        </main>
+          {/* Main Workspace */}
+          <main className="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-6 md:py-8">
+            {children}
+          </main>
+        </AuthProvider>
         
         {/* Footer */}
         <footer className="w-full bg-white border-t border-[#E2E8F0] mt-auto">
