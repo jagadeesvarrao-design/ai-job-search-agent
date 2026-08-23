@@ -8,7 +8,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as fbSignOut,
-  updateProfile
+  updateProfile,
+  GoogleAuthProvider
 } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 
@@ -56,10 +57,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signInWithGoogle = async () => {
     if (!auth) throw new Error("Authentication is not initialized.");
     try {
+      // First attempt fast auto-login with existing browser Google session
       await signInWithPopup(auth, googleProvider);
     } catch (error: any) {
-      console.error("Google Sign-In Error:", error);
-      throw error;
+      // If silent auto-login prompt needs user selection, fallback gracefully
+      if (error.code === "auth/popup-closed-by-user" || error.code === "auth/cancelled-popup-request") {
+        throw error;
+      }
+      try {
+        const fallbackProvider = new GoogleAuthProvider();
+        fallbackProvider.setCustomParameters({ prompt: "select_account" });
+        await signInWithPopup(auth, fallbackProvider);
+      } catch (fallbackError: any) {
+        console.error("Google Sign-In Error:", fallbackError);
+        throw fallbackError;
+      }
     }
   };
 
