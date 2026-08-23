@@ -16,7 +16,7 @@ import {
   Crown,
   Zap
 } from "lucide-react";
-import { getUserPlan } from "@/lib/user-tier";
+import { getUserTierState, isProSubscriber } from "@/lib/user-tier";
 import PricingModal from "@/components/PricingModal";
 
 export default function HeaderNav() {
@@ -28,7 +28,7 @@ export default function HeaderNav() {
   // Initialize theme and Pro subscription status
   useEffect(() => {
     const checkTier = () => {
-      setIsPro(getUserPlan() === "pro");
+      setIsPro(isProSubscriber());
     };
 
     checkTier();
@@ -60,97 +60,96 @@ export default function HeaderNav() {
 
   return (
     <>
-      {/* Top Ecosystem Announcement Ribbon */}
-      <div className="bg-gradient-to-r from-[#004D40] via-[#00685F] to-[#0D9488] text-white text-[11px] md:text-xs py-1.5 px-4 text-center font-bold flex items-center justify-center gap-2">
-        <Flame className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+      {/* Top Slim Ecosystem Announcement Ribbon */}
+      <div className="bg-[#004D40] dark:bg-[#062420] text-slate-100 text-[11px] md:text-xs py-1 px-4 text-center font-medium border-b border-teal-900/30 flex items-center justify-center gap-2">
+        <span className="inline-flex items-center gap-1 text-amber-300 font-bold">
+          <Flame className="w-3.5 h-3.5" />
+          Aneevarp Career Suite:
+        </span>
         <span>
-          Aneevarp Career Suite: Build your 95+ score resume on{" "}
+          Build ATS resumes on{" "}
           <a
             href="https://zenresume.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline text-amber-200 hover:text-white font-extrabold ml-1 inline-flex items-center gap-1"
+            className="underline text-white font-bold hover:text-amber-200 transition-colors inline-flex items-center gap-0.5"
           >
-            ZenResume <ExternalLink className="w-3 h-3" />
+            ZenResume <ExternalLink className="w-2.5 h-2.5 opacity-80" />
           </a>
         </span>
       </div>
 
-      {/* Main Sticky Navbar */}
-      <header className="bg-white border-b border-[#E2E8F0] sticky top-0 z-40 shadow-sm transition-all">
-        <div className="flex justify-between items-center w-full px-4 md:px-8 max-w-[1280px] mx-auto h-16">
-          {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group focus:outline-none" aria-label="ZenScout AI by Aneevarp Solutions">
+      {/* Main Clean Sticky Navbar */}
+      <header className="bg-white dark:bg-[#141B20] border-b border-[#E2E8F0] dark:border-[#232D36] sticky top-0 z-40 shadow-sm transition-all">
+        <div className="flex justify-between items-center w-full px-4 md:px-8 max-w-[1320px] mx-auto h-16">
+          
+          {/* Left: Brand Logo */}
+          <Link href="/" className="flex items-center gap-2.5 group focus:outline-none flex-shrink-0" aria-label="ZenScout AI by Aneevarp Solutions">
             <div className="bg-[#00685F] text-white p-2 rounded-xl group-hover:scale-105 group-active:scale-95 transition-all shadow-sm">
               <Briefcase className="w-4 h-4" />
             </div>
             <div className="flex flex-col text-left">
-              <span className="font-extrabold text-lg text-black leading-none tracking-tight">ZenScout AI</span>
-              <span className="text-[10px] text-[#00685F] font-bold tracking-wider uppercase">by Aneevarp Solutions</span>
+              <span className="font-extrabold text-base md:text-lg text-black dark:text-white leading-none tracking-tight">ZenScout AI</span>
+              <span className="text-[9px] md:text-[10px] text-[#00685F] dark:text-[#2DD4BF] font-bold tracking-wider uppercase">by Aneevarp Solutions</span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-bold text-[#0F172A]" aria-label="Main Navigation">
-            <Link href="/dashboard" className="hover:text-[#00685F] transition-colors py-1">Dashboard</Link>
-            <Link href="/profile" className="hover:text-[#00685F] transition-colors py-1">Profile & ATS Audit</Link>
-            <Link href="/blog" className="hover:text-[#00685F] transition-colors py-1">Career Guides</Link>
-            <Link href="/pricing" className="hover:text-[#00685F] transition-colors py-1">Pro Pricing</Link>
-            <Link href="/about" className="hover:text-[#00685F] transition-colors py-1">About</Link>
+          {/* Center: Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-6 text-xs xl:text-sm font-bold text-[#0F172A] dark:text-[#CBD5E1]" aria-label="Main Navigation">
+            <Link href="/dashboard" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Dashboard</Link>
+            <Link href="/profile" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Profile & ATS Audit</Link>
+            <Link href="/blog" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Career Guides</Link>
+            <Link href="/pricing" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Pricing</Link>
+            <Link href="/about" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">About</Link>
+          </nav>
+
+          {/* Right: Actions Cluster */}
+          <div className="flex items-center gap-2 md:gap-2.5">
+            {/* ZenResume Direct Link */}
             <a
               href="https://zenresume.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 bg-emerald-50 hover:bg-emerald-100 text-[#00685F] border border-emerald-200 px-3 py-1 rounded-full text-xs font-black transition-all"
+              className="hidden xl:inline-flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 text-[#00685F] dark:text-[#2DD4BF] border border-emerald-200 dark:border-emerald-800/60 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
             >
-              <Sparkles className="w-3 h-3 text-orange-500" />
-              <span>ZenResume Builder</span>
+              <Sparkles className="w-3.5 h-3.5 text-orange-500" />
+              <span>ZenResume</span>
               <ExternalLink className="w-2.5 h-2.5 opacity-70" />
             </a>
-          </nav>
 
-          {/* Right Action Buttons (Desktop) */}
-          <div className="flex items-center gap-2 sm:gap-3">
             {/* Pro Upgrade / Member Badge */}
             {isPro ? (
               <button
                 onClick={() => setPricingModalOpen(true)}
-                className="inline-flex items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-3 py-1.5 rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-all"
+                className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-3.5 py-2 rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-all"
               >
-                <Crown className="w-3.5 h-3.5" />
+                <Crown className="w-3.5 h-3.5 fill-white" />
                 <span>PRO ACTIVE</span>
               </button>
             ) : (
               <button
                 onClick={() => setPricingModalOpen(true)}
-                className="inline-flex items-center gap-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500 hover:to-orange-500 text-amber-900 dark:text-amber-300 hover:text-white border border-amber-400/40 text-xs font-black px-3 py-1.5 rounded-xl transition-all shadow-sm active:scale-95"
+                className="inline-flex items-center gap-1.5 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-500 hover:text-white text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 text-xs font-black px-3.5 py-2 rounded-xl transition-all shadow-sm active:scale-95 group"
               >
-                <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                <Zap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 group-hover:text-white fill-amber-500" />
                 <span>Upgrade Pro</span>
               </button>
             )}
 
-            {/* Light / Dark Mode Toggle Button */}
+            {/* Light / Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-xl border border-[#E2E8F0] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-black dark:text-amber-300 focus:outline-none active:scale-95"
+              className="p-2 rounded-xl border border-[#E2E8F0] dark:border-[#232D36] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-black dark:text-amber-300 focus:outline-none active:scale-95"
               aria-label="Toggle Light and Dark Mode"
               title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-slate-700" />}
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-slate-700 dark:text-slate-300" />}
             </button>
 
-            <Link
-              href="/dashboard"
-              className="hidden sm:inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              Dashboard
-            </Link>
-
+            {/* User Profile Avatar */}
             <Link
               href="/profile"
-              className="w-9 h-9 rounded-full bg-[#D5E0F8] hover:bg-[#C2D3F5] text-[#00685F] flex items-center justify-center transition-all active:scale-95 shadow-sm"
+              className="w-9 h-9 rounded-xl bg-[#D5E0F8] dark:bg-slate-800 hover:bg-[#C2D3F5] dark:hover:bg-slate-700 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-center transition-all active:scale-95 shadow-sm"
               aria-label="Profile Settings"
             >
               <User className="w-4 h-4" />
@@ -159,7 +158,7 @@ export default function HeaderNav() {
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-black hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+              className="lg:hidden p-2 rounded-xl text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -169,8 +168,8 @@ export default function HeaderNav() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-[#E2E8F0] px-6 py-5 shadow-lg animate-in slide-in-from-top-4 duration-200">
-            <div className="flex flex-col gap-3 font-bold text-sm text-black">
+          <div className="lg:hidden bg-white dark:bg-[#141B20] border-b border-[#E2E8F0] dark:border-[#232D36] px-6 py-5 shadow-lg animate-in slide-in-from-top-4 duration-200">
+            <div className="flex flex-col gap-3 font-bold text-sm text-black dark:text-white">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -180,7 +179,7 @@ export default function HeaderNav() {
               >
                 <span className="flex items-center gap-1.5">
                   <Crown className="w-4 h-4" />
-                  {isPro ? "ZenScout Pro Active (Manage)" : "Upgrade to Pro (Ad-Free & Unlimited)"}
+                  {isPro ? "ZenScout Pro Active (Manage Plan)" : "Upgrade to Pro (Ad-Free & 2x Turbo Speed)"}
                 </span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
@@ -188,7 +187,7 @@ export default function HeaderNav() {
               <Link 
                 href="/dashboard" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] text-[#00685F] flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-between"
               >
                 <span>Job Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -196,7 +195,7 @@ export default function HeaderNav() {
               <Link 
                 href="/profile" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 flex items-center justify-between"
               >
                 <span>Profile & ATS Audit</span>
                 <ArrowRight className="w-4 h-4" />
@@ -204,34 +203,34 @@ export default function HeaderNav() {
               <Link 
                 href="/blog" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 flex items-center justify-between"
               >
                 <span>Career Guides & Blog</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link 
+                href="/pricing" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 flex items-center justify-between"
+              >
+                <span>Pro Pricing Plans</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link 
                 href="/about" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 flex items-center justify-between"
               >
                 <span>About Aneevarp Solutions</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link 
-                href="/contact" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] flex items-center justify-between"
-              >
-                <span>Contact Support</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
 
-              <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
                 <a
                   href="https://zenresume.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-emerald-50 border border-emerald-200 text-[#00685F] font-black p-3 rounded-xl flex items-center justify-between text-xs"
+                  className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[#00685F] dark:text-[#2DD4BF] font-black p-3 rounded-xl flex items-center justify-between text-xs"
                 >
                   <span className="flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-orange-500" />
