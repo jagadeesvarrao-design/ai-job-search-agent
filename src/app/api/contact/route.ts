@@ -44,7 +44,38 @@ ${message}
       `,
     };
 
-    // Send the email
+    // Dispatch to Aneevarp CRM Inbound Webhook (Triggers WhatsApp & HubSpot Sync)
+    try {
+      const crmEndpoints = [
+        'http://127.0.0.1:5000/api/inbound-lead',
+        'http://localhost:5000/api/inbound-lead',
+        'https://ai-sales-agent.onrender.com/api/inbound-lead',
+        'https://aneevarp-crm.onrender.com/api/inbound-lead'
+      ];
+      for (const endpoint of crmEndpoints) {
+        try {
+          await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              product: 'ZenScout AI',
+              name,
+              email,
+              message,
+              type: 'contact_and_support'
+            }),
+            signal: AbortSignal.timeout(3000)
+          });
+          break; // Stop after first successful delivery
+        } catch {
+          // Try next CRM endpoint
+        }
+      }
+    } catch (crmErr) {
+      console.warn('Aneevarp CRM dispatch notice:', crmErr);
+    }
+
+    // Send the email directly as well
     await transporter.sendMail(mailOptions);
 
     return NextResponse.json(
