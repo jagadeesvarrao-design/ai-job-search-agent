@@ -33,9 +33,22 @@ import {
   Check,
   Globe,
   SlidersHorizontal,
-  FileCheck
+  FileCheck,
+  Crown,
+  Zap,
+  Lock
 } from "lucide-react";
 import Link from "next/link";
+import { 
+  getUserTierState, 
+  isProSubscriber, 
+  recordScoutRun, 
+  recordCoverLetterRun, 
+  recordInterviewMessage, 
+  getUsageQuota,
+  FREE_LIMITS
+} from "@/lib/user-tier";
+import PricingModal from "@/components/PricingModal";
 
 // Types for our job board
 type JobStatus = "New Matches" | "Saved" | "Applied" | "Interviewing" | "Offers" | "Rejected";
@@ -89,9 +102,19 @@ export default function DashboardPage() {
   const [voiceAudioEnabled, setVoiceAudioEnabled] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
 
+  // Subscription Tier & Quota States
+  const [isPro, setIsPro] = useState(false);
+  const [tierInfo, setTierInfo] = useState(getUserTierState());
+  const [usageQuota, setUsageQuota] = useState(getUsageQuota());
+  const [pricingModalOpen, setPricingModalOpen] = useState(false);
+
   // Load jobs and initial search criteria from localStorage
   const fetchJobs = () => {
     try {
+      setIsPro(isProSubscriber());
+      setTierInfo(getUserTierState());
+      setUsageQuota(getUsageQuota());
+
       const savedJobs = localStorage.getItem("jobs");
       if (savedJobs) {
         const parsedJobs: Job[] = JSON.parse(savedJobs);
@@ -162,6 +185,14 @@ export default function DashboardPage() {
 
   // Run Scout Agent with live custom search bar or default profile
   const handleRunScout = async () => {
+    // Free Tier Quota Check
+    const scoutCheck = recordScoutRun();
+    if (!scoutCheck.allowed) {
+      setPricingModalOpen(true);
+      return;
+    }
+    setUsageQuota(getUsageQuota());
+
     setScouting(true);
     try {
       const targetRole = searchRole.trim();
@@ -284,6 +315,14 @@ export default function DashboardPage() {
   };
 
   const handleGenerateCoverLetter = async (job: Job) => {
+    // Free Tier Quota Check for Cover Letters
+    const letterCheck = recordCoverLetterRun();
+    if (!letterCheck.allowed) {
+      setPricingModalOpen(true);
+      return;
+    }
+    setUsageQuota(getUsageQuota());
+
     setFactoryLoading(true);
     try {
       const savedProfile = localStorage.getItem("my_profile");
@@ -349,6 +388,15 @@ export default function DashboardPage() {
 
   const handleSendCoachMessage = async () => {
     if (!chatInput.trim() || !selectedJob) return;
+
+    // Free Tier Quota Check for Interview Coach
+    const interviewCheck = recordInterviewMessage();
+    if (!interviewCheck.allowed) {
+      setPricingModalOpen(true);
+      return;
+    }
+    setUsageQuota(getUsageQuota());
+
     const userMsg: ChatMessage = { role: "user", content: chatInput.trim() };
     const newMessages = [...chatMessages, userMsg];
     setChatMessages(newMessages);
@@ -390,7 +438,56 @@ export default function DashboardPage() {
   const interviewsCount = jobs.filter(j => j.status === "Interviewing" || j.status === "Offers").length;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
+      {/* 0. LIVE SUBSCRIPTION TIER & QUOTA METER */}
+      <div className="bg-white dark:bg-[#141B20] p-4 md:p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className={`p-2.5 rounded-xl flex items-center justify-center ${
+            isPro 
+              ? "bg-amber-500/20 text-amber-500" 
+              : "bg-teal-50 dark:bg-teal-950/40 text-[#00685F] dark:text-[#2DD4BF]"
+          }`}>
+            {isPro ? <Crown className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-sm text-black dark:text-white">
+                {isPro ? `ZenScout PRO Plan (${tierInfo.billingCycle.toUpperCase()})` : "Free Tier Workspace"}
+              </span>
+              {isPro ? (
+                <span className="text-[10px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black px-2 py-0.5 rounded-full">
+                  UNLIMITED AI & AD-FREE
+                </span>
+              ) : (
+                <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full">
+                  Standard Limits
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              {isPro 
+                ? `Active through ${new Date(tierInfo.expiresAt || "").toLocaleDateString()} • Zero Ads Enabled`
+                : `Daily Free Usage: ${usageQuota.scoutRunsToday}/${FREE_LIMITS.maxScoutsPerDay} Scouts • ${usageQuota.coverLettersGeneratedToday}/${FREE_LIMITS.maxCoverLettersPerDay} Cover Letters • ${usageQuota.interviewMessagesSent}/${FREE_LIMITS.maxInterviewRounds} Coach Q&As`}
+            </p>
+          </div>
+        </div>
+
+        {!isPro ? (
+          <button
+            onClick={() => setPricingModalOpen(true)}
+            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-black py-2.5 px-4 rounded-xl shadow-sm active:scale-95 transition-all"
+          >
+            <Crown className="w-3.5 h-3.5" />
+            <span>Upgrade to Pro (Ad-Free & Unlimited)</span>
+          </button>
+        ) : (
+          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-900">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>All AI Agents Operating on Pro Mode</span>
+          </div>
+        )}
+      </div>
+
       {/* 1. TOP ANALYTICS & STATS BAR */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-soft flex items-center gap-4">
@@ -830,6 +927,15 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Embedded Pricing & Upgrade Modal */}
+      <PricingModal 
+        isOpen={pricingModalOpen} 
+        onClose={() => {
+          setPricingModalOpen(false);
+          fetchJobs();
+        }} 
+      />
     </div>
   );
 }
