@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ShieldCheck, Cookie, X } from "lucide-react";
+import { Cookie, ShieldCheck, X } from "lucide-react";
 
 export default function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
@@ -49,18 +49,18 @@ export default function CookieConsent() {
       aria-label="Cookie consent banner"
       className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50 animate-in fade-in slide-in-from-bottom-5 duration-300"
     >
-      <div className="glass p-6 rounded-2xl border border-teal-500/30 shadow-2xl backdrop-blur-xl bg-slate-900/90">
-        <div className="flex items-start gap-3 mb-3">
-          <div className="p-2 bg-teal-500/20 rounded-xl text-teal-400">
+      <div className="bg-white dark:bg-[#141B20] p-6 rounded-3xl border-2 border-[#E2E8F0] dark:border-[#232D36] shadow-2xl transition-colors">
+        <div className="flex items-start gap-3.5 mb-3">
+          <div className="p-2.5 bg-teal-50 dark:bg-teal-950/50 rounded-2xl text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0">
             <Cookie className="w-5 h-5" />
           </div>
           <div className="flex-1">
-            <h3 className="font-bold text-white text-base flex items-center gap-2">
+            <h3 className="font-extrabold text-black dark:text-white text-base tracking-tight">
               Privacy & Cookie Preferences
             </h3>
-            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+            <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium mt-1.5 leading-relaxed">
               We and our trusted partners (including Google AdSense) use cookies to analyze site traffic, personalize content, and serve relevant advertising. Read our{" "}
-              <Link href="/privacy" className="text-teal-400 hover:underline font-medium">
+              <Link href="/privacy" className="text-[#00685F] dark:text-[#2DD4BF] hover:underline font-bold">
                 Privacy Policy
               </Link>{" "}
               to learn more.
@@ -68,16 +68,16 @@ export default function CookieConsent() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 mt-4 pt-3 border-t border-white/10">
+        <div className="flex items-center gap-3 mt-4 pt-3 border-t border-[#E2E8F0] dark:border-[#232D36]">
           <button
             onClick={handleAccept}
-            className="flex-1 bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-teal-500/20"
+            className="flex-1 bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white text-xs font-black py-3 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
           >
             Accept All
           </button>
           <button
             onClick={handleDecline}
-            className="flex-1 bg-white/10 hover:bg-white/15 text-slate-300 hover:text-white text-xs font-semibold py-2.5 px-4 rounded-xl transition-all"
+            className="flex-1 bg-[#F8FAFC] hover:bg-slate-200 dark:bg-[#1A2228] dark:hover:bg-[#232D36] text-black dark:text-[#CBD5E1] border border-[#E2E8F0] dark:border-[#232D36] text-xs font-bold py-3 px-4 rounded-xl transition-all active:scale-95"
           >
             Decline Non-Essential
           </button>
