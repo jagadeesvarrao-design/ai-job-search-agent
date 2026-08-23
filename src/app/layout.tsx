@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import { Briefcase, User, Sparkles } from "lucide-react";
 import CookieConsent from "@/components/CookieConsent";
+import HeaderNav from "@/components/HeaderNav";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
@@ -139,47 +140,8 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#F5FAF8] text-[#09090B] font-sans antialiased selection:bg-[#00685F] selection:text-white">
-        {/* Top Navigation Bar */}
-        <header className="bg-white border-b border-[#E2E8F0] sticky top-0 z-40 shadow-sm transition-all">
-          <div className="flex justify-between items-center w-full px-4 md:px-8 max-w-[1280px] mx-auto h-16">
-            {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group focus:outline-none" aria-label="ZenScout AI by Aneevarp Solutions">
-              <div className="bg-[#00685F] text-white p-2 rounded-xl group-hover:scale-105 group-active:scale-95 transition-all shadow-sm">
-                <Briefcase className="w-4 h-4" />
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="font-extrabold text-lg text-black leading-none tracking-tight">ZenScout AI</span>
-                <span className="text-[10px] text-[#00685F] font-bold tracking-wider uppercase">by Aneevarp Solutions</span>
-              </div>
-            </Link>
-
-            {/* Navigation Links */}
-            <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-[#0F172A]" aria-label="Main Navigation">
-              <Link href="/blog" className="hover:text-[#00685F] transition-colors py-1">Blog</Link>
-              <Link href="/about" className="hover:text-[#00685F] transition-colors py-1">About</Link>
-              <Link href="/dashboard" className="hover:text-[#00685F] transition-colors py-1">Dashboard</Link>
-              <Link href="/profile" className="hover:text-[#00685F] transition-colors py-1">Profile</Link>
-            </nav>
-
-            {/* Quick Actions & Profile */}
-            <div className="flex items-center gap-3">
-              <Link
-                href="/dashboard"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                Launch Dashboard
-              </Link>
-              <Link
-                href="/profile"
-                className="w-9 h-9 rounded-full bg-[#D5E0F8] hover:bg-[#C2D3F5] text-[#00685F] flex items-center justify-center transition-all active:scale-95 shadow-sm"
-                aria-label="Profile Settings"
-              >
-                <User className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </header>
+        {/* Top Header & Ecosystem Navigation */}
+        <HeaderNav />
 
         {/* Main Workspace */}
         <main className="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-6 md:py-8">
