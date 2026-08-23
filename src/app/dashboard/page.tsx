@@ -207,12 +207,17 @@ export default function DashboardPage() {
         return;
       }
 
+      const savedProfile = localStorage.getItem("my_profile");
+      const userProfile = savedProfile ? JSON.parse(savedProfile) : null;
+      const userExperience = userProfile?.experience || "Fresher";
+
       const response = await fetch("/api/agents/scout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           role: targetRole, 
-          location: targetLocation || "Remote" 
+          location: targetLocation || "Remote",
+          experience: userExperience
         })
       });
 
@@ -275,7 +280,11 @@ export default function DashboardPage() {
         const response = await fetch("/api/agents/filter", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ jobs: chunk, resumeBase64 })
+          body: JSON.stringify({ 
+            jobs: chunk, 
+            resumeBase64,
+            experience: profileDoc.experience || "Fresher"
+          })
         });
 
         if (!response.ok) {

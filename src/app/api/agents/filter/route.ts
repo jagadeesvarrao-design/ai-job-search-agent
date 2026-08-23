@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "AI Service is not configured." }, { status: 500 });
     }
 
-    const { jobs, resumeBase64 } = await request.json();
+    const { jobs, resumeBase64, experience } = await request.json();
 
     if (resumeBase64 && resumeBase64.length > 5 * 1024 * 1024) { 
       return NextResponse.json({ success: false, error: "Resume file is too large." }, { status: 413 });
@@ -35,14 +35,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Resume URL is required to filter jobs." }, { status: 400 });
     }
 
-    // 1. Read the local PDF file
     let resumeText = "No resume provided.";
-    // The frontend now passes the base64 string directly in resumeBase64
     if (resumeBase64 && resumeBase64.length > 100) {
       resumeText = resumeBase64;
     }
 
-    // 2. Format the jobs for the prompt
     const jobsList = jobs.map((j: any) => ({
       id: j.id,
       title: j.title,
@@ -50,18 +47,26 @@ export async function POST(request: Request) {
       description: j.description || "No description provided."
     }));
 
-    // 3. Ask Gemini to score them
+    const userExperience = experience || "Fresher";
+
+    // 3. Ask Gemini to score them with strict experience calibration
     const prompt = `
-      You are an expert technical recruiter and AI job matcher.
-      I have attached my resume as a PDF document.
+      You are an expert technical recruiter and AI job matcher for candidates.
+      The candidate has an official experience level of: "${userExperience}".
+      
+      I have attached the candidate's resume as a PDF document.
       I will provide a list of job postings in JSON format.
-      For EACH job, calculate a "matchScore" from 0 to 100 representing how well my resume fits the job requirements.
-      Be realistic and critical. If I have no experience in a required technology, lower the score significantly.
+      
+      CRITICAL EXPERIENCE MATCHING RULES:
+      1. If the candidate has 0 years / "Fresher" / Entry Level experience:
+         - Any job posting that requires 2+, 3+, 5+ years of industry experience or has Senior/Lead in the title MUST receive a very low matchScore (under 40%).
+         - Genuine Entry-Level, Graduate, Junior (0-1 yrs), or Internship postings matching the candidate's skills should receive high scores (70-98%).
+      2. If the candidate's skills match the entry-level requirements, reward them with a strong matchScore.
       
       Here are the jobs to evaluate:
       ${JSON.stringify(jobsList, null, 2)}
       
-      Respond with ONLY a JSON array of objects. Each object must have the job "id" and the calculated "matchScore" (a number).
+      Respond with ONLY a JSON array of objects. Each object must have the job "id" and the calculated "matchScore" (an integer from 0 to 100).
     `;
 
     const response = await ai.models.generateContent({
@@ -104,7 +109,7 @@ export async function POST(request: Request) {
 
     const scores = JSON.parse(scoresText);
 
-    // 4. Update the original jobs array with the new scores
+    // 4. Update the original jobs array with the calibrated scores
     const updatedJobs = jobs.map((job: any) => {
       const scoredJob = scores.find((s: any) => s.id === job.id);
       return {
