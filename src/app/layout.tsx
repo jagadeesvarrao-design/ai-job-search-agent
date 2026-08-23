@@ -138,7 +138,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#F5FAF8] text-[#171D1C] font-sans antialiased">
+      <body className="min-h-full flex flex-col bg-[#F5FAF8] text-[#09090B] font-sans antialiased selection:bg-[#00685F] selection:text-white">
         {/* Top Navigation Bar */}
         <header className="bg-white border-b border-[#E2E8F0] sticky top-0 z-40 shadow-sm transition-all">
           <div className="flex justify-between items-center w-full px-4 md:px-8 max-w-[1280px] mx-auto h-16">
@@ -148,13 +148,13 @@ export default function RootLayout({
                 <Briefcase className="w-4 h-4" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="font-bold text-lg text-[#171D1C] leading-none tracking-tight">ZenScout AI</span>
-                <span className="text-[10px] text-[#00685F] font-semibold tracking-wider uppercase">by Aneevarp Solutions</span>
+                <span className="font-extrabold text-lg text-black leading-none tracking-tight">ZenScout AI</span>
+                <span className="text-[10px] text-[#00685F] font-bold tracking-wider uppercase">by Aneevarp Solutions</span>
               </div>
             </Link>
 
             {/* Navigation Links */}
-            <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#545F73]" aria-label="Main Navigation">
+            <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-[#0F172A]" aria-label="Main Navigation">
               <Link href="/blog" className="hover:text-[#00685F] transition-colors py-1">Blog</Link>
               <Link href="/about" className="hover:text-[#00685F] transition-colors py-1">About</Link>
               <Link href="/dashboard" className="hover:text-[#00685F] transition-colors py-1">Dashboard</Link>
@@ -165,14 +165,14 @@ export default function RootLayout({
             <div className="flex items-center gap-3">
               <Link
                 href="/dashboard"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-semibold py-2 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 Launch Dashboard
               </Link>
               <Link
                 href="/profile"
-                className="w-9 h-9 rounded-full bg-[#D5E0F8] hover:bg-[#C2D3F5] text-[#00685F] flex items-center justify-center transition-all active:scale-95"
+                className="w-9 h-9 rounded-full bg-[#D5E0F8] hover:bg-[#C2D3F5] text-[#00685F] flex items-center justify-center transition-all active:scale-95 shadow-sm"
                 aria-label="Profile Settings"
               >
                 <User className="w-4 h-4" />
@@ -190,18 +190,18 @@ export default function RootLayout({
         <footer className="w-full bg-white border-t border-[#E2E8F0] mt-auto">
           <div className="w-full py-8 px-4 md:px-8 max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
-              <div className="flex items-center gap-2 font-bold text-base text-[#171D1C]">
+              <div className="flex items-center gap-2 font-black text-base text-black">
                 <div className="bg-[#00685F] text-white p-1.5 rounded-lg">
                   <Briefcase className="w-3.5 h-3.5" />
                 </div>
                 <span>ZenScout AI</span>
               </div>
-              <span className="text-xs text-[#545F73] md:border-l md:border-[#E2E8F0] md:pl-3">
-                © {new Date().getFullYear()} ZenScout AI. Part of the <strong>Aneevarp Solutions</strong> career suite.
+              <span className="text-xs text-[#1E293B] font-medium md:border-l md:border-[#E2E8F0] md:pl-3">
+                © {new Date().getFullYear()} ZenScout AI. Part of the <strong className="text-black">Aneevarp Solutions</strong> career suite.
               </span>
             </div>
 
-            <nav className="flex flex-wrap justify-center gap-6 text-xs font-medium text-[#545F73]" aria-label="Footer Navigation">
+            <nav className="flex flex-wrap justify-center gap-6 text-xs font-bold text-[#0F172A]" aria-label="Footer Navigation">
               <Link href="/about" className="hover:text-[#00685F] transition-colors">About</Link>
               <Link href="/contact" className="hover:text-[#00685F] transition-colors">Contact</Link>
               <Link href="/blog" className="hover:text-[#00685F] transition-colors">Blog</Link>
