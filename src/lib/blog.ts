@@ -22,7 +22,7 @@ export interface BlogPost {
 const defaultAuthor: Author = {
   name: "Jagadeeswara Rao",
   role: "Lead AI Engineer & Career Strategist at Aneevarp Solutions",
-  bio: "Specializing in Large Language Model applications, automated candidate matching systems, and recruitment technology. Over 6 years of experience building modern web architectures and career acceleration tools.",
+  bio: "Specializing in Large Language Model applications, automated candidate matching systems, and recruitment technology. Creator of ZenResume and ZenScout AI at Aneevarp Solutions.",
   avatar: "JR",
   experience: "6+ Years in AI Engineering & Technical Recruitment Systems"
 };
@@ -48,7 +48,7 @@ Advanced parsers convert PDF and DOCX files into structural plain text before ru
 
 When a parser encounters a two-column design, it frequently reads text horizontally across columns, conflating your job titles with unrelated technical skills. 
 
-**Best Practice:** Use a clean, single-column hierarchy with standard system fonts (Inter, Arial, Calibri, or Roboto). Keep margin sizes standard (0.5 to 1 inch) and avoid embedding critical contact details solely inside header/footer bands.
+**Best Practice:** Use a clean, single-column hierarchy with standard system fonts (Inter, Arial, Calibri, or Roboto). Keep margin sizes standard (0.5 to 1 inch) and avoid embedding critical contact details solely inside header/footer bands. You can use our sister tool **ZenResume** to construct perfectly formatted ATS-compliant resumes in minutes.
 
 ### 2. Standardize Section Taxonomy
 Recruitment algorithms look for standardized semantic anchors to index employment chronology, educational credentials, and core competencies. Avoid non-standard headings such as "My Career Journey" or "Core Passions."
@@ -77,7 +77,7 @@ Examples:
 ### 5. Dynamic Tailoring per Position
 Because AI algorithms score resume relevancy directly against specific Job Descriptions, submitting a generic resume across 100 applications results in low callback rates. 
 
-This is why our engineering team at **Aneevarp Solutions** built the **AI Job Search Agent**. Our autonomous *Filter Agent* analyzes job requirements against your verified skills, while the *Factory Agent* crafts targeted cover letters that bridge specific qualification gaps instantly.
+This is why our engineering team at **Aneevarp Solutions** built **ZenScout AI**. Our autonomous *Filter Agent* analyzes job requirements against your verified skills, while the *Factory Agent* crafts targeted cover letters that bridge specific qualification gaps instantly.
     `
   },
   {
@@ -123,7 +123,7 @@ Complaining about former managers, colleagues, or company culture raises immedia
 ### Mistake 5: Lack of Interactive Simulation Practice
 Rehearsing answers silently in your head does not build verbal muscle memory. Under high-stress interview conditions, unpracticed candidates frequently stumble or omit critical technical details.
 
-**The Solution:** Practice real-time verbal simulation. You can use the **Agent Coach** in our platform to run interactive mock interviews tailored specifically to the job description you are targeting, receiving real-time evaluation and constructive feedback on every response.
+**The Solution:** Practice real-time verbal simulation. You can use the **Agent Coach** in **ZenScout AI** to run interactive mock interviews tailored specifically to the job description you are targeting, receiving real-time evaluation and constructive feedback on every response.
     `
   },
   {
@@ -139,7 +139,7 @@ Rehearsing answers silently in your head does not build verbal muscle memory. Un
     content: `
 For over two decades, online job hunting has remained a frustrating, manual grind: search through disjointed job portals, modify resumes by hand, write generic cover letters, and send applications into an opaque black hole.
 
-Today, autonomous AI agent pipelines are transforming job search dynamics, empowering candidates with the same advanced machine intelligence that corporate recruiters have utilized for years.
+Today, autonomous AI agent pipelines like **ZenScout AI** are transforming job search dynamics, empowering candidates with the same advanced machine intelligence that corporate recruiters have utilized for years.
 
 ### 1. Autonomous Real-Time Job Discovery
 Instead of spending 15 hours a week manually searching job aggregation boards, autonomous agents continuously query live employment APIs, indexing opportunities the moment they are posted.
@@ -159,7 +159,7 @@ Our **Factory Agent** analyzes both documents to produce crisp, executive-ready 
 ### 4. Privacy-First "Zero-Backend" Architectures
 Historically, using third-party career platforms required uploading sensitive personal data, phone numbers, and compensation history to centralized cloud databases.
 
-At **Aneevarp Solutions**, we engineered our platform on a strict **Zero-Backend Architecture**. Your resume is processed locally in your browser's memory and streamed statelessly to AI endpoints without persisting in any database, ensuring 100% data sovereignty.
+At **Aneevarp Solutions**, we engineered **ZenScout AI** on a strict **Zero-Backend Architecture**. Your resume is processed locally in your browser's memory and streamed statelessly to AI endpoints without persisting in any database, ensuring 100% data sovereignty.
     `
   },
   {
@@ -206,7 +206,7 @@ Executive recruiters review hundreds of applications. Long, verbose cover letter
 - **Paragraph 2:** Two concrete, quantified achievements relevant to their exact job requirements.
 - **Paragraph 3:** Why their company mission resonates with you, remote readiness, and call to action.
 
-You can leverage our platform's **Factory Agent** to generate precisely structured, role-specific cover letters adhering to this exact framework in seconds.
+You can leverage **ZenScout AI's Factory Agent** to generate precisely structured, role-specific cover letters adhering to this exact framework in seconds.
     `
   },
   {
@@ -286,7 +286,7 @@ If the base salary is capped due to internal leveling bands, remember that compe
 ### 4. Maintain a Positive, Collaborative Tone
 Always express gratitude and genuine excitement about the team and mission before presenting a counteroffer. Frame your request around market data and your demonstrated track record of delivering measurable outcomes.
 
-By preparing thoroughly and practicing your negotiation conversations with our interactive **Coach Agent**, you can enter every hiring discussion with confidence, clarity, and executive presence.
+By preparing thoroughly and practicing your negotiation conversations with our interactive **Coach Agent** in **ZenScout AI**, you can enter every hiring discussion with confidence, clarity, and executive presence.
     `
   }
 ];

@@ -17,19 +17,20 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://ai-job-search-agent-chi.vercel.app"),
   title: {
-    default: "AI Job Search Agent | Autonomous Career Automation by Aneevarp Solutions",
-    template: "%s | AI Job Search Agent"
+    default: "ZenScout AI | Autonomous Career Automation by Aneevarp Solutions",
+    template: "%s | ZenScout AI"
   },
-  description: "Automate your entire job hunt with autonomous AI agents. Discover verified job postings, score resume compatibility, generate personalized cover letters, and prepare with interactive AI mock interviews. Built by Aneevarp Solutions.",
+  description: "Automate your entire job hunt with ZenScout AI. Discover verified job postings, score resume compatibility, generate personalized cover letters, and prepare with interactive AI mock interviews. Built by Aneevarp Solutions alongside ZenResume.",
   keywords: [
-    "AI job search agent",
+    "ZenScout AI",
+    "ZenScout",
+    "ZenResume ecosystem",
     "autonomous job hunter",
     "resume ATS scanner",
     "AI cover letter generator",
     "AI mock interview coach",
-    "zero backend resume tool",
-    "automated job application",
-    "Aneevarp Solutions career tools"
+    "zero backend career tools",
+    "Aneevarp Solutions career suite"
   ],
   authors: [{ name: "Aneevarp Solutions", url: "https://ai-job-search-agent-chi.vercel.app/about" }],
   creator: "Aneevarp Solutions",
@@ -38,16 +39,16 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "AI Job Search Agent | Autonomous Job Hunting by Aneevarp Solutions",
+    title: "ZenScout AI | Autonomous Job Hunting by Aneevarp Solutions",
     description: "Discover live jobs, score your resume match, generate bespoke cover letters, and practice with AI interview coaching. 100% privacy-first zero-backend architecture.",
     url: "https://ai-job-search-agent-chi.vercel.app",
-    siteName: "AI Job Search Agent",
+    siteName: "ZenScout AI",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Job Search Agent | Automate Your Job Hunt",
+    title: "ZenScout AI | Automate Your Job Hunt",
     description: "Autonomous multi-agent pipeline for discovering jobs, filtering matches, creating cover letters, and coaching interviews.",
     creator: "@AneevarpSolutions",
   },
@@ -79,7 +80,7 @@ export default function RootLayout({
         "name": "Aneevarp Solutions",
         "url": "https://ai-job-search-agent-chi.vercel.app",
         "logo": "https://ai-job-search-agent-chi.vercel.app/icon.png",
-        "description": "Parent technology organization engineering autonomous AI agents, career automation suites, and privacy-first web software.",
+        "description": "Parent technology organization engineering ZenResume, ZenScout AI, and privacy-first career tools.",
         "sameAs": [
           "https://github.com/jagadeesvarrao-design/ai-job-search-agent",
           "https://twitter.com/AneevarpSolutions"
@@ -94,7 +95,7 @@ export default function RootLayout({
         "@type": "WebSite",
         "@id": "https://ai-job-search-agent-chi.vercel.app/#website",
         "url": "https://ai-job-search-agent-chi.vercel.app",
-        "name": "AI Job Search Agent",
+        "name": "ZenScout AI",
         "description": "Autonomous multi-agent pipeline for discovery, resume scoring, cover letters, and interview coaching.",
         "publisher": {
           "@id": "https://ai-job-search-agent-chi.vercel.app/#organization"
@@ -104,7 +105,7 @@ export default function RootLayout({
       {
         "@type": "WebApplication",
         "@id": "https://ai-job-search-agent-chi.vercel.app/#webapp",
-        "name": "AI Job Search Agent",
+        "name": "ZenScout AI",
         "url": "https://ai-job-search-agent-chi.vercel.app",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "All modern browsers (Chrome, Safari, Firefox, Edge)",
@@ -115,6 +116,13 @@ export default function RootLayout({
           "price": "0",
           "priceCurrency": "USD"
         },
+        "featureList": [
+          "Agent Scout: Real-time job discovery via Google Jobs API",
+          "Agent Filter: PDF resume semantic compatibility scoring",
+          "Agent Factory: Hyper-personalized cover letter generation",
+          "Agent Coach: Interactive technical and behavioral interview simulation",
+          "Zero-Backend Architecture: 100% client-side privacy without database storage"
+        ],
         "creator": {
           "@id": "https://ai-job-search-agent-chi.vercel.app/#organization"
         }
@@ -131,16 +139,16 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#F5FAF8] text-[#171D1C] font-sans antialiased">
-        {/* Stitch Style TopNavBar */}
+        {/* Top Navigation Bar */}
         <header className="bg-white border-b border-[#E2E8F0] sticky top-0 z-40 shadow-sm transition-all">
           <div className="flex justify-between items-center w-full px-4 md:px-8 max-w-[1280px] mx-auto h-16">
             {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group focus:outline-none" aria-label="CareerScout AI by Aneevarp Solutions">
+            <Link href="/" className="flex items-center gap-2.5 group focus:outline-none" aria-label="ZenScout AI by Aneevarp Solutions">
               <div className="bg-[#00685F] text-white p-2 rounded-xl group-hover:scale-105 group-active:scale-95 transition-all shadow-sm">
                 <Briefcase className="w-4 h-4" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="font-bold text-lg text-[#171D1C] leading-none tracking-tight">CareerScout</span>
+                <span className="font-bold text-lg text-[#171D1C] leading-none tracking-tight">ZenScout AI</span>
                 <span className="text-[10px] text-[#00685F] font-semibold tracking-wider uppercase">by Aneevarp Solutions</span>
               </div>
             </Link>
@@ -157,7 +165,7 @@ export default function RootLayout({
             <div className="flex items-center gap-3">
               <Link
                 href="/dashboard"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-semibold py-2 px-4 rounded-xl transition-all shadow-sm active:scale-95"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-semibold py-2 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 Launch Dashboard
@@ -178,7 +186,7 @@ export default function RootLayout({
           {children}
         </main>
         
-        {/* Stitch Style Footer */}
+        {/* Footer */}
         <footer className="w-full bg-white border-t border-[#E2E8F0] mt-auto">
           <div className="w-full py-8 px-4 md:px-8 max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
@@ -186,10 +194,10 @@ export default function RootLayout({
                 <div className="bg-[#00685F] text-white p-1.5 rounded-lg">
                   <Briefcase className="w-3.5 h-3.5" />
                 </div>
-                <span>CareerScout AI</span>
+                <span>ZenScout AI</span>
               </div>
               <span className="text-xs text-[#545F73] md:border-l md:border-[#E2E8F0] md:pl-3">
-                © {new Date().getFullYear()} CareerScout AI. A Product of <strong>Aneevarp Solutions</strong>.
+                © {new Date().getFullYear()} ZenScout AI. Part of the <strong>Aneevarp Solutions</strong> career suite.
               </span>
             </div>
 

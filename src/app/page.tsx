@@ -26,12 +26,12 @@ export default function Home() {
 
   const faqs = [
     {
-      q: "How does the AI Job Search Agent find matching jobs?",
-      a: "Our Scout Agent queries real-time employment data via Google Jobs API. It filters listings strictly according to your target role, preferred location, and seniority, presenting verified live opportunities within seconds."
+      q: "What is ZenScout AI and how does it work with ZenResume?",
+      a: "ZenScout AI is the autonomous job hunting intelligence platform built by Aneevarp Solutions alongside ZenResume. While ZenResume helps you build ATS-optimized resumes, ZenScout AI scans live job postings, scores your resume compatibility from 0-100%, drafts tailored cover letters, and coaches you through interviews."
     },
     {
       q: "How does the Zero-Backend Architecture protect my privacy?",
-      a: "Unlike traditional platforms that store your resume, phone number, and employment history in cloud databases, our platform operates 100% in your browser's local memory. Your resume is base64 encoded client-side, sent statelessly to Google Gemini AI for processing, and never saved on our servers."
+      a: "Unlike traditional platforms that store your resume, phone number, and employment history in cloud databases, ZenScout AI operates 100% in your browser's local memory. Your resume is base64 encoded client-side, sent statelessly to Google Gemini AI for processing, and never saved on our servers."
     },
     {
       q: "How does Agent Filter calculate my resume match score?",
@@ -46,8 +46,8 @@ export default function Home() {
       a: "Agent Coach simulates a live technical and behavioral hiring manager. It asks role-specific questions one at a time, evaluates your answers, and provides immediate constructive feedback to help you refine your verbal delivery before real interviews."
     },
     {
-      q: "Is the AI Job Search Agent completely free to use?",
-      a: "Yes! AI Job Search Agent is a free, open technology initiative engineered by Aneevarp Solutions. You don't need a credit card, subscription, or account to automate your job search."
+      q: "Is ZenScout AI completely free to use?",
+      a: "Yes! ZenScout AI is a free, open career technology initiative engineered by Aneevarp Solutions. You don't need a credit card, subscription, or account to automate your job search."
     }
   ];
 
@@ -80,13 +80,13 @@ export default function Home() {
         <div className="bg-white border border-[#E2E8F0] shadow-soft px-5 py-2 rounded-full mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all">
           <Sparkles className="w-4 h-4 text-orange-500 animate-spin duration-3000" />
           <span className="text-xs md:text-sm font-semibold text-[#171D1C]">
-            Autonomous Career Automation by <strong className="text-[#00685F]">Aneevarp Solutions</strong>
+            Part of the <strong className="text-[#00685F]">ZenResume & Aneevarp Solutions</strong> Career Suite
           </span>
         </div>
         
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 max-w-4xl text-[#171D1C] leading-[1.15]">
           Automate your <br className="hidden md:block" />
-          <span className="text-gradient">Job Hunt</span> with AI Agents
+          <span className="text-gradient">Job Hunt</span> with ZenScout AI
         </h1>
         
         <p className="text-base sm:text-lg md:text-xl text-[#545F73] max-w-2xl mb-10 leading-relaxed">
@@ -121,7 +121,7 @@ export default function Home() {
                   <Cpu className="w-5 h-5 animate-pulse" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-[#171D1C]">Autonomous Agent Pipeline Active</h3>
+                  <h3 className="font-bold text-sm text-[#171D1C]">ZenScout AI Pipeline Active</h3>
                   <p className="text-xs text-[#545F73]">Streaming live career intelligence & scoring</p>
                 </div>
               </div>
@@ -299,9 +299,9 @@ export default function Home() {
       {/* CALL TO ACTION */}
       <section className="py-20 flex flex-col items-center">
         <div className="bg-[#00685F] p-10 md:p-16 rounded-3xl max-w-4xl w-full text-center relative overflow-hidden shadow-xl text-white">
-          <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Accelerate Your Job Hunt Today</h2>
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Accelerate Your Job Hunt with ZenScout AI</h2>
           <p className="text-teal-100 mb-10 max-w-xl mx-auto text-base">
-            Stop wasting hours on manual job applications. Let Aneevarp Solutions' autonomous agent suite do the heavy lifting for you.
+            Stop wasting hours on manual job applications. Let Aneevarp Solutions' autonomous ZenScout agent suite do the heavy lifting for you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 

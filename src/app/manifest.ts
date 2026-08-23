@@ -2,13 +2,13 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'AI Job Search Agent - Aneevarp Solutions',
-    short_name: 'AI Job Agent',
-    description: 'Autonomous AI multi-agent suite for discovering jobs, tailoring resumes, and mock interview coaching.',
+    name: 'ZenScout AI - Aneevarp Solutions',
+    short_name: 'ZenScout AI',
+    description: 'Autonomous AI multi-agent suite for discovering jobs, tailoring resumes, and mock interview coaching by Aneevarp Solutions.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#020617',
-    theme_color: '#0f172a',
+    background_color: '#F5FAF8',
+    theme_color: '#00685F',
     icons: [
       {
         src: '/favicon.ico',

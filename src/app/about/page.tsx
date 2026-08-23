@@ -3,8 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us | Aneevarp Solutions & AI Job Search Agent",
-  description: "Learn about Aneevarp Solutions, the creators of the AI Job Search Agent, our mission to democratize recruitment tools, and our privacy-first Zero-Backend architecture.",
+  title: "About Us | ZenScout AI by Aneevarp Solutions",
+  description: "Learn about ZenScout AI, created by Aneevarp Solutions alongside ZenResume to provide autonomous, privacy-first career acceleration.",
   alternates: {
     canonical: "/about",
   }
@@ -18,7 +18,7 @@ export default function AboutPage() {
           <Building2 className="w-4 h-4" />
           <span>A Product of Aneevarp Solutions</span>
         </div>
-        <h1 className="text-3xl md:text-5xl font-extrabold mb-4 text-[#171D1C] tracking-tight">About AI Job Search Agent</h1>
+        <h1 className="text-3xl md:text-5xl font-extrabold mb-4 text-[#171D1C] tracking-tight">About ZenScout AI</h1>
         <p className="text-base md:text-lg text-[#545F73] max-w-3xl mx-auto leading-relaxed font-light">
           We are on a mission to level the playing field for job seekers by providing autonomous, AI-driven recruitment intelligence with 100% privacy and zero compromise.
         </p>
@@ -39,9 +39,9 @@ export default function AboutPage() {
           <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-6 text-amber-600">
             <Zap className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-bold mb-3 text-[#171D1C]">Multi-Agent AI</h2>
+          <h2 className="text-xl font-bold mb-3 text-[#171D1C]">Zen Ecosystem</h2>
           <p className="text-[#545F73] text-sm leading-relaxed">
-            Powered by Google Gemini 2.5 Flash, our 4 specialized agents (Scout, Filter, Factory, Coach) orchestrate live job discovery, ATS scoring, and mock coaching.
+            Engineered alongside <strong>ZenResume</strong> to form an end-to-end career suite: build ATS-friendly resumes with ZenResume, then discover and apply with ZenScout AI.
           </p>
         </div>
 
@@ -64,10 +64,10 @@ export default function AboutPage() {
         </div>
         <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#171D1C]">About Aneevarp Solutions</h2>
         <p className="text-[#3D4947] leading-relaxed mb-4 text-base">
-          <strong>Aneevarp Solutions</strong> is a technology and software engineering enterprise dedicated to building accessible, high-performance web applications, generative AI workflows, and privacy-first digital tools.
+          <strong>Aneevarp Solutions</strong> is a software engineering company dedicated to building accessible, high-performance web applications, generative AI workflows, and privacy-first digital tools.
         </p>
         <p className="text-[#545F73] leading-relaxed mb-6 text-sm">
-          Our engineers recognized that while enterprise recruiters were adopting machine learning screening filters to automatically discard applicants, everyday job seekers had no intelligent tools to fight back. We created the AI Job Search Agent as an open, accessible solution to equalize hiring dynamics.
+          Following the successful launch of <strong>ZenResume</strong>, our team engineered <strong>ZenScout AI</strong> to empower job seekers with multi-agent automation: scouting live positions, scoring resume compatibility, crafting tailored cover letters, and simulating hiring manager interviews.
         </p>
 
         <div className="grid sm:grid-cols-2 gap-4 pt-6 border-t border-[#E2E8F0]">
@@ -89,7 +89,7 @@ export default function AboutPage() {
           href="/dashboard" 
           className="inline-flex items-center gap-2 bg-[#00685F] hover:bg-[#005049] text-white font-semibold px-8 py-3.5 rounded-xl transition-all shadow-md active:scale-95 btn-tactile"
         >
-          Launch Job Search Agent Now
+          Launch ZenScout AI Now
         </Link>
       </div>
     </div>
