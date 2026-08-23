@@ -12,14 +12,21 @@ import {
   Crown,
   TrendingUp,
   Star,
-  Lock
+  Lock,
+  LogIn,
+  AlertCircle
 } from "lucide-react";
 import { setUserPlan, getUserTierState } from "@/lib/user-tier";
+import { useAuth } from "@/lib/auth-context";
+import AuthModal from "@/components/AuthModal";
 
 export default function PricingPage() {
+  const { user } = useAuth();
   const [currency, setCurrency] = useState<"INR" | "USD">("INR");
   const [isUpgrading, setIsUpgrading] = useState(false);
   const [upgradeSuccess, setUpgradeSuccess] = useState(false);
+  const [showAuthWarning, setShowAuthWarning] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -35,6 +42,12 @@ export default function PricingPage() {
   }, []);
 
   const handleCheckout = (planKey: "monthly" | "quarterly" | "annual") => {
+    if (!user) {
+      setShowAuthWarning(true);
+      return;
+    }
+
+    setShowAuthWarning(false);
     setIsUpgrading(true);
     setTimeout(() => {
       setUserPlan("pro", planKey);
@@ -60,6 +73,31 @@ export default function PricingPage() {
           One callback from a top company changes everything. Unlock autonomous AI scouting, deep ATS audits, and an ad-free workspace.
         </p>
       </div>
+
+      {/* AUTHENTICATION REQUIRED PROMPT BANNER */}
+      {showAuthWarning && (
+        <div className="my-6 p-4 rounded-2xl bg-amber-500/10 border-2 border-amber-500/40 dark:border-amber-400/30 text-black dark:text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-left animate-in slide-in-from-top-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex-shrink-0">
+              <AlertCircle className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="font-black text-sm text-black dark:text-white">Sign In Required to Activate Subscription</h4>
+              <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+                Please log in with Google or Email so we can bind your Pro membership and sync your applications across all your devices.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setAuthModalOpen(true)}
+            className="bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white text-xs font-black py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1.5 whitespace-nowrap self-stretch sm:self-auto justify-center"
+          >
+            <LogIn className="w-4 h-4" />
+            <span>Sign In / Create Account</span>
+          </button>
+        </div>
+      )}
 
       {/* ELITE GROWTH MARKETING CONVERSION ENGINE */}
       <div className="my-8 p-6 md:p-8 rounded-3xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white shadow-2xl border border-teal-500/30 text-left relative overflow-hidden">
@@ -193,7 +231,7 @@ export default function PricingPage() {
           </button>
         </div>
 
-        {/* 2. 3-MONTH CAREER PASS (BEST VALUE) */}
+        {/* 2. 3-MONTH CAREER PASS */}
         <div className="p-8 rounded-3xl border-2 border-amber-500 dark:border-amber-400 bg-amber-50/20 dark:bg-amber-950/20 shadow-xl relative flex flex-col justify-between md:-translate-y-2">
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-full shadow-md">
             ⭐ BEST VALUE • FULL HIRING CYCLE
@@ -265,7 +303,7 @@ export default function PricingPage() {
           <div>
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">Annual Pro VIP</h3>
-              <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 px-2.5 py-1 rounded-full font-bold">
+              <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">
                 Ultimate Savings
               </span>
             </div>
@@ -330,6 +368,15 @@ export default function PricingPage() {
         </div>
         <span>A Product of Aneevarp Solutions</span>
       </div>
+
+      {/* Auth Modal Triggered on Standalone Page */}
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => {
+          setAuthModalOpen(false);
+          setShowAuthWarning(false);
+        }} 
+      />
     </div>
   );
 }
