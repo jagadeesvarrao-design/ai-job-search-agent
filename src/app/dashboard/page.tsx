@@ -1,6 +1,29 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Briefcase, MoreHorizontal, Building2, MapPin, IndianRupee, Clock } from "lucide-react";
+import { 
+  Briefcase, 
+  MoreHorizontal, 
+  Building2, 
+  MapPin, 
+  IndianRupee, 
+  Clock, 
+  Sparkles, 
+  Bookmark, 
+  Send, 
+  MessageSquare, 
+  Award, 
+  Ban, 
+  Filter, 
+  Search, 
+  Loader2, 
+  X, 
+  ChevronRight, 
+  FileText, 
+  Bot, 
+  CheckCircle2, 
+  ExternalLink,
+  RefreshCw
+} from "lucide-react";
 
 // Types for our job board
 type JobStatus = "New Matches" | "Saved" | "Applied" | "Interviewing" | "Offers" | "Rejected";
@@ -19,23 +42,29 @@ interface Job {
   source?: string;
 }
 
-const COLUMNS: JobStatus[] = ["New Matches", "Saved", "Applied", "Interviewing", "Offers", "Rejected"];
+const COLUMNS: { status: JobStatus; icon: any; color: string; bg: string; border: string }[] = [
+  { status: "New Matches", icon: Sparkles, color: "text-[#00685F]", bg: "bg-teal-50", border: "border-teal-200" },
+  { status: "Saved", icon: Bookmark, color: "text-[#545F73]", bg: "bg-slate-50", border: "border-slate-200" },
+  { status: "Applied", icon: Send, color: "text-[#0284C7]", bg: "bg-sky-50", border: "border-sky-200" },
+  { status: "Interviewing", icon: MessageSquare, color: "text-[#3B82F6]", bg: "bg-blue-50", border: "border-blue-200" },
+  { status: "Offers", icon: Award, color: "text-[#22C55E]", bg: "bg-emerald-50", border: "border-emerald-200" },
+  { status: "Rejected", icon: Ban, color: "text-[#EF4444]", bg: "bg-rose-50", border: "border-rose-200" },
+];
 
 type ChatMessage = { role: "user" | "assistant", content: string };
 
 export default function DashboardPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [loading, setLoading] = useState(false);
   const [scouting, setScouting] = useState(false);
   const [filtering, setFiltering] = useState(false);
   
   // Job Modal State
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [activeTab, setActiveTab] = useState<"details" | "cover_letter" | "coach">("details");
   const [coverLetter, setCoverLetter] = useState("");
   const [factoryLoading, setFactoryLoading] = useState(false);
 
-  // Agent E State
-  const [interviewMode, setInterviewMode] = useState(false);
+  // Agent Coach State
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [coachLoading, setCoachLoading] = useState(false);
@@ -46,8 +75,7 @@ export default function DashboardPage() {
       const savedJobs = localStorage.getItem("jobs");
       if (savedJobs) {
         const parsedJobs: Job[] = JSON.parse(savedJobs);
-        // Sort by matchScore descending
-        parsedJobs.sort((a, b) => b.matchScore - a.matchScore);
+        parsedJobs.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
         setJobs(parsedJobs);
       }
     } catch (error) {
@@ -62,10 +90,9 @@ export default function DashboardPage() {
   const handleRunScout = async () => {
     setScouting(true);
     try {
-      // 1. Fetch user profile from localStorage
       const savedProfile = localStorage.getItem("my_profile");
       if (!savedProfile) {
-        alert("Please set up your profile first!");
+        alert("Please set up your profile in the Profile page first!");
         setScouting(false);
         return;
       }
@@ -78,43 +105,32 @@ export default function DashboardPage() {
         return;
       }
 
-      // 2. Call Scout Agent API
       const response = await fetch("/api/agents/scout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role, location })
       });
 
-      const result = await response.json();
-      
-      if (!result.success) {
-        throw new Error(result.error);
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || "Failed to search jobs");
       }
 
-      // 3. Save new jobs to localStorage
+      const result = await response.json();
+      
       const savedJobsString = localStorage.getItem("jobs");
       let currentJobs: Job[] = savedJobsString ? JSON.parse(savedJobsString) : [];
       
-      // Remove previous 'New Matches' as requested by user
+      // Filter out previous New Matches
       currentJobs = currentJobs.filter(j => j.status !== "New Matches");
       
-      for (const newJob of result.jobs) {
-        // Prevent duplicates across all columns
-        if (!currentJobs.find(j => j.id === newJob.id)) {
-          currentJobs.push(newJob);
-        }
-      }
-
-      localStorage.setItem("jobs", JSON.stringify(currentJobs));
-
-      alert(`Agent Scout found ${result.jobs.length} new jobs!`);
-      
-      // 4. Refresh board
-      fetchJobs();
-      
-    } catch (error) {
-      console.error("Agent Scout Failed:", error);
-      alert("Agent Scout encountered an error. Please check the console.");
+      const combined = [...result.jobs, ...currentJobs];
+      localStorage.setItem("jobs", JSON.stringify(combined));
+      setJobs(combined);
+      alert(`Scout Agent discovered ${result.jobs.length} new opportunities!`);
+    } catch (error: any) {
+      console.error("Scout Error:", error);
+      alert(error.message || "Failed to scout jobs.");
     } finally {
       setScouting(false);
     }
@@ -125,472 +141,411 @@ export default function DashboardPage() {
     try {
       const savedProfile = localStorage.getItem("my_profile");
       if (!savedProfile) {
-        alert("Please set up your profile first!");
+        alert("Please set up your profile and upload your resume first!");
+        setFiltering(false);
         return;
       }
 
       const profileDoc = JSON.parse(savedProfile);
-      if (!profileDoc.resumeBase64) {
-        alert("Please upload your PDF resume in your profile first.");
+      const { resumeBase64 } = profileDoc;
+      if (!resumeBase64) {
+        alert("Please upload your PDF resume in your Profile to run Agent Filter.");
+        setFiltering(false);
         return;
       }
 
-      // Get jobs that need scoring (all New Matches)
-      const jobsToScore = jobs.filter(j => j.status === "New Matches" && j.matchScore === 0);
-      if (jobsToScore.length === 0) {
-        alert("No unscored jobs in 'New Matches' to filter!");
+      const targetJobs = jobs.filter(j => j.status === "New Matches" && (!j.matchScore || j.matchScore === 0));
+      if (targetJobs.length === 0) {
+        alert("All current matches have already been scored!");
+        setFiltering(false);
         return;
       }
 
-      // Vercel Serverless free tier times out after 10-15s. 
-      // Scoring 15 jobs against a PDF takes too long for a single request.
-      // We will process them sequentially in chunks of 3.
+      // Chunking sequentially for serverless limit resilience
       const CHUNK_SIZE = 3;
-      let allScoredJobs: any[] = [];
+      let scoredJobs: any[] = [];
 
-      for (let i = 0; i < jobsToScore.length; i += CHUNK_SIZE) {
-        const chunk = jobsToScore.slice(i, i + CHUNK_SIZE);
-        
+      for (let i = 0; i < targetJobs.length; i += CHUNK_SIZE) {
+        const chunk = targetJobs.slice(i, i + CHUNK_SIZE);
         const response = await fetch("/api/agents/filter", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ jobs: chunk, resumeBase64: profileDoc.resumeBase64 })
+          body: JSON.stringify({ jobs: chunk, resumeBase64 })
         });
 
         if (!response.ok) {
-          throw new Error(`Server error: ${response.status} - ${response.statusText}`);
+          throw new Error("Agent Filter failed on a batch.");
         }
 
-        const result = await response.json();
-        if (!result.success) {
-          throw new Error(result.error);
-        }
-        
-        allScoredJobs = [...allScoredJobs, ...result.jobs];
-      }
-
-      // Update local storage with new scores
-      const savedJobsString = localStorage.getItem("jobs");
-      let currentJobs: Job[] = savedJobsString ? JSON.parse(savedJobsString) : [];
-      
-      for (const scoredJob of allScoredJobs) {
-        const index = currentJobs.findIndex(j => j.id === scoredJob.id);
-        if (index !== -1) {
-          currentJobs[index].matchScore = scoredJob.matchScore;
+        const data = await response.json();
+        if (data.jobs) {
+          scoredJobs = [...scoredJobs, ...data.jobs];
         }
       }
 
-      localStorage.setItem("jobs", JSON.stringify(currentJobs));
-      alert(`Agent Filter successfully analyzed ${allScoredJobs.length} jobs against your resume!`);
-      fetchJobs();
+      const updatedAll = jobs.map(j => {
+        const found = scoredJobs.find(sj => sj.id === j.id);
+        return found ? { ...j, matchScore: found.matchScore } : j;
+      });
 
-    } catch (error) {
-      console.error("Agent Filter Failed:", error);
-      alert("Agent Filter encountered an error. Please check the console.");
+      updatedAll.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
+      localStorage.setItem("jobs", JSON.stringify(updatedAll));
+      setJobs(updatedAll);
+      alert(`Agent Filter successfully scored ${scoredJobs.length} jobs against your resume!`);
+    } catch (error: any) {
+      console.error("Filter Error:", error);
+      alert(error.message || "Failed to filter jobs.");
     } finally {
       setFiltering(false);
     }
   };
 
-  const handleRunFactory = async () => {
-    if (!selectedJob) return;
+  const updateJobStatus = (jobId: string, newStatus: JobStatus) => {
+    const updated = jobs.map(j => j.id === jobId ? { ...j, status: newStatus } : j);
+    localStorage.setItem("jobs", JSON.stringify(updated));
+    setJobs(updated);
+    if (selectedJob && selectedJob.id === jobId) {
+      setSelectedJob({ ...selectedJob, status: newStatus });
+    }
+  };
+
+  const handleGenerateCoverLetter = async (job: Job) => {
     setFactoryLoading(true);
-    setCoverLetter("");
-    
     try {
       const savedProfile = localStorage.getItem("my_profile");
-      if (!savedProfile) return;
-      const profileDoc = JSON.parse(savedProfile);
-      
+      const resumeBase64 = savedProfile ? JSON.parse(savedProfile).resumeBase64 : "";
+
       const response = await fetch("/api/agents/factory", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ job: selectedJob, resumeBase64: profileDoc.resumeBase64 })
+        body: JSON.stringify({ job, resumeBase64 })
       });
 
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status} - ${response.statusText}. The generation might have taken too long (Vercel 10s limit). Try again.`);
-      }
-
-      const result = await response.json();
-      if (!result.success) throw new Error(result.error);
-      
-      setCoverLetter(result.coverLetter);
-    } catch (error) {
-      console.error("Agent Factory Failed:", error);
+      if (!response.ok) throw new Error("Failed to generate cover letter");
+      const data = await response.json();
+      setCoverLetter(data.coverLetter);
+    } catch (error: any) {
+      console.error(error);
       alert("Failed to generate cover letter.");
     } finally {
       setFactoryLoading(false);
     }
   };
 
-  const handleSaveJob = (jobToSave: Job) => {
-    const savedJobsString = localStorage.getItem("jobs");
-    let currentJobs: Job[] = savedJobsString ? JSON.parse(savedJobsString) : [];
-    
-    const index = currentJobs.findIndex(j => j.id === jobToSave.id);
-    if (index !== -1) {
-      currentJobs[index].status = "Saved";
-    }
-    
-    localStorage.setItem("jobs", JSON.stringify(currentJobs));
-    fetchJobs();
-    setSelectedJob(null);
-  };
-
-  const handleApply = (jobToApply: Job) => {
-    // 1. Move to Applied
-    const savedJobsString = localStorage.getItem("jobs");
-    let currentJobs: Job[] = savedJobsString ? JSON.parse(savedJobsString) : [];
-    
-    const index = currentJobs.findIndex(j => j.id === jobToApply.id);
-    if (index !== -1) {
-      currentJobs[index].status = "Applied";
-    }
-    
-    localStorage.setItem("jobs", JSON.stringify(currentJobs));
-    fetchJobs();
-
-    // 2. Copy Cover Letter to Clipboard if generated
-    if (coverLetter) {
-      navigator.clipboard.writeText(coverLetter);
-      alert("Cover Letter copied to clipboard! Job moved to 'Applied' column.");
-    } else {
-      alert("Job moved to 'Applied' column.");
-    }
-
-    // 3. Open the apply link (or fallback to Google if none)
-    const url = jobToApply.applyLink || `https://www.google.com/search?q=${encodeURIComponent(jobToApply.company + " " + jobToApply.title + " careers apply")}`;
-    window.open(url, "_blank");
-    
-    setSelectedJob(null);
-  };
-
-  const startInterview = async () => {
-    if (!selectedJob) return;
-    setInterviewMode(true);
-    setChatMessages([]);
-    setCoachLoading(true);
-    
-    try {
-      const savedProfile = localStorage.getItem("my_profile");
-      const profileDoc = savedProfile ? JSON.parse(savedProfile) : {};
-      
-      const initialMessage: ChatMessage = { role: "user", content: "Hi, I am ready to begin the interview." };
-      setChatMessages([initialMessage]);
-
-      const response = await fetch("/api/agents/coach", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          job: selectedJob, 
-          resumeBase64: profileDoc.resumeBase64,
-          messages: [initialMessage] 
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status} - ${response.statusText}. The generation might have taken too long.`);
-      }
-
-      const result = await response.json();
-      if (!result.success) throw new Error(result.error);
-      
-      setChatMessages([initialMessage, { role: "assistant", content: result.reply }]);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to start interview.");
-      setInterviewMode(false);
-    } finally {
-      setCoachLoading(false);
-    }
-  };
-
-  const handleSendMessage = async () => {
+  const handleSendCoachMessage = async () => {
     if (!chatInput.trim() || !selectedJob) return;
-    
-    const newMessages: ChatMessage[] = [...chatMessages, { role: "user", content: chatInput }];
+    const userMsg: ChatMessage = { role: "user", content: chatInput.trim() };
+    const newMessages = [...chatMessages, userMsg];
     setChatMessages(newMessages);
     setChatInput("");
     setCoachLoading(true);
 
     try {
       const savedProfile = localStorage.getItem("my_profile");
-      const profileDoc = savedProfile ? JSON.parse(savedProfile) : {};
+      const resumeBase64 = savedProfile ? JSON.parse(savedProfile).resumeBase64 : "";
 
       const response = await fetch("/api/agents/coach", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          job: selectedJob, 
-          resumeBase64: profileDoc.resumeBase64,
-          messages: newMessages 
-        })
+        body: JSON.stringify({ job: selectedJob, resumeBase64, messages: newMessages })
       });
 
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status} - ${response.statusText}. The generation might have taken too long.`);
-      }
-
-      const result = await response.json();
-      if (!result.success) throw new Error(result.error);
-      
-      setChatMessages([...newMessages, { role: "assistant", content: result.reply }]);
-    } catch (error) {
+      if (!response.ok) throw new Error("Coach agent error");
+      const data = await response.json();
+      setChatMessages([...newMessages, { role: "assistant", content: data.reply }]);
+    } catch (error: any) {
       console.error(error);
-      alert("Failed to send message.");
+      alert("Failed to get interview feedback.");
     } finally {
       setCoachLoading(false);
     }
   };
 
-  const getJobsByStatus = (status: JobStatus) => {
-    return jobs.filter(job => job.status === status);
-  };
-
-  const getScoreColor = (score: number) => {
-    if (score >= 90) return "text-teal-400 bg-teal-400/10 border-teal-400/20";
-    if (score >= 80) return "text-orange-400 bg-orange-400/10 border-orange-400/20";
-    return "text-slate-400 bg-slate-400/10 border-slate-400/20";
-  };
-
   return (
-    <div className="h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Job Dashboard</h1>
-          <p className="text-slate-400 mt-1">Agent Scout is actively searching for jobs matching your profile.</p>
+    <div className="flex flex-col gap-8">
+      {/* Top Header & Actions Matching Stitch */}
+      <section className="flex flex-col md:flex-row md:items-end justify-between gap-4 pt-2 pb-2">
+        <div className="flex flex-col gap-1.5 max-w-2xl">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#171D1C] tracking-tight">Job Dashboard</h1>
+          <p className="text-base text-[#545F73]">Agent Scout is actively searching for verified jobs matching your profile.</p>
         </div>
-        <div className="flex gap-4">
-          <button 
-            onClick={handleRunScout}
-            disabled={scouting}
-            className="bg-teal-600 hover:bg-teal-500 disabled:opacity-50 text-white px-6 py-2 rounded-xl font-medium transition-all shadow-lg shadow-teal-500/25 flex items-center gap-2"
-          >
-            {scouting ? "Scouting..." : "Run Scout Agent"}
-          </button>
-          <button 
+
+        <div className="flex flex-wrap items-center gap-3">
+          <button
             onClick={handleRunFilter}
             disabled={filtering}
-            className="bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white px-6 py-2 rounded-xl font-medium transition-all shadow-lg shadow-orange-500/25 flex items-center gap-2"
+            className="bg-white border border-[#E2E8F0] hover:bg-[#F0F5F2] text-[#171D1C] font-semibold text-sm py-2.5 px-5 rounded-xl transition-all shadow-soft hover:shadow-soft-hover flex items-center gap-2 btn-tactile disabled:opacity-50"
           >
-            {filtering ? "Filtering..." : "Run Filter Agent"}
+            {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#00685F]" /> : <Filter className="w-4 h-4 text-[#00685F]" />}
+            <span>Run Filter Agent</span>
+          </button>
+
+          <button
+            onClick={handleRunScout}
+            disabled={scouting}
+            className="bg-[#00685F] hover:bg-[#005049] text-white font-semibold text-sm py-2.5 px-5 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center gap-2 btn-tactile disabled:opacity-50"
+          >
+            {scouting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+            <span>Run Scout Agent</span>
           </button>
         </div>
-      </div>
+      </section>
 
-      {/* Kanban Board Container */}
-      <div className="flex-1 flex gap-6 overflow-x-auto pb-4 hide-scrollbar">
-        {COLUMNS.map((column) => (
-          <div key={column} className="flex-shrink-0 w-80 flex flex-col gap-4">
-            {/* Column Header */}
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-slate-300 uppercase tracking-wider">{column}</h2>
-              <span className="bg-black/40 text-slate-400 text-xs py-1 px-2.5 rounded-full font-medium">
-                {getJobsByStatus(column).length}
-              </span>
-            </div>
-
-            {/* Column Body */}
-            <div className="flex-1 flex flex-col gap-4 min-h-[500px]">
-              {getJobsByStatus(column).map((job) => (
-                <div 
-                  key={job.id} 
-                  onClick={() => setSelectedJob(job)}
-                  className="glass p-5 rounded-2xl border border-white/5 hover:border-teal-500/30 transition-all cursor-pointer group"
-                >
-                  <div className="flex justify-between items-start mb-3">
-                    <div className={`text-xs font-bold px-2.5 py-1 rounded-md border ${getScoreColor(job.matchScore)}`}>
-                      {job.matchScore > 0 ? `${job.matchScore}% Match` : "Unscored"}
-                    </div>
-                    <button className="text-slate-500 hover:text-white transition-colors">
-                      <MoreHorizontal className="w-5 h-5" />
-                    </button>
+      {/* Stitch 6-Status Category Grid */}
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {COLUMNS.map(({ status, icon: Icon, color, bg, border }) => {
+          const columnJobs = jobs.filter(j => j.status === status);
+          
+          return (
+            <div 
+              key={status} 
+              className="bg-white rounded-2xl border border-[#E2E8F0] shadow-soft p-6 flex flex-col min-h-[320px] transition-all hover:shadow-soft-hover"
+            >
+              {/* Card Header */}
+              <div className="flex justify-between items-center w-full mb-4 pb-3 border-b border-[#E2E8F0]">
+                <div className="flex items-center gap-2">
+                  <div className={`p-1.5 rounded-lg ${bg} ${color}`}>
+                    <Icon className="w-4 h-4" />
                   </div>
-                  
-                  <h3 className="font-bold text-white text-lg mb-1 group-hover:text-teal-400 transition-colors">
-                    {job.title}
-                  </h3>
-                  
-                  <div className="space-y-2 mt-4">
-                    <div className="flex items-center gap-2 text-sm text-slate-300">
-                      <Building2 className="w-4 h-4 text-slate-500" />
-                      <span>{job.company}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-slate-300">
-                      <MapPin className="w-4 h-4 text-slate-500" />
-                      <span>{job.location}</span>
-                    </div>
-                    {job.salary && (
-                      <div className="flex items-center gap-2 text-sm text-slate-300">
-                        <IndianRupee className="w-4 h-4 text-slate-500" />
-                        <span>{job.salary}</span>
-                      </div>
-                    )}
-                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
-                      <div className="flex items-center gap-2 text-sm text-slate-400">
-                        <Clock className="w-4 h-4" />
-                        <span>{job.postedAt}</span>
-                      </div>
-                      {job.source && (
-                        <div className="text-xs font-medium px-2 py-0.5 rounded bg-white/5 text-slate-300">
-                          {job.source.replace(/^via\s+/i, '')}
-                        </div>
-                      )}
-                    </div>
+                  <h2 className="font-bold text-sm text-[#171D1C] uppercase tracking-wider">{status}</h2>
+                </div>
+                <span className="bg-[#EAEFED] text-[#3D4947] font-semibold text-xs px-2.5 py-0.5 rounded-full">
+                  {columnJobs.length}
+                </span>
+              </div>
+
+              {/* Jobs List inside status card */}
+              <div className="flex-1 flex flex-col gap-3 overflow-y-auto max-h-[480px]">
+                {columnJobs.length === 0 ? (
+                  <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-[#545F73]">
+                    <Icon className={`w-8 h-8 ${color} opacity-30 mb-2`} />
+                    <p className="text-sm font-medium">No jobs yet</p>
+                    <span className="text-xs text-slate-400 mt-0.5">Jobs in this category will appear here</span>
                   </div>
-                </div>
-              ))}
+                ) : (
+                  columnJobs.map(job => (
+                    <div 
+                      key={job.id}
+                      onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
+                      className="p-4 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] hover:bg-white hover:border-[#00685F]/40 hover:shadow-md transition-all cursor-pointer group flex flex-col gap-2 relative"
+                    >
+                      <div className="flex justify-between items-start gap-2">
+                        <h3 className="font-bold text-sm text-[#171D1C] group-hover:text-[#00685F] transition-colors line-clamp-1">
+                          {job.title}
+                        </h3>
+                        {job.matchScore > 0 && (
+                          <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ${
+                            job.matchScore >= 80 ? "bg-emerald-100 text-emerald-800" :
+                            job.matchScore >= 60 ? "bg-amber-100 text-amber-800" :
+                            "bg-slate-200 text-slate-700"
+                          }`}>
+                            {job.matchScore}% Match
+                          </span>
+                        )}
+                      </div>
 
-              {getJobsByStatus(column).length === 0 && (
-                <div className="border-2 border-dashed border-white/5 rounded-2xl h-32 flex items-center justify-center">
-                  <span className="text-sm text-slate-500">No jobs yet</span>
-                </div>
-              )}
+                      <div className="flex items-center gap-3 text-xs text-[#545F73]">
+                        <span className="flex items-center gap-1 font-medium"><Building2 className="w-3.5 h-3.5" /> {job.company}</span>
+                        <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {job.location}</span>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 mt-1">
+                        <span className="text-[10px] text-slate-400">{job.postedAt || "Recently active"}</span>
+                        <span className="text-xs font-semibold text-[#00685F] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
+                          View details &rarr;
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          );
+        })}
+      </section>
 
-      {/* Job Detail Modal */}
+      {/* JOB DETAIL & MULTI-AGENT MODAL */}
       {selectedJob && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="glass w-full max-w-3xl max-h-full rounded-2xl border border-white/10 overflow-hidden flex flex-col shadow-2xl">
-            <div className="p-6 border-b border-white/10 flex justify-between items-start">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="p-6 border-b border-[#E2E8F0] flex justify-between items-start bg-[#F8FAFC]">
               <div>
-                <h2 className="text-2xl font-bold text-white mb-2">{selectedJob.title}</h2>
-                <div className="flex items-center gap-4 text-sm text-slate-300">
-                  <span className="flex items-center gap-1"><Building2 className="w-4 h-4"/> {selectedJob.company}</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-4 h-4"/> {selectedJob.location}</span>
+                <div className="flex items-center gap-3 mb-1.5">
+                  <h2 className="text-2xl font-bold text-[#171D1C]">{selectedJob.title}</h2>
+                  {selectedJob.matchScore > 0 && (
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      {selectedJob.matchScore}% Match Score
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-[#545F73]">
+                  <span className="flex items-center gap-1"><Building2 className="w-4 h-4 text-[#00685F]" /> {selectedJob.company}</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-4 h-4 text-[#00685F]" /> {selectedJob.location}</span>
+                  {selectedJob.salary && <span className="flex items-center gap-1"><IndianRupee className="w-4 h-4 text-[#00685F]" /> {selectedJob.salary}</span>}
                 </div>
               </div>
               <button 
-                onClick={() => { setSelectedJob(null); setInterviewMode(false); }}
-                className="text-slate-400 hover:text-white bg-black/20 hover:bg-black/40 p-2 rounded-full transition-colors"
+                onClick={() => setSelectedJob(null)}
+                className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200/50 transition-colors"
+                aria-label="Close Modal"
               >
-                ✕
+                <X className="w-5 h-5" />
               </button>
             </div>
-            
-            <div className="p-6 overflow-y-auto flex-1 custom-scrollbar space-y-6">
-              {!interviewMode ? (
-                <>
-                  <div className="flex flex-wrap gap-3 items-center bg-black/20 p-4 rounded-xl border border-white/5">
-                    <div className="flex-1 min-w-[120px]">
-                      <div className="text-sm text-slate-400 mb-1">Match Score</div>
-                      <div className={`text-xl font-bold ${getScoreColor(selectedJob.matchScore).split(' ')[0]}`}>
-                        {selectedJob.matchScore > 0 ? `${selectedJob.matchScore}%` : "Not Scored Yet"}
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-3">
-                      {selectedJob.status === "New Matches" && (
-                        <button 
-                          onClick={() => handleSaveJob(selectedJob)}
-                          className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl font-medium transition-all shadow-lg shadow-blue-500/25 flex items-center gap-2"
+
+            {/* Modal Navigation Tabs */}
+            <div className="flex border-b border-[#E2E8F0] px-6 bg-white">
+              <button
+                onClick={() => setActiveTab("details")}
+                className={`py-3.5 px-4 font-semibold text-sm border-b-2 transition-all ${
+                  activeTab === "details" ? "border-[#00685F] text-[#00685F]" : "border-transparent text-[#545F73] hover:text-[#171D1C]"
+                }`}
+              >
+                Job Description
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("cover_letter");
+                  if (!coverLetter) handleGenerateCoverLetter(selectedJob);
+                }}
+                className={`py-3.5 px-4 font-semibold text-sm border-b-2 transition-all flex items-center gap-1.5 ${
+                  activeTab === "cover_letter" ? "border-[#00685F] text-[#00685F]" : "border-transparent text-[#545F73] hover:text-[#171D1C]"
+                }`}
+              >
+                <FileText className="w-4 h-4" />
+                Cover Letter Factory
+              </button>
+              <button
+                onClick={() => setActiveTab("coach")}
+                className={`py-3.5 px-4 font-semibold text-sm border-b-2 transition-all flex items-center gap-1.5 ${
+                  activeTab === "coach" ? "border-[#00685F] text-[#00685F]" : "border-transparent text-[#545F73] hover:text-[#171D1C]"
+                }`}
+              >
+                <Bot className="w-4 h-4" />
+                AI Interview Coach
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto flex-1 text-sm text-[#171D1C]">
+              {activeTab === "details" && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#545F73] mb-2">Move Status</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {COLUMNS.map(col => (
+                        <button
+                          key={col.status}
+                          onClick={() => updateJobStatus(selectedJob.id, col.status)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                            selectedJob.status === col.status
+                              ? "bg-[#00685F] text-white shadow-sm"
+                              : "bg-[#F0F5F2] hover:bg-[#E4E9E7] text-[#171D1C]"
+                          }`}
                         >
-                          Save Job
+                          {col.status}
                         </button>
-                      )}
-                      <button 
-                        onClick={startInterview}
-                        className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl font-medium transition-all shadow-lg shadow-amber-500/25 flex items-center gap-2"
-                      >
-                        Practice Interview
-                      </button>
-                      <button 
-                        onClick={handleRunFactory}
-                        disabled={factoryLoading}
-                        className="bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white px-4 py-2 rounded-xl font-medium transition-all shadow-lg shadow-purple-500/25 flex items-center gap-2"
-                      >
-                        {factoryLoading ? "Agent Generating..." : "Generate Letter"}
-                      </button>
-                      <button 
-                        onClick={() => handleApply(selectedJob)}
-                        className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl font-medium transition-all shadow-lg shadow-green-500/25 flex items-center gap-2"
-                      >
-                        {coverLetter ? "Copy & Apply" : "Apply Now"}
-                      </button>
+                      ))}
                     </div>
                   </div>
-
-                  {coverLetter && (
-                    <div className="space-y-3 animate-in slide-in-from-top-4 duration-500">
-                      <h3 className="text-lg font-semibold text-purple-400 flex items-center gap-2">
-                        ✨ Tailored Cover Letter
-                      </h3>
-                      <div className="bg-black/40 p-6 rounded-xl border border-white/5 text-slate-300 text-sm leading-relaxed whitespace-pre-wrap font-serif">
-                        {coverLetter}
-                      </div>
-                    </div>
-                  )}
 
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-3 border-b border-white/5 pb-2">Job Description</h3>
-                    <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
-                      {selectedJob.description}
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#545F73] mb-2">Role Overview & Responsibilities</h4>
+                    <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] whitespace-pre-wrap leading-relaxed text-[#3D4947]">
+                      {selectedJob.description || "No full job description available."}
                     </div>
                   </div>
-                </>
-              ) : (
-                <div className="flex flex-col h-[500px]">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-bold text-amber-400 flex items-center gap-2">
-                      🎙️ Mock Interview
-                    </h3>
-                    <button 
-                      onClick={() => setInterviewMode(false)}
-                      className="text-sm text-slate-400 hover:text-white"
+
+                  {selectedJob.applyLink && (
+                    <div className="pt-2">
+                      <a
+                        href={selectedJob.applyLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-[#00685F] hover:bg-[#005049] text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-sm active:scale-95"
+                      >
+                        Apply Directly on Official Portal <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {activeTab === "cover_letter" && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <p className="text-xs text-[#545F73]">Generated with Gemini 2.5 Flash mapping your experience to this job.</p>
+                    <button
+                      onClick={() => handleGenerateCoverLetter(selectedJob)}
+                      disabled={factoryLoading}
+                      className="text-xs text-[#00685F] hover:underline font-semibold flex items-center gap-1"
                     >
-                      Exit Interview
+                      <RefreshCw className="w-3.5 h-3.5" /> Regenerate
                     </button>
                   </div>
-                  
-                  <div className="flex-1 bg-black/40 rounded-xl border border-white/5 p-4 overflow-y-auto mb-4 space-y-4 custom-scrollbar">
-                    {chatMessages.length === 0 && !coachLoading && (
-                      <div className="text-center text-slate-500 mt-10">Starting interview...</div>
-                    )}
-                    {chatMessages.map((msg, idx) => (
-                      <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[80%] rounded-2xl p-4 ${
-                          msg.role === 'user' 
-                            ? 'bg-amber-600 text-white rounded-br-sm' 
-                            : 'bg-white/10 text-slate-200 rounded-bl-sm border border-white/5'
-                        }`}>
-                          <div className="text-xs opacity-70 mb-1 font-medium">
-                            {msg.role === 'user' ? 'You' : 'Hiring Manager (Agent E)'}
-                          </div>
-                          <div className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</div>
-                        </div>
+
+                  {factoryLoading ? (
+                    <div className="p-12 flex flex-col items-center justify-center text-center gap-3">
+                      <Loader2 className="w-8 h-8 animate-spin text-[#00685F]" />
+                      <p className="font-semibold text-sm text-[#171D1C]">Agent Factory is drafting your tailored cover letter...</p>
+                    </div>
+                  ) : (
+                    <textarea
+                      value={coverLetter}
+                      onChange={(e) => setCoverLetter(e.target.value)}
+                      rows={12}
+                      className="w-full p-4 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#171D1C] leading-relaxed font-sans text-sm focus:outline-none focus:border-[#00685F]"
+                    />
+                  )}
+                </div>
+              )}
+
+              {activeTab === "coach" && (
+                <div className="flex flex-col h-[400px]">
+                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] mb-4">
+                    {chatMessages.length === 0 ? (
+                      <div className="text-center py-12 text-[#545F73]">
+                        <Bot className="w-10 h-10 mx-auto mb-2 text-[#00685F]" />
+                        <p className="font-semibold text-sm">Start your mock interview with the Hiring Manager</p>
+                        <p className="text-xs text-slate-400 mt-1">Type "Hello, I am ready" below to start!</p>
                       </div>
-                    ))}
+                    ) : (
+                      chatMessages.map((msg, i) => (
+                        <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                          <div className={`max-w-[80%] p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed ${
+                            msg.role === "user"
+                              ? "bg-[#00685F] text-white rounded-br-none"
+                              : "bg-white border border-[#E2E8F0] text-[#171D1C] rounded-bl-none shadow-sm"
+                          }`}>
+                            {msg.content}
+                          </div>
+                        </div>
+                      ))
+                    )}
                     {coachLoading && (
                       <div className="flex justify-start">
-                        <div className="bg-white/5 text-slate-400 rounded-2xl p-4 rounded-bl-sm border border-white/5 flex items-center gap-2">
-                          <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                          <div className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>
+                        <div className="bg-white border border-[#E2E8F0] p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-500">
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-[#00685F]" />
+                          <span>Hiring Manager is evaluating your answer...</span>
                         </div>
                       </div>
                     )}
                   </div>
 
                   <div className="flex gap-2">
-                    <textarea 
+                    <input
+                      type="text"
                       value={chatInput}
                       onChange={(e) => setChatInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                          e.preventDefault();
-                          handleSendMessage();
-                        }
-                      }}
-                      placeholder="Type your answer here... (Press Enter to send)"
-                      className="flex-1 bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none h-12 custom-scrollbar"
+                      onKeyDown={(e) => e.key === "Enter" && handleSendCoachMessage()}
+                      placeholder="Type your interview response..."
+                      className="flex-1 p-3 rounded-xl border border-[#E2E8F0] bg-white text-sm focus:outline-none focus:border-[#00685F]"
                     />
-                    <button 
-                      onClick={handleSendMessage}
-                      disabled={!chatInput.trim() || coachLoading}
-                      className="bg-amber-600 hover:bg-amber-500 disabled:opacity-50 text-white px-6 rounded-xl font-medium transition-all"
+                    <button
+                      onClick={handleSendCoachMessage}
+                      disabled={coachLoading || !chatInput.trim()}
+                      className="bg-[#00685F] hover:bg-[#005049] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-50 btn-tactile"
                     >
                       Send
                     </button>

@@ -1,14 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { Briefcase, ShieldCheck, Heart } from "lucide-react";
+import { Briefcase, User, Sparkles } from "lucide-react";
 import CookieConsent from "@/components/CookieConsent";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
 
 export const viewport: Viewport = {
-  themeColor: "#0f172a",
+  themeColor: "#00685f",
   width: "device-width",
   initialScale: 1,
 };
@@ -33,11 +34,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Aneevarp Solutions", url: "https://ai-job-search-agent-chi.vercel.app/about" }],
   creator: "Aneevarp Solutions",
   publisher: "Aneevarp Solutions",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
   alternates: {
     canonical: "/",
   },
@@ -119,13 +115,6 @@ export default function RootLayout({
           "price": "0",
           "priceCurrency": "USD"
         },
-        "featureList": [
-          "Agent Scout: Real-time job discovery via Google Jobs API",
-          "Agent Filter: PDF resume semantic compatibility scoring",
-          "Agent Factory: Hyper-personalized cover letter generation",
-          "Agent Coach: Interactive technical and behavioral interview simulation",
-          "Zero-Backend Architecture: 100% client-side privacy without database storage"
-        ],
         "creator": {
           "@id": "https://ai-job-search-agent-chi.vercel.app/#organization"
         }
@@ -134,66 +123,87 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${inter.className} h-full antialiased`}>
+    <html lang="en" className={`${inter.variable} ${plusJakarta.variable} h-full antialiased`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100 selection:bg-teal-500 selection:text-white">
-        <header className="glass sticky top-0 z-40 px-6 py-4 flex items-center justify-between border-b border-white/10">
-          <Link href="/" className="flex items-center gap-2 group" aria-label="AI Job Search Agent Home">
-            <div className="bg-gradient-to-br from-teal-500 to-orange-500 p-2 rounded-xl group-hover:scale-105 transition-transform shadow-md shadow-teal-500/20">
-              <Briefcase className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex flex-col text-left">
-              <span className="font-bold text-lg tracking-tight text-white leading-tight">Job Agent</span>
-              <span className="text-[10px] text-teal-400 font-medium tracking-wider uppercase">by Aneevarp Solutions</span>
-            </div>
-          </Link>
-          <nav className="flex gap-6 items-center" aria-label="Main Navigation">
-            <Link href="/blog" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">Blog</Link>
-            <Link href="/about" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">About</Link>
-            <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">Dashboard</Link>
-            <Link href="/profile" className="bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all shadow-sm">
-              My Profile
+      <body className="min-h-full flex flex-col bg-[#F5FAF8] text-[#171D1C] font-sans antialiased">
+        {/* Stitch Style TopNavBar */}
+        <header className="bg-white border-b border-[#E2E8F0] sticky top-0 z-40 shadow-sm transition-all">
+          <div className="flex justify-between items-center w-full px-4 md:px-8 max-w-[1280px] mx-auto h-16">
+            {/* Brand Logo */}
+            <Link href="/" className="flex items-center gap-2.5 group focus:outline-none" aria-label="CareerScout AI by Aneevarp Solutions">
+              <div className="bg-[#00685F] text-white p-2 rounded-xl group-hover:scale-105 group-active:scale-95 transition-all shadow-sm">
+                <Briefcase className="w-4 h-4" />
+              </div>
+              <div className="flex flex-col text-left">
+                <span className="font-bold text-lg text-[#171D1C] leading-none tracking-tight">CareerScout</span>
+                <span className="text-[10px] text-[#00685F] font-semibold tracking-wider uppercase">by Aneevarp Solutions</span>
+              </div>
             </Link>
-          </nav>
+
+            {/* Navigation Links */}
+            <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#545F73]" aria-label="Main Navigation">
+              <Link href="/blog" className="hover:text-[#00685F] transition-colors py-1">Blog</Link>
+              <Link href="/about" className="hover:text-[#00685F] transition-colors py-1">About</Link>
+              <Link href="/dashboard" className="hover:text-[#00685F] transition-colors py-1">Dashboard</Link>
+              <Link href="/profile" className="hover:text-[#00685F] transition-colors py-1">Profile</Link>
+            </nav>
+
+            {/* Quick Actions & Profile */}
+            <div className="flex items-center gap-3">
+              <Link
+                href="/dashboard"
+                className="hidden sm:inline-flex items-center gap-1.5 bg-[#00685F] hover:bg-[#005049] text-white text-xs font-semibold py-2 px-4 rounded-xl transition-all shadow-sm active:scale-95"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                Launch Dashboard
+              </Link>
+              <Link
+                href="/profile"
+                className="w-9 h-9 rounded-full bg-[#D5E0F8] hover:bg-[#C2D3F5] text-[#00685F] flex items-center justify-center transition-all active:scale-95"
+                aria-label="Profile Settings"
+              >
+                <User className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
         </header>
 
-        <main className="flex-1 w-full max-w-7xl mx-auto p-6 md:p-8">
+        {/* Main Workspace */}
+        <main className="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-6 md:py-8">
           {children}
         </main>
         
-        <footer className="w-full border-t border-white/10 mt-20 bg-slate-900/40">
-          <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex flex-col items-center md:items-start gap-2">
-              <div className="flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-teal-400" />
-                <span className="font-bold text-lg text-white">AI Job Agent</span>
+        {/* Stitch Style Footer */}
+        <footer className="w-full bg-white border-t border-[#E2E8F0] mt-auto">
+          <div className="w-full py-8 px-4 md:px-8 max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
+              <div className="flex items-center gap-2 font-bold text-base text-[#171D1C]">
+                <div className="bg-[#00685F] text-white p-1.5 rounded-lg">
+                  <Briefcase className="w-3.5 h-3.5" />
+                </div>
+                <span>CareerScout AI</span>
               </div>
-              <p className="text-xs text-slate-400 text-center md:text-left max-w-sm">
-                Autonomous multi-agent recruitment suite engineered by <strong className="text-slate-200">Aneevarp Solutions</strong>. Privacy-first Zero-Backend architecture.
-              </p>
+              <span className="text-xs text-[#545F73] md:border-l md:border-[#E2E8F0] md:pl-3">
+                © {new Date().getFullYear()} CareerScout AI. A Product of <strong>Aneevarp Solutions</strong>.
+              </span>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-              <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
-              <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-              <Link href="/blog" className="hover:text-white transition-colors">Blog & Guides</Link>
-              <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-            </div>
-
-            <div className="flex flex-col items-center md:items-end text-xs text-slate-400 gap-1">
-              <span>&copy; {new Date().getFullYear()} AI Job Agent.</span>
-              <span className="text-slate-400 font-medium">A Product of Aneevarp Solutions</span>
-            </div>
+            <nav className="flex flex-wrap justify-center gap-6 text-xs font-medium text-[#545F73]" aria-label="Footer Navigation">
+              <Link href="/about" className="hover:text-[#00685F] transition-colors">About</Link>
+              <Link href="/contact" className="hover:text-[#00685F] transition-colors">Contact</Link>
+              <Link href="/blog" className="hover:text-[#00685F] transition-colors">Blog</Link>
+              <Link href="/privacy" className="hover:text-[#00685F] transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-[#00685F] transition-colors">Terms of Service</Link>
+            </nav>
           </div>
         </footer>
 
-        {/* Google Consent Mode v2 Cookie Banner */}
+        {/* Cookie Consent */}
         <CookieConsent />
       </body>
     </html>

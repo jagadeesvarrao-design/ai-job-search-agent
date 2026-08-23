@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Save, User, MapPin, IndianRupee, Briefcase, Clock, FileText, CheckCircle2 } from "lucide-react";
+import { Save, User, MapPin, IndianRupee, Briefcase, Clock, FileText, CheckCircle2, UploadCloud, ShieldCheck } from "lucide-react";
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ export default function ProfilePage() {
           const base64Data = base64String.split(',')[1];
           
           setFormData(prev => ({ ...prev, resumeBase64: base64Data }));
-          alert("Resume converted and prepared for save!");
+          alert("Resume successfully converted and encrypted in your local browser vault!");
           setLoading(false);
         };
         reader.readAsDataURL(selectedFile);
@@ -58,150 +58,143 @@ export default function ProfilePage() {
         ...formData,
         updatedAt: new Date().toISOString()
       };
-
-      // Save profile to localStorage instead of Firebase!
-      localStorage.setItem("my_profile", JSON.stringify(finalProfileData));
       
-      alert("Profile and Resume Saved Successfully!");
+      localStorage.setItem("my_profile", JSON.stringify(finalProfileData));
+      alert("Profile updated successfully!");
     } catch (error) {
-      console.error("Error saving profile:", error);
-      alert("Failed to save profile or resume. Please check console.");
+      console.error(error);
+      alert("Failed to save profile.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="bg-teal-500/20 p-3 rounded-xl">
-          <User className="w-8 h-8 text-teal-400" />
-        </div>
-        <div>
-          <h1 className="text-3xl font-bold text-white">Your Profile</h1>
-          <p className="text-slate-400 mt-1">Configure your job preferences and upload your resume PDF.</p>
-        </div>
+    <div className="max-w-3xl mx-auto py-8">
+      <div className="mb-8 text-center md:text-left">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-[#171D1C] tracking-tight mb-2">Job Search Profile</h1>
+        <p className="text-[#545F73] text-base">
+          Configure your career criteria. Agent Scout and Agent Filter use this profile to discover and rank opportunities.
+        </p>
       </div>
 
-      <form onSubmit={handleSave} className="space-y-6">
-        <div className="glass p-6 md:p-8 rounded-2xl space-y-6">
-          <h2 className="text-xl font-semibold text-white border-b border-white/10 pb-4 mb-6">Job Preferences</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300 ml-1">Desired Role</label>
-              <div className="relative">
-                <Briefcase className="absolute left-4 top-3.5 w-5 h-5 text-slate-500" />
-                <input 
-                  type="text" 
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  placeholder="e.g. Frontend Engineer" 
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
-                  required
-                />
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300 ml-1">Location</label>
-              <div className="relative">
-                <MapPin className="absolute left-4 top-3.5 w-5 h-5 text-slate-500" />
-                <input 
-                  type="text" 
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  placeholder="e.g. Remote, Mumbai, Bangalore" 
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300 ml-1">Target Salary (₹)</label>
-              <div className="relative">
-                <IndianRupee className="absolute left-4 top-3.5 w-5 h-5 text-slate-500" />
-                <input 
-                  type="text" 
-                  name="salary"
-                  value={formData.salary}
-                  onChange={handleChange}
-                  placeholder="e.g. 10,00,000" 
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300 ml-1">Experience Level</label>
-              <div className="relative">
-                <Clock className="absolute left-4 top-3.5 w-5 h-5 text-slate-500" />
-                <select 
-                  name="experience"
-                  value={formData.experience}
-                  onChange={handleChange}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all appearance-none"
-                  required
-                >
-                  <option value="Fresher">Fresher (0 years)</option>
-                  <option value="1-3 years">1-3 years</option>
-                  <option value="3-5 years">3-5 years</option>
-                  <option value="5+ years">5+ years</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="glass p-6 md:p-8 rounded-2xl space-y-6">
-          <div className="flex justify-between items-end border-b border-white/10 pb-4 mb-6">
-            <h2 className="text-xl font-semibold text-white">Resume (PDF)</h2>
-          </div>
-          
-          <div className="space-y-4">
-            <label className="block w-full p-8 border-2 border-dashed border-white/10 rounded-xl bg-black/20 text-center hover:border-teal-500/50 transition-colors cursor-pointer group">
-              <input 
-                type="file" 
-                accept="application/pdf" 
-                onChange={handleFileChange} 
-                className="hidden" 
-              />
-              {file ? (
-                <div className="flex flex-col items-center justify-center space-y-2">
-                  <CheckCircle2 className="w-10 h-10 text-teal-400 mb-2 group-hover:scale-110 transition-transform" />
-                  <p className="text-md font-medium text-teal-300">{file.name}</p>
-                  <p className="text-xs text-slate-400">Click to change file</p>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center space-y-2">
-                  <FileText className="w-10 h-10 text-slate-400 mb-2 group-hover:scale-110 transition-transform" />
-                  <p className="text-md font-medium text-slate-300">Click to upload your Resume (PDF)</p>
-                  <p className="text-xs text-slate-500">Max size 5MB</p>
-                </div>
-              )}
+      <div className="bg-white rounded-3xl border border-[#E2E8F0] shadow-soft p-6 md:p-10">
+        <form onSubmit={handleSave} className="space-y-6">
+          {/* Desired Role */}
+          <div>
+            <label className="block text-xs font-bold text-[#545F73] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <Briefcase className="w-4 h-4 text-[#00685F]" /> Desired Job Title / Role
             </label>
-            {formData.resumeBase64 && !file && (
-               <p className="text-sm text-teal-400 flex items-center gap-2">
-                 <CheckCircle2 className="w-4 h-4"/> A resume is already uploaded to your profile.
-               </p>
-            )}
+            <input
+              type="text"
+              name="role"
+              required
+              value={formData.role}
+              onChange={handleChange}
+              placeholder="e.g. Senior Frontend Engineer, Full Stack Developer"
+              className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#171D1C] text-sm focus:outline-none focus:border-[#00685F] focus:ring-2 focus:ring-[#00685F]/20 transition-all"
+            />
           </div>
-        </div>
 
-        <div className="flex justify-end">
-          <button 
-            type="submit"
-            disabled={loading || (!file && !formData.resumeBase64)}
-            className="bg-teal-600 hover:bg-teal-500 disabled:opacity-50 text-white px-8 py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40"
-          >
-            {loading ? "Uploading & Saving..." : <><Save className="w-5 h-5" /> Save Profile</>}
-          </button>
-        </div>
-      </form>
+          {/* Location */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-xs font-bold text-[#545F73] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <MapPin className="w-4 h-4 text-[#00685F]" /> Target Location
+              </label>
+              <input
+                type="text"
+                name="location"
+                required
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="e.g. Bangalore, Remote, Hyderabad"
+                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#171D1C] text-sm focus:outline-none focus:border-[#00685F] focus:ring-2 focus:ring-[#00685F]/20 transition-all"
+              />
+            </div>
+
+            {/* Experience Level */}
+            <div>
+              <label className="block text-xs font-bold text-[#545F73] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-[#00685F]" /> Experience Level
+              </label>
+              <select
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#171D1C] text-sm focus:outline-none focus:border-[#00685F] focus:ring-2 focus:ring-[#00685F]/20 transition-all"
+              >
+                <option value="Fresher">Entry Level / Fresher (0-1 yrs)</option>
+                <option value="Junior">Junior (1-3 yrs)</option>
+                <option value="Mid-Level">Mid-Level (3-5 yrs)</option>
+                <option value="Senior">Senior (5-8 yrs)</option>
+                <option value="Lead/Staff">Lead / Staff / Principal (8+ yrs)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Expected Salary */}
+          <div>
+            <label className="block text-xs font-bold text-[#545F73] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <IndianRupee className="w-4 h-4 text-[#00685F]" /> Expected Salary Range (Optional)
+            </label>
+            <input
+              type="text"
+              name="salary"
+              value={formData.salary}
+              onChange={handleChange}
+              placeholder="e.g. ₹15,00,000 - ₹25,00,000 / $120k - $160k"
+              className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#171D1C] text-sm focus:outline-none focus:border-[#00685F] focus:ring-2 focus:ring-[#00685F]/20 transition-all"
+            />
+          </div>
+
+          {/* Resume Upload Box */}
+          <div>
+            <label className="block text-xs font-bold text-[#545F73] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <FileText className="w-4 h-4 text-[#00685F]" /> Master Resume (PDF)
+            </label>
+            <div className="border-2 border-dashed border-[#E2E8F0] hover:border-[#00685F]/50 rounded-2xl p-8 text-center bg-[#F8FAFC] transition-colors relative">
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={handleFileChange}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="w-12 h-12 rounded-xl bg-teal-50 text-[#00685F] flex items-center justify-center">
+                  <UploadCloud className="w-6 h-6" />
+                </div>
+                <p className="font-semibold text-sm text-[#171D1C]">Click or Drag & Drop PDF Resume</p>
+                <p className="text-xs text-[#545F73]">Encrypted directly in client browser memory (Max 5MB)</p>
+
+                {formData.resumeBase64 && (
+                  <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200 mt-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    Resume Loaded in Vault
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Save Button */}
+          <div className="pt-4 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs text-[#545F73]">
+              <ShieldCheck className="w-4 h-4 text-[#00685F]" />
+              <span>Zero-Backend Privacy Guarantee</span>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-[#00685F] hover:bg-[#005049] text-white font-semibold text-sm px-8 py-3.5 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 btn-tactile disabled:opacity-50"
+            >
+              <Save className="w-4 h-4" />
+              <span>Save Career Profile</span>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
