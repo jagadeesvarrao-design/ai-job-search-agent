@@ -95,6 +95,7 @@ export default function HeaderNav() {
             <Link href="/dashboard" className="hover:text-[#00685F] transition-colors py-1">Dashboard</Link>
             <Link href="/profile" className="hover:text-[#00685F] transition-colors py-1">Profile & ATS Audit</Link>
             <Link href="/blog" className="hover:text-[#00685F] transition-colors py-1">Career Guides</Link>
+            <Link href="/pricing" className="hover:text-[#00685F] transition-colors py-1">Pro Pricing</Link>
             <Link href="/about" className="hover:text-[#00685F] transition-colors py-1">About</Link>
             <a
               href="https://zenresume.vercel.app"
