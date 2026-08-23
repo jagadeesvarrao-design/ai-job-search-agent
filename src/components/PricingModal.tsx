@@ -89,23 +89,51 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
           </button>
         </div>
 
-        {/* HIGH-CONVERTING MOTIVATIONAL PERSUASION BOX */}
-        <div className="mx-6 md:mx-8 mt-6 p-4 md:p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-teal-500/10 to-blue-500/10 border-2 border-amber-500/30 dark:border-amber-400/20 text-left relative overflow-hidden">
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5">
-              <Flame className="w-5 h-5 animate-pulse" />
-            </div>
-            <div>
-              <h3 className="font-black text-sm text-black dark:text-white flex items-center gap-2">
-                <span>Think About This for a Second...</span>
-                <span className="text-[10px] bg-amber-500/20 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full font-extrabold">
-                  Perspective Check
+        {/* ELITE GROWTH MARKETING CONVERSION ENGINE */}
+        <div className="mx-6 md:mx-8 mt-6 p-5 md:p-6 rounded-3xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white shadow-xl border border-teal-500/30 text-left relative overflow-hidden">
+          {/* Ambient Glow */}
+          <div className="absolute top-0 right-0 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-white/10 relative z-10">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-slate-950 flex items-center justify-center font-black shadow-md flex-shrink-0">
+                <Flame className="w-6 h-6 animate-pulse text-slate-950" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-teal-400 block">
+                  The Cost of Inaction (ROI Calculation)
                 </span>
-              </h3>
-              <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium mt-1 leading-relaxed">
-                You spend {isINR ? "₹299 on a single Swiggy dinner or movie popcorn" : "$9.99 on two cups of Starbucks coffee"}. 
-                Yet for the exact same amount, <strong>ZenScout Pro</strong> gives you 30 full days of continuous automated job hunting, 1-click tailored cover letters, and live voice interview practice.
-                <strong> Even just 1 extra interview callback can increase your salary by {isINR ? "₹5,00,000+ LPA" : "$20,000+ / year"}</strong>.
+                <h3 className="text-base md:text-lg font-black text-white leading-tight">
+                  Stop Leaving {isINR ? "₹5,00,000+ to ₹15,00,000" : "$20,000 to $45,000"} on the Table
+                </h3>
+              </div>
+            </div>
+
+            <div className="inline-flex items-center gap-1.5 bg-emerald-500/20 border border-emerald-400/30 px-3 py-1 rounded-full text-emerald-300 text-xs font-black self-start md:self-auto">
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span>1,670x Estimated Return</span>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4 pt-4 text-xs relative z-10">
+            {/* The Daily Routine Trap */}
+            <div className="bg-white/5 p-3.5 rounded-2xl border border-white/5 space-y-1.5">
+              <span className="text-[11px] font-black uppercase tracking-wider text-rose-400 flex items-center gap-1">
+                <span>❌ The Status Quo (Lost Momentum)</span>
+              </span>
+              <p className="text-slate-300 leading-relaxed font-normal">
+                Spending {isINR ? "₹299 on a single Swiggy dinner or movie ticket" : "$9.99 on two cups of coffee"} is gone in 20 minutes. Spending 4 hours manually tailoring resumes by hand leads to burn-out and missed deadlines.
+              </p>
+            </div>
+
+            {/* The Pro Transformation */}
+            <div className="bg-teal-950/40 p-3.5 rounded-2xl border border-teal-500/30 space-y-1.5">
+              <span className="text-[11px] font-black uppercase tracking-wider text-teal-300 flex items-center gap-1">
+                <span>⚡ The 30-Day Pro Advantage</span>
+              </span>
+              <p className="text-teal-100 leading-relaxed font-normal">
+                For that exact {isINR ? "₹299" : "$9.99"}, your 4 AI agents work <strong>24/7 scouting live openings, beating ATS parsers, drafting tailored letters, and coaching mock interviews</strong>. 
+                Just <strong>one</strong> offer upgrade easily yields {isINR ? "₹5,00,000+ LPA" : "$20,000+/yr"} in career upside.
               </p>
             </div>
           </div>
