@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Clock, Calendar, Tag, UserCheck, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
+import AdContainer from "@/components/AdContainer";
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
@@ -216,14 +217,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       <div className="bg-white p-8 md:p-12 rounded-3xl border border-[#E2E8F0] shadow-soft">
         {renderContent(post.content)}
 
-        {/* AD PLACEMENT */}
-        <aside 
-          aria-label="Advertisement" 
-          className="my-8 p-6 rounded-2xl bg-[#F8FAFC] border border-dashed border-[#E2E8F0] text-center text-xs text-[#545F73]"
-        >
-          <span className="uppercase tracking-wider font-semibold text-[10px] text-slate-400 block mb-1">Sponsored Advertisement</span>
-          <p className="text-slate-500">Contextual AdSense units will render here automatically after approval.</p>
-        </aside>
+        {/* AD PLACEMENT (Auto-Hidden for Pro Subscribers) */}
+        <AdContainer slotId="8472910384" format="auto" />
       </div>
 
       {/* E-E-A-T AUTHOR BIO BOX */}

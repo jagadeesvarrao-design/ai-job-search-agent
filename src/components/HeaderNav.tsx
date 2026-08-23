@@ -12,15 +12,28 @@ import {
   ArrowRight, 
   Flame,
   Sun,
-  Moon
+  Moon,
+  Crown,
+  Zap
 } from "lucide-react";
+import { getUserPlan } from "@/lib/user-tier";
+import PricingModal from "@/components/PricingModal";
 
 export default function HeaderNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [isPro, setIsPro] = useState(false);
+  const [pricingModalOpen, setPricingModalOpen] = useState(false);
 
-  // Initialize theme from localStorage or system preferences
+  // Initialize theme and Pro subscription status
   useEffect(() => {
+    const checkTier = () => {
+      setIsPro(getUserPlan() === "pro");
+    };
+
+    checkTier();
+    window.addEventListener("user-tier-updated", checkTier);
+
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       setIsDark(true);
@@ -29,6 +42,8 @@ export default function HeaderNav() {
       setIsDark(false);
       document.documentElement.classList.remove("dark");
     }
+
+    return () => window.removeEventListener("user-tier-updated", checkTier);
   }, []);
 
   const toggleDarkMode = () => {
@@ -76,7 +91,7 @@ export default function HeaderNav() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-7 text-sm font-bold text-[#0F172A]" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center gap-6 text-sm font-bold text-[#0F172A]" aria-label="Main Navigation">
             <Link href="/dashboard" className="hover:text-[#00685F] transition-colors py-1">Dashboard</Link>
             <Link href="/profile" className="hover:text-[#00685F] transition-colors py-1">Profile & ATS Audit</Link>
             <Link href="/blog" className="hover:text-[#00685F] transition-colors py-1">Career Guides</Link>
@@ -95,6 +110,25 @@ export default function HeaderNav() {
 
           {/* Right Action Buttons (Desktop) */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Pro Upgrade / Member Badge */}
+            {isPro ? (
+              <button
+                onClick={() => setPricingModalOpen(true)}
+                className="inline-flex items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-3 py-1.5 rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-all"
+              >
+                <Crown className="w-3.5 h-3.5" />
+                <span>PRO ACTIVE</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => setPricingModalOpen(true)}
+                className="inline-flex items-center gap-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500 hover:to-orange-500 text-amber-900 dark:text-amber-300 hover:text-white border border-amber-400/40 text-xs font-black px-3 py-1.5 rounded-xl transition-all shadow-sm active:scale-95"
+              >
+                <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                <span>Upgrade Pro</span>
+              </button>
+            )}
+
             {/* Light / Dark Mode Toggle Button */}
             <button
               onClick={toggleDarkMode}
@@ -136,6 +170,20 @@ export default function HeaderNav() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-b border-[#E2E8F0] px-6 py-5 shadow-lg animate-in slide-in-from-top-4 duration-200">
             <div className="flex flex-col gap-3 font-bold text-sm text-black">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setPricingModalOpen(true);
+                }}
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black p-3 rounded-xl flex items-center justify-between text-xs shadow-sm mb-1"
+              >
+                <span className="flex items-center gap-1.5">
+                  <Crown className="w-4 h-4" />
+                  {isPro ? "ZenScout Pro Active (Manage)" : "Upgrade to Pro (Ad-Free & Unlimited)"}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+
               <Link 
                 href="/dashboard" 
                 onClick={() => setMobileMenuOpen(false)}
@@ -203,6 +251,12 @@ export default function HeaderNav() {
           </div>
         )}
       </header>
+
+      {/* Pricing & Pro Upgrade Modal */}
+      <PricingModal 
+        isOpen={pricingModalOpen} 
+        onClose={() => setPricingModalOpen(false)} 
+      />
     </>
   );
 }
