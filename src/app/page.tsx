@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   ArrowRight, 
@@ -18,11 +18,84 @@ import {
   FileCheck,
   Search,
   Check,
-  FileText
+  FileText,
+  Play,
+  Award,
+  Layers,
+  Send,
+  MessageSquare,
+  TrendingUp,
+  Flame,
+  ExternalLink
 } from "lucide-react";
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [simulatedMatch, setSimulatedMatch] = useState<number>(0);
+
+  // Interactive Live Scanner Loop animation
+  useEffect(() => {
+    const stepInterval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % 4);
+    }, 2800);
+
+    return () => clearInterval(stepInterval);
+  }, []);
+
+  useEffect(() => {
+    let start = 45;
+    const matchTimer = setInterval(() => {
+      start = (start + 1) > 98 ? 98 : start + 3;
+      setSimulatedMatch(start);
+      if (start >= 98) clearInterval(matchTimer);
+    }, 50);
+
+    return () => clearInterval(matchTimer);
+  }, [activeStep]);
+
+  const pipelineSteps = [
+    {
+      agent: "Agent Scout",
+      badge: "Real-Time Discovery",
+      title: "Scanning Live Google Jobs Network",
+      sub: "Querying 10,000+ verified tech postings tailored to your seniority & city.",
+      icon: Search,
+      color: "text-[#00685F]",
+      bg: "bg-teal-50",
+      border: "border-teal-200"
+    },
+    {
+      agent: "Agent Filter",
+      badge: "Semantic ATS Analysis",
+      title: "Scoring Resume vs Job Description",
+      sub: "Extracting skills, vector embeddings, and calculating a 98% match.",
+      icon: FileCheck,
+      color: "text-emerald-700",
+      bg: "bg-emerald-50",
+      border: "border-emerald-200"
+    },
+    {
+      agent: "Agent Factory",
+      badge: "Targeted Pitch",
+      title: "Synthesizing Custom Cover Letter",
+      sub: "Mapping quantified achievements to the hiring manager's key requirements.",
+      icon: Zap,
+      color: "text-blue-700",
+      bg: "bg-blue-50",
+      border: "border-blue-200"
+    },
+    {
+      agent: "Agent Coach",
+      badge: "Interview Simulation",
+      title: "Simulating Live Hiring Manager Mock Round",
+      sub: "Evaluating answers in real-time with actionable STAR feedback.",
+      icon: Bot,
+      color: "text-purple-700",
+      bg: "bg-purple-50",
+      border: "border-purple-200"
+    }
+  ];
 
   const faqs = [
     {
@@ -72,24 +145,27 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* HERO SECTION WITH ANIMATED SCANNER */}
-      <section className="flex flex-col items-center justify-center min-h-[85vh] py-12 md:py-20 relative">
-        {/* Ambient Glows */}
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      {/* HERO SECTION WITH ANIMATED SCANNER & LIVE PIPELINE */}
+      <section className="flex flex-col items-center justify-center min-h-[85vh] py-10 md:py-16 relative">
+        {/* Ambient Decorative Blurs */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+        <div className="absolute top-20 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
 
-        <div className="bg-white border border-[#E2E8F0] shadow-soft px-5 py-2 rounded-full mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all">
+        {/* Ecosystem Pill */}
+        <div className="bg-white border border-[#E2E8F0] shadow-soft px-5 py-2 rounded-full mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all hover:scale-105">
           <Sparkles className="w-4 h-4 text-orange-500 animate-spin duration-3000" />
-          <span className="text-xs md:text-sm font-semibold text-[#171D1C]">
+          <span className="text-xs md:text-sm font-bold text-[#171D1C]">
             Part of the <strong className="text-[#00685F]">ZenResume & Aneevarp Solutions</strong> Career Suite
           </span>
         </div>
         
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 max-w-4xl text-[#171D1C] leading-[1.15]">
+        {/* Hero Headline */}
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 max-w-4xl text-[#171D1C] leading-[1.12]">
           Automate your <br className="hidden md:block" />
           <span className="text-gradient">Job Hunt</span> with ZenScout AI
         </h1>
         
-        <p className="text-base sm:text-lg md:text-xl text-[#545F73] max-w-2xl mb-10 leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl text-[#545F73] max-w-2xl mb-10 leading-relaxed font-normal">
           Upload your resume and let 4 autonomous AI agents discover live opportunities, score skill compatibility, write tailored cover letters, and coach you through interviews.
         </p>
 
@@ -97,9 +173,10 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-4 mb-16 z-10">
           <Link 
             href="/profile" 
-            className="bg-[#00685F] hover:bg-[#005049] text-white px-8 py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 btn-tactile"
+            className="bg-[#00685F] hover:bg-[#005049] text-white px-8 py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 btn-tactile group"
           >
-            Setup Free Profile <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <span>Audit Resume & Target Jobs</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link 
             href="/dashboard" 
@@ -109,65 +186,123 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* INTERACTIVE ANIMATED JOB SCANNER VISUAL */}
-        <div className="w-full max-w-4xl mx-auto my-6 relative">
+        {/* INTERACTIVE ANIMATED JOB SCANNER WORKSPACE */}
+        <div className="w-full max-w-4xl mx-auto my-4 relative">
           <div className="bg-white rounded-3xl border border-[#E2E8F0] shadow-2xl p-6 md:p-8 text-left relative overflow-hidden">
             {/* Animated Laser Scanning Beam */}
             <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00685F] to-transparent opacity-80 animate-scan pointer-events-none shadow-[0_0_15px_#00685F]"></div>
 
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+            {/* Top Interactive Status Bar */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-teal-50 text-[#00685F] flex items-center justify-center">
-                  <Cpu className="w-5 h-5 animate-pulse" />
+                <div className="w-11 h-11 rounded-2xl bg-teal-50 text-[#00685F] flex items-center justify-center shadow-sm">
+                  <Cpu className="w-6 h-6 animate-pulse" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-[#171D1C]">ZenScout AI Pipeline Active</h3>
-                  <p className="text-xs text-[#545F73]">Streaming live career intelligence & scoring</p>
+                  <h3 className="font-extrabold text-sm text-[#171D1C] flex items-center gap-2">
+                    <span>Autonomous Multi-Agent Pipeline</span>
+                    <span className="text-[10px] bg-teal-50 text-[#00685F] px-2 py-0.5 rounded-full font-bold">LIVE</span>
+                  </h3>
+                  <p className="text-xs text-[#545F73]">Streaming live candidate matching & interview simulation</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="flex h-2.5 w-2.5 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                </span>
-                <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  Live Scanner
-                </span>
+
+              {/* Dynamic Step Tabs */}
+              <div className="flex items-center gap-1.5 bg-[#F8FAFC] p-1 rounded-xl border border-[#E2E8F0]">
+                {pipelineSteps.map((s, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveStep(idx)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      activeStep === idx 
+                        ? "bg-[#00685F] text-white shadow-sm scale-105" 
+                        : "text-[#545F73] hover:text-[#171D1C]"
+                    }`}
+                  >
+                    {idx + 1}. {s.agent.split(" ")[1]}
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Pipeline Stage Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
-              <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-start gap-3 transition-all hover:bg-white hover:shadow-sm">
-                <div className="p-2 rounded-xl bg-teal-100 text-[#00685F] mt-0.5">
+            {/* Active Stage Animated Card Showcase */}
+            <div className="pt-6">
+              {pipelineSteps.map((step, idx) => {
+                const isCurrent = activeStep === idx;
+                if (!isCurrent) return null;
+                const Icon = step.icon;
+
+                return (
+                  <div key={idx} className="bg-gradient-to-br from-[#F8FAFC] to-white rounded-2xl border border-[#E2E8F0] p-6 animate-in fade-in zoom-in-95 duration-300">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-3 rounded-2xl ${step.bg} ${step.color}`}>
+                          <Icon className="w-6 h-6 animate-bounce" />
+                        </div>
+                        <div>
+                          <span className={`text-[11px] font-black uppercase tracking-wider ${step.color}`}>
+                            {step.agent} • {step.badge}
+                          </span>
+                          <h4 className="text-base sm:text-lg font-extrabold text-[#171D1C] mt-0.5">
+                            {step.title}
+                          </h4>
+                        </div>
+                      </div>
+
+                      {/* Live Counter / Match Badge */}
+                      <div className="bg-white px-4 py-2 rounded-xl border border-[#E2E8F0] shadow-sm self-start sm:self-auto">
+                        <span className="text-xs text-[#545F73] font-medium block text-right">ATS Compatibility</span>
+                        <div className="text-xl font-black text-[#00685F] text-right">
+                          {simulatedMatch}% Match
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-[#545F73] leading-relaxed mb-4">
+                      {step.sub}
+                    </p>
+
+                    {/* Progress Bar Animation */}
+                    <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-[#00685F] to-emerald-500 h-2 rounded-full transition-all duration-500" 
+                        style={{ width: `${simulatedMatch}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* 3 Pipeline Overview Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6">
+              <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-3 hover:bg-white hover:shadow-sm transition-all">
+                <div className="p-2 rounded-lg bg-teal-100 text-[#00685F]">
                   <Search className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#00685F]">Agent Scout</span>
-                  <p className="text-xs font-bold text-[#171D1C] mt-0.5">18 Live Postings Found</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Google Jobs API verified</p>
+                  <span className="text-[10px] font-bold uppercase text-[#00685F]">Scout</span>
+                  <p className="text-xs font-bold text-[#171D1C]">18 Live Jobs</p>
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-start gap-3 transition-all hover:bg-white hover:shadow-sm">
-                <div className="p-2 rounded-xl bg-emerald-100 text-emerald-700 mt-0.5">
+              <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-3 hover:bg-white hover:shadow-sm transition-all">
+                <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700">
                   <FileCheck className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Agent Filter</span>
-                  <p className="text-xs font-bold text-[#171D1C] mt-0.5">98% Match Score</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">ATS semantic keyword fit</p>
+                  <span className="text-[10px] font-bold uppercase text-emerald-700">Filter</span>
+                  <p className="text-xs font-bold text-[#171D1C]">98% Fit Score</p>
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-start gap-3 transition-all hover:bg-white hover:shadow-sm">
-                <div className="p-2 rounded-xl bg-blue-100 text-blue-700 mt-0.5">
+              <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] flex items-center gap-3 hover:bg-white hover:shadow-sm transition-all">
+                <div className="p-2 rounded-lg bg-blue-100 text-blue-700">
                   <Zap className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700">Agent Factory</span>
-                  <p className="text-xs font-bold text-[#171D1C] mt-0.5">Tailored Letter Ready</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">3-paragraph impact pitch</p>
+                  <span className="text-[10px] font-bold uppercase text-blue-700">Factory</span>
+                  <p className="text-xs font-bold text-[#171D1C]">Letter Ready</p>
                 </div>
               </div>
             </div>
@@ -186,13 +321,70 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4 AGENTS PIPELINE SECTION */}
-      <section className="py-20 flex flex-col items-center">
-        <div className="mb-16">
-          <span className="text-xs uppercase tracking-widest text-[#00685F] font-bold mb-2 block">Autonomous Architecture</span>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-[#171D1C]">4 Specialized AI Agents Working for You</h2>
+      {/* HOW IT WORKS SECTION (Step-By-Step Interactive Visual) */}
+      <section className="py-16 md:py-20 flex flex-col items-center">
+        <div className="mb-14">
+          <span className="text-xs uppercase tracking-widest text-[#00685F] font-extrabold mb-2 block">Seamless Workflow</span>
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-3 text-[#171D1C]">How ZenScout AI Works</h2>
+          <p className="text-[#545F73] max-w-xl mx-auto text-base">
+            From raw resume to confirmed job interviews in 3 automated steps.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl text-left">
+          {[
+            {
+              step: "01",
+              title: "Upload & Audit Resume",
+              desc: "Upload your master PDF. Our instant scanner audits your ATS compatibility score and identifies keyword gaps.",
+              icon: FileText,
+              tag: "Instant ATS Check"
+            },
+            {
+              step: "02",
+              title: "Agent Scout & Filter",
+              desc: "Our autonomous agents crawl live Google Jobs, scoring each opportunity from 0 to 100% against your skills.",
+              icon: BrainCircuit,
+              tag: "Real-Time Matching"
+            },
+            {
+              step: "03",
+              title: "Tailor & Interview Prep",
+              desc: "Generate bespoke 3-paragraph cover letters with Agent Factory and practice with the interactive Agent Coach.",
+              icon: Bot,
+              tag: "Mock Hiring Round"
+            }
+          ].map((item, i) => (
+            <div key={i} className="bg-white rounded-3xl p-8 border border-[#E2E8F0] shadow-soft hover:shadow-soft-hover hover:-translate-y-1.5 transition-all duration-300 relative group flex flex-col justify-between">
+              <div>
+                <div className="flex justify-between items-start mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-teal-50 text-[#00685F] flex items-center justify-center font-black text-lg group-hover:scale-110 transition-transform">
+                    <item.icon className="w-6 h-6" />
+                  </div>
+                  <span className="text-3xl font-black text-slate-200 group-hover:text-teal-200 transition-colors">
+                    {item.step}
+                  </span>
+                </div>
+                <span className="text-[11px] font-bold text-[#00685F] uppercase tracking-wider block mb-1">{item.tag}</span>
+                <h3 className="text-xl font-bold text-[#171D1C] mb-3">{item.title}</h3>
+                <p className="text-[#545F73] text-sm leading-relaxed">{item.desc}</p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-slate-100 flex items-center text-xs font-bold text-[#00685F] group-hover:translate-x-1 transition-transform">
+                <span>Explore Step {item.step} &rarr;</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4 SPECIALIZED AI AGENTS GRID */}
+      <section className="py-16 md:py-20 flex flex-col items-center">
+        <div className="mb-14">
+          <span className="text-xs uppercase tracking-widest text-[#00685F] font-extrabold mb-2 block">Autonomous Architecture</span>
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-3 text-[#171D1C]">4 Specialized AI Agents</h2>
           <p className="text-[#545F73] max-w-2xl mx-auto text-base">
-            Our multi-agent pipeline coordinates discovery, scoring, application materials, and verbal coaching seamlessly.
+            Each agent handles a specific bottleneck in the traditional job application process.
           </p>
         </div>
 
@@ -216,6 +408,38 @@ export default function Home() {
               <p className="text-[#545F73] leading-relaxed text-sm">{feature.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ZENRESUME CROSS-PROMOTION BANNER SECTION */}
+      <section className="py-12 w-full max-w-5xl mx-auto text-left">
+        <div className="bg-gradient-to-r from-[#00685F] via-[#0D9488] to-[#0284C7] rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
+            <div className="space-y-3 max-w-xl">
+              <div className="inline-flex items-center gap-1.5 bg-white/20 text-teal-100 text-xs font-bold px-3 py-1 rounded-full border border-white/20">
+                <Flame className="w-3.5 h-3.5 text-amber-300" />
+                <span>ZenResume & Aneevarp Solutions Sister Tool</span>
+              </div>
+              <h3 className="text-2xl md:text-4xl font-extrabold tracking-tight leading-tight">
+                Need a High-Scoring ATS Resume?
+              </h3>
+              <p className="text-teal-100 text-sm md:text-base leading-relaxed">
+                Before applying with ZenScout AI, ensure your resume passes all corporate parser filters. Build an ATS-certified single-column resume free on <strong>ZenResume</strong>.
+              </p>
+            </div>
+
+            <a
+              href="https://zenresume.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white hover:bg-teal-50 text-[#00685F] font-black text-sm px-8 py-4 rounded-xl transition-all shadow-md hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center gap-2 flex-shrink-0 btn-tactile"
+            >
+              <span>Build on ZenResume Free</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </section>
 
