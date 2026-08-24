@@ -159,7 +159,7 @@ export default function PrivacyPolicy() {
           </p>
           
           <div className="p-5 bg-white dark:bg-[#141B20] rounded-2xl border border-slate-200 dark:border-slate-800 text-xs space-y-2">
-            <div><strong>Designated Grievance & Data Protection Officer:</strong> N. Jagadeeshwar Rao</div>
+            <div><strong>Designated Grievance & Data Protection Officer:</strong> P. JAGADEESWARA RAO</div>
             <div><strong>Official Designation:</strong> Head of Compliance & Technical Operations</div>
             <div><strong>Corporate Entity:</strong> Aneevarp Solutions</div>
             <div><strong>Physical Office Address:</strong> Hyderabad, Telangana - 500081, India</div>

@@ -159,7 +159,7 @@ export default function ContactPage() {
             <div className="space-y-1">
               <h3 className="text-sm font-bold text-[#171D1C] dark:text-white mb-0.5">Grievance & DPO Desk</h3>
               <p className="text-[#545F73] dark:text-slate-400 text-[11px]">
-                <strong>Officer:</strong> N. Jagadeeshwar Rao<br />
+                <strong>Officer:</strong> P. JAGADEESWARA RAO<br />
                 <strong>Designation:</strong> Head of Compliance & Operations<br />
                 <strong>Jurisdiction:</strong> Hyderabad, Telangana - 500081, India
               </p>
