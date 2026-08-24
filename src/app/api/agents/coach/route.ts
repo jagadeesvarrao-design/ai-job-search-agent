@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { sanitizeString, validateBase64Pdf } from "@/lib/security";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
 
@@ -9,28 +10,45 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
-    if (!checkRateLimit(ip, 10, 60000)) {
-      return NextResponse.json({ success: false, error: "Too many requests. Please try again in a minute." }, { status: 429 });
+    const ip = getClientIp(request);
+    // Rate limit: 15 coaching messages per minute per IP
+    const rateCheck = checkRateLimit(`coach:${ip}`, 15, 60000);
+    if (!rateCheck.allowed) {
+      return NextResponse.json({ success: false, error: "Too many interview coach messages. Please slow down slightly." }, { status: 429 });
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ success: false, error: "AI Service is not configured." }, { status: 500 });
+      return NextResponse.json({ success: false, error: "Interview Coach service is temporarily unavailable." }, { status: 503 });
     }
 
-    const { job, resumeBase64, messages } = await request.json();
+    const body = await request.json().catch(() => ({}));
+    const { job, resumeBase64, messages } = body;
 
-    // Payload size validation (preventing prompt injection / DDoS via massive payloads)
-    if (resumeBase64 && resumeBase64.length > 5 * 1024 * 1024) { // 5MB limit for base64
-      return NextResponse.json({ success: false, error: "Resume file is too large." }, { status: 413 });
-    }
-    if (JSON.stringify(messages).length > 200000) {
-      return NextResponse.json({ success: false, error: "Conversation history too large." }, { status: 413 });
+    // Validate Base64 PDF file if provided (Max 5MB)
+    if (resumeBase64) {
+      const pdfValidation = validateBase64Pdf(resumeBase64, 5 * 1024 * 1024);
+      if (!pdfValidation.valid) {
+        return NextResponse.json({ success: false, error: pdfValidation.error || "Invalid PDF resume file." }, { status: 400 });
+      }
     }
 
-    if (!job || !messages) {
-      return NextResponse.json({ success: false, error: "Job details and messages are required." }, { status: 400 });
+    // Limit conversation history to prevent prompt injection / memory bloat
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return NextResponse.json({ success: false, error: "Messages array is required." }, { status: 400 });
     }
+    if (messages.length > 50) {
+      return NextResponse.json({ success: false, error: "Conversation history exceeds maximum turn limit." }, { status: 413 });
+    }
+
+    if (!job || typeof job !== "object") {
+      return NextResponse.json({ success: false, error: "Job details are required." }, { status: 400 });
+    }
+
+    const sanitizedJob = {
+      title: sanitizeString(job.title, 150),
+      company: sanitizeString(job.company, 150),
+      description: sanitizeString(job.description || "Not provided", 3000)
+    };
 
     let resumeText = "No resume provided.";
     if (resumeBase64 && resumeBase64.length > 100) {
@@ -39,11 +57,11 @@ export async function POST(request: Request) {
 
     // Prepare system instruction
     const systemInstruction = `
-      You are the Hiring Manager at ${job.company} conducting a technical/behavioral interview for the position of "${job.title}".
+      You are the Hiring Manager at ${sanitizedJob.company} conducting a technical/behavioral interview for the position of "${sanitizedJob.title}".
       I am the candidate.
       
       Job Description:
-      ${job.description || "Not provided"}
+      ${sanitizedJob.description}
 
       Rules for the Interview:
       1. Stay strictly in character as the hiring manager. NEVER break character.
@@ -55,10 +73,11 @@ export async function POST(request: Request) {
       7. Base your questions on both the Job Description requirements and the candidate's resume.
     `;
 
-    // Map conversation history
-    const contents: any[] = messages.map((m: any) => ({
+    // Map and sanitize conversation history (last 20 messages max for context & performance)
+    const recentMessages = messages.slice(-20);
+    const contents: any[] = recentMessages.map((m: any) => ({
       role: m.role === "user" ? "user" : "model",
-      parts: [{ text: m.content }]
+      parts: [{ text: sanitizeString(m.content || "", 2000) }]
     }));
 
     // If there's a resume and it's the very first user message, inject the PDF data
@@ -81,12 +100,11 @@ export async function POST(request: Request) {
 
     const reply = response.text;
     if (!reply) {
-       throw new Error("Empty response from Gemini");
+      throw new Error("Empty response from AI Coach");
     }
 
-    return NextResponse.json({ success: true, reply });
+    return NextResponse.json({ success: true, reply: sanitizeString(reply, 5000) });
   } catch (error) {
-    console.error("Agent Coach Error:", error);
-    return NextResponse.json({ success: false, error: "Failed to generate coach response." }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Failed to generate coach response. Please try again shortly." }, { status: 500 });
   }
 }

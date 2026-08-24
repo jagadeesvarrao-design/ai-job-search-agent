@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { sanitizeString, validateBase64Pdf } from "@/lib/security";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
 
@@ -9,64 +10,62 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
-    if (!checkRateLimit(ip, 10, 60000)) {
-      return NextResponse.json({ success: false, error: "Too many requests. Please try again in a minute." }, { status: 429 });
+    const ip = getClientIp(request);
+    // Rate limit: 10 requests per minute per IP
+    const rateCheck = checkRateLimit(`filter:${ip}`, 10, 60000);
+    if (!rateCheck.allowed) {
+      return NextResponse.json({ success: false, error: "Too many AI scoring requests. Please wait a moment before trying again." }, { status: 429 });
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ success: false, error: "AI Service is not configured." }, { status: 500 });
+      return NextResponse.json({ success: false, error: "AI matching service is temporarily unavailable." }, { status: 503 });
     }
 
-    const { jobs, resumeBase64, experience } = await request.json();
+    const body = await request.json().catch(() => ({}));
+    const { jobs, resumeBase64, experience } = body;
 
-    if (resumeBase64 && resumeBase64.length > 5 * 1024 * 1024) { 
-      return NextResponse.json({ success: false, error: "Resume file is too large." }, { status: 413 });
-    }
-    if (jobs && jobs.length > 100) {
-      return NextResponse.json({ success: false, error: "Too many jobs submitted for filtering." }, { status: 413 });
+    // Validate Resume PDF Payload
+    const pdfValidation = validateBase64Pdf(resumeBase64, 5 * 1024 * 1024);
+    if (!pdfValidation.valid) {
+      return NextResponse.json({ success: false, error: pdfValidation.error || "Valid PDF resume is required." }, { status: 400 });
     }
 
-    if (!jobs || jobs.length === 0) {
+    // Limit batch size to protect memory and prevent DoS
+    if (!Array.isArray(jobs) || jobs.length === 0) {
       return NextResponse.json({ success: true, jobs: [] });
     }
-
-    if (!resumeBase64) {
-      return NextResponse.json({ success: false, error: "Resume URL is required to filter jobs." }, { status: 400 });
+    if (jobs.length > 25) {
+      return NextResponse.json({ success: false, error: "Maximum 25 jobs can be scored per batch." }, { status: 413 });
     }
 
-    let resumeText = "No resume provided.";
-    if (resumeBase64 && resumeBase64.length > 100) {
-      resumeText = resumeBase64;
-    }
-
-    const jobsList = jobs.map((j: any) => ({
-      id: j.id,
-      title: j.title,
-      company: j.company,
-      description: j.description || "No description provided."
+    // Sanitize job descriptions and user metadata
+    const jobsList = jobs.slice(0, 25).map((j: any) => ({
+      id: sanitizeString(j.id, 100),
+      title: sanitizeString(j.title, 200),
+      company: sanitizeString(j.company, 150),
+      description: sanitizeString(j.description || "No description provided.", 3000)
     }));
 
-    const userExperience = experience || "Fresher";
+    const userExperience = sanitizeString(experience || "Fresher", 50);
 
-    // 3. Ask Gemini to score them with strict experience calibration
+    // Ask Gemini to score them with strict experience calibration
     const prompt = `
-      You are an expert technical recruiter and AI job matcher for candidates.
+      You are an expert technical recruiter and AI job matcher.
       The candidate has an official experience level of: "${userExperience}".
       
       I have attached the candidate's resume as a PDF document.
       I will provide a list of job postings in JSON format.
       
-      CRITICAL EXPERIENCE MATCHING RULES:
+      CRITICAL MATCHING RULES:
       1. If the candidate has 0 years / "Fresher" / Entry Level experience:
-         - Any job posting that requires 2+, 3+, 5+ years of industry experience or has Senior/Lead in the title MUST receive a very low matchScore (under 40%).
-         - Genuine Entry-Level, Graduate, Junior (0-1 yrs), or Internship postings matching the candidate's skills should receive high scores (70-98%).
-      2. If the candidate's skills match the entry-level requirements, reward them with a strong matchScore.
+         - Any job posting requiring 2+, 3+, 5+ years of industry experience or Senior/Lead in the title MUST receive a matchScore under 40%.
+         - Genuine Entry-Level, Graduate, Junior (0-1 yrs), or Internship postings matching skills should receive high scores (70-98%).
+      2. If candidate skills match the requirements, calculate a realistic score between 0 and 100.
       
-      Here are the jobs to evaluate:
+      Jobs to evaluate:
       ${JSON.stringify(jobsList, null, 2)}
       
-      Respond with ONLY a JSON array of objects. Each object must have the job "id" and the calculated "matchScore" (an integer from 0 to 100).
+      Respond with ONLY a JSON array of objects with keys "id" (string) and "matchScore" (integer 0-100).
     `;
 
     const response = await ai.models.generateContent({
@@ -77,7 +76,7 @@ export async function POST(request: Request) {
           parts: [
             {
               inlineData: {
-                data: resumeText,
+                data: resumeBase64,
                 mimeType: "application/pdf"
               }
             },
@@ -104,23 +103,25 @@ export async function POST(request: Request) {
 
     const scoresText = response.text;
     if (!scoresText) {
-       throw new Error("Empty response from Gemini");
+      throw new Error("Empty response from AI engine");
     }
 
     const scores = JSON.parse(scoresText);
 
-    // 4. Update the original jobs array with the calibrated scores
+    // Update the original jobs array with the calibrated scores
     const updatedJobs = jobs.map((job: any) => {
       const scoredJob = scores.find((s: any) => s.id === job.id);
       return {
         ...job,
-        matchScore: scoredJob ? scoredJob.matchScore : job.matchScore
+        matchScore: scoredJob ? Math.min(100, Math.max(0, Number(scoredJob.matchScore) || 0)) : job.matchScore
       };
     });
 
     return NextResponse.json({ success: true, jobs: updatedJobs });
-  } catch (error) {
-    console.error("Agent Filter Error:", error);
-    return NextResponse.json({ success: false, error: "Failed to filter jobs." }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ 
+      success: false, 
+      error: "Failed to score job compatibility. Please try again shortly." 
+    }, { status: 500 });
   }
 }

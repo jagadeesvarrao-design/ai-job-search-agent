@@ -1,13 +1,41 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { sanitizeString, isValidEmail } from '@/lib/security';
 
 export async function POST(request: Request) {
   try {
-    const { name, email, message } = await request.json();
+    const ip = getClientIp(request);
+    
+    // Strict Rate Limit: Max 5 submissions per 10 minutes per IP (Anti-Spam / Anti-Brute-Force)
+    const rateCheck = checkRateLimit(`contact:${ip}`, 5, 600000);
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: 'Too many contact requests submitted from this IP. Please wait before trying again.' },
+        { status: 429 }
+      );
+    }
+
+    const body = await request.json().catch(() => ({}));
+    const rawName = body.name;
+    const rawEmail = body.email;
+    const rawMessage = body.message;
+
+    // Sanitize & Validate Inputs
+    const name = sanitizeString(rawName, 100);
+    const email = typeof rawEmail === 'string' ? rawEmail.trim().toLowerCase() : '';
+    const message = sanitizeString(rawMessage, 2000);
 
     if (!name || !email || !message) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'All fields (name, valid email, and message) are required.' },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: 'Please provide a valid email address.' },
         { status: 400 }
       );
     }
@@ -16,7 +44,7 @@ export async function POST(request: Request) {
     let whatsappDispatched = false;
     let crmDispatched = false;
 
-    // Load from process.env (secured without hardcoded secrets in source files)
+    // Load credentials strictly from environment variables
     const gmailUser = process.env.GMAIL_USER;
     const gmailPass = process.env.GMAIL_APP_PASSWORD;
     const recipientEmail = process.env.CRM_TEAM_EMAIL || 'aneevarpsolutions@gmail.com';
@@ -37,12 +65,14 @@ export async function POST(request: Request) {
           },
         });
 
+        const safeHtmlMessage = message.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, '<br />');
+
         const mailOptions = {
           from: `"ZenScout AI Support" <${gmailUser}>`,
           to: recipientEmail,
           replyTo: email,
-          subject: `[ZenScout AI] New Inbound Inquiry from ${name}`,
-          text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+          subject: `[ZenScout AI] Inbound Message from ${name}`,
+          text: `Name: ${name}\nEmail: ${email}\nIP: [REDACTED]\n\nMessage:\n${message}`,
           html: `
             <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; color: #1e293b; padding: 24px;">
               <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
@@ -64,11 +94,11 @@ export async function POST(request: Request) {
 
                 <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #475569; margin-bottom: 8px;">Message:</div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 12px; font-size: 14px; line-height: 1.6; color: #1e293b;">
-                  ${message.replace(/\n/g, '<br />')}
+                  ${safeHtmlMessage}
                 </div>
 
                 <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #f1f5f9; text-align: center; font-size: 11px; color: #94a3b8;">
-                  Delivered automatically by ZenScout AI • Aneevarp Solutions
+                  Delivered securely by ZenScout AI • Aneevarp Solutions
                 </div>
               </div>
             </div>
@@ -79,7 +109,7 @@ export async function POST(request: Request) {
         emailDispatched = true;
       }
     } catch (smtpErr) {
-      console.error('Direct SMTP Error:', smtpErr);
+      console.error('Direct SMTP Notice: Failed to dispatch email.');
     }
 
     // 2. Direct Instant WhatsApp Alert via Twilio REST API
@@ -109,13 +139,10 @@ export async function POST(request: Request) {
 
         if (twilioRes.ok) {
           whatsappDispatched = true;
-        } else {
-          const errData = await twilioRes.json();
-          console.warn('Twilio WhatsApp dispatch notice:', errData);
         }
       }
     } catch (waErr) {
-      console.error('Direct WhatsApp Dispatch Error:', waErr);
+      console.error('Direct WhatsApp Notice: Failed to dispatch WhatsApp alert.');
     }
 
     // 3. Fallback Dispatch to External Aneevarp CRM if available
@@ -147,8 +174,8 @@ export async function POST(request: Request) {
           // Continue to next endpoint
         }
       }
-    } catch (crmErr) {
-      console.warn('CRM Dispatch Notice:', crmErr);
+    } catch {
+      // Ignored for privacy & performance
     }
 
     return NextResponse.json(
@@ -160,10 +187,9 @@ export async function POST(request: Request) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error('Failed to process message:', error);
+  } catch {
     return NextResponse.json(
-      { error: 'Failed to send message. Please try again later.' },
+      { error: 'An unexpected error occurred. Please try again later.' },
       { status: 500 }
     );
   }

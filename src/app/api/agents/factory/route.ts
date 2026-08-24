@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { sanitizeString, validateBase64Pdf } from "@/lib/security";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
 
@@ -9,38 +10,46 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
-    if (!checkRateLimit(ip, 10, 60000)) {
-      return NextResponse.json({ success: false, error: "Too many requests. Please try again in a minute." }, { status: 429 });
+    const ip = getClientIp(request);
+    // Rate limit: 8 cover letters per minute per IP
+    const rateCheck = checkRateLimit(`factory:${ip}`, 8, 60000);
+    if (!rateCheck.allowed) {
+      return NextResponse.json({ success: false, error: "Too many cover letter generation requests. Please wait a moment." }, { status: 429 });
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ success: false, error: "AI Service is not configured." }, { status: 500 });
+      return NextResponse.json({ success: false, error: "Cover Letter Generator is temporarily unavailable." }, { status: 503 });
     }
 
-    const { job, resumeBase64 } = await request.json();
+    const body = await request.json().catch(() => ({}));
+    const { job, resumeBase64 } = body;
 
-    if (resumeBase64 && resumeBase64.length > 5 * 1024 * 1024) { 
-      return NextResponse.json({ success: false, error: "Resume file is too large." }, { status: 413 });
+    // Validate Base64 PDF file (Max 5MB)
+    const pdfValidation = validateBase64Pdf(resumeBase64, 5 * 1024 * 1024);
+    if (!pdfValidation.valid) {
+      return NextResponse.json({ success: false, error: pdfValidation.error || "Valid PDF resume is required." }, { status: 400 });
     }
 
-    if (!job) {
+    if (!job || typeof job !== "object") {
       return NextResponse.json({ success: false, error: "Job details are required." }, { status: 400 });
     }
 
-    if (!resumeBase64) {
-      return NextResponse.json({ success: false, error: "Resume URL is required." }, { status: 400 });
-    }
+    const sanitizedJob = {
+      title: sanitizeString(job.title, 150),
+      company: sanitizeString(job.company, 150),
+      location: sanitizeString(job.location, 150),
+      description: sanitizeString(job.description || "No description provided.", 4000)
+    };
 
-    // 2. Ask Gemini to write a cover letter
+    // Ask Gemini to write a cover letter
     const prompt = `
       You are an expert career coach and professional copywriter.
       I have attached my resume as a PDF document.
       I am applying for the following job:
-      Title: ${job.title}
-      Company: ${job.company}
-      Location: ${job.location}
-      Description: ${job.description || "No description provided."}
+      Title: ${sanitizedJob.title}
+      Company: ${sanitizedJob.company}
+      Location: ${sanitizedJob.location}
+      Description: ${sanitizedJob.description}
 
       Task: Write a highly tailored, professional, and compelling cover letter for this specific job.
       
@@ -72,12 +81,11 @@ export async function POST(request: Request) {
 
     const coverLetter = response.text;
     if (!coverLetter) {
-       throw new Error("Empty response from Gemini");
+      throw new Error("Empty response from AI engine");
     }
 
-    return NextResponse.json({ success: true, coverLetter });
+    return NextResponse.json({ success: true, coverLetter: sanitizeString(coverLetter, 10000) });
   } catch (error) {
-    console.error("Agent Factory Error:", error);
-    return NextResponse.json({ success: false, error: "Failed to generate cover letter." }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Failed to generate cover letter. Please try again shortly." }, { status: 500 });
   }
 }

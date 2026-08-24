@@ -144,15 +144,35 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                 <span>Account Active & Synced</span>
               </div>
 
-              <button
-                onClick={async () => {
-                  await signOut();
-                  onClose();
-                }}
-                className="w-full bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 font-bold py-2.5 px-4 rounded-xl text-xs transition-all border border-rose-200 dark:border-rose-900"
-              >
-                Sign Out
-              </button>
+              <div className="flex flex-col gap-2 pt-2">
+                <button
+                  onClick={async () => {
+                    await signOut();
+                    onClose();
+                  }}
+                  className="w-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold py-2.5 px-4 rounded-xl text-xs transition-all"
+                >
+                  Sign Out
+                </button>
+
+                <button
+                  onClick={() => {
+                    if (confirm("Are you sure you want to delete all locally stored resumes, scouted jobs, and application data from this browser?")) {
+                      localStorage.removeItem("my_profile");
+                      localStorage.removeItem("jobs");
+                      localStorage.removeItem("user_tier");
+                      localStorage.removeItem("user_quota");
+                      window.dispatchEvent(new Event("user-tier-updated"));
+                      alert("All local data has been permanently cleared.");
+                      onClose();
+                      window.location.reload();
+                    }
+                  }}
+                  className="w-full bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 font-medium py-2 px-4 rounded-xl text-[11px] transition-all border border-rose-200/60 dark:border-rose-900/60"
+                >
+                  Delete All Local Workspace Data
+                </button>
+              </div>
             </div>
           ) : (
             /* Sign in / Sign up form */

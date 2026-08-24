@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { sanitizeString, validateBase64Pdf } from "@/lib/security";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
 
@@ -9,26 +10,27 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
-    if (!checkRateLimit(ip, 15, 60000)) {
-      return NextResponse.json({ success: false, error: "Too many requests. Please try again in a minute." }, { status: 429 });
+    const ip = getClientIp(request);
+    // Rate limit: 8 ATS analyses per minute per IP
+    const rateCheck = checkRateLimit(`ats:${ip}`, 8, 60000);
+    if (!rateCheck.allowed) {
+      return NextResponse.json({ success: false, error: "Too many ATS analysis requests. Please wait a moment before trying again." }, { status: 429 });
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json({ success: false, error: "AI Service is not configured." }, { status: 500 });
+      return NextResponse.json({ success: false, error: "ATS Audit service is temporarily unavailable." }, { status: 503 });
     }
 
-    const { role, resumeBase64 } = await request.json();
+    const body = await request.json().catch(() => ({}));
+    const { role, resumeBase64 } = body;
 
-    if (!resumeBase64) {
-      return NextResponse.json({ success: false, error: "Resume is required for ATS analysis." }, { status: 400 });
+    // Validate Base64 PDF file (Max 5MB)
+    const pdfValidation = validateBase64Pdf(resumeBase64, 5 * 1024 * 1024);
+    if (!pdfValidation.valid) {
+      return NextResponse.json({ success: false, error: pdfValidation.error || "Valid PDF resume file is required." }, { status: 400 });
     }
 
-    if (resumeBase64.length > 5 * 1024 * 1024) { 
-      return NextResponse.json({ success: false, error: "Resume file is too large." }, { status: 413 });
-    }
-
-    const targetRole = role || "Software Engineer / Professional";
+    const targetRole = sanitizeString(role || "Software Engineer / Professional", 100);
 
     const prompt = `
       You are an elite ATS (Applicant Tracking System) Algorithm Auditor and Executive Career Coach at ZenResume.
@@ -87,16 +89,15 @@ export async function POST(request: Request) {
 
     const resultText = response.text;
     if (!resultText) {
-      throw new Error("Empty response from AI analysis");
+      throw new Error("Empty response from AI analysis engine");
     }
 
     const analysis = JSON.parse(resultText);
     return NextResponse.json({ success: true, analysis });
   } catch (error: any) {
-    console.error("ATS Analyzer Error:", error);
     return NextResponse.json({ 
       success: false, 
-      error: error.message || "Failed to analyze resume for ATS score." 
+      error: "Failed to complete ATS resume analysis. Please try again shortly." 
     }, { status: 500 });
   }
 }
