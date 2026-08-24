@@ -40,6 +40,9 @@ export async function POST(request: Request) {
       );
     }
 
+    // Generate Statutory Grievance / Customer Inquiry Ticket ID (Consumer Protection Rules 2020)
+    const ticketId = `ANV-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
     let emailDispatched = false;
     let whatsappDispatched = false;
     let crmDispatched = false;
@@ -71,19 +74,28 @@ export async function POST(request: Request) {
           from: `"ZenScout AI Support" <${gmailUser}>`,
           to: recipientEmail,
           replyTo: email,
-          subject: `[ZenScout AI] Inbound Message from ${name}`,
-          text: `Name: ${name}\nEmail: ${email}\nIP: [REDACTED]\n\nMessage:\n${message}`,
+          subject: `[ZenScout AI Ticket #${ticketId}] Inbound Inquiry from ${name}`,
+          text: `Ticket ID: ${ticketId}\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
           html: `
             <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; color: #1e293b; padding: 24px;">
               <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-                <div style="border-bottom: 2px solid #00685F; padding-bottom: 16px; margin-bottom: 20px;">
-                  <h2 style="margin: 0; color: #00685F; font-size: 20px;">ZenScout AI — New Inbound Message</h2>
-                  <p style="margin: 4px 0 0; color: #64748b; font-size: 13px;">Aneevarp Solutions Operations Hub</p>
+                <div style="border-bottom: 2px solid #00685F; padding-bottom: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <h2 style="margin: 0; color: #00685F; font-size: 20px;">ZenScout AI — Support Ticket</h2>
+                    <p style="margin: 4px 0 0; color: #64748b; font-size: 13px;">Aneevarp Solutions Legal & Ops Hub</p>
+                  </div>
+                  <div style="background: #00685F; color: #ffffff; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: bold;">
+                    #${ticketId}
+                  </div>
                 </div>
 
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                   <tr>
-                    <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold; width: 30%;">Sender Name:</td>
+                    <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold; width: 30%;">Ticket ID:</td>
+                    <td style="padding: 8px 0; color: #00685F; font-size: 14px; font-weight: bold;">${ticketId}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold;">Sender Name:</td>
                     <td style="padding: 8px 0; color: #0f172a; font-size: 14px; font-weight: 600;">${name}</td>
                   </tr>
                   <tr>
@@ -92,13 +104,13 @@ export async function POST(request: Request) {
                   </tr>
                 </table>
 
-                <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #475569; margin-bottom: 8px;">Message:</div>
+                <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #475569; margin-bottom: 8px;">Inquiry / Message:</div>
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 12px; font-size: 14px; line-height: 1.6; color: #1e293b;">
                   ${safeHtmlMessage}
                 </div>
 
                 <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #f1f5f9; text-align: center; font-size: 11px; color: #94a3b8;">
-                  Delivered securely by ZenScout AI • Aneevarp Solutions
+                  Delivered securely pursuant to IT Rules 2021 & DPDP Act 2023 • Aneevarp Solutions
                 </div>
               </div>
             </div>
@@ -118,7 +130,7 @@ export async function POST(request: Request) {
         const fromFormatted = fromWhatsApp.startsWith('whatsapp:') ? fromWhatsApp : `whatsapp:${fromWhatsApp}`;
         const toFormatted = toWhatsApp.startsWith('whatsapp:') ? toWhatsApp : `whatsapp:${toWhatsApp}`;
 
-        const whatsappBody = `🚨 *New ZenScout AI Inquiry*\n\n👤 *From:* ${name}\n📧 *Email:* ${email}\n💬 *Message:* "${message.substring(0, 300)}"\n\n🔗 *Reply:* mailto:${email}`;
+        const whatsappBody = `🚨 *New ZenScout AI Ticket #${ticketId}*\n\n👤 *From:* ${name}\n📧 *Email:* ${email}\n💬 *Message:* "${message.substring(0, 250)}"\n\n🔗 *Reply:* mailto:${email}`;
 
         const authHeader = 'Basic ' + Buffer.from(`${twilioSid}:${twilioToken}`).toString('base64');
         const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${twilioSid}/Messages.json`;
@@ -158,6 +170,7 @@ export async function POST(request: Request) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+              ticketId,
               product: 'ZenScout AI',
               name,
               email,
@@ -180,7 +193,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { 
-        message: 'Message processed successfully', 
+        message: 'Message processed successfully',
+        ticketId,
+        acknowledgment: 'Your ticket has been logged and assigned to the Aneevarp Solutions support & grievance desk.',
         emailDispatched, 
         whatsappDispatched, 
         crmDispatched 
