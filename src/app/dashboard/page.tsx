@@ -681,23 +681,23 @@ export default function DashboardPage() {
 
       {/* 4. JOB DETAIL, COVER LETTER PDF & AI COACH MODAL */}
       {selectedJob && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+          <div className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="p-6 border-b border-[#E2E8F0] flex justify-between items-start bg-[#F8FAFC]">
-              <div>
-                <div className="flex items-center gap-3 mb-1.5">
-                  <h2 className="text-2xl font-black text-black">{selectedJob.title}</h2>
+            <div className="p-4 sm:p-6 border-b border-[#E2E8F0] dark:border-[#232D36] flex justify-between items-start bg-[#F8FAFC] dark:bg-[#1A2228] gap-3">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <h2 className="text-lg sm:text-2xl font-black text-black dark:text-white leading-snug break-words">{selectedJob.title}</h2>
                   {selectedJob.matchScore > 0 && (
-                    <span className="text-xs font-black px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300">
-                      {selectedJob.matchScore}% Match Score
+                    <span className="text-[11px] sm:text-xs font-black px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                      {selectedJob.matchScore}% Match
                     </span>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-[#0F172A]">
-                  <span className="flex items-center gap-1"><Building2 className="w-4 h-4 text-[#00685F]" /> {selectedJob.company}</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-4 h-4 text-[#00685F]" /> {selectedJob.location}</span>
-                  {selectedJob.salary && <span className="flex items-center gap-1"><IndianRupee className="w-4 h-4 text-[#00685F]" /> {selectedJob.salary}</span>}
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-bold text-[#0F172A] dark:text-slate-300">
+                  <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" /> {selectedJob.company}</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" /> {selectedJob.location}</span>
+                  {selectedJob.salary && <span className="flex items-center gap-1"><IndianRupee className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" /> {selectedJob.salary}</span>}
                 </div>
               </div>
               <button 
@@ -705,19 +705,19 @@ export default function DashboardPage() {
                   if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
                   setSelectedJob(null);
                 }}
-                className="p-2 rounded-xl text-slate-400 hover:text-black hover:bg-slate-200/50 transition-colors"
+                className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors flex-shrink-0"
                 aria-label="Close Modal"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Modal Navigation Tabs */}
-            <div className="flex border-b border-[#E2E8F0] px-6 bg-white">
+            {/* Modal Navigation Tabs (Scrollable on small screens) */}
+            <div className="flex border-b border-[#E2E8F0] dark:border-[#232D36] px-3 sm:px-6 bg-white dark:bg-[#141B20] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
               <button
                 onClick={() => setActiveTab("details")}
-                className={`py-3.5 px-4 font-bold text-sm border-b-2 transition-all ${
-                  activeTab === "details" ? "border-[#00685F] text-[#00685F]" : "border-transparent text-[#545F73] hover:text-black"
+                className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all whitespace-nowrap ${
+                  activeTab === "details" ? "border-[#00685F] dark:border-[#2DD4BF] text-[#00685F] dark:text-[#2DD4BF]" : "border-transparent text-[#545F73] dark:text-slate-400 hover:text-black dark:hover:text-white"
                 }`}
               >
                 Job Description
@@ -727,17 +727,17 @@ export default function DashboardPage() {
                   setActiveTab("cover_letter");
                   if (!coverLetter) handleGenerateCoverLetter(selectedJob);
                 }}
-                className={`py-3.5 px-4 font-bold text-sm border-b-2 transition-all flex items-center gap-1.5 ${
-                  activeTab === "cover_letter" ? "border-[#00685F] text-[#00685F]" : "border-transparent text-[#545F73] hover:text-black"
+                className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  activeTab === "cover_letter" ? "border-[#00685F] dark:border-[#2DD4BF] text-[#00685F] dark:text-[#2DD4BF]" : "border-transparent text-[#545F73] dark:text-slate-400 hover:text-black dark:hover:text-white"
                 }`}
               >
-                <FileText className="w-4 h-4" />
-                Cover Letter Factory
+                <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                Cover Letter
               </button>
               <button
                 onClick={() => setActiveTab("coach")}
-                className={`py-3.5 px-4 font-bold text-sm border-b-2 transition-all flex items-center gap-1.5 ${
-                  activeTab === "coach" ? "border-[#00685F] text-[#00685F]" : "border-transparent text-[#545F73] hover:text-black"
+                className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  activeTab === "coach" ? "border-[#00685F] dark:border-[#2DD4BF] text-[#00685F] dark:text-[#2DD4BF]" : "border-transparent text-[#545F73] dark:text-slate-400 hover:text-black dark:hover:text-white"
                 }`}
               >
                 <Bot className="w-4 h-4" />

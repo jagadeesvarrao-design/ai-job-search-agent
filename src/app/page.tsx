@@ -152,35 +152,35 @@ export default function Home() {
         <div className="absolute top-20 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
 
         {/* Ecosystem Pill */}
-        <div className="bg-white border border-[#E2E8F0] shadow-soft px-5 py-2 rounded-full mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all hover:scale-105">
-          <Sparkles className="w-4 h-4 text-orange-500 animate-spin duration-3000" />
-          <span className="text-xs md:text-sm font-bold text-[#171D1C]">
+        <div className="bg-white border border-[#E2E8F0] shadow-soft px-4 sm:px-5 py-1.5 sm:py-2 rounded-full mb-6 sm:mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all hover:scale-105 max-w-[95vw]">
+          <Sparkles className="w-4 h-4 text-orange-500 animate-spin duration-3000 flex-shrink-0" />
+          <span className="text-[11px] sm:text-xs md:text-sm font-bold text-[#171D1C] truncate">
             Part of the <strong className="text-[#00685F]">ZenResume & Aneevarp Solutions</strong> Career Suite
           </span>
         </div>
         
         {/* Hero Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 max-w-4xl text-[#171D1C] leading-[1.12]">
-          Automate your <br className="hidden md:block" />
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 sm:mb-6 max-w-4xl text-[#171D1C] leading-[1.15] px-2">
+          Automate your <br className="hidden sm:block" />
           <span className="text-gradient">Job Hunt</span> with ZenScout AI
         </h1>
         
-        <p className="text-base sm:text-lg md:text-xl text-[#545F73] max-w-2xl mb-10 leading-relaxed font-normal">
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#545F73] max-w-2xl mb-8 sm:mb-10 leading-relaxed font-normal px-2">
           Upload your resume and let 4 autonomous AI agents discover live opportunities, score skill compatibility, write tailored cover letters, and coach you through interviews.
         </p>
 
         {/* Tactile Call-To-Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-16 z-10">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 sm:mb-16 z-10 w-full sm:w-auto px-3 sm:px-0 max-w-md sm:max-w-none">
           <Link 
             href="/profile" 
-            className="bg-[#00685F] hover:bg-[#005049] text-white px-8 py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 btn-tactile group"
+            className="bg-[#00685F] hover:bg-[#005049] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 btn-tactile group w-full sm:w-auto"
           >
             <span>Audit Resume & Target Jobs</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link 
             href="/dashboard" 
-            className="bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-[#171D1C] px-8 py-4 rounded-xl font-bold text-base flex items-center justify-center transition-all shadow-soft hover:shadow-md hover:-translate-y-0.5 active:scale-95 btn-tactile"
+            className="bg-white border border-[#E2E8F0] hover:bg-[#F8FAFC] text-[#171D1C] px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center transition-all shadow-soft hover:shadow-md hover:-translate-y-0.5 active:scale-95 btn-tactile w-full sm:w-auto"
           >
             Launch Dashboard
           </Link>

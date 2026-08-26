@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import HeaderNav from "@/components/HeaderNav";
@@ -18,6 +18,14 @@ const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: "#00685F",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ai-job-search-agent-chi.vercel.app"),
