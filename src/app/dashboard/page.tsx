@@ -414,12 +414,21 @@ export default function DashboardPage() {
 
     try {
       const savedProfile = localStorage.getItem("my_profile");
-      const resumeBase64 = savedProfile ? JSON.parse(savedProfile).resumeBase64 : "";
+      const profileDoc = savedProfile ? JSON.parse(savedProfile) : {};
+      const resumeBase64 = profileDoc.resumeBase64 || "";
+      const userExperience = profileDoc.experience || "Fresher";
+      const userTargetRole = profileDoc.role || "";
 
       const response = await fetch("/api/agents/coach", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ job: selectedJob, resumeBase64, messages: newMessages })
+        body: JSON.stringify({ 
+          job: selectedJob, 
+          resumeBase64, 
+          messages: newMessages,
+          experience: userExperience,
+          targetRole: userTargetRole
+        })
       });
 
       if (!response.ok) throw new Error("Coach agent error");
