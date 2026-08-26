@@ -1,0 +1,141 @@
+# ZenScout AI — Complete LLM Knowledge Base (llms-full.txt)
+> Platform: ZenScout AI | Parent Entity: Aneevarp Solutions | Domain: https://ai-job-search-agent-chi.vercel.app
+
+This document provides the full, unabridged knowledge base, architectural specifications, user guides, API contracts, pricing matrices, and educational articles for ZenScout AI.
+
+---
+
+# SECTION 1: ARCHITECTURAL SPECIFICATIONS & PHILOSOPHY
+
+## 1.1 "Zero-Backend" Privacy Guarantee
+Traditional job hunt and recruitment platforms collect, aggregate, and monetize candidate resumes, salary histories, and personal phone numbers into persistent cloud databases.
+
+ZenScout AI operates under a **Zero-Backend Privacy Architecture**:
+1. **No Database Persistence:** We maintain no relational or NoSQL database storing candidate resumes, parsed profile strings, or application tracker entries.
+2. **Local Storage Sovereignty:** All PDF resume buffers, role preferences, target locations, and saved job bookmarks reside strictly inside the user's browser `localStorage` and `sessionStorage`.
+3. **Stateless AI Processing:** When generating ATS compatibility scores, drafting cover letters, or conducting interview coaching, the payload is transmitted over encrypted TLS 1.3 to Google Gemini 2.5 Flash API endpoints, executed in memory statelessly, and immediately discarded upon completion.
+4. **Data Deletion Freedom:** Users can click "Delete All Local Workspace Data" at any time to instantly and permanently erase all stored local assets from their device.
+
+## 1.2 The 4 Multi-Agent Workflows
+
+### Agent Scout (Job Discovery Agent)
+- **Primary Function:** Discovers real-time job listings matching user's role and location preferences.
+- **Data Engine:** Integrates SerpApi / Google Jobs search feeds to query across LinkedIn, Indeed, Glassdoor, ZipRecruiter, Monster, and direct employer ATS boards.
+- **Experience Calibration:** Dynamically optimizes search queries (e.g. injects "Entry Level", "Fresher", "Graduate" keywords when experience is 0 years) and rigorously filters out senior/lead positions demanding 2+, 3+, 5+ years of experience for entry-level seekers.
+
+### Agent Filter (ATS Resume Compatibility Matcher)
+- **Primary Function:** Calculates semantic similarity between candidate PDF resumes and discovered job descriptions.
+- **Data Engine:** Uses Gemini 2.5 Flash semantic embeddings with custom calibration logic.
+- **Scoring Output:** Generates a 0-100% match score with categorical breakdowns:
+  - 85-100%: Strong / Ideal Match
+  - 70-84%: Good Match (Minor tailoring required)
+  - 50-69%: Moderate Match (Key skill gaps present)
+  - <50%: Low Match / Experience Mismatch
+
+### Agent Factory (Cover Letter & Materials Generator)
+- **Primary Function:** Crafts tailored, authentic, human-sounding cover letters for selected jobs.
+- **Features:** Auto-extracts applicant name, email, and phone directly from the attached PDF resume letterhead. Completely avoids robotic AI clichés. Outputs clean, ready-to-send 3-paragraph copy.
+
+### Agent Coach (Interactive Interview Simulator)
+- **Primary Function:** Roleplays as the hiring manager at the target company conducting technical and behavioral interviews.
+- **Modes:** Text chat or real-time Voice AI interaction.
+- **Flow:** Welcomes candidate -> Asks one targeted question at a time -> Evaluates response with concise feedback -> Progressively deepens technical/behavioral scrutiny.
+
+---
+
+# SECTION 2: SUBSCRIPTION TIERS & PRICING (VALUE LADDER)
+
+| Plan Name | Price (INR / USD) | Daily Quota | Feature Set |
+|---|---|---|---|
+| **Free Tier** | ₹0 / $0 Forever | 5 Scans, 2 Cover Letters, 3 Interview Turns | Ad-supported (Google AdSense), standard speed AI compute. |
+| **1-Month Starter Pro** | ₹299 / $9.99 | 25 Scans, 10 Cover Letters, 15 Interview Turns | 100% Ad-Free interface, priority speed compute. |
+| **3-Month Career Pass** | ₹699 / $24.99 | **Unlimited** Scans, Letters & Interviews | Ad-Free, Deep ATS Keyword Gap Analysis, Salary Intelligence. |
+| **Annual Pro VIP** | ₹1,999 / $59.99 | **Unlimited** Scans, Letters & Interviews | Ad-Free, VIP Compute Priority, Early Access to Auto-Apply Extension. |
+
+---
+
+# SECTION 3: COMPREHENSIVE KNOWLEDGE BASE & BLOG ARTICLES
+
+## Article 1: How to Optimize Your Resume for AI Scanners and Modern ATS (2026 Guide)
+URL: https://ai-job-search-agent-chi.vercel.app/blog/optimize-resume-for-ai-ats
+
+Applicant Tracking Systems (ATS) have dramatically evolved. Traditional keyword-counting parsers have been replaced by Large Language Models and embedding-based semantic search engines. Rather than searching for exact string matches, modern hiring platforms evaluate candidate competency, contextual achievement, and role alignment.
+
+### Key Rules for Modern ATS Compliance:
+1. **Adopt Single-Column Semantic Formatting:** Multi-column layouts and text boxes get mangled during text parsing. Use a single-column hierarchy with system fonts (Inter, Roboto, Calibri).
+2. **Standardize Section Taxonomy:** Use standard headings ("Work Experience", "Technical Skills", "Education", "Certifications").
+3. **Use the Google XYZ Formula for Bullet Points:** Frame accomplishments as: *"Accomplished [X], as measured by [Y], by doing [Z]"*. For example: *"Reduced database query latency by 42% (Y) on 5M+ daily user records (X) by implementing Redis caching and indexing PostgreSQL queries (Z)."*
+4. **Target 70%+ Semantic Keyword Density:** Naturally integrate core tools and architectural concepts into context rather than keyword stuffing in white fonts (modern parsers detect and penalize hidden text).
+
+---
+
+## Article 2: Top 5 Behavioral Interview Mistakes and How to Avoid Them
+URL: https://ai-job-search-agent-chi.vercel.app/blog/top-5-behavioral-interview-mistakes
+
+Behavioral interviews are designed to predict future performance based on past behavior.
+
+### The 5 Critical Mistakes:
+1. **Giving Vague, Theoretical Answers:** Avoid talking about what you "would do." Give specific real past incidents.
+2. **Ignoring the STAR Framework:** Always structure responses with Situation, Task, Action, and Result.
+3. **Using "We" Instead of "I":** Recruiters want to know your individual contribution, decisions, and ownership.
+4. **Focusing Exclusively on Success Without Reflection:** When asked about failures, show extreme ownership, root-cause analysis, and systematic prevention.
+5. **Failing to Quantify Results:** Always conclude with metrics (time saved, revenue generated, errors prevented).
+
+---
+
+## Article 3: The Future of Job Hunting: How Multi-Agent AI is Replacing Manual Applications
+URL: https://ai-job-search-agent-chi.vercel.app/blog/future-of-job-hunting-ai
+
+The traditional job application process is broken: candidates submit hundreds of generic resumes into black-hole applicant portals.
+
+Multi-Agent AI shifts the paradigm from manual labor to autonomous orchestration:
+- **Scouting Agent:** Continuously discovers fresh job openings across 15+ networks.
+- **Filtering Agent:** Evaluates candidate competency against job requirements in milliseconds.
+- **Factory Agent:** Personalizes materials to highlight matching technical competencies.
+- **Coaching Agent:** Prepares candidates for realistic interview scenarios.
+
+---
+
+## Article 4: Why Generic Cover Letters Fail and How Tailored AI Letters Win
+URL: https://ai-job-search-agent-chi.vercel.app/blog/why-generic-cover-letters-fail
+
+Sending generic copy-paste cover letters results in <2% callback rates because recruiters instantly detect boilerplate templates.
+
+A winning cover letter requires:
+1. Direct connection between the candidate's verified achievements and the company's immediate pain points.
+2. Authentic, natural voice free from robotic clichés.
+3. Concise 3-paragraph structure with clear value proposition and call to action.
+
+---
+
+## Article 5: How to Prepare for Technical AI & Engineering Coding Rounds
+URL: https://ai-job-search-agent-chi.vercel.app/blog/prepare-for-technical-ai-coding-rounds
+
+Mastering technical engineering rounds requires balancing data structures, system scalability, and active verbal communication.
+
+### The 4-Step Technical Interview Framework:
+1. **Clarify Constraints:** Ask questions regarding input scale, edge cases, and memory limits before writing code.
+2. **State Approach & Complexity:** Explain your proposed solution, time complexity, and space complexity before implementing.
+3. **Write Clean, Modular Code:** Use clear variable naming, handle null/boundary conditions, and structure logical helper functions.
+4. **Dry Run with Test Cases:** Trace your code step-by-step with sample inputs to catch off-by-one errors before submitting.
+
+---
+
+## Article 6: Understanding ATS Resume Scores: What a 95+ Score Really Means
+URL: https://ai-job-search-agent-chi.vercel.app/blog/understanding-ats-resume-scores
+
+An ATS score is not an arbitrary grade; it is a mathematical index of semantic proximity and formatting compliance.
+
+- **90-100 Score:** Perfect section taxonomy, 0 formatting risks, >80% hard & soft skill alignment with verifiable impact metrics.
+- **75-89 Score:** Strong resume with clean structure but missing 2-3 specific secondary tool keywords or quantifiable metrics.
+- **<75 Score:** Formatting issues (tables/columns), missing standard section headers, or significant keyword mismatch.
+
+---
+
+# SECTION 4: CORPORATE & STATUTORY DISCLOSURES
+
+- **Operating Entity:** Aneevarp Solutions
+- **Jurisdiction:** Hyderabad, Telangana - 500081, India
+- **Grievance & Data Protection Officer:** P. JAGADEESWARA RAO
+- **Corporate & Support Email:** aneevarpsolutions@gmail.com
+- **Compliance Standards:** Information Technology Act 2000 (IT Rules 2021/2023), Digital Personal Data Protection Act 2023 (DPDP Act), Consumer Protection (E-Commerce) Rules 2020, CERT-In Cyber Security Directions 2022, WCAG 2.1 AA / RPwD Act 2016.

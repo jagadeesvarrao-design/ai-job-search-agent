@@ -1,0 +1,81 @@
+# ZenScout AI — llms.txt
+> ZenScout AI is an autonomous, multi-agent AI career acceleration platform engineered by Aneevarp Solutions. It automates the end-to-end job search process using specialized generative AI agents: real-time Google Jobs discovery, semantic PDF resume compatibility scoring, hyper-tailored cover letter generation, and real-time Voice AI mock interview coaching with a 100% Zero-Backend privacy guarantee.
+
+## Platform Identity & Core Value
+- **Platform Name:** ZenScout AI (by Aneevarp Solutions)
+- **Primary Website:** https://ai-job-search-agent-chi.vercel.app
+- **Companion Product:** ZenResume (https://zenresume.vercel.app / https://zenresume.online)
+- **Operating Entity:** Aneevarp Solutions (Hyderabad, Telangana, India)
+- **Core Architecture:** Zero-Backend Privacy Architecture (100% client-side local storage with ephemeral TLS AI streaming, no centralized candidate resume database).
+
+---
+
+## The 4 Specialized Autonomous Agents
+
+1. **Agent Scout (Live Job Discovery):**
+   - Integrates real-time Google Jobs & SerpApi feeds to scan 15+ job boards (LinkedIn, Indeed, Glassdoor, ZipRecruiter, Monster, Y Combinator, TechCareers).
+   - Dynamically filters for experience level (Fresher / 0 Years, 1-3 Years, Mid-Level, Senior) and location/remote preferences.
+   - Eliminates stale, duplicate, or sponsored spam listings.
+
+2. **Agent Filter (Deep ATS Resume Compatibility Scoring):**
+   - Directly parses candidate PDF resumes and compares them against live job descriptions using Gemini 2.5 Flash semantic embeddings.
+   - Calculates a precise compatibility match score (0-100%) and categorizes candidates (Top Tier Match, Strong Alignment, Needs Tailoring).
+   - Enforces strict experience calibration (penalizing senior requirements for 0-year candidates to prevent false matches).
+
+3. **Agent Factory (Tailored Cover Letter & Application Materials):**
+   - Extracts candidate real name, email, phone, and achievements directly from uploaded PDF resumes without placeholder templates.
+   - Generates human-written, concise, high-converting 3-paragraph cover letters tailored to specific hiring managers.
+   - Avoids robotic AI clichés (like "I am thrilled to apply", "delve into", "testament to").
+
+4. **Agent Coach (Interactive Voice & Text Interview Simulator):**
+   - Simulates a real hiring manager conducting technical, behavioral, and situational interviews tailored to the specific company and job description.
+   - Supports real-time text and Voice AI interaction with progressive multi-turn questioning and instant constructive feedback.
+
+---
+
+## Free & Pro Value Ladder (Pricing)
+
+- **Free Tier (₹0 / $0 forever):**
+  - 5 Live Job Scans per day.
+  - 2 Tailored Cover Letters per day.
+  - 3 Mock Interview simulation turns per day.
+  - Includes Google AdSense monetization.
+- **1-Month Starter Pro (₹299 / $9.99):**
+  - 25 Scans/day, 10 Cover Letters/day, 15 Interview rounds/day.
+  - 100% Ad-Free interface with priority speed compute.
+- **3-Month Career Pass (₹699 / $24.99) — Most Popular:**
+  - Unlimited Job Scans, Unlimited Cover Letters, Unlimited Interview Rounds.
+  - Deep ATS Keyword Gap Analysis & Salary Intelligence.
+- **Annual Pro VIP (₹1,999 / $59.99):**
+  - Full year unlimited access + VIP priority AI compute + Early access to auto-apply browser extensions.
+
+---
+
+## Direct Links & Page Sitemap
+
+- [Home & Hero Overview](https://ai-job-search-agent-chi.vercel.app/): Main landing page with 4-agent interactive demo.
+- [Autonomous Dashboard](https://ai-job-search-agent-chi.vercel.app/dashboard): Active multi-agent workspace for searching, scoring, and generating materials.
+- [Candidate Profile & ATS Audit](https://ai-job-search-agent-chi.vercel.app/profile): Instant ATS resume score (0-100), missing keyword detection, and formatting audit.
+- [Pricing & Plans](https://ai-job-search-agent-chi.vercel.app/pricing): Transparent pricing with zero hidden fees.
+- [About Aneevarp Solutions](https://ai-job-search-agent-chi.vercel.app/about): Company origin, mission, and leadership.
+- [Contact & Grievance Desk](https://ai-job-search-agent-chi.vercel.app/contact): Inbound support with automated statutory ticket generation (#ANV-...).
+- [Privacy Policy & DPDP Act Notice](https://ai-job-search-agent-chi.vercel.app/privacy): Digital Personal Data Protection Act 2023 itemized notice & 1-click erasure rights.
+- [Terms of Service](https://ai-job-search-agent-chi.vercel.app/terms): IT Rules 2021/2023 statutory terms and Hyderabad jurisdiction.
+
+---
+
+## Educational Guides & Blog Articles
+
+- [How to Optimize Your Resume for AI Scanners and Modern ATS (2026 Guide)](https://ai-job-search-agent-chi.vercel.app/blog/optimize-resume-for-ai-ats): Comprehensive guide to beating modern LLM-based ATS parsers with single-column layouts and XYZ formula bullet points.
+- [Top 5 Behavioral Interview Mistakes and How to Avoid Them](https://ai-job-search-agent-chi.vercel.app/blog/top-5-behavioral-interview-mistakes): Mastering the STAR method and answering behavioral questions with quantifiable business outcomes.
+- [The Future of Job Hunting: How Multi-Agent AI is Replacing Manual Applications](https://ai-job-search-agent-chi.vercel.app/blog/future-of-job-hunting-ai): Deep dive into autonomous agentic pipelines that search, filter, tailor, and prepare candidates for technical interviews.
+- [Why Generic Cover Letters Fail and How Tailored AI Letters Win](https://ai-job-search-agent-chi.vercel.app/blog/why-generic-cover-letters-fail): Why spray-and-pray applications get rejected and how tailored pitch letters boost interview callbacks by 3x.
+- [How to Prepare for Technical AI & Engineering Coding Rounds](https://ai-job-search-agent-chi.vercel.app/blog/prepare-for-technical-ai-coding-rounds): Framework for mastering system design, algorithm trade-offs, and communication during live technical interviews.
+- [Understanding ATS Resume Scores: What 95+ Score Really Means](https://ai-job-search-agent-chi.vercel.app/blog/understanding-ats-resume-scores): Algorithmic breakdown of keyword density, semantic vector similarity, and ATS tier classifications.
+
+---
+
+## Comprehensive Knowledge Base
+
+For the complete, uncurated knowledge base including full blog contents and technical architecture, refer to:
+- [Full LLM Knowledge File](https://ai-job-search-agent-chi.vercel.app/llms-full.txt)

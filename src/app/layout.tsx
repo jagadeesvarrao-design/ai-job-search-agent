@@ -146,6 +146,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable} h-full antialiased`}>
       <head>
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Summary (llms.txt)" />
+        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full LLM Knowledge Base (llms-full.txt)" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}

@@ -1,4 +1,43 @@
+# ==============================================================================
+# ZenScout AI Robots.txt — Configured for Search & AI LLM Crawlers
+# ==============================================================================
+
 User-agent: *
 Allow: /
 
+# Explicitly welcome leading Generative AI Search & LLM indexing agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Sitemap & LLM Knowledge Base Indexing
 Sitemap: https://ai-job-search-agent-chi.vercel.app/sitemap.xml
