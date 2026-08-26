@@ -896,23 +896,34 @@ export default function DashboardPage() {
                       <Bot className="w-4 h-4 text-[#00685F]" /> Mock Interview Simulation
                     </span>
                     
-                    <button
-                      onClick={() => {
-                        const next = !voiceAudioEnabled;
-                        setVoiceAudioEnabled(next);
-                        if (!next && typeof window !== "undefined" && "speechSynthesis" in window) {
-                          window.speechSynthesis.cancel();
-                        }
-                      }}
-                      className={`flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg border transition-all ${
-                        voiceAudioEnabled 
-                          ? "bg-teal-50 border-teal-300 text-[#00685F]" 
-                          : "bg-slate-100 border-slate-300 text-slate-500"
-                      }`}
-                    >
-                      {voiceAudioEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
-                      <span>{voiceAudioEnabled ? "Voice Enabled" : "Voice Muted"}</span>
-                    </button>
+                    {hasVoiceAudioAccess() ? (
+                      <button
+                        onClick={() => {
+                          const next = !voiceAudioEnabled;
+                          setVoiceAudioEnabled(next);
+                          if (!next && typeof window !== "undefined" && "speechSynthesis" in window) {
+                            window.speechSynthesis.cancel();
+                          }
+                        }}
+                        className={`flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg border transition-all ${
+                          voiceAudioEnabled 
+                            ? "bg-teal-50 border-teal-300 text-[#00685F]" 
+                            : "bg-slate-100 border-slate-300 text-slate-500"
+                        }`}
+                      >
+                        {voiceAudioEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+                        <span>{voiceAudioEnabled ? "Voice Enabled" : "Voice Muted"}</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setPricingModalOpen(true)}
+                        className="flex items-center gap-1.5 font-bold px-2.5 py-1 rounded-lg border border-amber-300 dark:border-amber-700/60 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 text-[11px] shadow-sm hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all"
+                        title="Live AI Voice Audio playback is available on the 3-Month Pass and Annual VIP"
+                      >
+                        <Lock className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                        <span>Unlock Voice Audio (3-Month Pass)</span>
+                      </button>
+                    )}
                   </div>
 
                   {/* Chat Message Thread */}

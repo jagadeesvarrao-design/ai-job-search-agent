@@ -180,7 +180,7 @@ export default function PricingPage() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
-                <span><strong>1 Full Voice Mock Interview Session / day</strong></span>
+                <span><strong>1 Full Text-Based Mock Interview Session / day</strong></span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
@@ -235,7 +235,7 @@ export default function PricingPage() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                <span><strong>⚡ UNLIMITED Interactive Voice AI Mock Interviews</strong></span>
+                <span><strong>⚡ UNLIMITED Interactive Voice AI Mock Interviews (Audio Playback)</strong></span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />

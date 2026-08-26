@@ -24,6 +24,7 @@ export interface UserTierState {
   deepAtsGaps: boolean;
   salaryIntel: boolean;
   recruiterTemplates: boolean;
+  voiceAudio: boolean;
 }
 
 // Industry-Standard Tier Quota Limits & Capabilities
@@ -35,6 +36,7 @@ export const TIER_LIMITS = {
     maxAtsAuditsPerDay: 1,
     isUnlimited: false,
     showAds: true,
+    voiceAudio: false,
     label: "Free Tier",
   },
   monthly: {
@@ -44,6 +46,7 @@ export const TIER_LIMITS = {
     maxAtsAuditsPerDay: 3,
     isUnlimited: false,
     showAds: false,
+    voiceAudio: false,
     label: "1-Month Starter",
   },
   quarterly: {
@@ -53,6 +56,7 @@ export const TIER_LIMITS = {
     maxAtsAuditsPerDay: 99999,
     isUnlimited: true,
     showAds: false,
+    voiceAudio: true,
     label: "3-Month Full Pass",
   },
   annual: {
@@ -62,6 +66,7 @@ export const TIER_LIMITS = {
     maxAtsAuditsPerDay: 99999,
     isUnlimited: true,
     showAds: false,
+    voiceAudio: true,
     label: "Annual Pro VIP",
   }
 };
@@ -109,7 +114,8 @@ export function getUserTierState(): UserTierState {
       prioritySpeed: false,
       deepAtsGaps: false,
       salaryIntel: false,
-      recruiterTemplates: false
+      recruiterTemplates: false,
+      voiceAudio: false
     };
   }
 
@@ -124,7 +130,8 @@ export function getUserTierState(): UserTierState {
         prioritySpeed: false,
         deepAtsGaps: false,
         salaryIntel: false,
-        recruiterTemplates: false
+        recruiterTemplates: false,
+        voiceAudio: false
       };
     }
     const parsed: UserTierState = JSON.parse(saved);
@@ -139,9 +146,13 @@ export function getUserTierState(): UserTierState {
         parsed.deepAtsGaps = false;
         parsed.salaryIntel = false;
         parsed.recruiterTemplates = false;
+        parsed.voiceAudio = false;
         localStorage.setItem("user_tier", JSON.stringify(parsed));
       }
     }
+    
+    // Re-verify voiceAudio flag consistency
+    parsed.voiceAudio = parsed.plan === "pro" && (parsed.billingCycle === "quarterly" || parsed.billingCycle === "annual");
     
     return parsed;
   } catch (e) {
@@ -153,7 +164,8 @@ export function getUserTierState(): UserTierState {
       prioritySpeed: false,
       deepAtsGaps: false,
       salaryIntel: false,
-      recruiterTemplates: false
+      recruiterTemplates: false,
+      voiceAudio: false
     };
   }
 }
@@ -164,6 +176,11 @@ export function getUserPlan(): UserPlan {
 
 export function isProSubscriber(): boolean {
   return getUserPlan() === "pro";
+}
+
+export function hasVoiceAudioAccess(): boolean {
+  const tier = getUserTierState();
+  return tier.plan === "pro" && (tier.billingCycle === "quarterly" || tier.billingCycle === "annual");
 }
 
 export function shouldShowAds(): boolean {
@@ -199,7 +216,8 @@ export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthl
     prioritySpeed: billingCycle === "quarterly" || billingCycle === "annual",
     deepAtsGaps: billingCycle === "monthly" || billingCycle === "quarterly" || billingCycle === "annual",
     salaryIntel: billingCycle === "annual",
-    recruiterTemplates: billingCycle === "annual"
+    recruiterTemplates: billingCycle === "annual",
+    voiceAudio: billingCycle === "quarterly" || billingCycle === "annual"
   };
 
   localStorage.setItem("user_tier", JSON.stringify(state));
