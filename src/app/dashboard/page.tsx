@@ -398,6 +398,10 @@ export default function DashboardPage() {
   const handleSendCoachMessage = async () => {
     if (!chatInput.trim() || !selectedJob) return;
 
+    const isFree = !isProSubscriber();
+    const currentSent = usageQuota.interviewMessagesSent;
+    const isFreeLastTurn = isFree && currentSent === 2;
+
     // Free Tier Quota Check for Interview Coach
     const interviewCheck = recordInterviewMessage();
     if (!interviewCheck.allowed) {
@@ -427,7 +431,8 @@ export default function DashboardPage() {
           resumeBase64, 
           messages: newMessages,
           experience: userExperience,
-          targetRole: userTargetRole
+          targetRole: userTargetRole,
+          isFreeTierLastTurn: isFreeLastTurn
         })
       });
 
@@ -947,6 +952,29 @@ export default function DashboardPage() {
                         </div>
                       ))
                     )}
+
+                    {/* IN-CHAT UPGRADE CARD (Triggered when 3 Free Turns are Completed) */}
+                    {!isProSubscriber() && usageQuota.interviewMessagesSent >= 3 && (
+                      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 border-2 border-amber-500/40 text-black dark:text-white shadow-lg animate-in fade-in slide-in-from-bottom-2 space-y-3">
+                        <div className="flex items-center gap-2 text-xs font-black text-amber-800 dark:text-amber-300">
+                          <Crown className="w-4 h-4 text-amber-500 fill-amber-500" />
+                          <span>FREE EVALUATION COMPLETE • UNLOCK FULL-LENGTH SESSIONS</span>
+                        </div>
+                        <p className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
+                          Build bulletproof interview muscle memory, unlock live voice sparring, and practice unlimited full-length rounds across all your applications.
+                        </p>
+                        <div className="flex flex-col sm:flex-row items-center gap-2 pt-1">
+                          <button
+                            onClick={() => setPricingModalOpen(true)}
+                            className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs py-2.5 px-4 rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5"
+                          >
+                            <Zap className="w-3.5 h-3.5 fill-white" />
+                            <span>Accelerate My Career & Unlock Full Practice &rarr;</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
                     {coachLoading && (
                       <div className="flex justify-start">
                         <div className="bg-white border border-[#E2E8F0] p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 font-bold shadow-sm">
@@ -962,10 +990,11 @@ export default function DashboardPage() {
                     <button
                       type="button"
                       onClick={toggleSpeechRecognition}
+                      disabled={!isProSubscriber() && usageQuota.interviewMessagesSent >= 3}
                       className={`p-3 rounded-xl border transition-all flex items-center justify-center ${
                         isRecording 
                           ? "bg-rose-500 text-white border-rose-600 animate-pulse" 
-                          : "bg-white border-[#E2E8F0] text-slate-700 hover:bg-slate-100"
+                          : "bg-white border-[#E2E8F0] text-slate-700 hover:bg-slate-100 disabled:opacity-50"
                       }`}
                       title={isRecording ? "Listening..." : "Speak response"}
                     >
@@ -976,16 +1005,36 @@ export default function DashboardPage() {
                       type="text"
                       value={chatInput}
                       onChange={(e) => setChatInput(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && handleSendCoachMessage()}
-                      placeholder={isRecording ? "Listening to your voice..." : "Type or speak your answer..."}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          if (!isProSubscriber() && usageQuota.interviewMessagesSent >= 3) {
+                            setPricingModalOpen(true);
+                          } else {
+                            handleSendCoachMessage();
+                          }
+                        }
+                      }}
+                      placeholder={
+                        !isProSubscriber() && usageQuota.interviewMessagesSent >= 3
+                          ? "Daily free evaluation limit reached (3/3). Click here to upgrade →"
+                          : isRecording 
+                            ? "Listening to your voice..." 
+                            : "Type or speak your answer..."
+                      }
                       className="flex-1 p-3 rounded-xl border border-[#E2E8F0] bg-white text-sm font-medium text-black focus:outline-none focus:border-[#00685F]"
                     />
                     <button
-                      onClick={handleSendCoachMessage}
-                      disabled={coachLoading || !chatInput.trim()}
-                      className="bg-[#00685F] hover:bg-[#005049] text-white px-5 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-50 btn-tactile"
+                      onClick={() => {
+                        if (!isProSubscriber() && usageQuota.interviewMessagesSent >= 3) {
+                          setPricingModalOpen(true);
+                        } else {
+                          handleSendCoachMessage();
+                        }
+                      }}
+                      disabled={coachLoading || (!chatInput.trim() && isProSubscriber())}
+                      className="bg-[#00685F] hover:bg-[#005049] text-white px-5 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-50 btn-tactile flex items-center gap-1.5"
                     >
-                      Send
+                      <span>{!isProSubscriber() && usageQuota.interviewMessagesSent >= 3 ? "Upgrade" : "Send"}</span>
                     </button>
                   </div>
                 </div>

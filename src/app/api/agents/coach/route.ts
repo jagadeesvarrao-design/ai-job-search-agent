@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json().catch(() => ({}));
-    const { job, resumeBase64, messages, experience, targetRole } = body;
+    const { job, resumeBase64, messages, experience, targetRole, isFreeTierLastTurn } = body;
 
     // Validate Base64 PDF file if provided (Max 5MB)
     if (resumeBase64) {
@@ -60,6 +60,21 @@ export async function POST(request: Request) {
     }
 
     // Prepare elite, highly experienced Hiring Manager prompt
+    let closingInstruction = "";
+    if (isFreeTierLastTurn) {
+      closingInstruction = `
+      SPECIAL INSTRUCTION FOR THIS TURN: This is the 3rd and final screening turn for this free evaluation session.
+      First, evaluate the candidate's last answer with authentic feedback (pointing out strong points or missing details).
+      Then, transition smoothly into this exact closing message:
+      
+      "You’ve got strong raw instincts for this role, and with the right preparation, you can easily stand out in the top 5% of candidates.
+      
+      Here’s the reality: in high-paying tech interviews, the difference between a rejection and a ₹15L–₹30L+ (or $120k+) offer comes down to handling the unexpected 4th, 5th, and 6th architectural follow-ups under pressure.
+      
+      Don't leave your dream offer to chance. Build bulletproof interview muscle memory, unlock live voice sparring, and practice unlimited full-length rounds for less than the cost of a single weekend dinner."
+      `;
+    }
+
     const systemInstruction = `
       You are a Principal Engineering Leader and Veteran Hiring Manager at ${sanitizedJob.company} with 15+ years of experience interviewing and evaluating engineering talent. You are conducting a live, realistic technical and behavioral hiring interview with a candidate for the position of "${sanitizedJob.title}".
 
@@ -107,6 +122,7 @@ export async function POST(request: Request) {
          - If an answer is vague or overly generic, ask a sharp, relevant follow-up question to test their real-world experience before moving to a new topic.
       5. KEEP RESPONSES CRISP AND ENGAGING: Limit each turn to 1–2 focused, well-written paragraphs (max 100–150 words). This ensures natural voice and audio synthesis.
       6. BALANCE: Blend technical domain questions (from the JD requirements) with behavioral and cultural fit questions.
+      ${closingInstruction}
     `;
 
     // Map and sanitize conversation history (last 20 messages for context)
