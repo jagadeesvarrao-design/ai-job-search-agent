@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
-import { sanitizeString, validateBase64Pdf } from "@/lib/security";
+import { sanitizeString, sanitizeAiPromptInput, validateBase64Pdf } from "@/lib/security";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
 
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     const sanitizedJob = {
       title: sanitizeString(job.title, 150),
       company: sanitizeString(job.company, 150),
-      description: sanitizeString(job.description || "Not provided", 3000)
+      description: sanitizeAiPromptInput(job.description || "Not provided", 3000)
     };
 
     let resumeText = "No resume provided.";
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
     const recentMessages = messages.slice(-20);
     const contents: any[] = recentMessages.map((m: any) => ({
       role: m.role === "user" ? "user" : "model",
-      parts: [{ text: sanitizeString(m.content || "", 2000) }]
+      parts: [{ text: sanitizeAiPromptInput(m.content || "", 2000) }]
     }));
 
     // If there's a resume and it's the very first user message, inject the PDF data

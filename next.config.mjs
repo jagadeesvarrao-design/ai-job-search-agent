@@ -5,6 +5,8 @@ const nextConfig = {
   },
   // Ensure power header is disabled to prevent framework fingerprinting
   poweredByHeader: false,
+  // Compress assets using gzip/brotli
+  compress: true,
   
   async headers() {
     return [
@@ -26,12 +28,12 @@ const nextConfig = {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
-          // Restrict browser features & sensors
+          // Restrict browser features & sensors (Zero unauthorized device access)
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(self), geolocation=(), interest-cohort=()",
+            value: "camera=(), microphone=(self), geolocation=(), interest-cohort=(), payment=(), usb=(), accelerometer=(), gyroscope=()",
           },
-          // Enforce HTTPS across all subdomains for 1 year
+          // Enforce HTTPS across all subdomains for 1 year with HSTS Preload
           {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains; preload",
@@ -41,7 +43,17 @@ const nextConfig = {
             key: "X-XSS-Protection",
             value: "1; mode=block",
           },
-          // Content Security Policy
+          // Cross-Origin-Opener-Policy (Prevents window.opener exploitation)
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups",
+          },
+          // Cross-Origin-Resource-Policy (Protects server assets from hotlinking)
+          {
+            key: "Cross-Origin-Resource-Policy",
+            value: "same-site",
+          },
+          // Content Security Policy (Strict Whitelist)
           {
             key: "Content-Security-Policy",
             value: [
@@ -50,11 +62,12 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
               "img-src 'self' data: blob: https: https://lh3.googleusercontent.com",
-              "connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.serpapi.com https://api.twilio.com https://ai-job-search-agent-chi.vercel.app https://zenresume.vercel.app",
+              "connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.serpapi.com https://api.twilio.com https://ai-job-search-agent-chi.vercel.app https://zenresume.vercel.app https://zenresume.online",
               "frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://googleads.g.doubleclick.net",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
+              "frame-ancestors 'none'",
             ].join("; "),
           },
         ],

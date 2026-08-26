@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
-import { sanitizeString, validateBase64Pdf } from "@/lib/security";
+import { sanitizeString, sanitizeAiPromptInput, validateBase64Pdf } from "@/lib/security";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
 
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       title: sanitizeString(job.title, 150),
       company: sanitizeString(job.company, 150),
       location: sanitizeString(job.location, 150),
-      description: sanitizeString(job.description || "No description provided.", 4000)
+      description: sanitizeAiPromptInput(job.description || "No description provided.", 4000)
     };
 
     // Ask Gemini to write a cover letter

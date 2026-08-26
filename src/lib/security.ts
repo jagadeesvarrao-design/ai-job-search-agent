@@ -1,17 +1,21 @@
 /**
- * Input sanitization and security utility functions
- * Defends against XSS, HTML/Script injection, prototype pollution, and oversized payloads.
+ * Enterprise Input Sanitization, Prompt Injection Defense, and Payload Security Engine
+ * Defends against XSS, HTML/Script injection, prototype pollution, prompt hijacking, and oversized memory exhaustion payloads.
  */
 
 /**
- * Strips HTML tags and script elements from user inputs
+ * Strips HTML tags, script elements, javascript: protocols, and event handlers from user inputs
  */
 export function sanitizeString(input: unknown, maxLength: number = 500): string {
   if (typeof input !== "string") return "";
   
-  // 1. Remove dangerous script and HTML tags
+  // 1. Remove dangerous script, iframe, object, and style tags
   let cleaned = input
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
+    .replace(/javascript\s*:/gi, "")
+    .replace(/on\w+\s*=/gi, "")
     .replace(/<[^>]+>/g, "")
     .trim();
 
@@ -24,7 +28,7 @@ export function sanitizeString(input: unknown, maxLength: number = 500): string 
 }
 
 /**
- * Validates whether an email string follows standard email RFC formats
+ * Validates whether an email string follows standard email RFC formats strictly
  */
 export function isValidEmail(email: unknown): boolean {
   if (typeof email !== "string") return false;
@@ -33,8 +37,31 @@ export function isValidEmail(email: unknown): boolean {
 }
 
 /**
+ * Neutralizes potential prompt injection markers before injecting into AI Prompts
+ */
+export function sanitizeAiPromptInput(input: unknown, maxLength: number = 3000): string {
+  if (typeof input !== "string") return "";
+  
+  let sanitized = sanitizeString(input, maxLength);
+  
+  // Neutralize common prompt hijacking boundaries (e.g. "Ignore previous instructions", "SYSTEM PROMPT OVERRIDE")
+  const dangerousPromptPatterns = [
+    /ignore (?:all )?(?:previous|above|prior) (?:instructions|rules|prompts)/gi,
+    /you are now in (?:developer|god|admin|unrestricted) mode/gi,
+    /system:\s*override/gi,
+    /disregard (?:all )?(?:safety|ethical) (?:guidelines|rules)/gi
+  ];
+
+  for (const pattern of dangerousPromptPatterns) {
+    sanitized = sanitized.replace(pattern, "[FILTERED_SECURITY_OVERRIDE]");
+  }
+
+  return sanitized;
+}
+
+/**
  * Validates Base64 PDF file strings
- * Ensures string matches base64 characters and file size is strictly within limits (default 5MB)
+ * Checks magic byte signatures (PDF header %PDF-) and strict size limits (default 5MB)
  */
 export function validateBase64Pdf(base64Data: unknown, maxSizeBytes: number = 5 * 1024 * 1024): { valid: boolean; error?: string } {
   if (!base64Data || typeof base64Data !== "string") {
@@ -49,10 +76,14 @@ export function validateBase64Pdf(base64Data: unknown, maxSizeBytes: number = 5 
 
   // Basic Base64 character set validation
   const base64Regex = /^[A-Za-z0-9+/=]+$/;
-  // Sample check on beginning of string to avoid full-string regex catastrophe
   const sample = base64Data.substring(0, 1000).replace(/\s/g, '');
   if (!base64Regex.test(sample)) {
     return { valid: false, error: "Malformatted Base64 encoding." };
+  }
+
+  // Verify PDF Magic Bytes ("%PDF" in base64 starts with "JVBERi0")
+  if (!base64Data.startsWith("JVBERi0") && !base64Data.substring(0, 50).includes("JVBERi0")) {
+    return { valid: false, error: "Invalid file format. Only genuine PDF documents are supported." };
   }
 
   return { valid: true };
