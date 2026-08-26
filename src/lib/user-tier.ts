@@ -10,6 +10,8 @@ export interface UserUsageQuota {
   lastLetterDate: string;
   interviewMessagesSent: number;
   lastInterviewDate: string;
+  atsAuditsToday: number;
+  lastAtsAuditDate: string;
 }
 
 export interface UserTierState {
@@ -21,37 +23,79 @@ export interface UserTierState {
   prioritySpeed: boolean;
   deepAtsGaps: boolean;
   salaryIntel: boolean;
+  recruiterTemplates: boolean;
 }
 
-// Apple & Samsung Value Ladder Quota Limits
+// Industry-Standard Tier Quota Limits & Capabilities
 export const TIER_LIMITS = {
   free: {
     maxScoutsPerDay: 5,
     maxCoverLettersPerDay: 2,
     maxInterviewRounds: 3,
+    maxAtsAuditsPerDay: 1,
     isUnlimited: false,
+    showAds: true,
     label: "Free Tier",
   },
   monthly: {
     maxScoutsPerDay: 25,
     maxCoverLettersPerDay: 10,
     maxInterviewRounds: 15,
+    maxAtsAuditsPerDay: 3,
     isUnlimited: false,
-    label: "1-Month Starter Pro",
+    showAds: false,
+    label: "1-Month Starter",
   },
   quarterly: {
     maxScoutsPerDay: 99999,
     maxCoverLettersPerDay: 99999,
     maxInterviewRounds: 99999,
+    maxAtsAuditsPerDay: 99999,
     isUnlimited: true,
-    label: "3-Month Career Pass",
+    showAds: false,
+    label: "3-Month Full Pass",
   },
   annual: {
     maxScoutsPerDay: 99999,
     maxCoverLettersPerDay: 99999,
     maxInterviewRounds: 99999,
+    maxAtsAuditsPerDay: 99999,
     isUnlimited: true,
+    showAds: false,
     label: "Annual Pro VIP",
+  }
+};
+
+export const PRICING_DATA = {
+  monthly: {
+    inr: 299,
+    inrPeriod: "month",
+    inrMonthlyEquivalent: 299,
+    usd: 9,
+    usdPeriod: "mo",
+    usdMonthlyEquivalent: 9,
+    tag: "Light Hunt",
+    subtext: "Essential AI tools for single-role targeted applications."
+  },
+  quarterly: {
+    inr: 699,
+    inrPeriod: "3 months",
+    inrMonthlyEquivalent: 233,
+    usd: 19,
+    usdPeriod: "3 mos",
+    usdMonthlyEquivalent: 6.33,
+    tag: "Most Popular • Covers Full 60–90 Day Hiring Cycle",
+    subtext: "Everything you need from initial resume submission to signed offer letter."
+  },
+  annual: {
+    inr: 1999,
+    inrPeriod: "year",
+    inrMonthlyEquivalent: 166,
+    usd: 49,
+    usdPeriod: "yr",
+    usdMonthlyEquivalent: 4.08,
+    tag: "Best Long-Term Value (Save 60%)",
+    subtext: "For continuous career growth, promotions, and lateral career switches."
   }
 };
 
@@ -64,7 +108,8 @@ export function getUserTierState(): UserTierState {
       vipBadge: false,
       prioritySpeed: false,
       deepAtsGaps: false,
-      salaryIntel: false
+      salaryIntel: false,
+      recruiterTemplates: false
     };
   }
 
@@ -78,10 +123,27 @@ export function getUserTierState(): UserTierState {
         vipBadge: false,
         prioritySpeed: false,
         deepAtsGaps: false,
-        salaryIntel: false
+        salaryIntel: false,
+        recruiterTemplates: false
       };
     }
-    return JSON.parse(saved);
+    const parsed: UserTierState = JSON.parse(saved);
+    
+    // Check if subscription has expired
+    if (parsed.plan === "pro" && parsed.expiresAt) {
+      if (new Date(parsed.expiresAt).getTime() < Date.now()) {
+        // Expired -> Downgrade back to free
+        parsed.plan = "free";
+        parsed.vipBadge = false;
+        parsed.prioritySpeed = false;
+        parsed.deepAtsGaps = false;
+        parsed.salaryIntel = false;
+        parsed.recruiterTemplates = false;
+        localStorage.setItem("user_tier", JSON.stringify(parsed));
+      }
+    }
+    
+    return parsed;
   } catch (e) {
     return {
       plan: "free",
@@ -90,7 +152,8 @@ export function getUserTierState(): UserTierState {
       vipBadge: false,
       prioritySpeed: false,
       deepAtsGaps: false,
-      salaryIntel: false
+      salaryIntel: false,
+      recruiterTemplates: false
     };
   }
 }
@@ -101,6 +164,10 @@ export function getUserPlan(): UserPlan {
 
 export function isProSubscriber(): boolean {
   return getUserPlan() === "pro";
+}
+
+export function shouldShowAds(): boolean {
+  return !isProSubscriber();
 }
 
 export function getCurrentTierLimits() {
@@ -130,8 +197,9 @@ export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthl
     expiresAt: new Date(Date.now() + daysValid * 24 * 60 * 60 * 1000).toISOString(),
     vipBadge: billingCycle === "annual",
     prioritySpeed: billingCycle === "quarterly" || billingCycle === "annual",
-    deepAtsGaps: billingCycle === "quarterly" || billingCycle === "annual",
-    salaryIntel: billingCycle === "quarterly" || billingCycle === "annual"
+    deepAtsGaps: billingCycle === "monthly" || billingCycle === "quarterly" || billingCycle === "annual",
+    salaryIntel: billingCycle === "annual",
+    recruiterTemplates: billingCycle === "annual"
   };
 
   localStorage.setItem("user_tier", JSON.stringify(state));
@@ -143,30 +211,24 @@ export function getTodayDateString(): string {
 }
 
 export function getUsageQuota(): UserUsageQuota {
-  if (typeof window === "undefined") {
-    return {
-      scoutRunsToday: 0,
-      lastScoutDate: getTodayDateString(),
-      coverLettersGeneratedToday: 0,
-      lastLetterDate: getTodayDateString(),
-      interviewMessagesSent: 0,
-      lastInterviewDate: getTodayDateString()
-    };
-  }
+  const today = getTodayDateString();
+  const defaultQuota: UserUsageQuota = {
+    scoutRunsToday: 0,
+    lastScoutDate: today,
+    coverLettersGeneratedToday: 0,
+    lastLetterDate: today,
+    interviewMessagesSent: 0,
+    lastInterviewDate: today,
+    atsAuditsToday: 0,
+    lastAtsAuditDate: today
+  };
+
+  if (typeof window === "undefined") return defaultQuota;
 
   try {
-    const today = getTodayDateString();
     const saved = localStorage.getItem("user_usage_quota");
-    if (!saved) {
-      return {
-        scoutRunsToday: 0,
-        lastScoutDate: today,
-        coverLettersGeneratedToday: 0,
-        lastLetterDate: today,
-        interviewMessagesSent: 0,
-        lastInterviewDate: today
-      };
-    }
+    if (!saved) return defaultQuota;
+    
     const quota: UserUsageQuota = JSON.parse(saved);
     if (quota.lastScoutDate !== today) {
       quota.scoutRunsToday = 0;
@@ -180,16 +242,13 @@ export function getUsageQuota(): UserUsageQuota {
       quota.interviewMessagesSent = 0;
       quota.lastInterviewDate = today;
     }
+    if (quota.lastAtsAuditDate !== today) {
+      quota.atsAuditsToday = 0;
+      quota.lastAtsAuditDate = today;
+    }
     return quota;
   } catch (e) {
-    return {
-      scoutRunsToday: 0,
-      lastScoutDate: getTodayDateString(),
-      coverLettersGeneratedToday: 0,
-      lastLetterDate: getTodayDateString(),
-      interviewMessagesSent: 0,
-      lastInterviewDate: getTodayDateString()
-    };
+    return defaultQuota;
   }
 }
 
@@ -246,6 +305,25 @@ export function recordInterviewMessage(): { allowed: boolean; remaining: number;
     allowed: true, 
     remaining: limits.maxInterviewRounds - quota.interviewMessagesSent, 
     max: limits.maxInterviewRounds,
+    isUnlimited: false 
+  };
+}
+
+export function recordAtsAuditRun(): { allowed: boolean; remaining: number; max: number; isUnlimited: boolean } {
+  const limits = getCurrentTierLimits();
+  if (limits.isUnlimited) return { allowed: true, remaining: 99999, max: 99999, isUnlimited: true };
+  
+  const quota = getUsageQuota();
+  if (quota.atsAuditsToday >= limits.maxAtsAuditsPerDay) {
+    return { allowed: false, remaining: 0, max: limits.maxAtsAuditsPerDay, isUnlimited: false };
+  }
+  quota.atsAuditsToday += 1;
+  quota.lastAtsAuditDate = getTodayDateString();
+  localStorage.setItem("user_usage_quota", JSON.stringify(quota));
+  return { 
+    allowed: true, 
+    remaining: limits.maxAtsAuditsPerDay - quota.atsAuditsToday, 
+    max: limits.maxAtsAuditsPerDay,
     isUnlimited: false 
   };
 }

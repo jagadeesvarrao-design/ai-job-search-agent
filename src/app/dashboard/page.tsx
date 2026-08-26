@@ -461,24 +461,32 @@ export default function DashboardPage() {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-sm text-black dark:text-white">
-                {isPro ? `ZenScout PRO Plan (${tierInfo.billingCycle.toUpperCase()})` : "Free Tier Workspace"}
+                {isPro 
+                  ? (tierInfo.billingCycle === "annual" 
+                      ? "ZenScout ANNUAL PRO VIP" 
+                      : tierInfo.billingCycle === "quarterly" 
+                        ? "ZenScout 3-MONTH FULL PASS" 
+                        : "ZenScout 1-MONTH STARTER")
+                  : "Free Tier Workspace"}
               </span>
               {isPro ? (
                 <span className="text-[10px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black px-2 py-0.5 rounded-full">
-                  UNLIMITED AI & AD-FREE
+                  {tierInfo.billingCycle === "annual" ? "👑 VIP UNLIMITED" : tierInfo.billingCycle === "quarterly" ? "⚡ UNLIMITED AI" : "100% AD-FREE"}
                 </span>
               ) : (
                 <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full">
-                  Standard Limits
+                  Standard Limits (Ads Enabled)
                 </span>
               )}
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               {isPro 
                 ? (tierInfo.billingCycle === "monthly"
-                    ? `Monthly Starter Plan: ${usageQuota.scoutRunsToday}/25 Daily Scouts • ${usageQuota.coverLettersGeneratedToday}/10 Letters • 100% Ad-Free`
-                    : `Active through ${new Date(tierInfo.expiresAt || "").toLocaleDateString()} • ⚡ Truly Unlimited AI & 100% Ad-Free`)
-                : `Daily Free Usage: ${usageQuota.scoutRunsToday}/5 Scouts • ${usageQuota.coverLettersGeneratedToday}/2 Cover Letters • ${usageQuota.interviewMessagesSent}/3 Coach Q&As`}
+                    ? `1-Month Starter Plan: ${usageQuota.scoutRunsToday}/25 Daily Scouts • ${usageQuota.coverLettersGeneratedToday}/10 Letters • 100% Ad-Free`
+                    : tierInfo.billingCycle === "quarterly"
+                      ? `3-Month Pass: ⚡ Truly Unlimited AI Scouting, Letters & Coach • Priority 2x Server Speed • 100% Ad-Free`
+                      : `Annual VIP Member: 👑 VIP Badge Active • Truly Unlimited AI • Recruiter Outreach & Salary Playbooks Active`)
+                : `Daily Free Usage: ${usageQuota.scoutRunsToday}/5 Scouts • ${usageQuota.coverLettersGeneratedToday}/2 Letters • ${usageQuota.interviewMessagesSent}/3 Coach Exchanges`}
             </p>
           </div>
         </div>
@@ -491,13 +499,41 @@ export default function DashboardPage() {
             <Crown className="w-3.5 h-3.5" />
             <span>Upgrade to Pro (Compare Plans)</span>
           </button>
+        ) : tierInfo.billingCycle === "monthly" ? (
+          <button
+            onClick={() => setPricingModalOpen(true)}
+            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-500 hover:text-white text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 text-xs font-bold py-2 px-3 rounded-xl transition-all shadow-sm active:scale-95"
+          >
+            <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+            <span>Upgrade to 3-Month Unlimited</span>
+          </button>
         ) : (
           <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-900">
             <CheckCircle2 className="w-4 h-4" />
-            <span>{tierInfo.billingCycle === "annual" ? "👑 VIP Unlimited Access Active" : "⚡ Pro Workspace Active"}</span>
+            <span>{tierInfo.billingCycle === "annual" ? "👑 VIP Member Status Active" : "⚡ 3-Month Unlimited Active"}</span>
           </div>
         )}
       </div>
+
+      {/* CONDITIONAL ADSENSE SPONSOR BANNER (Displayed ONLY on Free Tier) */}
+      {!isPro && (
+        <div className="bg-slate-50 dark:bg-[#1A2228] p-3.5 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="flex items-center gap-2.5">
+            <span className="text-[9px] font-black uppercase tracking-widest bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded">
+              Ad / Sponsor
+            </span>
+            <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
+              Targeting tech jobs? Level up your profile with verified certifications & ZenResume ATS templates.
+            </p>
+          </div>
+          <button
+            onClick={() => setPricingModalOpen(true)}
+            className="text-[11px] font-bold text-[#00685F] dark:text-[#2DD4BF] hover:underline whitespace-nowrap"
+          >
+            Remove ads with ZenScout Pro &rarr;
+          </button>
+        </div>
+      )}
 
       {/* 1. TOP ANALYTICS & STATS BAR */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
