@@ -472,36 +472,36 @@ export default function Home() {
           </div>
 
           {/* High-Trust Founder Commitment Card */}
-          <div className="w-full md:w-80 flex-shrink-0">
-            <div className="bg-gradient-to-br from-[#F8FAFC] to-teal-50/50 dark:from-[#1A2228] dark:to-teal-950/40 rounded-3xl p-5 sm:p-6 border border-teal-200/80 dark:border-teal-800/60 shadow-md text-center space-y-3 relative">
-              <div className="w-24 h-24 mx-auto rounded-2xl overflow-hidden border-2 border-[#00685F] dark:border-[#2DD4BF] shadow-md relative group">
+          <div className="w-full md:w-88 flex-shrink-0">
+            <div className="bg-gradient-to-br from-[#F8FAFC] to-teal-50/60 dark:from-[#1A2228] dark:to-teal-950/40 rounded-3xl p-6 border border-teal-200/80 dark:border-teal-800/60 shadow-lg text-center space-y-3.5 relative">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-3xl overflow-hidden border-2 border-[#00685F] dark:border-[#2DD4BF] shadow-md relative group">
                 <img 
                   src="/founder.jpg" 
                   alt="Jagadeeswara Rao Peddada - Founder of Aneevarp Solutions"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-wider bg-teal-100 dark:bg-teal-900/60 text-[#00685F] dark:text-[#2DD4BF] px-2.5 py-0.5 rounded-full border border-teal-200 dark:border-teal-800">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-teal-100 dark:bg-teal-900/60 text-[#00685F] dark:text-[#2DD4BF] px-3 py-0.5 rounded-full border border-teal-200 dark:border-teal-800 inline-block">
                   Founder's Privacy Pledge
                 </span>
-                <h4 className="font-extrabold text-sm text-[#171D1C] dark:text-white pt-1">
+                <h4 className="font-black text-base text-[#171D1C] dark:text-white pt-1">
                   Jagadeeswara Rao Peddada
                 </h4>
-                <p className="text-[11px] text-[#545F73] dark:text-slate-400 font-medium">
-                  Lead Architect @ Aneevarp Solutions
+                <p className="text-xs text-[#545F73] dark:text-slate-300 font-medium">
+                  Founder & Lead Architect @ Aneevarp Solutions
                 </p>
               </div>
 
-              <p className="text-xs text-slate-700 dark:text-slate-300 italic leading-relaxed pt-1">
-                "We engineered ZenScout AI with strict Zero-Backend cryptography. Your career data never touches a server."
+              <p className="text-xs text-slate-700 dark:text-slate-200 italic leading-relaxed pt-1">
+                "We engineered ZenScout AI with strict Zero-Backend cryptography. Your career data never touches a database."
               </p>
 
-              <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800/80 flex items-center justify-center gap-3 text-xs">
+              <div className="pt-2.5 border-t border-slate-200/60 dark:border-slate-800/80 flex items-center justify-center gap-3 text-xs">
                 <Link href="/about" className="font-bold text-[#00685F] dark:text-[#2DD4BF] hover:underline inline-flex items-center gap-1">
-                  <span>Our Story</span>
-                  <ArrowRight className="w-3 h-3" />
+                  <span>Read Full Origin Story</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
