@@ -237,6 +237,53 @@ export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthl
 }
 
 /**
+ * Direct Zen Suite Entitlement resolver matching Aneevarp Ecosystem specification.
+ */
+export async function checkZenSuiteEntitlement(user: { uid: string; email?: string | null } | null) {
+  if (!user) return { isSuiteMember: false, plan: "free" };
+  
+  try {
+    const { doc, getDoc, collection, query, where, getDocs } = await import("firebase/firestore");
+    if (!db || !db.type) return { isSuiteMember: false, plan: "free" };
+
+    const userDocRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(userDocRef);
+    
+    let sub: any = null;
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      sub = data.subscription;
+    } else if (user.email) {
+      const q = query(collection(db, "users"), where("email", "==", user.email));
+      const querySnap = await getDocs(q);
+      if (!querySnap.empty) {
+        sub = querySnap.docs[0].data()?.subscription;
+      }
+    }
+    
+    if (sub && (sub.plan_id === "zen_suite" || sub.plan_id === "suite" || (sub.tier_title && sub.tier_title.toLowerCase().includes("suite"))) && sub.status === "active") {
+      const expiresAt = new Date(sub.expires_at).getTime();
+      if (isNaN(expiresAt) || Date.now() < expiresAt) {
+        // Persist to session/localStorage for fast UI rendering
+        if (typeof window !== "undefined") {
+          localStorage.setItem("zenscout_active_plan", JSON.stringify({
+            planId: "zen_suite",
+            title: sub.tier_title || "Zen Suite Ultimate",
+            isSuiteMember: true
+          }));
+        }
+        return { isSuiteMember: true, plan: "zen_suite", details: sub };
+      }
+    }
+  } catch (err) {
+    console.warn("Could not resolve Zen Suite entitlement:", err);
+  }
+  
+  return { isSuiteMember: false, plan: "free" };
+}
+
+/**
  * Automatically queries Cloud Firestore for cross-suite subscription entitlement.
  * Matches unified schema: users/{uid} -> subscription: { plan_id: "zen_suite", status: "active", ... }
  */
@@ -307,6 +354,13 @@ export async function syncUserSubscriptionFromFirestore(user: { uid: string; ema
 
         if (typeof window !== "undefined") {
           localStorage.setItem("user_tier", JSON.stringify(newState));
+          if (isSuite) {
+            localStorage.setItem("zenscout_active_plan", JSON.stringify({
+              planId: "zen_suite",
+              title: tier_title || "Zen Suite Ultimate",
+              isSuiteMember: true
+            }));
+          }
           window.dispatchEvent(new Event("user-tier-updated"));
         }
         return newState;
