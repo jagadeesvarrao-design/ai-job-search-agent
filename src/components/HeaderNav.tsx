@@ -90,10 +90,9 @@ export default function HeaderNav() {
           </Link>
 
           {/* Center: Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs xl:text-sm font-bold text-[#0F172A] dark:text-[#CBD5E1]" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-xs sm:text-sm font-bold text-[#0F172A] dark:text-[#CBD5E1]" aria-label="Main Navigation">
             <Link href="/dashboard" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Dashboard</Link>
-            <Link href="/profile" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Profile & ATS Audit</Link>
-            <Link href="/blog" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Career Guides</Link>
+            <Link href="/profile" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">ATS Audit</Link>
             <Link href="/pricing" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Pricing</Link>
             <Link href="/about" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">About</Link>
 
@@ -102,30 +101,17 @@ export default function HeaderNav() {
               <button
                 onClick={() => setSuiteMenuOpen(!suiteMenuOpen)}
                 onBlur={() => setTimeout(() => setSuiteMenuOpen(false), 200)}
-                className="inline-flex items-center gap-1 hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1 cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-200 hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1 cursor-pointer"
               >
                 <Layers className="w-3.5 h-3.5 text-amber-500" />
                 <span>Zen Suite</span>
-                <ChevronDown className="w-3 h-3 opacity-70" />
+                <ChevronDown className="w-3 h-3 opacity-60" />
               </button>
 
               {suiteMenuOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-[#141B20] rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-xl p-2 z-50 animate-in fade-in zoom-in-95">
-                  <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 px-3 py-1 block">Aneevarp Ecosystem</span>
-                  <a
-                    href="https://pdf-analizing-and-answering-bot.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                  >
-                    <Brain className="w-4 h-4 text-purple-500" />
-                    <div className="flex flex-col">
-                      <span>ZenDoc AI</span>
-                      <span className="text-[10px] text-slate-500 font-normal">Document Intelligence</span>
-                    </div>
-                    <ExternalLink className="w-3 h-3 ml-auto opacity-50" />
-                  </a>
-
+                <div className="absolute top-full right-0 mt-2 w-60 bg-white dark:bg-[#141B20] rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95">
+                  <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 px-3 py-1 block">Aneevarp Zen Ecosystem</span>
+                  
                   <a
                     href="https://zenresume.online/"
                     target="_blank"
@@ -137,7 +123,21 @@ export default function HeaderNav() {
                       <span>ZenResume</span>
                       <span className="text-[10px] text-slate-500 font-normal">ATS Resume Builder</span>
                     </div>
-                    <ExternalLink className="w-3 h-3 ml-auto opacity-50" />
+                    <ExternalLink className="w-3 h-3 ml-auto opacity-40" />
+                  </a>
+
+                  <a
+                    href="https://pdf-analizing-and-answering-bot.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  >
+                    <Brain className="w-4 h-4 text-purple-500" />
+                    <div className="flex flex-col">
+                      <span>ZenDoc AI</span>
+                      <span className="text-[10px] text-slate-500 font-normal">Document Intelligence</span>
+                    </div>
+                    <ExternalLink className="w-3 h-3 ml-auto opacity-40" />
                   </a>
 
                   <a
@@ -151,27 +151,15 @@ export default function HeaderNav() {
                       <span>Aneevarp Solutions</span>
                       <span className="text-[10px] text-slate-500 font-normal">Official Portal</span>
                     </div>
-                    <ExternalLink className="w-3 h-3 ml-auto opacity-50" />
+                    <ExternalLink className="w-3 h-3 ml-auto opacity-40" />
                   </a>
                 </div>
               )}
             </div>
           </nav>
 
-          {/* Right: Actions Cluster (Adaptive for Mobile & Desktop) */}
-          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5 flex-shrink-0">
-            
-            {/* Direct ZenResume Shortcut Link */}
-            <a
-              href="https://zenresume.online/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden xl:inline-flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 text-[#00685F] dark:text-[#2DD4BF] border border-emerald-200 dark:border-emerald-800/60 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-orange-500" />
-              <span>ZenResume</span>
-              <ExternalLink className="w-2.5 h-2.5 opacity-70" />
-            </a>
+          {/* Right: Actions Cluster (Clean & Uncluttered) */}
+          <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
 
             {/* Pro Upgrade / Member Badge (Desktop/Tablet) */}
             <div className="hidden sm:inline-flex">
