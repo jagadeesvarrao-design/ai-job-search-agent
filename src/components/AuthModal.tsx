@@ -45,7 +45,13 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
         setSuccess("");
       }, 1000);
     } catch (err: any) {
-      setError(err.message || "Failed to sign in with Google.");
+      if (err.code === "auth/unauthorized-domain") {
+        setError("Firebase Domain Notice: 'localhost' is not yet added to Authorized Domains in Firebase Console. You can use Email/Password sign-in below!");
+      } else if (err.code === "auth/popup-closed-by-user") {
+        setError("Sign-in popup was closed before completing.");
+      } else {
+        setError(err.message || "Failed to sign in with Google.");
+      }
     } finally {
       setLoading(false);
     }
@@ -83,7 +89,11 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
       if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") {
         setError("Invalid email or password.");
       } else if (err.code === "auth/email-already-in-use") {
-        setError("This email is already registered. Please sign in instead.");
+        setError("This email is already registered. Please click 'Sign In' below instead of creating a duplicate.");
+      } else if (err.code === "auth/account-exists-with-different-credential") {
+        setError("An account already exists with this email via Google Sign-In. Please click 'Continue with Google'.");
+      } else if (err.code === "auth/weak-password") {
+        setError("Password is too weak. Please use at least 6 characters with letters and numbers.");
       } else {
         setError(err.message || "Authentication failed.");
       }

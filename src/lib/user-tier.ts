@@ -105,34 +105,26 @@ export const PRICING_DATA = {
 };
 
 export function getUserTierState(): UserTierState {
+  const defaultState: UserTierState = {
+    plan: "free",
+    currency: "INR",
+    billingCycle: "monthly",
+    vipBadge: false,
+    prioritySpeed: false,
+    deepAtsGaps: false,
+    salaryIntel: false,
+    recruiterTemplates: false,
+    voiceAudio: false
+  };
+
   if (typeof window === "undefined") {
-    return {
-      plan: "free",
-      currency: "INR",
-      billingCycle: "monthly",
-      vipBadge: false,
-      prioritySpeed: false,
-      deepAtsGaps: false,
-      salaryIntel: false,
-      recruiterTemplates: false,
-      voiceAudio: false
-    };
+    return defaultState;
   }
 
   try {
     const saved = localStorage.getItem("user_tier");
     if (!saved) {
-      return {
-        plan: "free",
-        currency: "INR",
-        billingCycle: "monthly",
-        vipBadge: false,
-        prioritySpeed: false,
-        deepAtsGaps: false,
-        salaryIntel: false,
-        recruiterTemplates: false,
-        voiceAudio: false
-      };
+      return defaultState;
     }
     const parsed: UserTierState = JSON.parse(saved);
     
@@ -151,22 +143,10 @@ export function getUserTierState(): UserTierState {
       }
     }
     
-    // Re-verify voiceAudio flag consistency
     parsed.voiceAudio = parsed.plan === "pro" && (parsed.billingCycle === "quarterly" || parsed.billingCycle === "annual");
-    
     return parsed;
   } catch (e) {
-    return {
-      plan: "free",
-      currency: "INR",
-      billingCycle: "monthly",
-      vipBadge: false,
-      prioritySpeed: false,
-      deepAtsGaps: false,
-      salaryIntel: false,
-      recruiterTemplates: false,
-      voiceAudio: false
-    };
+    return defaultState;
   }
 }
 

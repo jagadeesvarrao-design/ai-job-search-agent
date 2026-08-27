@@ -15,7 +15,8 @@ import {
   Moon,
   Crown,
   Zap,
-  LogIn
+  LogIn,
+  FileText
 } from "lucide-react";
 import { getUserTierState, isProSubscriber } from "@/lib/user-tier";
 import { useAuth } from "@/lib/auth-context";
@@ -299,6 +300,57 @@ export default function HeaderNav() {
           </div>
         )}
       </header>
+
+      {/* MOBILE & FOLDABLE FLOATING BOTTOM NAVIGATION DOCK */}
+      <nav 
+        aria-label="Mobile Bottom Navigation"
+        className="lg:hidden fixed bottom-3 inset-x-3 z-40 max-w-lg mx-auto bg-white/90 dark:bg-[#141B20]/90 backdrop-blur-xl border border-[#E2E8F0] dark:border-[#232D36] rounded-2xl shadow-2xl p-1.5 flex items-center justify-around animate-in fade-in slide-in-from-bottom-3"
+      >
+        <Link
+          href="/dashboard"
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-300 active:scale-95 transition-all flex-1"
+        >
+          <Briefcase className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+          <span className="text-[10px] font-bold mt-0.5">Jobs</span>
+        </Link>
+
+        <Link
+          href="/profile"
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-300 active:scale-95 transition-all flex-1"
+        >
+          <FileText className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+          <span className="text-[10px] font-bold mt-0.5">ATS Audit</span>
+        </Link>
+
+        <button
+          onClick={() => setPricingModalOpen(true)}
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-900 dark:text-amber-300 active:scale-95 transition-all flex-1"
+        >
+          {isPro ? (
+            <Crown className="w-4 h-4 text-amber-500 fill-amber-500" />
+          ) : (
+            <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
+          )}
+          <span className="text-[10px] font-black mt-0.5">{isPro ? "PRO" : "Upgrade"}</span>
+        </button>
+
+        <button
+          onClick={() => setAuthModalOpen(true)}
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-300 active:scale-95 transition-all flex-1"
+        >
+          <User className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+          <span className="text-[10px] font-bold mt-0.5">{user ? "Vault" : "Sign In"}</span>
+        </button>
+
+        <button
+          onClick={toggleDarkMode}
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-black dark:text-amber-300 active:scale-95 transition-all flex-1"
+          aria-label="Toggle Theme"
+        >
+          {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          <span className="text-[10px] font-bold mt-0.5">{isDark ? "Light" : "Dark"}</span>
+        </button>
+      </nav>
 
       {/* Pricing & Pro Upgrade Modal */}
       <PricingModal 

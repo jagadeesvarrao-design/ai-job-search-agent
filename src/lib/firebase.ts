@@ -23,10 +23,8 @@ if (typeof window !== "undefined" || firebaseConfig.apiKey) {
     app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
     auth = getAuth(app);
     googleProvider = new GoogleAuthProvider();
-    
-    // Automatically select the active logged-in Google account in the browser without re-asking
     googleProvider.setCustomParameters({
-      prompt: "none" // Silently auto-select current active Google browser session
+      prompt: "select_account"
     });
     
     db = getFirestore(app);

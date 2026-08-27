@@ -34,10 +34,12 @@ import {
   getCurrentTierLimits
 } from "@/lib/user-tier";
 import PricingModal from "@/components/PricingModal";
+import { NotificationToast, ToastMessage, ToastType } from "@/components/NotificationToast";
 
 interface AtsAnalysis {
   score: number;
   tier: string;
+  isNonResume?: boolean;
   strengths: string[];
   improvements: string[];
   keyMissingSkills: string[];
@@ -45,13 +47,14 @@ interface AtsAnalysis {
 }
 
 export default function ProfilePage() {
+  const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [analyzingAts, setAnalyzingAts] = useState(false);
   const [atsAnalysis, setAtsAnalysis] = useState<AtsAnalysis | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [pricingModalOpen, setPricingModalOpen] = useState(false);
-  const [tierState, setTierState] = useState(getUserTierState());
-  const [usageQuota, setUsageQuota] = useState(getUsageQuota());
+  const [tierState, setTierState] = useState({ plan: "free", billingCycle: "monthly" as any });
+  const [usageQuota, setUsageQuota] = useState({ atsAuditsToday: 0 });
 
   const [formData, setFormData] = useState({
     role: "",
@@ -59,11 +62,31 @@ export default function ProfilePage() {
     salary: "",
     experience: "Fresher",
     resumeBase64: "",
+    resumeFileName: "",
     atsScore: 0
   });
 
+  // In-App Notification Toast State
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  const showToast = (type: ToastType, title: string, message: string, duration?: number) => {
+    const newToast: ToastMessage = {
+      id: `toast-${Date.now()}-${Math.random().toString(36).substring(7)}`,
+      type,
+      title,
+      message,
+      duration: duration || 4500
+    };
+    setToasts(prev => [...prev, newToast]);
+  };
+
+  const dismissToast = (id: string) => {
+    setToasts(prev => prev.filter(t => t.id !== id));
+  };
+
   // Load profile from localStorage on mount
   useEffect(() => {
+    setMounted(true);
     const savedProfile = localStorage.getItem("my_profile");
     if (savedProfile) {
       const parsed = JSON.parse(savedProfile);
@@ -86,6 +109,8 @@ export default function ProfilePage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const [atsError, setAtsError] = useState<string | null>(null);
+
   // Run ATS audit using Gemini 2.5 Flash
   const runAtsAudit = async (resumeData: string, roleTitle: string) => {
     if (!resumeData) return;
@@ -98,43 +123,36 @@ export default function ProfilePage() {
     }
     setUsageQuota(getUsageQuota());
 
+    setAtsError(null);
+    setAtsAnalysis(null);
     setAnalyzingAts(true);
     try {
       const res = await fetch("/api/analyze-resume", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        cache: "no-store",
         body: JSON.stringify({
           role: roleTitle || formData.role || "Software Engineer",
           resumeBase64: resumeData
         })
       });
 
-      if (!res.ok) {
-        throw new Error("Could not calculate ATS score");
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Could not calculate ATS score");
       }
 
-      const data = await res.json();
-      if (data.success && data.analysis) {
+      if (data.analysis) {
         setAtsAnalysis(data.analysis);
         setFormData(prev => ({
           ...prev,
           atsScore: data.analysis.score
         }));
       }
-    } catch (err) {
-      console.error("ATS Analysis failed:", err);
-      // Fallback baseline calculation if server is busy
-      const fallbackScore = Math.floor(Math.random() * 15) + 68; // 68 - 82%
-      const fallbackAnalysis: AtsAnalysis = {
-        score: fallbackScore,
-        tier: fallbackScore >= 75 ? "Strong" : "Needs Optimization",
-        strengths: ["Clean contact hierarchy", "Core skills present"],
-        improvements: ["Single-column ATS formatting needed", "Action-oriented quantifiable metrics missing"],
-        keyMissingSkills: ["Industry Standard Keyword Density", "Impact Metrics"],
-        summary: `Your resume currently scores ${fallbackScore}/100 for ATS screening algorithms. Preparing a tailored version with ZenResume can increase your interview callbacks by 3x.`
-      };
-      setAtsAnalysis(fallbackAnalysis);
-      setFormData(prev => ({ ...prev, atsScore: fallbackScore }));
+    } catch (err: any) {
+      console.error("ATS Analysis error:", err);
+      setAtsError(err.message || "Could not complete ATS analysis. Please upload a standard 1-2 page PDF resume.");
+      setAtsAnalysis(null);
     } finally {
       setAnalyzingAts(false);
     }
@@ -150,18 +168,25 @@ export default function ProfilePage() {
         const reader = new FileReader();
         reader.onloadend = async () => {
           const base64String = (reader.result as string).split(",")[1];
-          const updated = { ...formData, resumeBase64: base64String };
+          const updated = { 
+            ...formData, 
+            resumeBase64: base64String,
+            resumeFileName: selectedFile.name 
+          };
           setFormData(updated);
           localStorage.setItem("my_profile", JSON.stringify(updated));
           setLoading(false);
 
-          // Automatically trigger ATS Analysis upon upload
+          // Automatically trigger fresh ATS Analysis upon upload
           await runAtsAudit(base64String, formData.role);
         };
         reader.readAsDataURL(selectedFile);
       } catch (err) {
         console.error("Error reading file:", err);
         setLoading(false);
+      } finally {
+        // Reset file input so subsequent uploads of same or new file always trigger onChange
+        e.target.value = "";
       }
     }
   };
@@ -173,10 +198,10 @@ export default function ProfilePage() {
       atsAnalysis
     };
     localStorage.setItem("my_profile", JSON.stringify(toSave));
-    alert("Career profile and ATS intelligence saved locally!");
+    showToast("success", "Profile Saved", "Career profile and ATS intelligence saved to local vault!");
   };
 
-  const isPro = isProSubscriber();
+  const isPro = mounted && (tierState.plan === "pro" || isProSubscriber());
   const limits = getCurrentTierLimits();
 
   return (
@@ -287,6 +312,7 @@ export default function ProfilePage() {
               </label>
               <div className="border-2 border-dashed border-[#E2E8F0] dark:border-[#232D36] hover:border-[#00685F]/50 dark:hover:border-[#2DD4BF]/50 rounded-2xl p-6 sm:p-8 text-center bg-[#F8FAFC] dark:bg-[#1A2228] transition-all relative group cursor-pointer">
                 <input
+                  id="resume-file-input"
                   type="file"
                   accept="application/pdf"
                   onChange={handleFileChange}
@@ -300,74 +326,194 @@ export default function ProfilePage() {
                   <p className="text-xs text-[#545F73] dark:text-slate-400">Instant ATS scanner & client-side vault encryption (Max 5MB)</p>
 
                   {formData.resumeBase64 && !analyzingAts && (
-                    <div className="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800 mt-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      Resume Loaded in Vault
+                    <div className="flex flex-col items-center gap-1.5 mt-2 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 px-4 py-2.5 rounded-2xl animate-in fade-in">
+                      <div className="inline-flex items-center gap-1.5 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                        <span>Active Vault Document:</span>
+                        <span className="font-extrabold text-[#00685F] dark:text-[#2DD4BF] bg-white dark:bg-slate-900 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800 max-w-[260px] sm:max-w-xs truncate">
+                          {formData.resumeFileName || "Candidate_Resume.pdf"}
+                        </span>
+                      </div>
+                      <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-medium">Click anywhere to replace or upload a new PDF</span>
                     </div>
                   )}
 
                   {analyzingAts && (
-                    <div className="inline-flex items-center gap-2 bg-teal-50 dark:bg-teal-950/40 text-[#00685F] dark:text-[#2DD4BF] text-xs font-bold px-4 py-1.5 rounded-full border border-teal-200 dark:border-teal-800 mt-2">
+                    <div className="inline-flex items-center gap-2 bg-teal-50 dark:bg-teal-950/40 text-[#00685F] dark:text-[#2DD4BF] text-xs font-bold px-4 py-2 rounded-full border border-teal-200 dark:border-teal-800 mt-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Auditing Resume with Gemini ATS Model...</span>
+                      <span>Auditing {formData.resumeFileName ? `"${formData.resumeFileName}"` : "Resume"} with ATS Engine...</span>
                     </div>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Save Button */}
-            <div className="pt-2 flex items-center justify-between">
+            {/* Action Buttons Cluster */}
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800/80 pt-4">
               <div className="flex items-center gap-2 text-xs text-[#545F73] dark:text-slate-400">
                 <ShieldCheck className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
                 <span>Zero-Backend Privacy Guarantee</span>
               </div>
 
-              <button
-                type="submit"
-                disabled={loading || analyzingAts}
-                className="bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-semibold text-sm px-6 sm:px-8 py-3 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 btn-tactile disabled:opacity-50"
-              >
-                <Save className="w-4 h-4" />
-                <span>Save Career Profile</span>
-              </button>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                {/* Instant ATS Scan / Re-Audit Button for 3-Month & Annual VIP subscribers */}
+                {isPro && (tierState.billingCycle === "quarterly" || tierState.billingCycle === "annual") ? (
+                  <button
+                    type="button"
+                    onClick={() => runAtsAudit(formData.resumeBase64, formData.role)}
+                    disabled={analyzingAts || !formData.resumeBase64}
+                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                    title="Trigger instant ATS parsing on demand whenever you change your role or resume"
+                  >
+                    <RefreshCw className={`w-4 h-4 ${analyzingAts ? "animate-spin" : ""}`} />
+                    <span>{analyzingAts ? "Auditing Resume..." : "⚡ Re-Audit ATS for New Role"}</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setPricingModalOpen(true)}
+                    className="bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 font-bold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-xl transition-all shadow-sm hover:bg-amber-100 dark:hover:bg-amber-900/60 flex items-center justify-center gap-2 cursor-pointer"
+                    title="Unlock Unlimited Instant ATS Audits on the 3-Month Pass"
+                  >
+                    <Lock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                    <span>Unlock Unlimited ATS Audits (3-Month Pass)</span>
+                  </button>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loading || analyzingAts}
+                  className="bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-semibold text-sm px-6 sm:px-8 py-3 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 btn-tactile disabled:opacity-50"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save Profile</span>
+                </button>
+              </div>
             </div>
           </form>
         </div>
 
+        {/* EXPLICIT ATS ERROR BANNER (Displayed if upload is invalid or analysis fails) */}
+        {atsError && (
+          <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/10 border-2 border-rose-500/30 text-black dark:text-white flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2">
+            <div className="p-2 rounded-xl bg-rose-500/20 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-extrabold text-sm text-rose-800 dark:text-rose-300">ATS Audit Notice</h4>
+              <p className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
+                {atsError}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* HIGH-CONVERTING ATS SCORE & KEYWORD DIAGNOSTICS CARD */}
         {atsAnalysis && (
-          <div className="bg-gradient-to-br from-white to-[#F0FDF4] dark:from-[#141B20] dark:to-[#0f241d] rounded-3xl border-2 border-emerald-500/30 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
-            {/* Ambient Glow */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          (atsAnalysis.isNonResume || atsAnalysis.score === 0) ? (
+            /* SPECIALIZED OPTION-2 SECOND CHANCE CARD (For Non-Resume Documents) */
+            <div className="bg-gradient-to-br from-white to-amber-50/50 dark:from-[#141B20] dark:to-amber-950/20 rounded-3xl border-2 border-amber-500/40 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500 space-y-5">
+              {/* Ambient Glow */}
+              <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            {/* Score Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-emerald-100 dark:border-emerald-900/40">
-              <div>
-                <div className="inline-flex items-center gap-1.5 bg-emerald-100/80 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 text-xs font-extrabold px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-800 mb-2">
-                  <Flame className="w-3.5 h-3.5 text-orange-500" />
-                  <span>Real-Time ATS Screening Score</span>
+              {/* Header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-amber-200 dark:border-amber-900/40">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 text-xs font-black px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 mb-2">
+                    {isPro ? <Crown className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> : <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />}
+                    <span>{isPro ? "PRO WORKSPACE • NON-RESUME DETECTED" : "HIRING COMMITTEE REALITY CHECK • NON-RESUME DETECTED"}</span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#171D1C] dark:text-white">
+                    No Candidate Profile Found
+                  </h2>
+                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#545F73] dark:text-slate-400">
+                    <span>Flagged Upload:</span>
+                    <span className="inline-flex items-center gap-1 bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 px-2.5 py-0.5 rounded-md font-bold">
+                      <FileText className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                      <span className="max-w-[240px] truncate">{formData.resumeFileName || "Uploaded_Document.pdf"}</span>
+                    </span>
+                  </div>
                 </div>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#171D1C] dark:text-white">
-                  Your Resume ATS Compatibility
-                </h2>
-                <p className="text-xs text-[#545F73] dark:text-slate-400 mt-1">
-                  Targeting: <strong className="text-[#171D1C] dark:text-white">{formData.role || "Target Role"}</strong>
-                </p>
+
+                {/* 0/100 Score Display */}
+                <div className="flex items-center gap-4 bg-white dark:bg-[#1A2228] p-3.5 rounded-2xl border border-amber-300 dark:border-amber-800 shadow-sm self-start md:self-auto">
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-black text-amber-600 dark:text-amber-400 leading-none">
+                      0<span className="text-base font-bold text-slate-400">/100</span>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-amber-800 dark:text-amber-300 block mt-1">
+                      Invalid Document
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              {/* Score Display */}
-              <div className="flex items-center gap-4 bg-white dark:bg-[#1A2228] p-3.5 rounded-2xl border border-emerald-200 dark:border-emerald-800 shadow-sm self-start md:self-auto">
-                <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-black text-[#00685F] dark:text-[#2DD4BF] leading-none">
-                    {atsAnalysis.score}<span className="text-base font-bold text-slate-400">/100</span>
+              {/* Dynamic Copy: Pro Subscribers vs Free Tier 2nd Chance */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-[#1A2228]/90 border border-amber-200 dark:border-amber-900/50 space-y-3">
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
+                  Recruiters and corporate ATS filters don’t give second chances for misaligned uploads. In real corporate hiring, submitting a project paper or non-resume document results in an instant automated rejection within 3 seconds.
+                </p>
+                {isPro ? (
+                  <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs font-semibold leading-relaxed">
+                    👑 <strong>Unlimited Pro Access Active:</strong> As a Pro member, you have unlimited ATS resume audits across all your target roles. To ensure your real applications pass modern corporate filters with a 95+ score, please upload your official 1–2 page candidate resume.
                   </div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-800 dark:text-emerald-300 block mt-1">
-                    {atsAnalysis.tier}
-                  </span>
-                </div>
+                ) : (
+                  <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs font-semibold leading-relaxed">
+                    ⚡ <strong>1-Time Courtesy Second Chance Unlocked:</strong> ZenScout AI normally enforces a strict <strong>1 Free ATS Audit per day</strong> for standard accounts. Because we take your career success seriously and want you to see where your profile truly stands, we have granted you a second chance today to upload your official candidate resume.
+                  </div>
+                )}
+              </div>
+
+              {/* Action Button to Reupload */}
+              <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("resume-file-input")?.click()}
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs sm:text-sm py-3 px-6 rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <UploadCloud className="w-4 h-4" />
+                  <span>{isPro ? "Upload Official Candidate Resume (Pro Access) →" : "Claim 2nd Chance & Upload Official Resume →"}</span>
+                </button>
               </div>
             </div>
+          ) : (
+            /* STANDARD ATS ANALYSIS CARD (For Valid Resumes) */
+            <div className="bg-gradient-to-br from-white to-[#F0FDF4] dark:from-[#141B20] dark:to-[#0f241d] rounded-3xl border-2 border-emerald-500/30 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
+              {/* Ambient Glow */}
+              <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+              {/* Score Header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-emerald-100 dark:border-emerald-900/40">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 bg-emerald-100/80 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 text-xs font-extrabold px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-800 mb-2">
+                    <Flame className="w-3.5 h-3.5 text-orange-500" />
+                    <span>Real-Time ATS Screening Score</span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#171D1C] dark:text-white">
+                    Your Resume ATS Compatibility
+                  </h2>
+                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#545F73] dark:text-slate-400">
+                    <span>Targeting: <strong className="text-[#171D1C] dark:text-white">{formData.role || "Target Role"}</strong></span>
+                    <span>•</span>
+                    <span className="inline-flex items-center gap-1 bg-emerald-100/70 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 px-2.5 py-0.5 rounded-md font-bold border border-emerald-200 dark:border-emerald-800">
+                      <FileText className="w-3 h-3 text-[#00685F] dark:text-[#2DD4BF]" />
+                      <span className="max-w-[220px] truncate">{formData.resumeFileName || "Candidate_Resume.pdf"}</span>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Score Display */}
+                <div className="flex items-center gap-4 bg-white dark:bg-[#1A2228] p-3.5 rounded-2xl border border-emerald-200 dark:border-emerald-800 shadow-sm self-start md:self-auto">
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-black text-[#00685F] dark:text-[#2DD4BF] leading-none">
+                      {atsAnalysis.score}<span className="text-base font-bold text-slate-400">/100</span>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-800 dark:text-emerald-300 block mt-1">
+                      {atsAnalysis.tier}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
             {/* Analysis Summary */}
             <div className="py-5">
@@ -452,7 +598,7 @@ export default function ProfilePage() {
               </button>
             </div>
           </div>
-        )}
+        ) )}
       </div>
 
       {/* Pricing Modal */}
@@ -464,6 +610,9 @@ export default function ProfilePage() {
           setUsageQuota(getUsageQuota());
         }} 
       />
+
+      {/* In-App Notification Toast Stream */}
+      <NotificationToast toasts={toasts} onDismiss={dismissToast} />
     </div>
   );
 }
