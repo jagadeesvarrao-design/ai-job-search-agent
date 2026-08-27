@@ -443,23 +443,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ZERO-BACKEND PRIVACY GUARANTEE */}
+      {/* ZERO-BACKEND PRIVACY GUARANTEE & FOUNDER TRUST COMMITMENT */}
       <section className="py-12 sm:py-16 w-full max-w-5xl mx-auto text-left">
-        <div className="bg-white dark:bg-[#141B20] rounded-3xl p-6 sm:p-8 md:p-14 border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex flex-col md:flex-row items-center gap-8 sm:gap-12 relative overflow-hidden">
+        <div className="bg-white dark:bg-[#141B20] rounded-3xl p-6 sm:p-8 md:p-12 border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex flex-col md:flex-row items-center gap-8 sm:gap-10 relative overflow-hidden">
           <div className="flex-1">
-            <span className="text-xs uppercase tracking-widest text-[#00685F] dark:text-[#2DD4BF] font-bold mb-2 block">Privacy First</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-6 text-[#171D1C] dark:text-white">
+            <span className="text-xs uppercase tracking-widest text-[#00685F] dark:text-[#2DD4BF] font-bold mb-2 block">Privacy First Guarantee</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-[#171D1C] dark:text-white">
               100% Data Privacy.<br />Zero Database Storage.
             </h2>
-            <p className="text-[#545F73] dark:text-slate-300 text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed">
+            <p className="text-[#545F73] dark:text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
               At <strong>Aneevarp Solutions</strong>, we believe your resume and career history belong exclusively to you. When you upload a PDF resume, it is encoded locally in your browser and processed statelessly without ever being stored in a central database.
             </p>
-            <ul className="space-y-3 sm:space-y-4">
+            <ul className="space-y-3">
               {[
-                "No cloud database storing your resume or contact details.",
-                "Your career profile lives exclusively in your browser storage.",
+                "No cloud database storing your resume, phone number, or contact info.",
+                "Your career profile lives exclusively in your local browser vault.",
                 "Direct, stateless encrypted streaming with Google Gemini AI.",
-                "Instantly and permanently wiped whenever you clear your cache."
+                "Instantly and permanently wiped whenever you clear your browser cache."
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-[#171D1C] dark:text-slate-200 text-xs sm:text-sm font-medium">
                   <div className="p-1 rounded-full bg-teal-50 dark:bg-teal-950/60 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0">
@@ -470,12 +470,41 @@ export default function Home() {
               ))}
             </ul>
           </div>
-          <div className="flex-1 flex justify-center w-full sm:w-auto">
-             <div className="w-full sm:w-64 h-56 sm:h-64 bg-gradient-to-br from-teal-50 to-blue-50 dark:from-[#1A2228] dark:to-teal-950/30 rounded-3xl flex flex-col items-center justify-center border border-[#E2E8F0] dark:border-[#232D36] shadow-soft p-6 text-center">
-                <ShieldCheck className="w-12 h-12 sm:w-16 sm:h-16 text-[#00685F] dark:text-[#2DD4BF] mb-3" />
-                <span className="font-bold text-[#171D1C] dark:text-white text-sm sm:text-base">Client-Side Vault</span>
-                <span className="text-xs text-[#545F73] dark:text-slate-400 mt-1">Zero-Backend Security by Aneevarp Solutions</span>
-             </div>
+
+          {/* High-Trust Founder Commitment Card */}
+          <div className="w-full md:w-80 flex-shrink-0">
+            <div className="bg-gradient-to-br from-[#F8FAFC] to-teal-50/50 dark:from-[#1A2228] dark:to-teal-950/40 rounded-3xl p-5 sm:p-6 border border-teal-200/80 dark:border-teal-800/60 shadow-md text-center space-y-3 relative">
+              <div className="w-24 h-24 mx-auto rounded-2xl overflow-hidden border-2 border-[#00685F] dark:border-[#2DD4BF] shadow-md relative group">
+                <img 
+                  src="/founder.jpg" 
+                  alt="Jagadeeswara Rao Peddada - Founder of Aneevarp Solutions"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-teal-100 dark:bg-teal-900/60 text-[#00685F] dark:text-[#2DD4BF] px-2.5 py-0.5 rounded-full border border-teal-200 dark:border-teal-800">
+                  Founder's Privacy Pledge
+                </span>
+                <h4 className="font-extrabold text-sm text-[#171D1C] dark:text-white pt-1">
+                  Jagadeeswara Rao Peddada
+                </h4>
+                <p className="text-[11px] text-[#545F73] dark:text-slate-400 font-medium">
+                  Lead Architect @ Aneevarp Solutions
+                </p>
+              </div>
+
+              <p className="text-xs text-slate-700 dark:text-slate-300 italic leading-relaxed pt-1">
+                "We engineered ZenScout AI with strict Zero-Backend cryptography. Your career data never touches a server."
+              </p>
+
+              <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800/80 flex items-center justify-center gap-3 text-xs">
+                <Link href="/about" className="font-bold text-[#00685F] dark:text-[#2DD4BF] hover:underline inline-flex items-center gap-1">
+                  <span>Our Story</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
