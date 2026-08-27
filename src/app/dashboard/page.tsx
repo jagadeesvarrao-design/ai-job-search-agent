@@ -617,49 +617,49 @@ export default function DashboardPage() {
 
       {/* 1. TOP ANALYTICS & STATS BAR */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-teal-50 text-[#00685F]">
+        <div className="bg-white dark:bg-[#141B20] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-[#00685F] dark:text-[#2DD4BF]">
             <Briefcase className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">Total Scouted</span>
-            <span className="text-2xl font-black text-black">{totalScouted}</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Total Scouted</span>
+            <span className="text-2xl font-black text-black dark:text-white">{totalScouted}</span>
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-emerald-50 text-emerald-700">
+        <div className="bg-white dark:bg-[#141B20] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">Avg Match Score</span>
-            <span className="text-2xl font-black text-emerald-700">{avgMatch > 0 ? `${avgMatch}%` : "—"}</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Avg Match Score</span>
+            <span className="text-2xl font-black text-emerald-700 dark:text-emerald-300">{avgMatch > 0 ? `${avgMatch}%` : "—"}</span>
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-sky-50 text-[#0284C7]">
+        <div className="bg-white dark:bg-[#141B20] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-[#0284C7] dark:text-sky-300">
             <Send className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">Applications Sent</span>
-            <span className="text-2xl font-black text-[#0284C7]">{appliedCount}</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Applications Sent</span>
+            <span className="text-2xl font-black text-[#0284C7] dark:text-sky-300">{appliedCount}</span>
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-purple-50 text-purple-700">
+        <div className="bg-white dark:bg-[#141B20] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
             <Award className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">Interviews & Offers</span>
-            <span className="text-2xl font-black text-purple-700">{interviewsCount}</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Interviews & Offers</span>
+            <span className="text-2xl font-black text-purple-700 dark:text-purple-300">{interviewsCount}</span>
           </div>
         </div>
       </section>
 
       {/* 2. LIVE SEARCH & FILTER CONTROL BAR */}
-      <section className="bg-white rounded-3xl border border-[#E2E8F0] shadow-soft p-5 md:p-6">
+      <section className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft p-5 md:p-6">
         <div className="flex flex-col lg:flex-row items-center gap-4">
           {/* Target Role Input */}
           <div className="flex-1 w-full relative">
@@ -669,7 +669,7 @@ export default function DashboardPage() {
               value={searchRole}
               onChange={(e) => setSearchRole(e.target.value)}
               placeholder="Search Role (e.g. React Developer, Frontend Engineer, Data Scientist)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-bold text-black focus:outline-none focus:border-[#00685F] focus:ring-2 focus:ring-[#00685F]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#00685F] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#00685F]/20"
             />
           </div>
 
@@ -681,7 +681,7 @@ export default function DashboardPage() {
               value={searchLocation}
               onChange={(e) => setSearchLocation(e.target.value)}
               placeholder="City (e.g. Bangalore, Hyderabad)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-bold text-black focus:outline-none focus:border-[#00685F] focus:ring-2 focus:ring-[#00685F]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#00685F] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#00685F]/20"
             />
           </div>
 
@@ -691,8 +691,8 @@ export default function DashboardPage() {
             onClick={() => setRemoteOnly(!remoteOnly)}
             className={`px-4 py-3 rounded-xl border text-xs font-bold flex items-center gap-2 transition-all w-full lg:w-auto justify-center ${
               remoteOnly 
-                ? "bg-teal-50 border-[#00685F] text-[#00685F]" 
-                : "bg-[#F8FAFC] border-[#E2E8F0] text-[#545F73] hover:text-black"
+                ? "bg-teal-50 dark:bg-teal-950/60 border-[#00685F] dark:border-[#2DD4BF] text-[#00685F] dark:text-[#2DD4BF]" 
+                : "bg-[#F8FAFC] dark:bg-[#1A2228] border-[#E2E8F0] dark:border-[#232D36] text-[#545F73] dark:text-slate-300 hover:text-black dark:hover:text-white"
             }`}
           >
             <Globe className="w-4 h-4" />
@@ -704,9 +704,9 @@ export default function DashboardPage() {
             <button
               onClick={handleRunFilter}
               disabled={filtering}
-              className="bg-white border border-[#E2E8F0] hover:bg-[#F0F5F2] text-black font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-white dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] hover:bg-[#F0F5F2] dark:hover:bg-[#232D36] text-black dark:text-white font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
             >
-              {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#00685F]" /> : <Filter className="w-4 h-4 text-[#00685F]" />}
+              {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#00685F] dark:text-[#2DD4BF]" /> : <Filter className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />}
               <span>Score ATS</span>
             </button>
 
