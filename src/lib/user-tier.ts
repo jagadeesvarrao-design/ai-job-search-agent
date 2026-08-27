@@ -1,5 +1,7 @@
 "use client";
 
+import { db } from "@/lib/firebase";
+
 export type UserPlan = "free" | "pro";
 export type BillingCycle = "monthly" | "quarterly" | "annual";
 
@@ -25,6 +27,9 @@ export interface UserTierState {
   salaryIntel: boolean;
   recruiterTemplates: boolean;
   voiceAudio: boolean;
+  isZenSuite?: boolean;
+  tierTitle?: string;
+  sourceApp?: string;
 }
 
 // Industry-Standard Tier Quota Limits & Capabilities
@@ -68,6 +73,16 @@ export const TIER_LIMITS = {
     showAds: false,
     voiceAudio: true,
     label: "Annual Pro VIP",
+  },
+  zen_suite: {
+    maxScoutsPerDay: 99999,
+    maxCoverLettersPerDay: 99999,
+    maxInterviewRounds: 99999,
+    maxAtsAuditsPerDay: 99999,
+    isUnlimited: true,
+    showAds: false,
+    voiceAudio: true,
+    label: "Zen Suite Ultimate",
   }
 };
 
@@ -101,6 +116,16 @@ export const PRICING_DATA = {
     usdMonthlyEquivalent: 4.08,
     tag: "Best Long-Term Value (Save 60%)",
     subtext: "For continuous career growth, promotions, and lateral career switches."
+  },
+  zen_suite: {
+    inr: 599,
+    inrPeriod: "month",
+    inrMonthlyEquivalent: 599,
+    usd: 15.99,
+    usdPeriod: "mo",
+    usdMonthlyEquivalent: 15.99,
+    tag: "🌟 ALL-IN-ONE ZEN SUITE CROSS-PASS",
+    subtext: "Unlocks ZenScout AI + ZenDoc AI + ZenResume simultaneously under a single subscription."
   }
 };
 
@@ -114,7 +139,9 @@ export function getUserTierState(): UserTierState {
     deepAtsGaps: false,
     salaryIntel: false,
     recruiterTemplates: false,
-    voiceAudio: false
+    voiceAudio: false,
+    isZenSuite: false,
+    tierTitle: "Free Tier"
   };
 
   if (typeof window === "undefined") {
@@ -139,11 +166,13 @@ export function getUserTierState(): UserTierState {
         parsed.salaryIntel = false;
         parsed.recruiterTemplates = false;
         parsed.voiceAudio = false;
+        parsed.isZenSuite = false;
+        parsed.tierTitle = "Free Tier";
         localStorage.setItem("user_tier", JSON.stringify(parsed));
       }
     }
     
-    parsed.voiceAudio = parsed.plan === "pro" && (parsed.billingCycle === "quarterly" || parsed.billingCycle === "annual");
+    parsed.voiceAudio = parsed.plan === "pro" && (parsed.billingCycle === "quarterly" || parsed.billingCycle === "annual" || parsed.isZenSuite === true);
     return parsed;
   } catch (e) {
     return defaultState;
@@ -160,7 +189,7 @@ export function isProSubscriber(): boolean {
 
 export function hasVoiceAudioAccess(): boolean {
   const tier = getUserTierState();
-  return tier.plan === "pro" && (tier.billingCycle === "quarterly" || tier.billingCycle === "annual");
+  return tier.plan === "pro" && (tier.billingCycle === "quarterly" || tier.billingCycle === "annual" || tier.isZenSuite === true);
 }
 
 export function shouldShowAds(): boolean {
@@ -169,13 +198,14 @@ export function shouldShowAds(): boolean {
 
 export function getCurrentTierLimits() {
   const tier = getUserTierState();
+  if (tier.isZenSuite) return TIER_LIMITS.zen_suite;
   if (tier.plan === "free") return TIER_LIMITS.free;
   if (tier.billingCycle === "quarterly") return TIER_LIMITS.quarterly;
   if (tier.billingCycle === "annual") return TIER_LIMITS.annual;
   return TIER_LIMITS.monthly;
 }
 
-export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthly") {
+export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthly", isZenSuite: boolean = false) {
   if (typeof window === "undefined") return;
   const isIndia = Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Calcutta") ||
                   Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Kolkata") ||
@@ -185,23 +215,108 @@ export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthl
   
   let daysValid = 30;
   if (billingCycle === "quarterly") daysValid = 90;
-  if (billingCycle === "annual") daysValid = 365;
+  if (billingCycle === "annual" || isZenSuite) daysValid = 365;
 
   const state: UserTierState = {
     plan,
     currency,
     billingCycle,
     expiresAt: new Date(Date.now() + daysValid * 24 * 60 * 60 * 1000).toISOString(),
-    vipBadge: billingCycle === "annual",
-    prioritySpeed: billingCycle === "quarterly" || billingCycle === "annual",
-    deepAtsGaps: billingCycle === "monthly" || billingCycle === "quarterly" || billingCycle === "annual",
-    salaryIntel: billingCycle === "annual",
-    recruiterTemplates: billingCycle === "annual",
-    voiceAudio: billingCycle === "quarterly" || billingCycle === "annual"
+    vipBadge: billingCycle === "annual" || isZenSuite,
+    prioritySpeed: billingCycle === "quarterly" || billingCycle === "annual" || isZenSuite,
+    deepAtsGaps: true,
+    salaryIntel: billingCycle === "annual" || isZenSuite,
+    recruiterTemplates: billingCycle === "annual" || isZenSuite,
+    voiceAudio: billingCycle === "quarterly" || billingCycle === "annual" || isZenSuite,
+    isZenSuite,
+    tierTitle: isZenSuite ? "Zen Suite Ultimate" : (billingCycle === "annual" ? "ZenScout Annual VIP" : billingCycle === "quarterly" ? "ZenScout 3-Month Pass" : "ZenScout 1-Month Starter")
   };
 
   localStorage.setItem("user_tier", JSON.stringify(state));
   window.dispatchEvent(new Event("user-tier-updated"));
+}
+
+/**
+ * Automatically queries Cloud Firestore for cross-suite subscription entitlement.
+ * Matches unified schema: users/{uid} -> subscription: { plan_id: "zen_suite", status: "active", ... }
+ */
+export async function syncUserSubscriptionFromFirestore(user: { uid: string; email?: string | null }): Promise<UserTierState> {
+  const defaultState = getUserTierState();
+  if (!user?.uid) return defaultState;
+
+  try {
+    const { doc, getDoc, collection, query, where, getDocs } = await import("firebase/firestore");
+    if (!db || !db.type) return defaultState;
+
+    let subscriptionData: any = null;
+
+    // 1. Try fetching doc by user.uid directly
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userDocRef);
+      if (userSnap.exists()) {
+        subscriptionData = userSnap.data()?.subscription;
+      }
+    } catch (err) {
+      console.warn("Direct uid subscription lookup:", err);
+    }
+
+    // 2. Fallback: Search by email if uid was not registered
+    if (!subscriptionData && user.email) {
+      try {
+        const q = query(collection(db, "users"), where("email", "==", user.email));
+        const querySnap = await getDocs(q);
+        if (!querySnap.empty) {
+          subscriptionData = querySnap.docs[0].data()?.subscription;
+        }
+      } catch (err) {
+        console.warn("Email subscription lookup:", err);
+      }
+    }
+
+    if (subscriptionData) {
+      const { plan_id, tier_title, status, expires_at, source_app } = subscriptionData;
+      const isActive = status === "active" || status === "trialing";
+      const isNotExpired = !expires_at || new Date(expires_at).getTime() > Date.now();
+
+      if (isActive && isNotExpired) {
+        const isSuite = plan_id === "zen_suite" || 
+                        plan_id === "suite" || 
+                        (tier_title && tier_title.toLowerCase().includes("suite")) ||
+                        (source_app && source_app.toLowerCase().includes("suite"));
+
+        const isIndia = Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Calcutta") ||
+                        Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Kolkata") ||
+                        Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Asia/Kolkata");
+
+        const newState: UserTierState = {
+          plan: "pro",
+          currency: isIndia ? "INR" : "USD",
+          billingCycle: isSuite ? "annual" : (plan_id === "annual" ? "annual" : (plan_id === "quarterly" ? "quarterly" : "monthly")),
+          expiresAt: expires_at,
+          vipBadge: true,
+          prioritySpeed: true,
+          deepAtsGaps: true,
+          salaryIntel: true,
+          recruiterTemplates: true,
+          voiceAudio: true,
+          isZenSuite: isSuite,
+          tierTitle: tier_title || (isSuite ? "Zen Suite Ultimate" : "ZenScout Pro"),
+          sourceApp: source_app || "cloud_firestore"
+        };
+
+        if (typeof window !== "undefined") {
+          localStorage.setItem("user_tier", JSON.stringify(newState));
+          window.dispatchEvent(new Event("user-tier-updated"));
+        }
+        return newState;
+      }
+    }
+    return defaultState;
+  } catch (globalErr) {
+    console.error("Failed to sync subscription entitlement from Firestore:", globalErr);
+    return defaultState;
+  }
 }
 
 export function getTodayDateString(): string {

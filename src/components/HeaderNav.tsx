@@ -31,10 +31,14 @@ export default function HeaderNav() {
   const [pricingModalOpen, setPricingModalOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
+  const [isZenSuite, setIsZenSuite] = useState(false);
+
   // Initialize theme and Pro subscription status
   useEffect(() => {
     const checkTier = () => {
-      setIsPro(isProSubscriber());
+      const tier = getUserTierState();
+      setIsPro(tier.plan === "pro");
+      setIsZenSuite(tier.isZenSuite === true);
     };
 
     checkTier();
@@ -132,7 +136,7 @@ export default function HeaderNav() {
                   className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-all"
                 >
                   <Crown className="w-3.5 h-3.5 fill-white" />
-                  <span>PRO ACTIVE</span>
+                  <span>{isZenSuite ? "ZEN SUITE VIP" : "PRO ACTIVE"}</span>
                 </button>
               ) : (
                 <button
@@ -205,7 +209,7 @@ export default function HeaderNav() {
               >
                 <span className="flex items-center gap-2">
                   <Crown className="w-4 h-4 fill-white" />
-                  <span>{isPro ? "ZenScout Pro Active (Manage Plan)" : "Upgrade to Pro (Ad-Free & Turbo Speed)"}</span>
+                  <span>{isPro ? (isZenSuite ? "👑 Zen Suite Ultimate VIP Active" : "ZenScout Pro Active (Manage Plan)") : "Upgrade to Pro (Ad-Free & Turbo Speed)"}</span>
                 </span>
                 <ArrowRight className="w-4 h-4" />
               </button>

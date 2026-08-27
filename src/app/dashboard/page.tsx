@@ -542,16 +542,18 @@ export default function DashboardPage() {
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-sm text-black dark:text-white">
                 {isPro 
-                  ? (tierInfo.billingCycle === "annual" 
-                      ? "ZenScout ANNUAL PRO VIP" 
-                      : tierInfo.billingCycle === "quarterly" 
-                        ? "ZenScout 3-MONTH FULL PASS" 
-                        : "ZenScout 1-MONTH STARTER")
+                  ? (tierInfo.isZenSuite 
+                      ? "ANEEVARP ZEN SUITE ULTIMATE"
+                      : tierInfo.billingCycle === "annual" 
+                        ? "ZenScout ANNUAL PRO VIP" 
+                        : tierInfo.billingCycle === "quarterly" 
+                          ? "ZenScout 3-MONTH FULL PASS" 
+                          : "ZenScout 1-MONTH STARTER")
                   : "Free Tier Workspace"}
               </span>
               {isPro ? (
                 <span className="text-[10px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black px-2 py-0.5 rounded-full">
-                  {tierInfo.billingCycle === "annual" ? "👑 VIP UNLIMITED" : tierInfo.billingCycle === "quarterly" ? "⚡ UNLIMITED AI" : "100% AD-FREE"}
+                  {tierInfo.isZenSuite ? "👑 ZEN SUITE ULTIMATE VIP" : (tierInfo.billingCycle === "annual" ? "👑 VIP UNLIMITED" : tierInfo.billingCycle === "quarterly" ? "⚡ UNLIMITED AI" : "100% AD-FREE")}
                 </span>
               ) : (
                 <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full">
@@ -561,11 +563,13 @@ export default function DashboardPage() {
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               {isPro 
-                ? (tierInfo.billingCycle === "monthly"
-                    ? `1-Month Starter Plan: ${usageQuota.scoutRunsToday}/25 Daily Scouts • ${usageQuota.coverLettersGeneratedToday}/10 Letters • 100% Ad-Free`
-                    : tierInfo.billingCycle === "quarterly"
-                      ? `3-Month Pass: ⚡ Truly Unlimited AI Scouting, Letters & Coach • Priority 2x Server Speed • 100% Ad-Free`
-                      : `Annual VIP Member: 👑 VIP Badge Active • Truly Unlimited AI • Recruiter Outreach & Salary Playbooks Active`)
+                ? (tierInfo.isZenSuite
+                    ? `⚡ All-in-One Cross-Suite Pass Active (ZenScout + ZenDoc + ZenResume) • Truly Unlimited AI Scouting, Letters & AI Voice Coach • Priority 2x Server Speed • 100% Ad-Free`
+                    : tierInfo.billingCycle === "monthly"
+                      ? `1-Month Starter Plan: ${usageQuota.scoutRunsToday}/25 Daily Scouts • ${usageQuota.coverLettersGeneratedToday}/10 Letters • 100% Ad-Free`
+                      : tierInfo.billingCycle === "quarterly"
+                        ? `3-Month Pass: ⚡ Truly Unlimited AI Scouting, Letters & Coach • Priority 2x Server Speed • 100% Ad-Free`
+                        : `Annual VIP Member: 👑 VIP Badge Active • Truly Unlimited AI • Recruiter Outreach & Salary Playbooks Active`)
                 : `Daily Free Usage: ${usageQuota.scoutRunsToday}/5 Scouts • ${usageQuota.coverLettersGeneratedToday}/2 Letters • ${usageQuota.interviewMessagesSent}/3 Coach Exchanges`}
             </p>
           </div>

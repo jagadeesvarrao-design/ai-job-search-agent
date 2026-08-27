@@ -43,7 +43,7 @@ export default function PricingPage() {
     }
   }, []);
 
-  const handleCheckout = (planKey: "monthly" | "quarterly" | "annual") => {
+  const handleCheckout = (planKey: "monthly" | "quarterly" | "annual" | "zen_suite") => {
     if (!user) {
       setShowAuthWarning(true);
       return;
@@ -52,7 +52,11 @@ export default function PricingPage() {
     setShowAuthWarning(false);
     setIsUpgrading(true);
     setTimeout(() => {
-      setUserPlan("pro", planKey);
+      if (planKey === "zen_suite") {
+        setUserPlan("pro", "annual", true);
+      } else {
+        setUserPlan("pro", planKey, false);
+      }
       setIsUpgrading(false);
       setUpgradeSuccess(true);
     }, 800);
@@ -66,7 +70,7 @@ export default function PricingPage() {
       <div className="mb-6">
         <div className="inline-flex items-center gap-1.5 bg-[#00685F]/10 dark:bg-teal-900/30 text-[#00685F] dark:text-[#2DD4BF] text-xs font-black px-4 py-1.5 rounded-full mb-3">
           <Crown className="w-4 h-4 text-amber-500" />
-          <span>ZENScout PRO CAREER ACCELERATION</span>
+          <span>ZENScout PRO & ZEN SUITE ACCELERATION</span>
         </div>
         <h1 className="text-3xl md:text-5xl font-black text-black dark:text-white tracking-tight mb-3">
           Choose Your Career Acceleration Plan
@@ -93,7 +97,7 @@ export default function PricingPage() {
 
           <button
             onClick={() => setAuthModalOpen(true)}
-            className="bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white text-xs font-black py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1.5 whitespace-nowrap self-stretch sm:self-auto justify-center"
+            className="bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white text-xs font-black py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1.5 whitespace-nowrap self-stretch sm:self-auto justify-center cursor-pointer"
           >
             <LogIn className="w-4 h-4" />
             <span>Sign In / Create Account</span>
@@ -101,29 +105,51 @@ export default function PricingPage() {
         </div>
       )}
 
-      {/* 2. COMPACT STREAMLINED VALUE PROPOSITION BANNER (Mobile-First) */}
-      <div className="my-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white shadow-md border border-teal-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-left">
-        <div>
-          <div className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-400 mb-1">
-            <Zap className="w-3 h-3 fill-amber-400" />
-            <span>ACCELERATE YOUR SEARCH</span>
+      {/* 🌟 ZEN SUITE ULTIMATE ALL-IN-ONE CROSS-APP BUNDLE */}
+      <div className="my-6 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-teal-400/60 shadow-2xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-left relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="space-y-2 max-w-2xl relative z-10">
+          <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">
+            <Crown className="w-3.5 h-3.5 fill-white" />
+            <span>ANEEVARP ZEN SUITE ULTIMATE • ALL 3 APPS UNLOCKED</span>
           </div>
-          <h3 className="text-sm sm:text-base md:text-lg font-black text-white leading-tight">
-            Cut Your Job Hunt from 4 Months to 3 Weeks
-          </h3>
-          <p className="text-slate-300 text-xs sm:text-sm mt-0.5 max-w-2xl leading-relaxed">
-            Automate tedious applications, bypass ATS filters, and practice live AI voice mock interviews tailored to your exact target role.
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white flex flex-wrap items-center gap-3">
+            <span>Zen Suite Ultimate Cross-Pass</span>
+            <span className="text-sm sm:text-base font-bold text-[#2DD4BF] bg-teal-950/80 px-3 py-1 rounded-xl border border-teal-500/40">
+              {isINR ? "₹599/month" : "$15.99/mo"}
+            </span>
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            One unified master subscription unlocking <strong>ZenScout AI</strong> (Unlimited Pro Scouting & AI Voice Coach), <strong>ZenDoc AI</strong> (Unlimited Document AI & Multi-File OCR), and <strong>ZenResume</strong> (Unlimited ATS Templates) seamlessly across all devices using your single Google/Email login.
           </p>
         </div>
 
-        {/* Currency Switcher */}
-        <div className="inline-flex bg-white/10 p-1 rounded-xl border border-white/10 flex-shrink-0 self-start sm:self-center">
+        <button
+          onClick={() => handleCheckout("zen_suite")}
+          disabled={isUpgrading}
+          className="w-full md:w-auto bg-gradient-to-r from-[#00685F] to-[#2DD4BF] hover:from-[#005049] hover:to-[#14B8A6] text-slate-950 font-black py-4 px-8 rounded-2xl text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 flex-shrink-0 relative z-10 cursor-pointer"
+        >
+          <Zap className="w-4 h-4 fill-slate-950 text-slate-950" />
+          <span>Get Zen Suite Ultimate</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Currency Switcher Bar */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 my-6 p-4 rounded-2xl bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36] text-left shadow-sm">
+        <div>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Standalone Plans</span>
+          <p className="text-xs text-black dark:text-white font-medium">Looking for ZenScout AI standalone access only?</p>
+        </div>
+
+        <div className="inline-flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
           <button
             onClick={() => setCurrency("INR")}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               currency === "INR" 
                 ? "bg-[#00685F] text-white shadow-sm" 
-                : "text-slate-300 hover:text-white"
+                : "text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
             }`}
           >
             ₹ INR (India)
@@ -133,7 +159,7 @@ export default function PricingPage() {
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               currency === "USD" 
                 ? "bg-[#00685F] text-white shadow-sm" 
-                : "text-slate-300 hover:text-white"
+                : "text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
             }`}
           >
             $ USD (Global)
@@ -192,7 +218,7 @@ export default function PricingPage() {
           <button
             onClick={() => handleCheckout("monthly")}
             disabled={isUpgrading}
-            className="mt-8 w-full bg-slate-100 hover:bg-[#00685F] hover:text-white dark:bg-[#1A2228] dark:hover:bg-[#14B8A6] dark:hover:text-slate-950 text-[#00685F] dark:text-[#2DD4BF] font-black py-3.5 px-4 rounded-xl text-xs transition-all border border-[#00685F]/30 active:scale-95 flex items-center justify-center gap-1.5"
+            className="mt-8 w-full bg-slate-100 hover:bg-[#00685F] hover:text-white dark:bg-[#1A2228] dark:hover:bg-[#14B8A6] dark:hover:text-slate-950 text-[#00685F] dark:text-[#2DD4BF] font-black py-3.5 px-4 rounded-xl text-xs transition-all border border-[#00685F]/30 active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span>Unlock 1-Month Starter</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -255,7 +281,7 @@ export default function PricingPage() {
           <button
             onClick={() => handleCheckout("quarterly")}
             disabled={isUpgrading}
-            className="mt-8 w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black py-4 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5"
+            className="mt-8 w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black py-4 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span>Get 3-Month Full Pass (Recommended)</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -310,7 +336,7 @@ export default function PricingPage() {
           <button
             onClick={() => handleCheckout("annual")}
             disabled={isUpgrading}
-            className="mt-8 w-full bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-black py-4 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5"
+            className="mt-8 w-full bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-black py-3.5 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span>Get Annual VIP Access</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -319,34 +345,34 @@ export default function PricingPage() {
       </div>
 
       {upgradeSuccess && (
-        <div className="my-6 p-4 bg-emerald-50 dark:bg-emerald-950 border border-emerald-300 text-emerald-800 dark:text-emerald-200 rounded-2xl text-sm font-bold text-center animate-in fade-in">
-          🎉 Upgrade Successful! You are now a ZenScout Pro member. All ads have been permanently disabled and your tier capabilities are active.
+        <div className="my-6 p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-sm font-bold rounded-2xl text-center animate-in fade-in">
+          🎉 Subscription Activated! Welcome to Pro. <Link href="/dashboard" className="underline ml-1">Launch Dashboard &rarr;</Link>
         </div>
       )}
 
-      {/* 4. TRUST & PAYMENT SECURITY FOOTER STRIP */}
-      <div className="mt-12 pt-6 border-t border-[#E2E8F0] dark:border-[#232D36] space-y-2 text-center sm:text-left">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-            <span><strong>🔒 256-Bit Encrypted Checkout</strong> • Instant UPI, Card & NetBanking Access • 1-Click Instant Cancellation</span>
-          </div>
-          <div className="text-xs text-slate-400">
-            Operating under Aneevarp Solutions
-          </div>
+      {/* 4. FREQUENTLY ASKED QUESTIONS */}
+      <div className="mt-14 text-left max-w-3xl mx-auto space-y-4">
+        <h3 className="text-xl font-bold text-black dark:text-white text-center mb-6">Frequently Asked Questions</h3>
+        
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36]">
+          <h4 className="font-bold text-sm text-black dark:text-white mb-1">How does Zen Suite Ultimate work across ZenDoc AI, ZenScout, and ZenResume?</h4>
+          <p className="text-xs text-[#545F73] dark:text-slate-300 leading-relaxed">
+            When you subscribe to Zen Suite Ultimate (₹599/mo / $15.99/mo), your single Google or Email account automatically unlocks all premium features across all 3 platforms without needing separate subscriptions.
+          </p>
         </div>
-        <p className="text-xs text-slate-400 text-center">
-          🛡️ 100% Zero-Database Privacy — Your career data lives exclusively in your browser memory.
-        </p>
+
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36]">
+          <h4 className="font-bold text-sm text-black dark:text-white mb-1">Is my resume data stored on your cloud servers?</h4>
+          <p className="text-xs text-[#545F73] dark:text-slate-300 leading-relaxed">
+            No. ZenScout AI operates under strict Zero-Backend privacy architecture. Your resume is parsed statelessly in your local browser and sent directly to Google Gemini AI over encrypted TLS without database storage.
+          </p>
+        </div>
       </div>
 
-      {/* Auth Modal Triggered on Standalone Page */}
+      {/* Auth Modal Trigger */}
       <AuthModal 
         isOpen={authModalOpen} 
-        onClose={() => {
-          setAuthModalOpen(false);
-          setShowAuthWarning(false);
-        }} 
+        onClose={() => setAuthModalOpen(false)} 
       />
     </div>
   );

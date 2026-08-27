@@ -55,7 +55,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
   if (!isOpen) return null;
 
-  const handleCheckout = (planKey: "monthly" | "quarterly" | "annual") => {
+  const handleCheckout = (planKey: "monthly" | "quarterly" | "annual" | "zen_suite") => {
     if (!user) {
       setShowAuthWarning(true);
       return;
@@ -64,7 +64,11 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
     setShowAuthWarning(false);
     setIsUpgrading(true);
     setTimeout(() => {
-      setUserPlan("pro", planKey);
+      if (planKey === "zen_suite") {
+        setUserPlan("pro", "annual", true);
+      } else {
+        setUserPlan("pro", planKey, false);
+      }
       setIsUpgrading(false);
       setUpgradeSuccess(true);
       setTimeout(() => {
@@ -88,7 +92,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 <Crown className="w-4 h-4" />
               </div>
               <span className="font-extrabold text-sm sm:text-base text-black dark:text-white tracking-tight">
-                ZenScout Pro Career Acceleration
+                ZenScout Pro & Zen Suite Acceleration
               </span>
             </div>
 
@@ -129,29 +133,47 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
               </div>
             )}
 
-            {/* 2. COMPACT STREAMLINED VALUE PROPOSITION BANNER (Mobile-First) */}
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white shadow-md border border-teal-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-left">
-              <div>
-                <div className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-400 mb-1">
-                  <Zap className="w-3 h-3 fill-amber-400" />
-                  <span>ACCELERATE YOUR SEARCH</span>
+            {/* 🌟 ZEN SUITE ULTIMATE ALL-IN-ONE CROSS-APP BUNDLE */}
+            <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-teal-400/60 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+              
+              <div className="space-y-1.5 max-w-xl relative z-10">
+                <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full shadow-sm">
+                  <Crown className="w-3 h-3 fill-white" />
+                  <span>ANEEVARP ZEN SUITE ULTIMATE • ALL 3 APPS UNLOCKED</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black text-white leading-tight">
-                  Cut Your Job Hunt from 4 Months to 3 Weeks
+                <h3 className="text-base sm:text-lg font-black text-white flex flex-wrap items-center gap-2">
+                  <span>Zen Suite Ultimate Cross-Pass</span>
+                  <span className="text-sm font-bold text-[#2DD4BF] bg-teal-950/80 px-2.5 py-0.5 rounded-lg border border-teal-500/40">
+                    {isINR ? "₹599/mo" : "$15.99/mo"}
+                  </span>
                 </h3>
-                <p className="text-slate-300 text-[11px] sm:text-xs mt-0.5 max-w-2xl leading-relaxed">
-                  Automate tedious applications, bypass ATS filters, and practice live AI voice mock interviews tailored to your exact target role.
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  One unified subscription unlocking <strong>ZenScout AI</strong> (Unlimited Pro), <strong>ZenDoc AI</strong> (Unlimited Document AI), and <strong>ZenResume</strong> (Unlimited ATS Templates) seamlessly across all devices.
                 </p>
               </div>
 
-              {/* Currency Toggle */}
-              <div className="inline-flex bg-white/10 p-1 rounded-xl border border-white/10 flex-shrink-0 self-start sm:self-center">
+              <button
+                onClick={() => handleCheckout("zen_suite")}
+                disabled={isUpgrading}
+                className="w-full md:w-auto bg-gradient-to-r from-[#00685F] to-[#2DD4BF] hover:from-[#005049] hover:to-[#14B8A6] text-slate-950 font-black py-3 px-6 rounded-2xl text-xs shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2 flex-shrink-0 relative z-10 cursor-pointer"
+              >
+                <Zap className="w-4 h-4 fill-slate-950 text-slate-950" />
+                <span>Get Zen Suite Ultimate</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Currency Switcher Bar */}
+            <div className="flex items-center justify-between px-2 pt-1">
+              <span className="text-xs font-bold text-[#545F73] dark:text-slate-400">ZenScout Standalone Plans:</span>
+              <div className="inline-flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
                 <button
                   onClick={() => setCurrency("INR")}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     currency === "INR" 
                       ? "bg-[#00685F] text-white shadow-sm" 
-                      : "text-slate-300 hover:text-white"
+                      : "text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white"
                   }`}
                 >
                   ₹ INR (India)
@@ -161,7 +183,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     currency === "USD" 
                       ? "bg-[#00685F] text-white shadow-sm" 
-                      : "text-slate-300 hover:text-white"
+                      : "text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white"
                   }`}
                 >
                   $ USD (Global)
@@ -220,7 +242,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 <button
                   onClick={() => handleCheckout("monthly")}
                   disabled={isUpgrading}
-                  className="mt-5 w-full bg-slate-100 hover:bg-[#00685F] hover:text-white dark:bg-[#1A2228] dark:hover:bg-[#14B8A6] dark:hover:text-slate-950 text-[#00685F] dark:text-[#2DD4BF] font-black py-2.5 px-4 rounded-xl text-xs transition-all border border-[#00685F]/30 active:scale-95 flex items-center justify-center gap-1.5"
+                  className="mt-5 w-full bg-slate-100 hover:bg-[#00685F] hover:text-white dark:bg-[#1A2228] dark:hover:bg-[#14B8A6] dark:hover:text-slate-950 text-[#00685F] dark:text-[#2DD4BF] font-black py-2.5 px-4 rounded-xl text-xs transition-all border border-[#00685F]/30 active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Unlock 1-Month Starter</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -284,7 +306,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 <button
                   onClick={() => handleCheckout("quarterly")}
                   disabled={isUpgrading}
-                  className="mt-5 w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black py-3 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5"
+                  className="mt-5 w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black py-3 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Get 3-Month Full Pass (Recommended)</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -339,7 +361,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 <button
                   onClick={() => handleCheckout("annual")}
                   disabled={isUpgrading}
-                  className="mt-5 w-full bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-black py-2.5 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5"
+                  className="mt-5 w-full bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-black py-2.5 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Get Annual VIP Access</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -348,37 +370,30 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
             </div>
 
             {upgradeSuccess && (
-              <div className="p-3 bg-emerald-50 dark:bg-emerald-950 border border-emerald-300 text-emerald-800 dark:text-emerald-200 rounded-xl text-xs font-bold text-center animate-in fade-in">
-                🎉 Upgrade Successful! You are now a ZenScout Pro member. All ads have been removed and your tier capabilities are active.
+              <div className="p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-xs font-bold rounded-xl text-center animate-in fade-in">
+                🎉 Subscription Activated! Welcome to Pro.
               </div>
             )}
+          </div>
 
-            {/* 4. TRUST & PAYMENT SECURITY FOOTER STRIP */}
-            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-1.5 text-center sm:text-left">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
-                <div className="flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span><strong>🔒 256-Bit Encrypted Checkout</strong> • Instant UPI, Card & NetBanking Access • 1-Click Instant Cancellation</span>
-                </div>
-                <div className="text-[10px] text-slate-400">
-                  Operating under Aneevarp Solutions
-                </div>
-              </div>
-              <p className="text-[10px] text-slate-400 text-center">
-                🛡️ 100% Zero-Database Privacy — Your career data lives exclusively in your browser memory.
-              </p>
+          {/* Footer Bar */}
+          <div className="px-5 py-3 border-t border-[#E2E8F0] dark:border-[#232D36] bg-slate-50 dark:bg-[#141B20] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+              <span>100% Zero-Backend Privacy • Cancel Anytime • Aneevarp Solutions</span>
+            </div>
+            <div className="flex items-center gap-2 font-bold">
+              <span>Instant Cross-App Entitlement Sync</span>
             </div>
           </div>
+
         </div>
       </div>
 
-      {/* Embedded Auth Modal */}
+      {/* Auth Modal Trigger */}
       <AuthModal 
         isOpen={authModalOpen} 
-        onClose={() => {
-          setAuthModalOpen(false);
-          setShowAuthWarning(false);
-        }} 
+        onClose={() => setAuthModalOpen(false)} 
       />
     </>
   );
