@@ -133,6 +133,23 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
               </div>
             )}
 
+            {/* ACTIVE ZEN SUITE PLAN BANNER */}
+            {getUserTierState().isZenSuite && (
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950 via-slate-900 to-purple-950 border-2 border-amber-400/60 text-white flex items-center gap-3 animate-in fade-in shadow-lg">
+                <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-300 flex-shrink-0">
+                  <Crown className="w-5 h-5 fill-amber-300" />
+                </div>
+                <div>
+                  <h4 className="font-black text-sm text-amber-300 flex items-center gap-1.5">
+                    <span>✅ Your Zen Suite Ultimate plan is active!</span>
+                  </h4>
+                  <p className="text-xs text-slate-200 mt-0.5 leading-relaxed">
+                    All senior manager mock interview rounds, voice simulations, and code evaluations are unlocked across ZenScout AI, ZenDoc AI, and ZenResume.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* 🌟 ZEN SUITE ULTIMATE ALL-IN-ONE CROSS-APP BUNDLE */}
             <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-teal-400/60 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
