@@ -79,9 +79,9 @@ export default function HeaderNav() {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Left: Brand Identity */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
-            <div className="bg-[#00685F] text-white p-2 sm:p-2.5 rounded-2xl group-hover:scale-105 transition-transform shadow-soft flex items-center justify-center">
-              <Briefcase className="w-4 h-4 sm:w-5 sm:h-5" />
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 bg-teal-50 dark:bg-teal-950/60 border border-teal-200 dark:border-teal-800 rounded-2xl group-hover:scale-105 transition-transform shadow-soft flex items-center justify-center p-1 flex-shrink-0">
+              <img src="/icon.svg" alt="ZenScout AI Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col text-left truncate">
               <span className="font-extrabold text-sm sm:text-base md:text-lg text-black dark:text-white leading-none tracking-tight">ZenScout AI</span>
