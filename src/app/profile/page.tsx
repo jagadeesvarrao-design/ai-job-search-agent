@@ -230,7 +230,7 @@ export default function ProfilePage() {
           <span>
             {isPro 
               ? (tierState.billingCycle === "annual" ? "👑 Annual VIP Active" : tierState.billingCycle === "quarterly" ? "⚡ 3-Month Pass Active" : "⚡ 1-Month Starter") 
-              : `Free Tier (${usageQuota.atsAuditsToday}/1 Daily Audit)`}
+              : `Free Tier (${usageQuota.atsAuditsToday}/3 Daily Audits)`}
           </span>
         </button>
       </div>

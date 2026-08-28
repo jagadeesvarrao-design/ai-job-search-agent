@@ -35,20 +35,20 @@ export interface UserTierState {
 // Industry-Standard Tier Quota Limits & Capabilities
 export const TIER_LIMITS = {
   free: {
-    maxScoutsPerDay: 20,
-    maxCoverLettersPerDay: 8,
-    maxInterviewRounds: 12,
-    maxAtsAuditsPerDay: 5,
+    maxScoutsPerDay: 5,
+    maxCoverLettersPerDay: 2,
+    maxInterviewRounds: 3,
+    maxAtsAuditsPerDay: 3,
     isUnlimited: false,
     showAds: true,
     voiceAudio: false,
     label: "Free Tier",
   },
   monthly: {
-    maxScoutsPerDay: 50,
-    maxCoverLettersPerDay: 25,
-    maxInterviewRounds: 30,
-    maxAtsAuditsPerDay: 15,
+    maxScoutsPerDay: 25,
+    maxCoverLettersPerDay: 10,
+    maxInterviewRounds: 15,
+    maxAtsAuditsPerDay: 5,
     isUnlimited: false,
     showAds: false,
     voiceAudio: false,

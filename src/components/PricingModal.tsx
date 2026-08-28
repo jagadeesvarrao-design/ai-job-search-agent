@@ -55,29 +55,6 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
   if (!isOpen) return null;
 
-  const [promoCode, setPromoCode] = useState("");
-  const [promoMessage, setPromoMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-
-  const handleApplyPromo = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanCode = promoCode.trim().toUpperCase();
-    const validCodes = ["FOUNDER", "VIP", "TEST", "TESTING", "PRO", "ANEEVARP", "SUITE", "ZEN", "FREEDOM", "DEV", "ULTIMATE", "JAGADEESH"];
-    
-    if (validCodes.includes(cleanCode)) {
-      setUserPlan("pro", "annual", true);
-      const { resetUsageQuota } = require("@/lib/user-tier");
-      resetUsageQuota();
-      setPromoMessage({ type: "success", text: "🎉 VIP Passcode Accepted! Zen Suite Ultimate Unlocked." });
-      setUpgradeSuccess(true);
-      setTimeout(() => {
-        setUpgradeSuccess(false);
-        onClose();
-      }, 1200);
-    } else {
-      setPromoMessage({ type: "error", text: "Invalid promo code. Use FOUNDER or VIP." });
-    }
-  };
-
   const handleCheckout = (planKey: "monthly" | "quarterly" | "annual" | "zen_suite") => {
     setIsUpgrading(true);
     setTimeout(() => {
@@ -86,8 +63,6 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
       } else {
         setUserPlan("pro", planKey, false);
       }
-      const { resetUsageQuota } = require("@/lib/user-tier");
-      resetUsageQuota();
       setIsUpgrading(false);
       setUpgradeSuccess(true);
       setTimeout(() => {
@@ -404,43 +379,6 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 </button>
               </div>
             </div>
-
-            {/* PROMO CODE & INSTANT VIP PASSCODE ENTRY */}
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#1A2228] border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                <div className="text-left">
-                  <span className="text-xs font-bold text-black dark:text-white block">Have a VIP Passcode or Testing Code?</span>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400">Enter passcode (e.g. FOUNDER, VIP, ANEEVARP) for instant access.</span>
-                </div>
-              </div>
-
-              <form onSubmit={handleApplyPromo} className="flex items-center gap-2 w-full sm:w-auto">
-                <input
-                  type="text"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
-                  placeholder="Passcode / Code"
-                  className="px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-black dark:text-white uppercase placeholder:normal-case placeholder:font-normal focus:outline-none focus:border-amber-500 w-full sm:w-36 text-center"
-                />
-                <button
-                  type="submit"
-                  className="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all shadow-sm active:scale-95 whitespace-nowrap cursor-pointer"
-                >
-                  Unlock
-                </button>
-              </form>
-            </div>
-
-            {promoMessage && (
-              <div className={`p-2.5 rounded-xl text-xs font-bold text-center ${
-                promoMessage.type === "success" 
-                  ? "bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 text-emerald-800 dark:text-emerald-300" 
-                  : "bg-rose-50 dark:bg-rose-950/60 border border-rose-300 text-rose-800 dark:text-rose-300"
-              }`}>
-                {promoMessage.text}
-              </div>
-            )}
 
             {upgradeSuccess && (
               <div className="p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-xs font-bold rounded-xl text-center animate-in fade-in">
