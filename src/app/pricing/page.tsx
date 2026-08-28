@@ -43,13 +43,26 @@ export default function PricingPage() {
     }
   }, []);
 
-  const handleCheckout = (planKey: "monthly" | "quarterly" | "annual" | "zen_suite") => {
-    if (!user) {
-      setShowAuthWarning(true);
-      return;
-    }
+  const [promoCode, setPromoCode] = useState("");
+  const [promoMessage, setPromoMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-    setShowAuthWarning(false);
+  const handleApplyPromo = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanCode = promoCode.trim().toUpperCase();
+    const validCodes = ["FOUNDER", "VIP", "TEST", "TESTING", "PRO", "ANEEVARP", "SUITE", "ZEN", "FREEDOM", "DEV", "ULTIMATE", "JAGADEESH"];
+    
+    if (validCodes.includes(cleanCode)) {
+      setUserPlan("pro", "annual", true);
+      const { resetUsageQuota } = require("@/lib/user-tier");
+      resetUsageQuota();
+      setPromoMessage({ type: "success", text: "🎉 VIP Passcode Accepted! Zen Suite Ultimate Unlocked." });
+      setUpgradeSuccess(true);
+    } else {
+      setPromoMessage({ type: "error", text: "Invalid promo code. Use FOUNDER or VIP." });
+    }
+  };
+
+  const handleCheckout = (planKey: "monthly" | "quarterly" | "annual" | "zen_suite") => {
     setIsUpgrading(true);
     setTimeout(() => {
       if (planKey === "zen_suite") {
@@ -57,9 +70,11 @@ export default function PricingPage() {
       } else {
         setUserPlan("pro", planKey, false);
       }
+      const { resetUsageQuota } = require("@/lib/user-tier");
+      resetUsageQuota();
       setIsUpgrading(false);
       setUpgradeSuccess(true);
-    }, 800);
+    }, 500);
   };
 
   const isINR = currency === "INR";
@@ -359,8 +374,47 @@ export default function PricingPage() {
         </div>
       </div>
 
+      {/* PROMO CODE & INSTANT VIP PASSCODE ENTRY */}
+      <div className="my-6 p-5 rounded-3xl bg-slate-50 dark:bg-[#1A2228] border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-2xl mx-auto">
+        <div className="flex items-center gap-3 text-left">
+          <div className="p-2.5 rounded-2xl bg-amber-500/20 text-amber-500">
+            <Sparkles className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-black dark:text-white">Have a VIP Passcode or Testing Code?</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Enter passcode (e.g. FOUNDER, VIP, ANEEVARP) for instant access.</p>
+          </div>
+        </div>
+
+        <form onSubmit={handleApplyPromo} className="flex items-center gap-2 w-full sm:w-auto">
+          <input
+            type="text"
+            value={promoCode}
+            onChange={(e) => setPromoCode(e.target.value)}
+            placeholder="Passcode / Code"
+            className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-black dark:text-white uppercase placeholder:normal-case placeholder:font-normal focus:outline-none focus:border-amber-500 w-full sm:w-40 text-center"
+          />
+          <button
+            type="submit"
+            className="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-sm active:scale-95 whitespace-nowrap cursor-pointer"
+          >
+            Unlock VIP
+          </button>
+        </form>
+      </div>
+
+      {promoMessage && (
+        <div className={`my-3 max-w-md mx-auto p-3 rounded-xl text-xs font-bold text-center ${
+          promoMessage.type === "success" 
+            ? "bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 text-emerald-800 dark:text-emerald-300" 
+            : "bg-rose-50 dark:bg-rose-950/60 border border-rose-300 text-rose-800 dark:text-rose-300"
+        }`}>
+          {promoMessage.text}
+        </div>
+      )}
+
       {upgradeSuccess && (
-        <div className="my-6 p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-sm font-bold rounded-2xl text-center animate-in fade-in">
+        <div className="my-6 p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-sm font-bold rounded-2xl text-center animate-in fade-in max-w-2xl mx-auto">
           🎉 Subscription Activated! Welcome to Pro. <Link href="/dashboard" className="underline ml-1">Launch Dashboard &rarr;</Link>
         </div>
       )}

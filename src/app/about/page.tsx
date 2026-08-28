@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us & Leadership | ZenScout AI by Aneevarp Solutions",
-  description: "Learn about ZenScout AI, engineered by Jagadeeswara Rao Peddada (Founder & Lead Architect at Aneevarp Solutions) alongside ZenResume and ZenDock AI.",
+  description: "Learn about ZenScout AI, engineered by Jagadeeswara Rao Peddada (Founder & Lead Architect at Aneevarp Solutions) alongside ZenResume and ZenDoc AI.",
   alternates: {
     canonical: "/about",
   }
@@ -44,7 +44,7 @@ export default function AboutPage() {
           </div>
           <h2 className="text-xl font-bold mb-3 text-[#171D1C] dark:text-white">Zen Ecosystem</h2>
           <p className="text-[#545F73] dark:text-slate-300 text-sm leading-relaxed">
-            Engineered alongside <strong>ZenResume</strong> and <strong>ZenDock AI</strong> to form an end-to-end career & document productivity suite.
+            Engineered alongside <strong>ZenResume</strong> and <strong>ZenDoc AI</strong> to form an end-to-end career & document productivity suite.
           </p>
         </div>
 
@@ -141,7 +141,7 @@ export default function AboutPage() {
                 </div>
 
                 <div className="p-3 rounded-2xl bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36] text-left shadow-sm">
-                  <span className="text-xs font-black text-black dark:text-white block">ZenDock AI</span>
+                  <span className="text-xs font-black text-black dark:text-white block">ZenDoc AI</span>
                   <span className="text-[10px] text-slate-500 dark:text-slate-400">Document & Data AI</span>
                 </div>
               </div>

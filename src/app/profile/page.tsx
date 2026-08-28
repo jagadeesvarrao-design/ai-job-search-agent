@@ -357,28 +357,16 @@ export default function ProfilePage() {
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
                 {/* Instant ATS Scan / Re-Audit Button for 3-Month & Annual VIP subscribers */}
-                {isPro && (tierState.billingCycle === "quarterly" || tierState.billingCycle === "annual") ? (
-                  <button
-                    type="button"
-                    onClick={() => runAtsAudit(formData.resumeBase64, formData.role)}
-                    disabled={analyzingAts || !formData.resumeBase64}
-                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
-                    title="Trigger instant ATS parsing on demand whenever you change your role or resume"
-                  >
-                    <RefreshCw className={`w-4 h-4 ${analyzingAts ? "animate-spin" : ""}`} />
-                    <span>{analyzingAts ? "Auditing Resume..." : "⚡ Re-Audit ATS for New Role"}</span>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setPricingModalOpen(true)}
-                    className="bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 font-bold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-xl transition-all shadow-sm hover:bg-amber-100 dark:hover:bg-amber-900/60 flex items-center justify-center gap-2 cursor-pointer"
-                    title="Unlock Unlimited Instant ATS Audits on the 3-Month Pass"
-                  >
-                    <Lock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                    <span>Unlock Unlimited ATS Audits (3-Month Pass)</span>
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => runAtsAudit(formData.resumeBase64, formData.role)}
+                  disabled={analyzingAts || !formData.resumeBase64}
+                  className="bg-gradient-to-r from-teal-600 to-[#00685F] hover:from-teal-700 hover:to-[#005049] text-white font-bold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                  title="Trigger instant ATS parsing on demand"
+                >
+                  <RefreshCw className={`w-4 h-4 ${analyzingAts ? "animate-spin" : ""}`} />
+                  <span>{analyzingAts ? "Auditing Resume..." : "⚡ Re-Audit ATS for Target Role"}</span>
+                </button>
 
                 <button
                   type="submit"
