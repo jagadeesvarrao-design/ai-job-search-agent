@@ -71,11 +71,11 @@ interface Job {
 }
 
 const COLUMNS: { status: JobStatus; icon: any; color: string; bg: string; border: string }[] = [
-  { status: "New Matches", icon: Sparkles, color: "text-[#476550]", bg: "bg-teal-50", border: "border-teal-200" },
-  { status: "Saved", icon: Bookmark, color: "text-[#596060]", bg: "bg-slate-50", border: "border-slate-200" },
+  { status: "New Matches", icon: Sparkles, color: "text-[#476550]", bg: "bg-[#E8F0EB]", border: "border-[#A2BCA8]/40" },
+  { status: "Saved", icon: Bookmark, color: "text-[#596060]", bg: "bg-[#F4F4F0]", border: "border-slate-200" },
   { status: "Applied", icon: Send, color: "text-[#0284C7]", bg: "bg-sky-50", border: "border-sky-200" },
   { status: "Interviewing", icon: MessageSquare, color: "text-[#3B82F6]", bg: "bg-blue-50", border: "border-blue-200" },
-  { status: "Offers", icon: Award, color: "text-[#22C55E]", bg: "bg-emerald-50", border: "border-emerald-200" },
+  { status: "Offers", icon: Award, color: "text-[#22C55E]", bg: "bg-[#E8F0EB]", border: "border-[#A2BCA8]/40" },
   { status: "Rejected", icon: Ban, color: "text-[#EF4444]", bg: "bg-rose-50", border: "border-rose-200" },
 ];
 
@@ -529,12 +529,12 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* 0. LIVE SUBSCRIPTION TIER & QUOTA METER */}
-      <div className="bg-white dark:bg-[#222828] p-4 md:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-[#FAF9F6] dark:bg-[#222828] p-4 md:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className={`p-2.5 rounded-xl flex items-center justify-center ${
             isPro 
               ? "bg-amber-500/20 text-amber-500" 
-              : "bg-teal-50 dark:bg-teal-950/40 text-[#476550] dark:text-[#A2BCA8]"
+              : "bg-[#E8F0EB] dark:bg-[#1A1F1F]/40 text-[#476550] dark:text-[#A2BCA8]"
           }`}>
             {isPro ? <Crown className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
           </div>
@@ -592,7 +592,7 @@ export default function DashboardPage() {
             <span>Upgrade to 3-Month Unlimited</span>
           </button>
         ) : (
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-900">
+          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-[#E8F0EB] dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-[#A2BCA8]/40 dark:border-emerald-900">
             <CheckCircle2 className="w-4 h-4" />
             <span>{tierInfo.billingCycle === "annual" ? "👑 VIP Member Status Active" : "⚡ 3-Month Unlimited Active"}</span>
           </div>
@@ -601,7 +601,7 @@ export default function DashboardPage() {
 
       {/* CONDITIONAL ADSENSE SPONSOR BANNER (Displayed ONLY on Free Tier) */}
       {!isPro && (
-        <div className="bg-slate-50 dark:bg-[#1F2525] p-3.5 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div className="bg-[#F4F4F0] dark:bg-[#1F2525] p-3.5 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div className="flex items-center gap-2.5">
             <span className="text-[9px] font-black uppercase tracking-widest bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded">
               Ad / Sponsor
@@ -621,8 +621,8 @@ export default function DashboardPage() {
 
       {/* 1. TOP ANALYTICS & STATS BAR */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8]">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 text-[#476550] dark:text-[#A2BCA8]">
             <Briefcase className="w-5 h-5" />
           </div>
           <div>
@@ -631,8 +631,8 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-[#E8F0EB] dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div>
@@ -641,7 +641,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
           <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-[#0284C7] dark:text-sky-300">
             <Send className="w-5 h-5" />
           </div>
@@ -651,7 +651,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
           <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
             <Award className="w-5 h-5" />
           </div>
@@ -663,7 +663,7 @@ export default function DashboardPage() {
       </section>
 
       {/* 2. LIVE SEARCH & FILTER CONTROL BAR */}
-      <section className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 md:p-6">
+      <section className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 md:p-6">
         <div className="flex flex-col lg:flex-row items-center gap-4">
           {/* Target Role Input */}
           <div className="flex-1 w-full relative">
@@ -673,7 +673,7 @@ export default function DashboardPage() {
               value={searchRole}
               onChange={(e) => setSearchRole(e.target.value)}
               placeholder="Search Role (e.g. React Developer, Frontend Engineer, Data Scientist)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#A2BCA8] focus:ring-2 focus:ring-[#476550]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#A2BCA8] focus:ring-2 focus:ring-[#476550]/20"
             />
           </div>
 
@@ -685,7 +685,7 @@ export default function DashboardPage() {
               value={searchLocation}
               onChange={(e) => setSearchLocation(e.target.value)}
               placeholder="City (e.g. Bangalore, Hyderabad)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#A2BCA8] focus:ring-2 focus:ring-[#476550]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#A2BCA8] focus:ring-2 focus:ring-[#476550]/20"
             />
           </div>
 
@@ -695,8 +695,8 @@ export default function DashboardPage() {
             onClick={() => setRemoteOnly(!remoteOnly)}
             className={`px-4 py-3 rounded-xl border text-xs font-bold flex items-center gap-2 transition-all w-full lg:w-auto justify-center ${
               remoteOnly 
-                ? "bg-teal-50 dark:bg-teal-950/60 border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" 
-                : "bg-[#F8FAFC] dark:bg-[#1F2525] border-[#D8E2DA] dark:border-[#2D3636] text-[#596060] dark:text-slate-300 hover:text-black dark:hover:text-white"
+                ? "bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" 
+                : "bg-[#F4F4F0] dark:bg-[#1F2525] border-[#D8E2DA] dark:border-[#2D3636] text-[#596060] dark:text-slate-300 hover:text-black dark:hover:text-white"
             }`}
           >
             <Globe className="w-4 h-4" />
@@ -708,7 +708,7 @@ export default function DashboardPage() {
             <button
               onClick={handleRunFilter}
               disabled={filtering}
-              className="bg-white dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-[#F0F5F2] dark:hover:bg-[#2D3636] text-black dark:text-white font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-[#FAF9F6] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-[#F0F5F2] dark:hover:bg-[#2D3636] text-black dark:text-white font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
             >
               {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#476550] dark:text-[#A2BCA8]" /> : <Filter className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />}
               <span>Score ATS</span>
@@ -754,7 +754,7 @@ export default function DashboardPage() {
               <CheckCircle2 className="w-4 h-4 text-[#A2BCA8] flex-shrink-0" />
               <span className="font-semibold text-slate-200">1. Query Real-Time Jobs Index</span>
             </div>
-            <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-teal-500/20 border border-teal-400 text-[#A2BCA8] animate-pulse font-extrabold shadow-sm">
+            <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[#E8F0EB]0/20 border border-teal-400 text-[#A2BCA8] animate-pulse font-extrabold shadow-sm">
               <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" />
               <span>2. Match Candidate Profile</span>
             </div>
@@ -772,7 +772,7 @@ export default function DashboardPage() {
           <h2 className="text-lg sm:text-xl font-black text-black dark:text-white tracking-tight">
             {viewMode === "board" ? "Pipeline Kanban Board" : "Opportunity Feed & Scoreboard"}
           </h2>
-          <span className="text-xs font-black text-[#476550] dark:text-[#A2BCA8] bg-teal-50 dark:bg-teal-950/60 px-3 py-1 rounded-full border border-teal-200 dark:border-teal-800/80 shadow-sm">
+          <span className="text-xs font-black text-[#476550] dark:text-[#A2BCA8] bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 px-3 py-1 rounded-full border border-[#A2BCA8]/40 dark:border-teal-800/80 shadow-sm">
             {jobs.length} Active Opportunities
           </span>
         </div>
@@ -808,7 +808,7 @@ export default function DashboardPage() {
       {viewMode === "list" && (
         <section className="space-y-3">
           {jobs.length === 0 ? (
-            <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] p-12 text-center text-slate-500 shadow-soft">
+            <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] p-12 text-center text-slate-500 shadow-soft">
               <Search className="w-10 h-10 mx-auto mb-3 text-slate-400 opacity-40" />
               <h3 className="text-base font-bold text-black dark:text-white">No Opportunities Scouted Yet</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -822,7 +822,7 @@ export default function DashboardPage() {
               .map(job => (
                 <div
                   key={job.id}
-                  className="bg-white dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] p-4 sm:p-5 shadow-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                  className="bg-[#FAF9F6] dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] p-4 sm:p-5 shadow-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
                 >
                   <div className="min-w-0 flex-1 space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
@@ -846,7 +846,7 @@ export default function DashboardPage() {
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-[#0F172A] dark:text-slate-300 font-medium">
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-[#1A1F1F] dark:text-slate-300 font-medium">
                       <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {job.company}</span>
                       <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {job.location}</span>
                       {job.salary && <span className="flex items-center gap-1 font-bold text-emerald-700 dark:text-emerald-400"><IndianRupee className="w-3.5 h-3.5" /> {job.salary}</span>}
@@ -858,7 +858,7 @@ export default function DashboardPage() {
                     <select
                       value={job.status}
                       onChange={(e) => updateJobStatus(job.id, e.target.value as JobStatus)}
-                      className="text-xs font-bold bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] text-black dark:text-white px-3 py-2 rounded-xl focus:outline-none focus:border-[#476550] cursor-pointer"
+                      className="text-xs font-bold bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] text-black dark:text-white px-3 py-2 rounded-xl focus:outline-none focus:border-[#476550] cursor-pointer"
                     >
                       {COLUMNS.map(c => (
                         <option key={c.status} value={c.status}>{c.status}</option>
@@ -883,7 +883,7 @@ export default function DashboardPage() {
 
                     <button
                       onClick={() => { setSelectedJob(job); setActiveTab("coach"); }}
-                      className="text-xs font-bold bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 text-[#476550] dark:text-[#A2BCA8] border border-teal-200 dark:border-teal-800 px-3 py-2 rounded-xl transition-all"
+                      className="text-xs font-bold bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 hover:bg-teal-100 text-[#476550] dark:text-[#A2BCA8] border border-[#A2BCA8]/40 dark:border-teal-800 px-3 py-2 rounded-xl transition-all"
                       title="Practice mock interview"
                     >
                       <Bot className="w-3.5 h-3.5" />
@@ -916,7 +916,7 @@ export default function DashboardPage() {
             return (
               <div 
                 key={status} 
-                className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 sm:p-6 flex flex-col min-h-[340px] transition-all hover:shadow-soft-hover"
+                className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 sm:p-6 flex flex-col min-h-[340px] transition-all hover:shadow-soft-hover"
               >
                 {/* Card Header */}
                 <div className="flex justify-between items-center w-full mb-4 pb-3 border-b border-[#D8E2DA] dark:border-[#2D3636]">
@@ -944,7 +944,7 @@ export default function DashboardPage() {
                       <div 
                         key={job.id}
                         onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
-                        className="p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F8FAFC] dark:bg-[#1F2525] hover:bg-white dark:hover:bg-[#1F2930] hover:border-[#476550]/50 dark:hover:border-[#A2BCA8]/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group flex flex-col gap-2 relative"
+                        className="p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F4F4F0] dark:bg-[#1F2525] hover:bg-[#FAF9F6] dark:hover:bg-[#1F2930] hover:border-[#476550]/50 dark:hover:border-[#A2BCA8]/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group flex flex-col gap-2 relative"
                       >
                         <div className="flex justify-between items-start gap-2">
                           <h3 className="font-extrabold text-sm text-black dark:text-white group-hover:text-[#476550] dark:group-hover:text-[#A2BCA8] transition-colors line-clamp-1">
@@ -961,7 +961,7 @@ export default function DashboardPage() {
                           )}
                         </div>
 
-                        <div className="flex items-center gap-3 text-xs text-[#0F172A] dark:text-slate-300 font-medium">
+                        <div className="flex items-center gap-3 text-xs text-[#1A1F1F] dark:text-slate-300 font-medium">
                           <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {job.company}</span>
                           <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {job.location}</span>
                         </div>
@@ -984,10 +984,10 @@ export default function DashboardPage() {
 
       {/* 4. JOB DETAIL, COVER LETTER PDF & AI COACH MODAL */}
       {selectedJob && (
-        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 bg-[#1A1F1F]/70 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+          <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="p-4 sm:p-6 border-b border-[#D8E2DA] dark:border-[#2D3636] flex justify-between items-start bg-[#F8FAFC] dark:bg-[#1F2525] gap-3">
+            <div className="p-4 sm:p-6 border-b border-[#D8E2DA] dark:border-[#2D3636] flex justify-between items-start bg-[#F4F4F0] dark:bg-[#1F2525] gap-3">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
                   <h2 className="text-lg sm:text-2xl font-black text-black dark:text-white leading-snug break-words">{selectedJob.title}</h2>
@@ -997,7 +997,7 @@ export default function DashboardPage() {
                     </span>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-bold text-[#0F172A] dark:text-slate-300">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-bold text-[#1A1F1F] dark:text-slate-300">
                   <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.company}</span>
                   <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.location}</span>
                   {selectedJob.salary && <span className="flex items-center gap-1"><IndianRupee className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.salary}</span>}
@@ -1016,7 +1016,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Navigation Tabs (Scrollable on small screens) */}
-            <div className="flex border-b border-[#D8E2DA] dark:border-[#2D3636] px-3 sm:px-6 bg-white dark:bg-[#222828] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
+            <div className="flex border-b border-[#D8E2DA] dark:border-[#2D3636] px-3 sm:px-6 bg-[#FAF9F6] dark:bg-[#222828] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
               <button
                 onClick={() => setActiveTab("details")}
                 className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all whitespace-nowrap ${
@@ -1074,7 +1074,7 @@ export default function DashboardPage() {
 
                   <div>
                     <h4 className="font-bold text-xs uppercase tracking-wider text-[#596060] dark:text-slate-400 mb-2.5">Role Overview & Responsibilities</h4>
-                    <div className="p-5 sm:p-6 rounded-2xl bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm">
+                    <div className="p-5 sm:p-6 rounded-2xl bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm">
                       {renderFormattedDescription(selectedJob.description)}
                     </div>
                   </div>
@@ -1097,14 +1097,14 @@ export default function DashboardPage() {
               {/* TAB 2: COVER LETTER WITH 1-CLICK PDF EXPORT */}
               {activeTab === "cover_letter" && (
                 <div className="space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F8FAFC] dark:bg-[#1F2525] p-3.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636]">
-                    <p className="text-xs text-[#0F172A] dark:text-slate-300 font-medium">Synthesized with Gemini 2.5 Flash mapping your experience.</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F4F4F0] dark:bg-[#1F2525] p-3.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636]">
+                    <p className="text-xs text-[#1A1F1F] dark:text-slate-300 font-medium">Synthesized with Gemini 2.5 Flash mapping your experience.</p>
                     
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleCopyCoverLetter}
                         disabled={factoryLoading || !coverLetter}
-                        className="text-xs bg-white dark:bg-slate-800 border border-[#D8E2DA] dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-black dark:text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all"
+                        className="text-xs bg-[#FAF9F6] dark:bg-slate-800 border border-[#D8E2DA] dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-black dark:text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all"
                       >
                         {copiedLetter ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{copiedLetter ? "Copied!" : "Copy"}</span>
@@ -1139,7 +1139,7 @@ export default function DashboardPage() {
                       value={coverLetter}
                       onChange={(e) => setCoverLetter(e.target.value)}
                       rows={13}
-                      className="w-full p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F8FAFC] dark:bg-[#1F2525] text-black dark:text-slate-100 leading-relaxed font-sans text-sm focus:outline-none focus:border-[#476550]"
+                      className="w-full p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F4F4F0] dark:bg-[#1F2525] text-black dark:text-slate-100 leading-relaxed font-sans text-sm focus:outline-none focus:border-[#476550]"
                     />
                   )}
                 </div>
@@ -1165,7 +1165,7 @@ export default function DashboardPage() {
                         }}
                         className={`flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg border transition-all ${
                           voiceAudioEnabled 
-                            ? "bg-teal-50 dark:bg-teal-950/60 border-teal-300 dark:border-teal-800 text-[#476550] dark:text-[#A2BCA8]" 
+                            ? "bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 border-teal-300 dark:border-teal-800 text-[#476550] dark:text-[#A2BCA8]" 
                             : "bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400"
                         }`}
                       >
@@ -1185,7 +1185,7 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Chat Message Thread */}
-                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F8FAFC] dark:bg-[#1F2525] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] mb-3">
+                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F4F4F0] dark:bg-[#1F2525] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] mb-3">
                     {chatMessages.length === 0 ? (
                       <div className="text-center py-10 text-[#596060] dark:text-slate-400">
                         <Bot className="w-10 h-10 mx-auto mb-2 text-[#476550] dark:text-[#A2BCA8]" />
@@ -1202,12 +1202,12 @@ export default function DashboardPage() {
                           ) : (
                             <div className="max-w-[85%] flex flex-col items-start gap-1.5">
                               {i > 0 && (
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-300 dark:border-emerald-800 text-[10px] font-black text-emerald-800 dark:text-emerald-300 shadow-sm">
+                                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E8F0EB] dark:bg-emerald-950/70 border border-emerald-300 dark:border-emerald-800 text-[10px] font-black text-emerald-800 dark:text-emerald-300 shadow-sm">
                                   <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                                   <span>Hiring Scorecard: STAR 9/10 • Technical Depth: High</span>
                                 </div>
                               )}
-                              <div className="p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-slate-700 text-black dark:text-slate-100 rounded-bl-none shadow-sm font-normal">
+                              <div className="p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-slate-700 text-black dark:text-slate-100 rounded-bl-none shadow-sm font-normal">
                                 {msg.content}
                               </div>
                             </div>
@@ -1240,7 +1240,7 @@ export default function DashboardPage() {
 
                     {coachLoading && (
                       <div className="flex justify-start">
-                        <div className="bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-slate-700 p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold shadow-sm">
+                        <div className="bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-slate-700 p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold shadow-sm">
                           <Loader2 className="w-3.5 h-3.5 animate-spin text-[#476550] dark:text-[#A2BCA8]" />
                           <span>Hiring Manager is evaluating your answer...</span>
                         </div>
@@ -1257,7 +1257,7 @@ export default function DashboardPage() {
                       className={`p-3 rounded-xl border transition-all flex items-center justify-center ${
                         isRecording 
                           ? "bg-rose-500 text-white border-rose-600 animate-pulse" 
-                          : "bg-white dark:bg-[#222828] border-[#D8E2DA] dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50"
+                          : "bg-[#FAF9F6] dark:bg-[#222828] border-[#D8E2DA] dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50"
                       }`}
                       title={isRecording ? "Listening..." : "Speak response"}
                     >
@@ -1284,7 +1284,7 @@ export default function DashboardPage() {
                             ? "Listening to your voice..." 
                             : "Type or speak your answer..."
                       }
-                      className="flex-1 p-3 rounded-xl border border-[#D8E2DA] dark:border-slate-700 bg-white dark:bg-[#222828] text-sm font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                      className="flex-1 p-3 rounded-xl border border-[#D8E2DA] dark:border-slate-700 bg-[#FAF9F6] dark:bg-[#222828] text-sm font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
                     />
                     <button
                       onClick={() => {

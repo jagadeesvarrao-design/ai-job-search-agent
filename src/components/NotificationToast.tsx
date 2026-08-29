@@ -42,7 +42,7 @@ export const NotificationToast: React.FC<NotificationToastProps> = ({ toasts, on
           bg: "bg-emerald-950/90 dark:bg-emerald-950/95 border-emerald-500/50 text-emerald-100",
           icon: <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />,
           accent: "text-emerald-400",
-          progressBg: "bg-emerald-500"
+          progressBg: "bg-[#E8F0EB]0"
         };
       case "scout":
         return {
@@ -88,7 +88,7 @@ export const NotificationToast: React.FC<NotificationToastProps> = ({ toasts, on
         };
       default:
         return {
-          bg: "bg-slate-900/95 border-slate-700 text-slate-100",
+          bg: "bg-[#1A1F1F]/95 border-slate-700 text-slate-100",
           icon: <Info className="w-5 h-5 text-slate-400 flex-shrink-0" />,
           accent: "text-slate-300",
           progressBg: "bg-slate-400"
@@ -116,7 +116,7 @@ export const NotificationToast: React.FC<NotificationToastProps> = ({ toasts, on
             </div>
             <button
               onClick={() => onDismiss(toast.id)}
-              className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors flex-shrink-0"
+              className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#FAF9F6]/10 transition-colors flex-shrink-0"
               aria-label="Dismiss notification"
             >
               <X className="w-4 h-4" />

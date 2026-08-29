@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 py-16">
-      <div className="w-16 h-16 rounded-2xl bg-teal-50 text-[#476550] flex items-center justify-center mb-6 border border-teal-100">
+      <div className="w-16 h-16 rounded-2xl bg-[#E8F0EB] text-[#476550] flex items-center justify-center mb-6 border border-teal-100">
         <Search className="w-8 h-8" />
       </div>
 
@@ -29,13 +29,13 @@ export default function NotFound() {
         </Link>
         <Link 
           href="/blog" 
-          className="inline-flex items-center gap-2 bg-white border border-[#D8E2DA] hover:bg-[#F8FAFC] text-[#1A1F1F] font-semibold px-6 py-3 rounded-xl transition-all shadow-soft active:scale-95 btn-tactile"
+          className="inline-flex items-center gap-2 bg-[#FAF9F6] border border-[#D8E2DA] hover:bg-[#F4F4F0] text-[#1A1F1F] font-semibold px-6 py-3 rounded-xl transition-all shadow-soft active:scale-95 btn-tactile"
         >
           <BookOpen className="w-4 h-4" /> Browse Career Guides
         </Link>
         <Link 
           href="/dashboard" 
-          className="inline-flex items-center gap-2 bg-white border border-[#D8E2DA] hover:bg-[#F8FAFC] text-[#1A1F1F] font-semibold px-6 py-3 rounded-xl transition-all shadow-soft active:scale-95 btn-tactile"
+          className="inline-flex items-center gap-2 bg-[#FAF9F6] border border-[#D8E2DA] hover:bg-[#F4F4F0] text-[#1A1F1F] font-semibold px-6 py-3 rounded-xl transition-all shadow-soft active:scale-95 btn-tactile"
         >
           <Briefcase className="w-4 h-4" /> Go to Dashboard
         </Link>

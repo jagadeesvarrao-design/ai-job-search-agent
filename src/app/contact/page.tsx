@@ -52,20 +52,20 @@ export default function ContactPage() {
 
       <div className="grid md:grid-cols-12 gap-8">
         {/* Left Column: Form (7 cols) */}
-        <div className="md:col-span-7 bg-white dark:bg-[#222828] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft">
+        <div className="md:col-span-7 bg-[#FAF9F6] dark:bg-[#222828] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft">
           <h2 className="text-2xl font-bold text-[#1A1F1F] dark:text-white mb-2">Submit an Inquiry / Grievance</h2>
           <p className="text-xs text-[#596060] dark:text-slate-400 mb-6">
             Every submission generates a unique statutory tracking ticket.
           </p>
           
           {status === "success" ? (
-            <div className="bg-teal-50 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900 rounded-2xl p-6 text-center space-y-3 animate-in fade-in zoom-in-95">
+            <div className="bg-[#E8F0EB] dark:bg-[#1A1F1F]/30 border border-[#A2BCA8]/40 dark:border-teal-900 rounded-2xl p-6 text-center space-y-3 animate-in fade-in zoom-in-95">
               <div className="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
               <h3 className="text-[#476550] dark:text-[#A2BCA8] font-extrabold text-lg">Inquiry Logged Successfully!</h3>
               
-              <div className="p-3 bg-white dark:bg-[#222828] rounded-xl border border-teal-200 dark:border-teal-900 inline-block font-mono text-xs font-bold text-slate-800 dark:text-slate-200">
+              <div className="p-3 bg-[#FAF9F6] dark:bg-[#222828] rounded-xl border border-[#A2BCA8]/40 dark:border-teal-900 inline-block font-mono text-xs font-bold text-slate-800 dark:text-slate-200">
                 Ticket Reference: <span className="text-[#476550] dark:text-[#A2BCA8]">#{ticketId}</span>
               </div>
 
@@ -89,7 +89,7 @@ export default function ContactPage() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Rahul Sharma"
-                  className="w-full px-4 py-3 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F8FAFC] dark:bg-[#1F2525] text-[#1A1F1F] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#476550]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F4F4F0] dark:bg-[#1F2525] text-[#1A1F1F] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#476550]"
                 />
               </div>
 
@@ -101,7 +101,7 @@ export default function ContactPage() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="e.g. rahul@example.com"
-                  className="w-full px-4 py-3 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F8FAFC] dark:bg-[#1F2525] text-[#1A1F1F] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#476550]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F4F4F0] dark:bg-[#1F2525] text-[#1A1F1F] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#476550]"
                 />
               </div>
 
@@ -113,7 +113,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="How can we assist you today? Provide any relevant details or questions..."
-                  className="w-full px-4 py-3 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F8FAFC] dark:bg-[#1F2525] text-[#1A1F1F] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#476550]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F4F4F0] dark:bg-[#1F2525] text-[#1A1F1F] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#476550]"
                 />
               </div>
 
@@ -138,8 +138,8 @@ export default function ContactPage() {
         <div className="md:col-span-5 flex flex-col gap-4">
           
           {/* Direct Support Desk */}
-          <div className="bg-white dark:bg-[#222828] p-6 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-start gap-4">
-            <div className="p-3 bg-teal-50 dark:bg-teal-950/40 text-[#476550] dark:text-[#A2BCA8] rounded-2xl">
+          <div className="bg-[#FAF9F6] dark:bg-[#222828] p-6 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-start gap-4">
+            <div className="p-3 bg-[#E8F0EB] dark:bg-[#1A1F1F]/40 text-[#476550] dark:text-[#A2BCA8] rounded-2xl">
               <Mail className="w-5 h-5" />
             </div>
             <div>
@@ -152,8 +152,8 @@ export default function ContactPage() {
           </div>
           
           {/* Statutory Grievance Officer */}
-          <div className="bg-white dark:bg-[#222828] p-6 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-start gap-4">
-            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-2xl">
+          <div className="bg-[#FAF9F6] dark:bg-[#222828] p-6 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-start gap-4">
+            <div className="p-3 bg-[#E8F0EB] dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-2xl">
               <Scale className="w-5 h-5" />
             </div>
             <div className="space-y-1">
@@ -170,7 +170,7 @@ export default function ContactPage() {
           </div>
 
           {/* Parent Company & MCA Framework */}
-          <div className="bg-white dark:bg-[#222828] p-6 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-start gap-4">
+          <div className="bg-[#FAF9F6] dark:bg-[#222828] p-6 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-start gap-4">
             <div className="p-3 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-2xl">
               <Building2 className="w-5 h-5" />
             </div>

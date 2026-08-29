@@ -16,7 +16,7 @@ export default function AboutPage() {
     <div className="max-w-5xl mx-auto py-8 px-2 md:px-4">
       {/* Header */}
       <div className="text-center mb-14">
-        <div className="inline-flex items-center gap-2 bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#A2BCA8] font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#A2BCA8] font-semibold mb-4">
           <Building2 className="w-4 h-4" />
           <span>A Product of Aneevarp Solutions</span>
         </div>
@@ -28,8 +28,8 @@ export default function AboutPage() {
 
       {/* 3 Value Pillars */}
       <div className="grid md:grid-cols-3 gap-6 mb-14">
-        <div className="bg-white dark:bg-[#222828] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft text-center">
-          <div className="w-14 h-14 bg-teal-50 dark:bg-teal-950/40 rounded-2xl flex items-center justify-center mx-auto mb-6 text-[#476550] dark:text-[#A2BCA8]">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft text-center">
+          <div className="w-14 h-14 bg-[#E8F0EB] dark:bg-[#1A1F1F]/40 rounded-2xl flex items-center justify-center mx-auto mb-6 text-[#476550] dark:text-[#A2BCA8]">
             <Target className="w-7 h-7" />
           </div>
           <h2 className="text-xl font-bold mb-3 text-[#1A1F1F] dark:text-white">Our Mission</h2>
@@ -38,7 +38,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-[#222828] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft text-center">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft text-center">
           <div className="w-14 h-14 bg-amber-50 dark:bg-amber-950/40 rounded-2xl flex items-center justify-center mx-auto mb-6 text-amber-600 dark:text-amber-400">
             <Zap className="w-7 h-7" />
           </div>
@@ -48,7 +48,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-[#222828] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft text-center">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft text-center">
           <div className="w-14 h-14 bg-purple-50 dark:bg-purple-950/40 rounded-2xl flex items-center justify-center mx-auto mb-6 text-purple-600 dark:text-purple-400">
             <ShieldCheck className="w-7 h-7" />
           </div>
@@ -62,7 +62,7 @@ export default function AboutPage() {
       {/* FOUNDER & LEAD ARCHITECT SPOTLIGHT */}
       <section className="bg-gradient-to-br from-white via-[#F8FAFC] to-teal-50/40 dark:from-[#222828] dark:via-[#1F2525] dark:to-teal-950/20 rounded-3xl p-6 sm:p-10 md:p-12 mb-14 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft relative overflow-hidden">
         {/* Ambient Glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 dark:bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#E8F0EB]0/10 dark:bg-[#E8F0EB]0/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-10 relative z-10">
           {/* Founder Portrait */}
@@ -73,7 +73,7 @@ export default function AboutPage() {
                 alt="Jagadeeswara Rao Peddada - Founder & Lead Architect at Aneevarp Solutions"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute bottom-2 inset-x-2 bg-slate-900/80 backdrop-blur-md rounded-xl py-1 text-center text-[10px] font-black text-[#A2BCA8] border border-teal-500/30">
+              <div className="absolute bottom-2 inset-x-2 bg-[#1A1F1F]/80 backdrop-blur-md rounded-xl py-1 text-center text-[10px] font-black text-[#A2BCA8] border border-teal-500/30">
                 VERIFIED FOUNDER
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function AboutPage() {
                 href="https://my-portfolio-five-mu-77.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-bold text-[#476550] dark:text-[#A2BCA8] hover:underline inline-flex items-center gap-1 bg-teal-50 dark:bg-teal-950/60 px-3 py-1 rounded-full border border-teal-200 dark:border-teal-800"
+                className="text-xs font-bold text-[#476550] dark:text-[#A2BCA8] hover:underline inline-flex items-center gap-1 bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 px-3 py-1 rounded-full border border-[#A2BCA8]/40 dark:border-teal-800"
               >
                 <span>Portfolio</span>
                 <ExternalLink className="w-3 h-3" />
@@ -126,7 +126,7 @@ export default function AboutPage() {
                   href="https://zenresume.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-2xl bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] hover:border-[#476550] dark:hover:border-[#A2BCA8] transition-all flex items-center justify-between group shadow-sm"
+                  className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] hover:border-[#476550] dark:hover:border-[#A2BCA8] transition-all flex items-center justify-between group shadow-sm"
                 >
                   <div className="text-left">
                     <span className="text-xs font-black text-black dark:text-white block group-hover:text-[#476550] dark:group-hover:text-[#A2BCA8] transition-colors">ZenResume</span>
@@ -135,12 +135,12 @@ export default function AboutPage() {
                   <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#476550] dark:group-hover:text-[#A2BCA8]" />
                 </a>
 
-                <div className="p-3 rounded-2xl bg-white dark:bg-[#222828] border border-teal-300 dark:border-teal-800 shadow-sm text-left">
+                <div className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#222828] border border-teal-300 dark:border-teal-800 shadow-sm text-left">
                   <span className="text-xs font-black text-[#476550] dark:text-[#A2BCA8] block">ZenScout AI</span>
                   <span className="text-[10px] text-slate-500 dark:text-slate-400">Autonomous Job Scout</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] text-left shadow-sm">
+                <div className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] text-left shadow-sm">
                   <span className="text-xs font-black text-black dark:text-white block">ZenDoc AI</span>
                   <span className="text-[10px] text-slate-500 dark:text-slate-400">Document & Data AI</span>
                 </div>
@@ -151,7 +151,7 @@ export default function AboutPage() {
       </section>
       
       {/* PARENT COMPANY & STATUTORY SPOTLIGHT */}
-      <div className="bg-white dark:bg-[#222828] p-8 md:p-12 rounded-3xl mb-14 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft">
+      <div className="bg-[#FAF9F6] dark:bg-[#222828] p-8 md:p-12 rounded-3xl mb-14 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft">
         <div className="flex items-center gap-2 mb-4 text-[#476550] dark:text-[#A2BCA8]">
           <Award className="w-5 h-5" />
           <span className="text-xs uppercase tracking-widest font-bold">Parent Company & Corporate Disclosures</span>

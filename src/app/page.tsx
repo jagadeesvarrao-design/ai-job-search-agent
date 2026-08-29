@@ -62,8 +62,8 @@ export default function Home() {
       sub: "Querying 10,000+ verified tech postings tailored to your seniority & city.",
       icon: Search,
       color: "text-[#476550] dark:text-[#A2BCA8]",
-      bg: "bg-teal-50 dark:bg-teal-950/60",
-      border: "border-teal-200 dark:border-teal-800"
+      bg: "bg-[#E8F0EB] dark:bg-[#1A1F1F]/60",
+      border: "border-[#A2BCA8]/40 dark:border-teal-800"
     },
     {
       agent: "Agent Filter",
@@ -72,8 +72,8 @@ export default function Home() {
       sub: "Extracting skills, vector embeddings, and calculating a 98% match score.",
       icon: FileCheck,
       color: "text-emerald-700 dark:text-emerald-300",
-      bg: "bg-emerald-50 dark:bg-emerald-950/60",
-      border: "border-emerald-200 dark:border-emerald-800"
+      bg: "bg-[#E8F0EB] dark:bg-emerald-950/60",
+      border: "border-[#A2BCA8]/40 dark:border-emerald-800"
     },
     {
       agent: "Agent Factory",
@@ -82,8 +82,8 @@ export default function Home() {
       sub: "Mapping quantified achievements to the hiring manager's core challenges.",
       icon: Zap,
       color: "text-[#476550] dark:text-[#A2BCA8]",
-      bg: "bg-teal-50 dark:bg-teal-950/60",
-      border: "border-teal-200 dark:border-teal-800"
+      bg: "bg-[#E8F0EB] dark:bg-[#1A1F1F]/60",
+      border: "border-[#A2BCA8]/40 dark:border-teal-800"
     },
     {
       agent: "Agent Coach",
@@ -148,11 +148,11 @@ export default function Home() {
       {/* HERO SECTION WITH ANIMATED SCANNER & LIVE PIPELINE */}
       <section className="flex flex-col items-center justify-center min-h-[85vh] py-8 sm:py-12 md:py-16 relative">
         {/* Ambient Decorative Blurs */}
-        <div className="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-teal-500/10 dark:bg-teal-500/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
-        <div className="absolute top-20 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+        <div className="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#E8F0EB]0/10 dark:bg-[#E8F0EB]0/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+        <div className="absolute top-20 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#E8F0EB]0/10 dark:bg-[#E8F0EB]0/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
 
         {/* Ecosystem Pill */}
-        <div className="bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full mb-6 sm:mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all hover:scale-105 max-w-[95vw]">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full mb-6 sm:mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all hover:scale-105 max-w-[95vw]">
           <Sparkles className="w-4 h-4 text-orange-500 animate-spin duration-3000 flex-shrink-0" />
           <span className="text-[11px] sm:text-xs md:text-sm font-bold text-[#1A1F1F] dark:text-slate-200 truncate">
             Part of the <strong className="text-[#476550] dark:text-[#A2BCA8]">ZenResume & Aneevarp Solutions</strong> Career Suite
@@ -180,7 +180,7 @@ export default function Home() {
           </Link>
           <Link 
             href="/dashboard" 
-            className="bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-[#F8FAFC] dark:hover:bg-[#1F2525] text-[#1A1F1F] dark:text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center transition-all shadow-soft hover:shadow-md hover:-translate-y-0.5 active:scale-95 btn-tactile w-full sm:w-auto min-h-[48px]"
+            className="bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-[#F4F4F0] dark:hover:bg-[#1F2525] text-[#1A1F1F] dark:text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center transition-all shadow-soft hover:shadow-md hover:-translate-y-0.5 active:scale-95 btn-tactile w-full sm:w-auto min-h-[48px]"
           >
             Launch Dashboard
           </Link>
@@ -188,27 +188,27 @@ export default function Home() {
 
         {/* INTERACTIVE ANIMATED JOB SCANNER WORKSPACE */}
         <div className="w-full max-w-4xl mx-auto my-4 relative">
-          <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl p-5 sm:p-7 md:p-8 text-left relative overflow-hidden">
+          <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl p-5 sm:p-7 md:p-8 text-left relative overflow-hidden">
             {/* Animated Laser Scanning Beam */}
             <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#476550] dark:via-[#A2BCA8] to-transparent opacity-80 animate-scan pointer-events-none shadow-[0_0_15px_#476550]"></div>
 
             {/* Top Interactive Status Bar */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center shadow-sm flex-shrink-0">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center shadow-sm flex-shrink-0">
                   <Cpu className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
                 </div>
                 <div>
                   <h3 className="font-extrabold text-sm text-[#1A1F1F] dark:text-white flex items-center gap-2">
                     <span>Autonomous Multi-Agent Pipeline</span>
-                    <span className="text-[10px] bg-teal-50 dark:bg-teal-950/80 text-[#476550] dark:text-[#A2BCA8] border border-teal-200 dark:border-teal-800 px-2 py-0.5 rounded-full font-bold">LIVE</span>
+                    <span className="text-[10px] bg-[#E8F0EB] dark:bg-[#1A1F1F]/80 text-[#476550] dark:text-[#A2BCA8] border border-[#A2BCA8]/40 dark:border-teal-800 px-2 py-0.5 rounded-full font-bold">LIVE</span>
                   </h3>
                   <p className="text-xs text-[#596060] dark:text-slate-400">Streaming live candidate matching & interview simulation</p>
                 </div>
               </div>
 
               {/* Dynamic Step Tabs */}
-              <div className="flex flex-wrap items-center gap-1 bg-[#F8FAFC] dark:bg-[#1F2525] p-1 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636]">
+              <div className="flex flex-wrap items-center gap-1 bg-[#F4F4F0] dark:bg-[#1F2525] p-1 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636]">
                 {pipelineSteps.map((s, idx) => (
                   <button
                     key={idx}
@@ -250,7 +250,7 @@ export default function Home() {
                       </div>
 
                       {/* Live Counter / Match Badge */}
-                      <div className="bg-white dark:bg-[#222828] px-4 py-2 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm self-start sm:self-auto">
+                      <div className="bg-[#FAF9F6] dark:bg-[#222828] px-4 py-2 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm self-start sm:self-auto">
                         <span className="text-xs text-[#596060] dark:text-slate-400 font-medium block text-right">ATS Compatibility</span>
                         <div className="text-xl font-black text-[#476550] dark:text-[#A2BCA8] text-right">
                           {simulatedMatch}% Match
@@ -276,8 +276,8 @@ export default function Home() {
 
             {/* 3 Pipeline Overview Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-5">
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
-                <div className="p-2 rounded-lg bg-teal-100 dark:bg-teal-950 text-[#476550] dark:text-[#A2BCA8]">
+              <div className="p-3.5 rounded-xl bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
+                <div className="p-2 rounded-lg bg-teal-100 dark:bg-[#1A1F1F] text-[#476550] dark:text-[#A2BCA8]">
                   <Search className="w-4 h-4" />
                 </div>
                 <div>
@@ -286,7 +286,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
+              <div className="p-3.5 rounded-xl bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
                 <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
                   <FileCheck className="w-4 h-4" />
                 </div>
@@ -296,8 +296,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
-                <div className="p-2 rounded-lg bg-teal-100 dark:bg-teal-950 text-[#476550] dark:text-[#A2BCA8]">
+              <div className="p-3.5 rounded-xl bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
+                <div className="p-2 rounded-lg bg-teal-100 dark:bg-[#1A1F1F] text-[#476550] dark:text-[#A2BCA8]">
                   <Zap className="w-4 h-4" />
                 </div>
                 <div>
@@ -309,12 +309,12 @@ export default function Home() {
           </div>
 
           {/* Floating Aesthetic Badges */}
-          <div className="hidden lg:flex items-center gap-2 bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft-hover px-4 py-2.5 rounded-2xl absolute -bottom-4 -left-6 animate-float">
+          <div className="hidden lg:flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft-hover px-4 py-2.5 rounded-2xl absolute -bottom-4 -left-6 animate-float">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span className="text-xs font-bold text-[#1A1F1F] dark:text-slate-200">Zero-Backend Privacy (No DB)</span>
           </div>
 
-          <div className="hidden lg:flex items-center gap-2 bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft-hover px-4 py-2.5 rounded-2xl absolute -top-4 -right-6 animate-float-delayed">
+          <div className="hidden lg:flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft-hover px-4 py-2.5 rounded-2xl absolute -top-4 -right-6 animate-float-delayed">
             <Bot className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
             <span className="text-xs font-bold text-[#1A1F1F] dark:text-slate-200">Gemini 2.5 Flash Mock Coach</span>
           </div>
@@ -355,10 +355,10 @@ export default function Home() {
               tag: "Mock Hiring Round"
             }
           ].map((item, i) => (
-            <div key={i} className="bg-white dark:bg-[#222828] rounded-3xl p-6 sm:p-8 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft hover:shadow-soft-hover hover:-translate-y-1.5 transition-all duration-300 relative group flex flex-col justify-between">
+            <div key={i} className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl p-6 sm:p-8 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft hover:shadow-soft-hover hover:-translate-y-1.5 transition-all duration-300 relative group flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-start mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center font-black text-lg group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center font-black text-lg group-hover:scale-110 transition-transform">
                     <item.icon className="w-6 h-6" />
                   </div>
                   <span className="text-3xl font-black text-slate-200 dark:text-slate-700 group-hover:text-teal-200 dark:group-hover:text-teal-700 transition-colors">
@@ -395,9 +395,9 @@ export default function Home() {
             { icon: Zap, title: "3. Agent Factory", badge: "Synthesis", desc: "Generates tailored, 3-paragraph executive cover letters highlighting your quantifiable impact." },
             { icon: Bot, title: "4. Agent Coach", badge: "Preparation", desc: "Simulates interactive behavioral and technical hiring manager interviews with real-time feedback." }
           ].map((feature, i) => (
-            <div key={i} className="bg-white dark:bg-[#222828] rounded-3xl p-6 sm:p-8 text-left border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft hover:shadow-soft-hover hover:-translate-y-1 transition-all duration-300 group">
+            <div key={i} className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl p-6 sm:p-8 text-left border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft hover:shadow-soft-hover hover:-translate-y-1 transition-all duration-300 group">
               <div className="flex justify-between items-start mb-6">
-                <div className="bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8] w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 text-[#476550] dark:text-[#A2BCA8] w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                   <feature.icon className="w-6 h-6" />
                 </div>
                 <span className="text-[11px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-[#EAEFED] dark:bg-slate-800 text-[#596060] dark:text-slate-300">
@@ -414,11 +414,11 @@ export default function Home() {
       {/* ZENRESUME CROSS-PROMOTION BANNER SECTION */}
       <section className="py-10 sm:py-12 w-full max-w-5xl mx-auto text-left">
         <div className="bg-gradient-to-r from-[#476550] via-[#55735E] to-[#0284C7] rounded-3xl p-6 sm:p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#FAF9F6]/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 relative z-10">
             <div className="space-y-2 sm:space-y-3 max-w-xl">
-              <div className="inline-flex items-center gap-1.5 bg-white/20 text-teal-100 text-xs font-bold px-3 py-1 rounded-full border border-white/20">
+              <div className="inline-flex items-center gap-1.5 bg-[#FAF9F6]/20 text-teal-100 text-xs font-bold px-3 py-1 rounded-full border border-white/20">
                 <Flame className="w-3.5 h-3.5 text-amber-300" />
                 <span>ZenResume & Aneevarp Solutions Sister Tool</span>
               </div>
@@ -434,7 +434,7 @@ export default function Home() {
               href="https://zenresume.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-teal-50 text-[#476550] font-black text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-md hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2 flex-shrink-0 btn-tactile w-full md:w-auto min-h-[44px]"
+              className="bg-[#FAF9F6] hover:bg-[#E8F0EB] text-[#476550] font-black text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-md hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2 flex-shrink-0 btn-tactile w-full md:w-auto min-h-[44px]"
             >
               <span>Build on ZenResume Free</span>
               <ExternalLink className="w-4 h-4" />
@@ -445,7 +445,7 @@ export default function Home() {
 
       {/* ZERO-BACKEND PRIVACY GUARANTEE & FOUNDER TRUST COMMITMENT */}
       <section className="py-12 sm:py-16 w-full max-w-5xl mx-auto text-left">
-        <div className="bg-white dark:bg-[#222828] rounded-3xl p-6 sm:p-8 md:p-12 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex flex-col md:flex-row items-center gap-8 sm:gap-10 relative overflow-hidden">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl p-6 sm:p-8 md:p-12 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex flex-col md:flex-row items-center gap-8 sm:gap-10 relative overflow-hidden">
           <div className="flex-1">
             <span className="text-xs uppercase tracking-widest text-[#476550] dark:text-[#A2BCA8] font-bold mb-2 block">Privacy First Guarantee</span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-[#1A1F1F] dark:text-white">
@@ -462,7 +462,7 @@ export default function Home() {
                 "Instantly and permanently wiped whenever you clear your browser cache."
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-[#1A1F1F] dark:text-slate-200 text-xs sm:text-sm font-medium">
-                  <div className="p-1 rounded-full bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0">
+                  <div className="p-1 rounded-full bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0">
                     <Check className="w-3.5 h-3.5" />
                   </div>
                   <span>{item}</span>
@@ -473,7 +473,7 @@ export default function Home() {
 
           {/* High-Trust Founder Commitment Card */}
           <div className="w-full md:w-88 flex-shrink-0">
-            <div className="bg-gradient-to-br from-[#F8FAFC] to-teal-50/60 dark:from-[#1F2525] dark:to-teal-950/40 rounded-3xl p-6 border border-teal-200/80 dark:border-teal-800/60 shadow-lg text-center space-y-3.5 relative">
+            <div className="bg-gradient-to-br from-[#F8FAFC] to-teal-50/60 dark:from-[#1F2525] dark:to-teal-950/40 rounded-3xl p-6 border border-[#A2BCA8]/40/80 dark:border-teal-800/60 shadow-lg text-center space-y-3.5 relative">
               <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-3xl overflow-hidden border-2 border-[#476550] dark:border-[#A2BCA8] shadow-md relative group">
                 <img 
                   src="/founder.jpg" 
@@ -483,7 +483,7 @@ export default function Home() {
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-wider bg-teal-100 dark:bg-teal-900/60 text-[#476550] dark:text-[#A2BCA8] px-3 py-0.5 rounded-full border border-teal-200 dark:border-teal-800 inline-block">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-teal-100 dark:bg-teal-900/60 text-[#476550] dark:text-[#A2BCA8] px-3 py-0.5 rounded-full border border-[#A2BCA8]/40 dark:border-teal-800 inline-block">
                   Founder's Privacy Pledge
                 </span>
                 <h4 className="font-black text-base text-[#1A1F1F] dark:text-white pt-1">
@@ -512,7 +512,7 @@ export default function Home() {
       {/* GOOGLE PROMOTION & FAQ SECTION */}
       <section className="py-12 sm:py-16 w-full max-w-4xl mx-auto text-left">
         <div className="text-center mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#A2BCA8] font-semibold mb-3">
+          <div className="inline-flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#A2BCA8] font-semibold mb-3">
             <HelpCircle className="w-4 h-4" />
             <span>Frequently Asked Questions</span>
           </div>
@@ -528,11 +528,11 @@ export default function Home() {
             return (
               <div 
                 key={index} 
-                className="bg-white dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft overflow-hidden transition-all"
+                className="bg-[#FAF9F6] dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft overflow-hidden transition-all"
               >
                 <button
                   onClick={() => setOpenFaq(isOpen ? null : index)}
-                  className="w-full p-4 sm:p-6 text-left flex justify-between items-center gap-4 hover:bg-[#F8FAFC] dark:hover:bg-[#1F2525] transition-colors focus:outline-none"
+                  className="w-full p-4 sm:p-6 text-left flex justify-between items-center gap-4 hover:bg-[#F4F4F0] dark:hover:bg-[#1F2525] transition-colors focus:outline-none"
                   aria-expanded={isOpen}
                 >
                   <span className="font-bold text-[#1A1F1F] dark:text-white text-sm sm:text-base md:text-lg">{faq.q}</span>
@@ -559,7 +559,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link 
               href="/profile" 
-              className="bg-white hover:bg-teal-50 text-[#476550] px-8 py-3.5 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 btn-tactile min-h-[44px]"
+              className="bg-[#FAF9F6] hover:bg-[#E8F0EB] text-[#476550] px-8 py-3.5 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 btn-tactile min-h-[44px]"
             >
               <Target className="w-5 h-5" /> Start Automated Search
             </Link>

@@ -76,8 +76,8 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
   return (
     <>
-      <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
-        <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-5xl w-full max-h-[94vh] flex flex-col overflow-hidden my-auto animate-in zoom-in-95 duration-200">
+      <div className="fixed inset-0 bg-[#1A1F1F]/80 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-5xl w-full max-h-[94vh] flex flex-col overflow-hidden my-auto animate-in zoom-in-95 duration-200">
           
           {/* Header Bar */}
           <div className="px-5 sm:px-6 py-3.5 border-b border-[#D8E2DA] dark:border-[#2D3636] bg-gradient-to-r from-teal-50/50 via-white to-amber-50/50 dark:from-[#222828] dark:via-[#1F2525] dark:to-[#222828] flex justify-between items-center flex-shrink-0">
@@ -111,7 +111,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                   </div>
                   <div>
                     <h4 className="font-black text-xs sm:text-sm text-black dark:text-white">Sign In Required to Activate Subscription</h4>
-                    <p className="text-[11px] text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+                    <p className="text-[11px] text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
                       Please log in with Google or Email so we can bind your Pro membership and sync your application workspace across devices.
                     </p>
                   </div>
@@ -146,7 +146,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
             {/* 🌟 ZEN SUITE ULTIMATE ALL-IN-ONE CROSS-APP BUNDLE */}
             <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-teal-400/60 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#E8F0EB]0/10 rounded-full blur-3xl pointer-events-none"></div>
               
               <div className="space-y-1.5 max-w-xl relative z-10">
                 <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full shadow-sm">
@@ -155,7 +155,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 </div>
                 <h3 className="text-base sm:text-lg font-black text-white flex flex-wrap items-center gap-2">
                   <span>Zen Suite Ultimate Cross-Pass</span>
-                  <span className="text-sm font-bold text-[#A2BCA8] bg-teal-950/80 px-2.5 py-0.5 rounded-lg border border-teal-500/40">
+                  <span className="text-sm font-bold text-[#A2BCA8] bg-[#1A1F1F]/80 px-2.5 py-0.5 rounded-lg border border-teal-500/40">
                     {isINR ? "₹599/mo" : "$15.99/mo"}
                   </span>
                 </h3>
@@ -206,7 +206,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 text-left pt-1">
               
               {/* PLAN 1: 1-MONTH STARTER */}
-              <div className="p-4 sm:p-5 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#222828] hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between shadow-sm">
+              <div className="p-4 sm:p-5 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#222828] hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between shadow-sm">
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
                     <h4 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">1-Month Starter</h4>
@@ -222,11 +222,11 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                     <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "month" : "mo"}</span>
                   </div>
 
-                  <p className="text-[11px] text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+                  <p className="text-[11px] text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-3 pb-3 border-b border-slate-100 dark:border-slate-800">
                     Essential AI tools for single-role targeted applications.
                   </p>
 
-                  <ul className="space-y-2 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+                  <ul className="space-y-2 text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
                     <li className="flex items-center gap-2">
                       <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>100% Ad-Free & Zero-Backend Data Privacy</strong></span>
@@ -282,11 +282,11 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                     <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "3 months (₹233/mo)" : "3 mos ($6.33/mo)"}</span>
                   </div>
 
-                  <p className="text-[11px] text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-3 pb-3 border-b border-amber-200 dark:border-amber-900/40">
+                  <p className="text-[11px] text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-3 pb-3 border-b border-amber-200 dark:border-amber-900/40">
                     Everything you need from initial resume submission to signed offer letter.
                   </p>
 
-                  <ul className="space-y-2 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+                  <ul className="space-y-2 text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
                     <li className="flex items-center gap-2">
                       <Check className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
                       <span><strong>⚡ UNLIMITED Live Google Jobs Scouting</strong></span>
@@ -325,7 +325,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
               </div>
 
               {/* PLAN 3: ANNUAL PRO VIP */}
-              <div className="p-4 sm:p-5 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#222828] hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between shadow-sm">
+              <div className="p-4 sm:p-5 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#222828] hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between shadow-sm">
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
                     <h4 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">Annual Pro VIP</h4>
@@ -341,11 +341,11 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                     <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "year (₹166/mo)" : "yr ($4.08/mo)"}</span>
                   </div>
 
-                  <p className="text-[11px] text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+                  <p className="text-[11px] text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-3 pb-3 border-b border-slate-100 dark:border-slate-800">
                     For continuous career growth, promotions, and lateral career switches.
                   </p>
 
-                  <ul className="space-y-2 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+                  <ul className="space-y-2 text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
                     <li className="flex items-center gap-2">
                       <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>✓ Everything in 3-Month Pass for 365 Days</strong></span>
@@ -381,14 +381,14 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
             </div>
 
             {upgradeSuccess && (
-              <div className="p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-xs font-bold rounded-xl text-center animate-in fade-in">
+              <div className="p-3 bg-[#E8F0EB] dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-xs font-bold rounded-xl text-center animate-in fade-in">
                 🎉 Subscription Activated! Welcome to Pro.
               </div>
             )}
           </div>
 
           {/* Footer Bar */}
-          <div className="px-5 py-3 border-t border-[#D8E2DA] dark:border-[#2D3636] bg-slate-50 dark:bg-[#222828] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="px-5 py-3 border-t border-[#D8E2DA] dark:border-[#2D3636] bg-[#F4F4F0] dark:bg-[#222828] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
               <span>100% Zero-Backend Privacy • Cancel Anytime • Aneevarp Solutions</span>

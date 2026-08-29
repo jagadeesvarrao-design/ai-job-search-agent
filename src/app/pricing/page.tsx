@@ -69,7 +69,7 @@ export default function PricingPage() {
         <h1 className="text-3xl md:text-5xl font-black text-black dark:text-white tracking-tight mb-3">
           Choose Your Career Acceleration Plan
         </h1>
-        <p className="text-sm md:text-base text-[#0F172A] dark:text-[#CBD5E1] font-medium max-w-2xl mx-auto">
+        <p className="text-sm md:text-base text-[#1A1F1F] dark:text-[#CBD5E1] font-medium max-w-2xl mx-auto">
           One callback from a top company changes everything. Unlock autonomous AI scouting, deep ATS audits, and an ad-free workspace.
         </p>
       </div>
@@ -83,7 +83,7 @@ export default function PricingPage() {
             </div>
             <div>
               <h4 className="font-black text-sm text-black dark:text-white">Sign In Required to Activate Subscription</h4>
-              <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+              <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
                 Please log in with Google or Email so we can bind your Pro membership and sync your applications across all your devices.
               </p>
             </div>
@@ -116,7 +116,7 @@ export default function PricingPage() {
 
       {/* 🌟 ZEN SUITE ULTIMATE ALL-IN-ONE CROSS-APP BUNDLE */}
       <div className="my-6 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-teal-400/60 shadow-2xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-left relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#E8F0EB]0/15 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="space-y-2 max-w-2xl relative z-10">
           <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">
@@ -125,7 +125,7 @@ export default function PricingPage() {
           </div>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white flex flex-wrap items-center gap-3">
             <span>Zen Suite Ultimate Cross-Pass</span>
-            <span className="text-sm sm:text-base font-bold text-[#A2BCA8] bg-teal-950/80 px-3 py-1 rounded-xl border border-teal-500/40">
+            <span className="text-sm sm:text-base font-bold text-[#A2BCA8] bg-[#1A1F1F]/80 px-3 py-1 rounded-xl border border-teal-500/40">
               {isINR ? "₹599/month" : "$15.99/mo"}
             </span>
           </h2>
@@ -146,7 +146,7 @@ export default function PricingPage() {
       </div>
 
       {/* Currency Switcher Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 my-6 p-4 rounded-2xl bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] text-left shadow-sm">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 my-6 p-4 rounded-2xl bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] text-left shadow-sm">
         <div>
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Standalone Plans</span>
           <p className="text-xs text-black dark:text-white font-medium">Looking for ZenScout AI standalone access only?</p>
@@ -180,7 +180,7 @@ export default function PricingPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-left my-6">
         
         {/* PLAN 1: 1-MONTH STARTER */}
-        <div className="p-6 sm:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#222828] shadow-soft hover:shadow-soft-hover transition-all flex flex-col justify-between">
+        <div className="p-6 sm:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#222828] shadow-soft hover:shadow-soft-hover transition-all flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">1-Month Starter</h3>
@@ -196,11 +196,11 @@ export default function PricingPage() {
               <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "month" : "mo"}</span>
             </div>
 
-            <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
               Essential AI tools for single-role targeted applications.
             </p>
 
-            <ul className="space-y-3 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+            <ul className="space-y-3 text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                 <span><strong>100% Ad-Free & Zero-Backend Data Privacy</strong></span>
@@ -255,11 +255,11 @@ export default function PricingPage() {
               <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "3 months (₹233/mo)" : "3 mos ($6.33/mo)"}</span>
             </div>
 
-            <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-amber-200 dark:border-amber-900/40">
+            <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-amber-200 dark:border-amber-900/40">
               Everything you need from initial resume submission to signed offer letter.
             </p>
 
-            <ul className="space-y-3 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+            <ul className="space-y-3 text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-amber-500 flex-shrink-0" />
                 <span><strong>⚡ UNLIMITED Live Google Jobs Scouting</strong></span>
@@ -298,7 +298,7 @@ export default function PricingPage() {
         </div>
 
         {/* PLAN 3: ANNUAL PRO VIP */}
-        <div className="p-6 sm:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#222828] shadow-soft hover:shadow-soft-hover transition-all flex flex-col justify-between">
+        <div className="p-6 sm:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#222828] shadow-soft hover:shadow-soft-hover transition-all flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">Annual Pro VIP</h3>
@@ -314,11 +314,11 @@ export default function PricingPage() {
               <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "year (₹166/mo)" : "yr ($4.08/mo)"}</span>
             </div>
 
-            <p className="text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
               For continuous career growth, promotions, and lateral career switches.
             </p>
 
-            <ul className="space-y-3 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
+            <ul className="space-y-3 text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                 <span><strong>✓ Everything in 3-Month Pass for 365 Days</strong></span>
@@ -354,7 +354,7 @@ export default function PricingPage() {
       </div>
 
       {upgradeSuccess && (
-        <div className="my-6 p-4 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-sm font-bold rounded-2xl text-center animate-in fade-in max-w-2xl mx-auto">
+        <div className="my-6 p-4 bg-[#E8F0EB] dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200 text-sm font-bold rounded-2xl text-center animate-in fade-in max-w-2xl mx-auto">
           🎉 Subscription Activated! Welcome to Pro. <Link href="/dashboard" className="underline ml-1">Launch Dashboard &rarr;</Link>
         </div>
       )}
@@ -363,14 +363,14 @@ export default function PricingPage() {
       <div className="mt-14 text-left max-w-3xl mx-auto space-y-4">
         <h3 className="text-xl font-bold text-black dark:text-white text-center mb-6">Frequently Asked Questions</h3>
         
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636]">
+        <div className="p-5 rounded-2xl bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636]">
           <h4 className="font-bold text-sm text-black dark:text-white mb-1">How does Zen Suite Ultimate work across ZenDoc AI, ZenScout, and ZenResume?</h4>
           <p className="text-xs text-[#596060] dark:text-slate-300 leading-relaxed">
             When you subscribe to Zen Suite Ultimate (₹599/mo / $15.99/mo), your single Google or Email account automatically unlocks all premium features across all 3 platforms without needing separate subscriptions.
           </p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636]">
+        <div className="p-5 rounded-2xl bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636]">
           <h4 className="font-bold text-sm text-black dark:text-white mb-1">Is my resume data stored on your cloud servers?</h4>
           <p className="text-xs text-[#596060] dark:text-slate-300 leading-relaxed">
             No. ZenScout AI operates under strict Zero-Backend privacy architecture. Your resume is parsed statelessly in your local browser and sent directly to Google Gemini AI over encrypted TLS without database storage.

@@ -167,7 +167,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       {/* HEADER SECTION */}
       <header className="mb-8">
         <div className="flex flex-wrap items-center gap-3 mb-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-teal-50 text-[#476550] border border-teal-100">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-[#E8F0EB] text-[#476550] border border-teal-100">
             <Tag className="w-3 h-3" />
             {post.category}
           </span>
@@ -190,7 +190,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         </p>
 
         {/* E-E-A-T AUTHOR & REVIEWER BYLINE */}
-        <div className="bg-white p-4 rounded-2xl border border-[#D8E2DA] shadow-soft flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-[#FAF9F6] p-4 rounded-2xl border border-[#D8E2DA] shadow-soft flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-[#D5E0F8] text-[#476550] flex items-center justify-center font-bold text-sm">
               {post.author.avatar}
@@ -198,7 +198,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             <div>
               <div className="text-sm font-bold text-[#1A1F1F] flex items-center gap-2">
                 {post.author.name}
-                <span className="text-[10px] bg-teal-50 text-[#476550] px-2 py-0.5 rounded-full font-semibold border border-teal-100">
+                <span className="text-[10px] bg-[#E8F0EB] text-[#476550] px-2 py-0.5 rounded-full font-semibold border border-teal-100">
                   Verified Author
                 </span>
               </div>
@@ -206,7 +206,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-[#596060] bg-[#F8FAFC] px-3 py-1.5 rounded-xl border border-slate-200">
+          <div className="flex items-center gap-2 text-xs text-[#596060] bg-[#F4F4F0] px-3 py-1.5 rounded-xl border border-slate-200">
             <UserCheck className="w-4 h-4 text-[#476550]" />
             <span>Fact Checked by {post.reviewedBy}</span>
           </div>
@@ -214,7 +214,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </header>
 
       {/* ARTICLE BODY */}
-      <div className="bg-white p-8 md:p-12 rounded-3xl border border-[#D8E2DA] shadow-soft">
+      <div className="bg-[#FAF9F6] p-8 md:p-12 rounded-3xl border border-[#D8E2DA] shadow-soft">
         {renderContent(post.content)}
 
         {/* AD PLACEMENT (Auto-Hidden for Pro Subscribers) */}
@@ -222,7 +222,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </div>
 
       {/* E-E-A-T AUTHOR BIO BOX */}
-      <section aria-label="About the Author" className="mt-10 bg-white p-8 rounded-3xl border border-[#D8E2DA] shadow-soft">
+      <section aria-label="About the Author" className="mt-10 bg-[#FAF9F6] p-8 rounded-3xl border border-[#D8E2DA] shadow-soft">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
           <div className="w-16 h-16 rounded-2xl bg-[#D5E0F8] text-[#476550] flex items-center justify-center font-bold text-xl flex-shrink-0">
             {post.author.avatar}
@@ -246,7 +246,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             <Link 
               key={other.slug} 
               href={`/blog/${other.slug}`}
-              className="bg-white p-6 rounded-2xl border border-[#D8E2DA] shadow-soft hover:shadow-soft-hover hover:-translate-y-1 transition-all block group"
+              className="bg-[#FAF9F6] p-6 rounded-2xl border border-[#D8E2DA] shadow-soft hover:shadow-soft-hover hover:-translate-y-1 transition-all block group"
             >
               <span className="text-[11px] font-bold text-[#476550] block mb-2">{other.category}</span>
               <h4 className="text-lg font-bold text-[#1A1F1F] group-hover:text-[#476550] transition-colors mb-2 leading-snug">

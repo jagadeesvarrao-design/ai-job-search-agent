@@ -240,7 +240,7 @@ export default function ProfilePage() {
 
       <div className="flex flex-col gap-6">
         {/* Main Settings Card */}
-        <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 sm:p-8">
+        <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 sm:p-8">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             
             {/* Target Role & City Inputs */}
@@ -255,7 +255,7 @@ export default function ProfilePage() {
                   value={formData.role}
                   onChange={handleChange}
                   placeholder="e.g. Full Stack Developer, React Engineer"
-                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                  className="w-full px-4 py-3 bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
                 />
               </div>
 
@@ -269,7 +269,7 @@ export default function ProfilePage() {
                   value={formData.location}
                   onChange={handleChange}
                   placeholder="e.g. Bangalore, Hyderabad, Remote"
-                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                  className="w-full px-4 py-3 bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
                 />
               </div>
             </div>
@@ -284,7 +284,7 @@ export default function ProfilePage() {
                   name="experience"
                   value={formData.experience}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                  className="w-full px-4 py-3 bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
                 >
                   <option value="Fresher">Fresher / 0 Years (College Graduate / Career Switcher)</option>
                   <option value="1-2 Years">Junior (1 - 2 Years)</option>
@@ -303,7 +303,7 @@ export default function ProfilePage() {
                   value={formData.salary}
                   onChange={handleChange}
                   placeholder="e.g. ₹8,00,000 - ₹12,00,000 LPA"
-                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                  className="w-full px-4 py-3 bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
                 />
               </div>
             </div>
@@ -313,7 +313,7 @@ export default function ProfilePage() {
               <label className="block text-xs font-bold text-[#596060] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <FileText className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" /> Master Resume (PDF)
               </label>
-              <div className="border-2 border-dashed border-[#D8E2DA] dark:border-[#2D3636] hover:border-[#476550]/50 dark:hover:border-[#A2BCA8]/50 rounded-2xl p-6 sm:p-8 text-center bg-[#F8FAFC] dark:bg-[#1F2525] transition-all relative group cursor-pointer">
+              <div className="border-2 border-dashed border-[#D8E2DA] dark:border-[#2D3636] hover:border-[#476550]/50 dark:hover:border-[#A2BCA8]/50 rounded-2xl p-6 sm:p-8 text-center bg-[#F4F4F0] dark:bg-[#1F2525] transition-all relative group cursor-pointer">
                 <input
                   id="resume-file-input"
                   type="file"
@@ -322,18 +322,18 @@ export default function ProfilePage() {
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-teal-50 dark:bg-teal-950/40 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#E8F0EB] dark:bg-[#1A1F1F]/40 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center group-hover:scale-110 transition-transform">
                     <UploadCloud className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
                   <p className="font-bold text-sm text-[#1A1F1F] dark:text-white">Click or Drag & Drop PDF Resume</p>
                   <p className="text-xs text-[#596060] dark:text-slate-400">Instant ATS scanner & client-side vault encryption (Max 5MB)</p>
 
                   {formData.resumeBase64 && !analyzingAts && (
-                    <div className="flex flex-col items-center gap-1.5 mt-2 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 px-4 py-2.5 rounded-2xl animate-in fade-in">
+                    <div className="flex flex-col items-center gap-1.5 mt-2 bg-[#E8F0EB] dark:bg-emerald-950/40 border border-[#A2BCA8]/40 dark:border-emerald-800 px-4 py-2.5 rounded-2xl animate-in fade-in">
                       <div className="inline-flex items-center gap-1.5 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                         <span>Active Vault Document:</span>
-                        <span className="font-extrabold text-[#476550] dark:text-[#A2BCA8] bg-white dark:bg-slate-900 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800 max-w-[260px] sm:max-w-xs truncate">
+                        <span className="font-extrabold text-[#476550] dark:text-[#A2BCA8] bg-[#FAF9F6] dark:bg-[#1A1F1F] px-2 py-0.5 rounded-md border border-[#A2BCA8]/40 dark:border-emerald-800 max-w-[260px] sm:max-w-xs truncate">
                           {formData.resumeFileName || "Candidate_Resume.pdf"}
                         </span>
                       </div>
@@ -342,7 +342,7 @@ export default function ProfilePage() {
                   )}
 
                   {analyzingAts && (
-                    <div className="inline-flex items-center gap-2 bg-teal-50 dark:bg-teal-950/40 text-[#476550] dark:text-[#A2BCA8] text-xs font-bold px-4 py-2 rounded-full border border-teal-200 dark:border-teal-800 mt-2">
+                    <div className="inline-flex items-center gap-2 bg-[#E8F0EB] dark:bg-[#1A1F1F]/40 text-[#476550] dark:text-[#A2BCA8] text-xs font-bold px-4 py-2 rounded-full border border-[#A2BCA8]/40 dark:border-teal-800 mt-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
                       <span>Auditing {formData.resumeFileName ? `"${formData.resumeFileName}"` : "Resume"} with ATS Engine...</span>
                     </div>
@@ -374,7 +374,7 @@ export default function ProfilePage() {
                 <button
                   type="submit"
                   disabled={loading || analyzingAts}
-                  className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-xl transition-all border border-slate-300 dark:border-slate-700 flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 cursor-pointer"
+                  className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[#1A1F1F] dark:text-white font-semibold text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-xl transition-all border border-slate-300 dark:border-slate-700 flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 cursor-pointer"
                 >
                   <Save className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
                   <span>Save Profile</span>
@@ -437,7 +437,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* 0/100 Score Display */}
-                <div className="flex items-center gap-4 bg-white dark:bg-[#1F2525] p-3.5 rounded-2xl border border-amber-300 dark:border-amber-800 shadow-sm self-start md:self-auto">
+                <div className="flex items-center gap-4 bg-[#FAF9F6] dark:bg-[#1F2525] p-3.5 rounded-2xl border border-amber-300 dark:border-amber-800 shadow-sm self-start md:self-auto">
                   <div className="text-center">
                     <div className="text-3xl sm:text-4xl font-black text-amber-600 dark:text-amber-400 leading-none">
                       0<span className="text-base font-bold text-slate-400">/100</span>
@@ -450,7 +450,7 @@ export default function ProfilePage() {
               </div>
 
               {/* Dynamic Copy: Pro Subscribers vs Free Tier 2nd Chance */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-[#1F2525]/90 border border-amber-200 dark:border-amber-900/50 space-y-3">
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF9F6]/90 dark:bg-[#1F2525]/90 border border-amber-200 dark:border-amber-900/50 space-y-3">
                 <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
                   Recruiters and corporate ATS filters don’t give second chances for misaligned uploads. In real corporate hiring, submitting a project paper or non-resume document results in an instant automated rejection within 3 seconds.
                 </p>
@@ -481,7 +481,7 @@ export default function ProfilePage() {
             /* STANDARD ATS ANALYSIS CARD (For Valid Resumes) */
             <div className="bg-gradient-to-br from-white to-[#F0FDF4] dark:from-[#222828] dark:to-[#0f241d] rounded-3xl border-2 border-emerald-500/30 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
               {/* Ambient Glow */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#E8F0EB]0/10 rounded-full blur-3xl pointer-events-none"></div>
 
               {/* Score Header */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-emerald-100 dark:border-emerald-900/40">
@@ -496,7 +496,7 @@ export default function ProfilePage() {
                   <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#596060] dark:text-slate-400">
                     <span>Targeting: <strong className="text-[#1A1F1F] dark:text-white">{formData.role || "Target Role"}</strong></span>
                     <span>•</span>
-                    <span className="inline-flex items-center gap-1 bg-emerald-100/70 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 px-2.5 py-0.5 rounded-md font-bold border border-emerald-200 dark:border-emerald-800">
+                    <span className="inline-flex items-center gap-1 bg-emerald-100/70 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 px-2.5 py-0.5 rounded-md font-bold border border-[#A2BCA8]/40 dark:border-emerald-800">
                       <FileText className="w-3 h-3 text-[#476550] dark:text-[#A2BCA8]" />
                       <span className="max-w-[220px] truncate">{formData.resumeFileName || "Candidate_Resume.pdf"}</span>
                     </span>
@@ -504,7 +504,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* Score Display */}
-                <div className="flex items-center gap-4 bg-white dark:bg-[#1F2525] p-3.5 rounded-2xl border border-emerald-200 dark:border-emerald-800 shadow-sm self-start md:self-auto">
+                <div className="flex items-center gap-4 bg-[#FAF9F6] dark:bg-[#1F2525] p-3.5 rounded-2xl border border-[#A2BCA8]/40 dark:border-emerald-800 shadow-sm self-start md:self-auto">
                   <div className="text-center">
                     <div className="text-3xl sm:text-4xl font-black text-[#476550] dark:text-[#A2BCA8] leading-none">
                       {atsAnalysis.score}<span className="text-base font-bold text-slate-400">/100</span>
@@ -518,14 +518,14 @@ export default function ProfilePage() {
 
             {/* Analysis Summary */}
             <div className="py-5">
-              <p className="text-xs sm:text-sm text-[#596060] dark:text-slate-200 font-medium leading-relaxed bg-white/80 dark:bg-[#1F2525]/80 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/40">
+              <p className="text-xs sm:text-sm text-[#596060] dark:text-slate-200 font-medium leading-relaxed bg-[#FAF9F6]/80 dark:bg-[#1F2525]/80 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/40">
                 {atsAnalysis.summary}
               </p>
 
               {/* Strengths & Missing Elements Breakdown */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 {/* Strengths */}
-                <div className="bg-white dark:bg-[#1F2525] p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                <div className="bg-[#FAF9F6] dark:bg-[#1F2525] p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4" /> Detected Strengths
                   </h4>
@@ -540,7 +540,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* ATS Risks / Missing Keywords */}
-                <div className="bg-white dark:bg-[#1F2525] p-4 rounded-2xl border border-amber-200 dark:border-amber-900/50">
+                <div className="bg-[#FAF9F6] dark:bg-[#1F2525] p-4 rounded-2xl border border-amber-200 dark:border-amber-900/50">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-1.5">
                     <AlertTriangle className="w-4 h-4" /> Critical ATS Filter Risks & Missing Keywords
                   </h4>
@@ -558,10 +558,10 @@ export default function ProfilePage() {
 
             {/* NEXT STEP GUIDANCE BANNER (Direct Navigation to Dashboard) */}
             <div className="my-5 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-[#A2BCA8]/50 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden animate-in fade-in slide-in-from-top-3">
-              <div className="absolute -top-10 -right-10 w-48 h-48 bg-teal-500/20 rounded-full blur-2xl pointer-events-none"></div>
+              <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#E8F0EB]0/20 rounded-full blur-2xl pointer-events-none"></div>
 
               <div className="space-y-1.5 relative z-10">
-                <div className="inline-flex items-center gap-1.5 bg-teal-500/20 text-[#A2BCA8] text-[11px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full border border-teal-500/30">
+                <div className="inline-flex items-center gap-1.5 bg-[#E8F0EB]0/20 text-[#A2BCA8] text-[11px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full border border-teal-500/30">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>Next Step: Autonomous Job Discovery</span>
                 </div>
@@ -584,11 +584,11 @@ export default function ProfilePage() {
 
             {/* MARKETING HOOK (ZenResume Sister App) */}
             <div className="bg-gradient-to-r from-[#476550] to-[#55735E] rounded-2xl p-5 sm:p-7 text-white shadow-lg relative overflow-hidden mt-2">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#FAF9F6]/10 rounded-full blur-2xl"></div>
 
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative z-10">
                 <div className="space-y-1.5 max-w-xl">
-                  <div className="inline-flex items-center gap-1.5 bg-white/20 text-teal-100 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                  <div className="inline-flex items-center gap-1.5 bg-[#FAF9F6]/20 text-teal-100 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
                     <Zap className="w-3.5 h-3.5 text-amber-300" />
                     <span>Aneevarp Solutions Career Suite</span>
                   </div>
@@ -604,7 +604,7 @@ export default function ProfilePage() {
                   href="https://zenresume.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white hover:bg-teal-50 text-[#476550] font-black text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md hover:shadow-xl hover:scale-105 active:scale-95 flex items-center gap-2 flex-shrink-0 btn-tactile"
+                  className="bg-[#FAF9F6] hover:bg-[#E8F0EB] text-[#476550] font-black text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md hover:shadow-xl hover:scale-105 active:scale-95 flex items-center gap-2 flex-shrink-0 btn-tactile"
                 >
                   <span>Build on ZenResume Free</span>
                   <ArrowRight className="w-4 h-4" />

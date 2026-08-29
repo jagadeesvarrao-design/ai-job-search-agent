@@ -183,7 +183,7 @@ export default function RootLayout({
         </AuthProvider>
         
         {/* Statutory Enterprise Footer */}
-        <footer className="w-full bg-white dark:bg-[#222828] border-t border-[#D8E2DA] dark:border-[#2D3636] mt-auto">
+        <footer className="w-full bg-[#FAF9F6] dark:bg-[#222828] border-t border-[#D8E2DA] dark:border-[#2D3636] mt-auto">
           <div className="w-full py-8 px-4 md:px-8 max-w-[1280px] mx-auto flex flex-col gap-6">
             
             {/* Top Footer Row */}
@@ -195,13 +195,13 @@ export default function RootLayout({
                   </div>
                   <span>ZenScout AI</span>
                 </div>
-                <span className="text-xs text-[#1E293B] dark:text-slate-300 font-medium md:border-l md:border-[#D8E2DA] dark:md:border-[#2D3636] md:pl-3">
+                <span className="text-xs text-[#1A1F1F] dark:text-slate-300 font-medium md:border-l md:border-[#D8E2DA] dark:md:border-[#2D3636] md:pl-3">
                   © {new Date().getFullYear()} ZenScout AI. Engineered by <strong className="text-black dark:text-white">Aneevarp Solutions</strong>.
                 </span>
               </div>
 
               {/* Navigation links */}
-              <nav className="flex flex-wrap justify-center gap-6 text-xs font-bold text-[#0F172A] dark:text-slate-200" aria-label="Footer Navigation">
+              <nav className="flex flex-wrap justify-center gap-6 text-xs font-bold text-[#1A1F1F] dark:text-slate-200" aria-label="Footer Navigation">
                 <Link href="/about" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors">About</Link>
                 <Link href="/contact" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors">Contact & Grievance</Link>
                 <Link href="/blog" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors">Blog</Link>
@@ -211,7 +211,7 @@ export default function RootLayout({
             </div>
 
             {/* Bottom Statutory Disclosure Bar */}
-            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-[#64748B] dark:text-slate-400 flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-[#7D8787] dark:text-slate-400 flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
               <div>
                 <span>Operating Entity: <strong>Aneevarp Solutions</strong> (Hyderabad, Telangana, India) • Country of Origin: <strong>India</strong></span>
               </div>

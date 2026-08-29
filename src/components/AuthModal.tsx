@@ -103,8 +103,8 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-md w-full overflow-hidden my-auto animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 bg-[#1A1F1F]/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+      <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-md w-full overflow-hidden my-auto animate-in zoom-in-95 duration-200">
         
         {/* Modal Header */}
         <div className="px-6 py-5 border-b border-[#D8E2DA] dark:border-[#2D3636] flex justify-between items-center bg-gradient-to-r from-teal-50/40 via-white to-blue-50/40 dark:from-[#222828] dark:via-[#1F2525] dark:to-[#222828]">
@@ -149,7 +149,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{user.email}</p>
               </div>
 
-              <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 rounded-xl text-xs text-emerald-800 dark:text-emerald-300 font-bold flex items-center justify-center gap-1.5">
+              <div className="p-3 bg-[#E8F0EB] dark:bg-emerald-950/40 border border-[#A2BCA8]/40 dark:border-emerald-900 rounded-xl text-xs text-emerald-800 dark:text-emerald-300 font-bold flex items-center justify-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 <span>Account Active & Synced</span>
               </div>
@@ -191,7 +191,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
               <button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full bg-white dark:bg-[#1F2525] hover:bg-slate-50 dark:hover:bg-slate-800 text-black dark:text-white border border-[#D8E2DA] dark:border-[#2D3636] font-bold py-3 px-4 rounded-2xl text-xs transition-all flex items-center justify-center gap-2.5 shadow-sm active:scale-95 disabled:opacity-50"
+                className="w-full bg-[#FAF9F6] dark:bg-[#1F2525] hover:bg-[#F4F4F0] dark:hover:bg-slate-800 text-black dark:text-white border border-[#D8E2DA] dark:border-[#2D3636] font-bold py-3 px-4 rounded-2xl text-xs transition-all flex items-center justify-center gap-2.5 shadow-sm active:scale-95 disabled:opacity-50"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -217,7 +217,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
               )}
 
               {success && (
-                <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 text-xs font-semibold rounded-xl flex items-center gap-2">
+                <div className="p-3 bg-[#E8F0EB] dark:bg-emerald-950/40 border border-[#A2BCA8]/40 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 text-xs font-semibold rounded-xl flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
                   <span>{success}</span>
                 </div>
@@ -236,7 +236,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                         value={displayName}
                         onChange={(e) => setDisplayName(e.target.value)}
                         placeholder="Alex Kumar"
-                        className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                        className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
                       />
                     </div>
                   </div>
@@ -252,7 +252,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@example.com"
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
                     />
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
                     />
                   </div>
                 </div>
@@ -323,7 +323,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
         </div>
 
         {/* Security Footer */}
-        <div className="px-6 py-3 bg-slate-50 dark:bg-[#1F2525]/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-1.5 text-[10px] text-slate-400 font-medium">
+        <div className="px-6 py-3 bg-[#F4F4F0] dark:bg-[#1F2525]/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-1.5 text-[10px] text-slate-400 font-medium">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
           <span>Encrypted Authentication via Firebase • Zero-Knowledge Storage</span>
         </div>

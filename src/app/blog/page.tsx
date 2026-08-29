@@ -21,7 +21,7 @@ export default function BlogIndex() {
   return (
     <div className="max-w-5xl mx-auto py-8 px-2 md:px-4">
       <div className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 bg-white border border-[#D8E2DA] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 bg-[#FAF9F6] border border-[#D8E2DA] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] font-semibold mb-4">
           <BookOpen className="w-4 h-4" />
           <span>Aneevarp Solutions Career Research Lab</span>
         </div>
@@ -35,11 +35,11 @@ export default function BlogIndex() {
         {blogPosts.map((post) => (
           <article 
             key={post.slug} 
-            className="bg-white p-8 rounded-3xl border border-[#D8E2DA] shadow-soft hover:shadow-soft-hover hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+            className="bg-[#FAF9F6] p-8 rounded-3xl border border-[#D8E2DA] shadow-soft hover:shadow-soft-hover hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
           >
             <div>
               <div className="flex items-center justify-between gap-4 mb-4">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-teal-50 text-[#476550] border border-teal-100">
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-[#E8F0EB] text-[#476550] border border-teal-100">
                   <Tag className="w-3 h-3" />
                   {post.category}
                 </span>
@@ -86,7 +86,7 @@ export default function BlogIndex() {
       {/* AdSense Placement Section */}
       <aside 
         aria-label="Sponsored Content" 
-        className="mt-16 p-6 rounded-2xl bg-white border border-[#D8E2DA] shadow-soft text-center text-xs text-[#596060]"
+        className="mt-16 p-6 rounded-2xl bg-[#FAF9F6] border border-[#D8E2DA] shadow-soft text-center text-xs text-[#596060]"
       >
         <span className="uppercase tracking-wider font-semibold text-[10px] text-slate-400 block mb-1">Advertisements & Career Resources</span>
         <p className="text-slate-500">AdSense auto-ads or relevant career partner resources will appear here non-intrusively.</p>
