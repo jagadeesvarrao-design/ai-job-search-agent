@@ -245,7 +245,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                     </li>
                     <li className="flex items-center gap-2">
                       <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
-                      <span><strong>Core ATS Keyword Gap Diagnostics (3 Deep Audits / day)</strong></span>
+                      <span><strong>Core ATS Keyword Gap Diagnostics (5 Deep Audits / day • 150/mo)</strong></span>
                     </li>
                   </ul>
                 </div>

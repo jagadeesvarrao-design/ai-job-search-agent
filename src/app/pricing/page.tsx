@@ -219,7 +219,7 @@ export default function PricingPage() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
-                <span><strong>Core ATS Keyword Gap Diagnostics (3 Deep Audits / day)</strong></span>
+                <span><strong>Core ATS Keyword Gap Diagnostics (5 Deep Audits / day • 150/mo)</strong></span>
               </li>
             </ul>
           </div>
