@@ -71,8 +71,8 @@ interface Job {
 }
 
 const COLUMNS: { status: JobStatus; icon: any; color: string; bg: string; border: string }[] = [
-  { status: "New Matches", icon: Sparkles, color: "text-[#00685F]", bg: "bg-teal-50", border: "border-teal-200" },
-  { status: "Saved", icon: Bookmark, color: "text-[#545F73]", bg: "bg-slate-50", border: "border-slate-200" },
+  { status: "New Matches", icon: Sparkles, color: "text-[#476550]", bg: "bg-teal-50", border: "border-teal-200" },
+  { status: "Saved", icon: Bookmark, color: "text-[#596060]", bg: "bg-slate-50", border: "border-slate-200" },
   { status: "Applied", icon: Send, color: "text-[#0284C7]", bg: "bg-sky-50", border: "border-sky-200" },
   { status: "Interviewing", icon: MessageSquare, color: "text-[#3B82F6]", bg: "bg-blue-50", border: "border-blue-200" },
   { status: "Offers", icon: Award, color: "text-[#22C55E]", bg: "bg-emerald-50", border: "border-emerald-200" },
@@ -94,14 +94,14 @@ function renderFormattedDescription(desc?: string) {
     .filter(Boolean);
 
   return (
-    <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-[#171D1C] dark:text-slate-200 font-normal">
+    <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-[#1A1F1F] dark:text-slate-200 font-normal">
       {lines.map((line, idx) => {
         const isHeader = /^(Position:|What You Will Be Doing|What We're Looking For|Responsibilities|Requirements|Qualifications|Nice to Haves|Compensation And Benefits|Compensation & Benefits|About Us|About the Role|Key Duties)/i.test(line);
         const isBullet = line.startsWith("•") || line.startsWith("-");
 
         if (isHeader) {
           return (
-            <h5 key={idx} className="font-extrabold text-xs sm:text-sm text-[#00685F] dark:text-[#2DD4BF] pt-3 pb-1 border-t border-slate-200 dark:border-slate-800 first:border-0 first:pt-0 uppercase tracking-wider block">
+            <h5 key={idx} className="font-extrabold text-xs sm:text-sm text-[#476550] dark:text-[#A2BCA8] pt-3 pb-1 border-t border-slate-200 dark:border-slate-800 first:border-0 first:pt-0 uppercase tracking-wider block">
               {line}
             </h5>
           );
@@ -110,7 +110,7 @@ function renderFormattedDescription(desc?: string) {
         if (isBullet) {
           return (
             <div key={idx} className="flex items-start gap-2 pl-2">
-              <span className="text-[#00685F] dark:text-[#2DD4BF] font-black text-sm leading-tight flex-shrink-0 mt-0.5">•</span>
+              <span className="text-[#476550] dark:text-[#A2BCA8] font-black text-sm leading-tight flex-shrink-0 mt-0.5">•</span>
               <span className="flex-1">{line.replace(/^[•-]\s*/, "")}</span>
             </div>
           );
@@ -433,7 +433,7 @@ export default function DashboardPage() {
           <title>Cover Letter - ${selectedJob.company}</title>
           <style>
             body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 40px 50px; color: #111827; line-height: 1.6; }
-            .header { border-bottom: 2px solid #00685F; padding-bottom: 15px; margin-bottom: 25px; }
+            .header { border-bottom: 2px solid #476550; padding-bottom: 15px; margin-bottom: 25px; }
             .date { color: #6B7280; font-size: 13px; margin-bottom: 20px; }
             .content { white-space: pre-wrap; font-size: 14px; }
             .footer { margin-top: 40px; font-size: 12px; color: #9CA3AF; text-align: center; border-top: 1px solid #E5E7EB; padding-top: 10px; }
@@ -441,7 +441,7 @@ export default function DashboardPage() {
         </head>
         <body>
           <div class="header">
-            <h2 style="margin: 0; color: #00685F;">Application for ${selectedJob.title}</h2>
+            <h2 style="margin: 0; color: #476550;">Application for ${selectedJob.title}</h2>
             <p style="margin: 4px 0 0 0; color: #4B5563;">${selectedJob.company} • ${selectedJob.location}</p>
           </div>
           <div class="date">${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</div>
@@ -529,12 +529,12 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* 0. LIVE SUBSCRIPTION TIER & QUOTA METER */}
-      <div className="bg-white dark:bg-[#141B20] p-4 md:p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#222828] p-4 md:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className={`p-2.5 rounded-xl flex items-center justify-center ${
             isPro 
               ? "bg-amber-500/20 text-amber-500" 
-              : "bg-teal-50 dark:bg-teal-950/40 text-[#00685F] dark:text-[#2DD4BF]"
+              : "bg-teal-50 dark:bg-teal-950/40 text-[#476550] dark:text-[#A2BCA8]"
           }`}>
             {isPro ? <Crown className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
           </div>
@@ -601,7 +601,7 @@ export default function DashboardPage() {
 
       {/* CONDITIONAL ADSENSE SPONSOR BANNER (Displayed ONLY on Free Tier) */}
       {!isPro && (
-        <div className="bg-slate-50 dark:bg-[#1A2228] p-3.5 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div className="bg-slate-50 dark:bg-[#1F2525] p-3.5 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div className="flex items-center gap-2.5">
             <span className="text-[9px] font-black uppercase tracking-widest bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded">
               Ad / Sponsor
@@ -612,7 +612,7 @@ export default function DashboardPage() {
           </div>
           <button
             onClick={() => setPricingModalOpen(true)}
-            className="text-[11px] font-bold text-[#00685F] dark:text-[#2DD4BF] hover:underline whitespace-nowrap"
+            className="text-[11px] font-bold text-[#476550] dark:text-[#A2BCA8] hover:underline whitespace-nowrap"
           >
             Remove ads with ZenScout Pro &rarr;
           </button>
@@ -621,8 +621,8 @@ export default function DashboardPage() {
 
       {/* 1. TOP ANALYTICS & STATS BAR */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#141B20] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-[#00685F] dark:text-[#2DD4BF]">
+        <div className="bg-white dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8]">
             <Briefcase className="w-5 h-5" />
           </div>
           <div>
@@ -631,7 +631,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#141B20] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex items-center gap-4">
+        <div className="bg-white dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
           <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
             <TrendingUp className="w-5 h-5" />
           </div>
@@ -641,7 +641,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#141B20] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex items-center gap-4">
+        <div className="bg-white dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
           <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-[#0284C7] dark:text-sky-300">
             <Send className="w-5 h-5" />
           </div>
@@ -651,7 +651,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#141B20] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex items-center gap-4">
+        <div className="bg-white dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
           <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
             <Award className="w-5 h-5" />
           </div>
@@ -663,7 +663,7 @@ export default function DashboardPage() {
       </section>
 
       {/* 2. LIVE SEARCH & FILTER CONTROL BAR */}
-      <section className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft p-5 md:p-6">
+      <section className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 md:p-6">
         <div className="flex flex-col lg:flex-row items-center gap-4">
           {/* Target Role Input */}
           <div className="flex-1 w-full relative">
@@ -673,7 +673,7 @@ export default function DashboardPage() {
               value={searchRole}
               onChange={(e) => setSearchRole(e.target.value)}
               placeholder="Search Role (e.g. React Developer, Frontend Engineer, Data Scientist)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#00685F] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#00685F]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#A2BCA8] focus:ring-2 focus:ring-[#476550]/20"
             />
           </div>
 
@@ -685,7 +685,7 @@ export default function DashboardPage() {
               value={searchLocation}
               onChange={(e) => setSearchLocation(e.target.value)}
               placeholder="City (e.g. Bangalore, Hyderabad)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#00685F] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#00685F]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#A2BCA8] focus:ring-2 focus:ring-[#476550]/20"
             />
           </div>
 
@@ -695,8 +695,8 @@ export default function DashboardPage() {
             onClick={() => setRemoteOnly(!remoteOnly)}
             className={`px-4 py-3 rounded-xl border text-xs font-bold flex items-center gap-2 transition-all w-full lg:w-auto justify-center ${
               remoteOnly 
-                ? "bg-teal-50 dark:bg-teal-950/60 border-[#00685F] dark:border-[#2DD4BF] text-[#00685F] dark:text-[#2DD4BF]" 
-                : "bg-[#F8FAFC] dark:bg-[#1A2228] border-[#E2E8F0] dark:border-[#232D36] text-[#545F73] dark:text-slate-300 hover:text-black dark:hover:text-white"
+                ? "bg-teal-50 dark:bg-teal-950/60 border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" 
+                : "bg-[#F8FAFC] dark:bg-[#1F2525] border-[#D8E2DA] dark:border-[#2D3636] text-[#596060] dark:text-slate-300 hover:text-black dark:hover:text-white"
             }`}
           >
             <Globe className="w-4 h-4" />
@@ -708,16 +708,16 @@ export default function DashboardPage() {
             <button
               onClick={handleRunFilter}
               disabled={filtering}
-              className="bg-white dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] hover:bg-[#F0F5F2] dark:hover:bg-[#232D36] text-black dark:text-white font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-white dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-[#F0F5F2] dark:hover:bg-[#2D3636] text-black dark:text-white font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
             >
-              {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#00685F] dark:text-[#2DD4BF]" /> : <Filter className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />}
+              {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#476550] dark:text-[#A2BCA8]" /> : <Filter className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />}
               <span>Score ATS</span>
             </button>
 
             <button
               onClick={handleRunScout}
               disabled={scouting}
-              className="bg-[#00685F] hover:bg-[#005049] text-white font-bold text-xs py-3 px-6 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-[#476550] hover:bg-[#3A5342] text-white font-bold text-xs py-3 px-6 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
             >
               {scouting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
               <span>Search Live Jobs</span>
@@ -728,11 +728,11 @@ export default function DashboardPage() {
 
       {/* LIVE MULTI-STEP AGENT PIPELINE MONITOR */}
       {(scouting || filtering) && (
-        <section className="bg-gradient-to-r from-teal-950/90 via-slate-900 to-teal-950/90 border-2 border-[#00685F]/60 rounded-3xl p-5 text-white shadow-xl animate-in fade-in slide-in-from-top-2 space-y-4">
+        <section className="bg-gradient-to-r from-teal-950/90 via-slate-900 to-teal-950/90 border-2 border-[#476550]/60 rounded-3xl p-5 text-white shadow-xl animate-in fade-in slide-in-from-top-2 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-teal-800/40 pb-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#00685F] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
-                <Loader2 className="w-4 h-4 animate-spin text-[#2DD4BF]" />
+              <div className="w-8 h-8 rounded-xl bg-[#476550] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                <Loader2 className="w-4 h-4 animate-spin text-[#A2BCA8]" />
               </div>
               <div>
                 <h4 className="font-black text-sm sm:text-base text-white leading-tight">
@@ -743,7 +743,7 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <span className="text-[11px] font-black bg-[#00685F]/50 border border-[#2DD4BF]/50 text-[#2DD4BF] px-3 py-1 rounded-full self-start sm:self-auto shadow-sm">
+            <span className="text-[11px] font-black bg-[#476550]/50 border border-[#A2BCA8]/50 text-[#A2BCA8] px-3 py-1 rounded-full self-start sm:self-auto shadow-sm">
               Stage 2 of 3 • Neural Matching
             </span>
           </div>
@@ -751,10 +751,10 @@ export default function DashboardPage() {
           {/* 3-Step Progress Stage Nodes */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
             <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-teal-900/40 border border-teal-500/30">
-              <CheckCircle2 className="w-4 h-4 text-[#2DD4BF] flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-[#A2BCA8] flex-shrink-0" />
               <span className="font-semibold text-slate-200">1. Query Real-Time Jobs Index</span>
             </div>
-            <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-teal-500/20 border border-teal-400 text-[#2DD4BF] animate-pulse font-extrabold shadow-sm">
+            <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-teal-500/20 border border-teal-400 text-[#A2BCA8] animate-pulse font-extrabold shadow-sm">
               <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" />
               <span>2. Match Candidate Profile</span>
             </div>
@@ -772,19 +772,19 @@ export default function DashboardPage() {
           <h2 className="text-lg sm:text-xl font-black text-black dark:text-white tracking-tight">
             {viewMode === "board" ? "Pipeline Kanban Board" : "Opportunity Feed & Scoreboard"}
           </h2>
-          <span className="text-xs font-black text-[#00685F] dark:text-[#2DD4BF] bg-teal-50 dark:bg-teal-950/60 px-3 py-1 rounded-full border border-teal-200 dark:border-teal-800/80 shadow-sm">
+          <span className="text-xs font-black text-[#476550] dark:text-[#A2BCA8] bg-teal-50 dark:bg-teal-950/60 px-3 py-1 rounded-full border border-teal-200 dark:border-teal-800/80 shadow-sm">
             {jobs.length} Active Opportunities
           </span>
         </div>
 
         {/* View Switcher Segmented Control */}
-        <div className="inline-flex p-1 rounded-2xl bg-[#F0F5F2] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] shadow-inner self-start sm:self-auto">
+        <div className="inline-flex p-1 rounded-2xl bg-[#F0F5F2] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] shadow-inner self-start sm:self-auto">
           <button
             onClick={() => setViewMode("board")}
             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all ${
               viewMode === "board"
-                ? "bg-[#00685F] text-white shadow-sm"
-                : "text-[#545F73] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                ? "bg-[#476550] text-white shadow-sm"
+                : "text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
             }`}
           >
             <LayoutGrid className="w-3.5 h-3.5" />
@@ -794,8 +794,8 @@ export default function DashboardPage() {
             onClick={() => setViewMode("list")}
             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all ${
               viewMode === "list"
-                ? "bg-[#00685F] text-white shadow-sm"
-                : "text-[#545F73] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                ? "bg-[#476550] text-white shadow-sm"
+                : "text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
             }`}
           >
             <List className="w-3.5 h-3.5" />
@@ -808,7 +808,7 @@ export default function DashboardPage() {
       {viewMode === "list" && (
         <section className="space-y-3">
           {jobs.length === 0 ? (
-            <div className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] p-12 text-center text-slate-500 shadow-soft">
+            <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] p-12 text-center text-slate-500 shadow-soft">
               <Search className="w-10 h-10 mx-auto mb-3 text-slate-400 opacity-40" />
               <h3 className="text-base font-bold text-black dark:text-white">No Opportunities Scouted Yet</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -822,13 +822,13 @@ export default function DashboardPage() {
               .map(job => (
                 <div
                   key={job.id}
-                  className="bg-white dark:bg-[#141B20] rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] p-4 sm:p-5 shadow-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                  className="bg-white dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] p-4 sm:p-5 shadow-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
                 >
                   <div className="min-w-0 flex-1 space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 
                         onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
-                        className="font-extrabold text-sm sm:text-base text-black dark:text-white group-hover:text-[#00685F] dark:group-hover:text-[#2DD4BF] transition-colors cursor-pointer"
+                        className="font-extrabold text-sm sm:text-base text-black dark:text-white group-hover:text-[#476550] dark:group-hover:text-[#A2BCA8] transition-colors cursor-pointer"
                       >
                         {job.title}
                       </h3>
@@ -847,7 +847,7 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="flex flex-wrap items-center gap-3 text-xs text-[#0F172A] dark:text-slate-300 font-medium">
-                      <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" /> {job.company}</span>
+                      <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {job.company}</span>
                       <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {job.location}</span>
                       {job.salary && <span className="flex items-center gap-1 font-bold text-emerald-700 dark:text-emerald-400"><IndianRupee className="w-3.5 h-3.5" /> {job.salary}</span>}
                     </div>
@@ -858,7 +858,7 @@ export default function DashboardPage() {
                     <select
                       value={job.status}
                       onChange={(e) => updateJobStatus(job.id, e.target.value as JobStatus)}
-                      className="text-xs font-bold bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] text-black dark:text-white px-3 py-2 rounded-xl focus:outline-none focus:border-[#00685F] cursor-pointer"
+                      className="text-xs font-bold bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] text-black dark:text-white px-3 py-2 rounded-xl focus:outline-none focus:border-[#476550] cursor-pointer"
                     >
                       {COLUMNS.map(c => (
                         <option key={c.status} value={c.status}>{c.status}</option>
@@ -867,7 +867,7 @@ export default function DashboardPage() {
 
                     <button
                       onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
-                      className="text-xs font-bold bg-[#00685F] hover:bg-[#005049] text-white px-4 py-2 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1"
+                      className="text-xs font-bold bg-[#476550] hover:bg-[#3A5342] text-white px-4 py-2 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1"
                     >
                       <span>Details</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -883,7 +883,7 @@ export default function DashboardPage() {
 
                     <button
                       onClick={() => { setSelectedJob(job); setActiveTab("coach"); }}
-                      className="text-xs font-bold bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 text-[#00685F] dark:text-[#2DD4BF] border border-teal-200 dark:border-teal-800 px-3 py-2 rounded-xl transition-all"
+                      className="text-xs font-bold bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 text-[#476550] dark:text-[#A2BCA8] border border-teal-200 dark:border-teal-800 px-3 py-2 rounded-xl transition-all"
                       title="Practice mock interview"
                     >
                       <Bot className="w-3.5 h-3.5" />
@@ -916,10 +916,10 @@ export default function DashboardPage() {
             return (
               <div 
                 key={status} 
-                className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft p-5 sm:p-6 flex flex-col min-h-[340px] transition-all hover:shadow-soft-hover"
+                className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 sm:p-6 flex flex-col min-h-[340px] transition-all hover:shadow-soft-hover"
               >
                 {/* Card Header */}
-                <div className="flex justify-between items-center w-full mb-4 pb-3 border-b border-[#E2E8F0] dark:border-[#232D36]">
+                <div className="flex justify-between items-center w-full mb-4 pb-3 border-b border-[#D8E2DA] dark:border-[#2D3636]">
                   <div className="flex items-center gap-2">
                     <div className={`p-2 rounded-xl ${bg} ${color}`}>
                       <Icon className="w-4 h-4" />
@@ -934,7 +934,7 @@ export default function DashboardPage() {
                 {/* Jobs List inside status card */}
                 <div className="flex-1 flex flex-col gap-3 overflow-y-auto max-h-[480px]">
                   {columnJobs.length === 0 ? (
-                    <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-[#545F73] dark:text-slate-400">
+                    <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-[#596060] dark:text-slate-400">
                       <Icon className={`w-8 h-8 ${color} opacity-30 mb-2`} />
                       <p className="text-sm font-bold text-black dark:text-white">No jobs in {status}</p>
                       <span className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Drag or move opportunities here</span>
@@ -944,10 +944,10 @@ export default function DashboardPage() {
                       <div 
                         key={job.id}
                         onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
-                        className="p-4 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] bg-[#F8FAFC] dark:bg-[#1A2228] hover:bg-white dark:hover:bg-[#1F2930] hover:border-[#00685F]/50 dark:hover:border-[#2DD4BF]/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group flex flex-col gap-2 relative"
+                        className="p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F8FAFC] dark:bg-[#1F2525] hover:bg-white dark:hover:bg-[#1F2930] hover:border-[#476550]/50 dark:hover:border-[#A2BCA8]/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group flex flex-col gap-2 relative"
                       >
                         <div className="flex justify-between items-start gap-2">
-                          <h3 className="font-extrabold text-sm text-black dark:text-white group-hover:text-[#00685F] dark:group-hover:text-[#2DD4BF] transition-colors line-clamp-1">
+                          <h3 className="font-extrabold text-sm text-black dark:text-white group-hover:text-[#476550] dark:group-hover:text-[#A2BCA8] transition-colors line-clamp-1">
                             {job.title}
                           </h3>
                           {job.matchScore > 0 && (
@@ -962,13 +962,13 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="flex items-center gap-3 text-xs text-[#0F172A] dark:text-slate-300 font-medium">
-                          <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" /> {job.company}</span>
+                          <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {job.company}</span>
                           <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {job.location}</span>
                         </div>
 
                         <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 dark:border-slate-800/80 mt-1">
                           <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">{job.postedAt || "Verified active"}</span>
-                          <span className="text-xs font-bold text-[#00685F] dark:text-[#2DD4BF] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
+                          <span className="text-xs font-bold text-[#476550] dark:text-[#A2BCA8] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
                             View details &rarr;
                           </span>
                         </div>
@@ -985,9 +985,9 @@ export default function DashboardPage() {
       {/* 4. JOB DETAIL, COVER LETTER PDF & AI COACH MODAL */}
       {selectedJob && (
         <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="p-4 sm:p-6 border-b border-[#E2E8F0] dark:border-[#232D36] flex justify-between items-start bg-[#F8FAFC] dark:bg-[#1A2228] gap-3">
+            <div className="p-4 sm:p-6 border-b border-[#D8E2DA] dark:border-[#2D3636] flex justify-between items-start bg-[#F8FAFC] dark:bg-[#1F2525] gap-3">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
                   <h2 className="text-lg sm:text-2xl font-black text-black dark:text-white leading-snug break-words">{selectedJob.title}</h2>
@@ -998,9 +998,9 @@ export default function DashboardPage() {
                   )}
                 </div>
                 <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-bold text-[#0F172A] dark:text-slate-300">
-                  <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" /> {selectedJob.company}</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" /> {selectedJob.location}</span>
-                  {selectedJob.salary && <span className="flex items-center gap-1"><IndianRupee className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" /> {selectedJob.salary}</span>}
+                  <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.company}</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.location}</span>
+                  {selectedJob.salary && <span className="flex items-center gap-1"><IndianRupee className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.salary}</span>}
                 </div>
               </div>
               <button 
@@ -1016,11 +1016,11 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Navigation Tabs (Scrollable on small screens) */}
-            <div className="flex border-b border-[#E2E8F0] dark:border-[#232D36] px-3 sm:px-6 bg-white dark:bg-[#141B20] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
+            <div className="flex border-b border-[#D8E2DA] dark:border-[#2D3636] px-3 sm:px-6 bg-white dark:bg-[#222828] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
               <button
                 onClick={() => setActiveTab("details")}
                 className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all whitespace-nowrap ${
-                  activeTab === "details" ? "border-[#00685F] dark:border-[#2DD4BF] text-[#00685F] dark:text-[#2DD4BF]" : "border-transparent text-[#545F73] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                  activeTab === "details" ? "border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" : "border-transparent text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
                 }`}
               >
                 Job Description
@@ -1031,7 +1031,7 @@ export default function DashboardPage() {
                   if (!coverLetter) handleGenerateCoverLetter(selectedJob);
                 }}
                 className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  activeTab === "cover_letter" ? "border-[#00685F] dark:border-[#2DD4BF] text-[#00685F] dark:text-[#2DD4BF]" : "border-transparent text-[#545F73] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                  activeTab === "cover_letter" ? "border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" : "border-transparent text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
                 }`}
               >
                 <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -1040,7 +1040,7 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("coach")}
                 className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  activeTab === "coach" ? "border-[#00685F] dark:border-[#2DD4BF] text-[#00685F] dark:text-[#2DD4BF]" : "border-transparent text-[#545F73] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                  activeTab === "coach" ? "border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" : "border-transparent text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
                 }`}
               >
                 <Bot className="w-4 h-4" />
@@ -1049,12 +1049,12 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Content */}
-            <div className="p-4 sm:p-6 overflow-y-auto flex-1 text-sm text-[#171D1C] dark:text-slate-200">
+            <div className="p-4 sm:p-6 overflow-y-auto flex-1 text-sm text-[#1A1F1F] dark:text-slate-200">
               {/* TAB 1: DETAILS */}
               {activeTab === "details" && (
                 <div className="space-y-6">
                   <div>
-                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#545F73] dark:text-slate-400 mb-2.5">Move Status</h4>
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#596060] dark:text-slate-400 mb-2.5">Move Status</h4>
                     <div className="flex flex-wrap gap-2">
                       {COLUMNS.map(col => (
                         <button
@@ -1062,7 +1062,7 @@ export default function DashboardPage() {
                           onClick={() => updateJobStatus(selectedJob.id, col.status)}
                           className={`px-3.5 py-1.5 rounded-xl text-xs transition-all ${
                             selectedJob.status === col.status
-                              ? "bg-[#00685F] text-white shadow-md font-black ring-2 ring-[#00685F]/30"
+                              ? "bg-[#476550] text-white shadow-md font-black ring-2 ring-[#476550]/30"
                               : "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold"
                           }`}
                         >
@@ -1073,8 +1073,8 @@ export default function DashboardPage() {
                   </div>
 
                   <div>
-                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#545F73] dark:text-slate-400 mb-2.5">Role Overview & Responsibilities</h4>
-                    <div className="p-5 sm:p-6 rounded-2xl bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] shadow-sm">
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#596060] dark:text-slate-400 mb-2.5">Role Overview & Responsibilities</h4>
+                    <div className="p-5 sm:p-6 rounded-2xl bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm">
                       {renderFormattedDescription(selectedJob.description)}
                     </div>
                   </div>
@@ -1085,7 +1085,7 @@ export default function DashboardPage() {
                         href={selectedJob.applyLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-[#00685F] hover:bg-[#005049] text-white font-black px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-95 btn-tactile text-xs sm:text-sm"
+                        className="inline-flex items-center gap-2 bg-[#476550] hover:bg-[#3A5342] text-white font-black px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-95 btn-tactile text-xs sm:text-sm"
                       >
                         Apply Directly on Official Portal <ExternalLink className="w-4 h-4" />
                       </a>
@@ -1097,14 +1097,14 @@ export default function DashboardPage() {
               {/* TAB 2: COVER LETTER WITH 1-CLICK PDF EXPORT */}
               {activeTab === "cover_letter" && (
                 <div className="space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F8FAFC] dark:bg-[#1A2228] p-3.5 rounded-xl border border-[#E2E8F0] dark:border-[#232D36]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F8FAFC] dark:bg-[#1F2525] p-3.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636]">
                     <p className="text-xs text-[#0F172A] dark:text-slate-300 font-medium">Synthesized with Gemini 2.5 Flash mapping your experience.</p>
                     
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleCopyCoverLetter}
                         disabled={factoryLoading || !coverLetter}
-                        className="text-xs bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-black dark:text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all"
+                        className="text-xs bg-white dark:bg-slate-800 border border-[#D8E2DA] dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-black dark:text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all"
                       >
                         {copiedLetter ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{copiedLetter ? "Copied!" : "Copy"}</span>
@@ -1113,7 +1113,7 @@ export default function DashboardPage() {
                       <button
                         onClick={handlePrintCoverLetter}
                         disabled={factoryLoading || !coverLetter}
-                        className="text-xs bg-[#00685F] hover:bg-[#005049] text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all shadow-sm"
+                        className="text-xs bg-[#476550] hover:bg-[#3A5342] text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all shadow-sm"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>Download PDF</span>
@@ -1122,7 +1122,7 @@ export default function DashboardPage() {
                       <button
                         onClick={() => handleGenerateCoverLetter(selectedJob)}
                         disabled={factoryLoading}
-                        className="text-xs text-[#00685F] dark:text-[#2DD4BF] hover:underline font-bold flex items-center gap-1 pl-1"
+                        className="text-xs text-[#476550] dark:text-[#A2BCA8] hover:underline font-bold flex items-center gap-1 pl-1"
                       >
                         <RefreshCw className={`w-3.5 h-3.5 ${factoryLoading ? "animate-spin" : ""}`} />
                       </button>
@@ -1131,7 +1131,7 @@ export default function DashboardPage() {
 
                   {factoryLoading ? (
                     <div className="p-12 flex flex-col items-center justify-center text-center gap-3">
-                      <Loader2 className="w-8 h-8 animate-spin text-[#00685F] dark:text-[#2DD4BF]" />
+                      <Loader2 className="w-8 h-8 animate-spin text-[#476550] dark:text-[#A2BCA8]" />
                       <p className="font-bold text-sm text-black dark:text-white">Agent Factory is drafting your tailored cover letter...</p>
                     </div>
                   ) : (
@@ -1139,7 +1139,7 @@ export default function DashboardPage() {
                       value={coverLetter}
                       onChange={(e) => setCoverLetter(e.target.value)}
                       rows={13}
-                      className="w-full p-4 rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] bg-[#F8FAFC] dark:bg-[#1A2228] text-black dark:text-slate-100 leading-relaxed font-sans text-sm focus:outline-none focus:border-[#00685F]"
+                      className="w-full p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F8FAFC] dark:bg-[#1F2525] text-black dark:text-slate-100 leading-relaxed font-sans text-sm focus:outline-none focus:border-[#476550]"
                     />
                   )}
                 </div>
@@ -1151,7 +1151,7 @@ export default function DashboardPage() {
                   {/* Coach Controls Bar */}
                   <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3 text-xs">
                     <span className="font-bold text-black dark:text-white flex items-center gap-1.5">
-                      <Bot className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" /> Mock Interview Simulation
+                      <Bot className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" /> Mock Interview Simulation
                     </span>
                     
                     {hasVoiceAudioAccess() ? (
@@ -1165,7 +1165,7 @@ export default function DashboardPage() {
                         }}
                         className={`flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg border transition-all ${
                           voiceAudioEnabled 
-                            ? "bg-teal-50 dark:bg-teal-950/60 border-teal-300 dark:border-teal-800 text-[#00685F] dark:text-[#2DD4BF]" 
+                            ? "bg-teal-50 dark:bg-teal-950/60 border-teal-300 dark:border-teal-800 text-[#476550] dark:text-[#A2BCA8]" 
                             : "bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400"
                         }`}
                       >
@@ -1185,10 +1185,10 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Chat Message Thread */}
-                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F8FAFC] dark:bg-[#1A2228] rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] mb-3">
+                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F8FAFC] dark:bg-[#1F2525] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] mb-3">
                     {chatMessages.length === 0 ? (
-                      <div className="text-center py-10 text-[#545F73] dark:text-slate-400">
-                        <Bot className="w-10 h-10 mx-auto mb-2 text-[#00685F] dark:text-[#2DD4BF]" />
+                      <div className="text-center py-10 text-[#596060] dark:text-slate-400">
+                        <Bot className="w-10 h-10 mx-auto mb-2 text-[#476550] dark:text-[#A2BCA8]" />
                         <p className="font-bold text-sm text-black dark:text-white">Start your mock interview with the Hiring Manager</p>
                         <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Type "Hello, I am ready to begin" or tap the mic below!</p>
                       </div>
@@ -1196,7 +1196,7 @@ export default function DashboardPage() {
                       chatMessages.map((msg, i) => (
                         <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                           {msg.role === "user" ? (
-                            <div className="max-w-[85%] p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#00685F] text-white rounded-br-none font-medium shadow-sm">
+                            <div className="max-w-[85%] p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#476550] text-white rounded-br-none font-medium shadow-sm">
                               {msg.content}
                             </div>
                           ) : (
@@ -1207,7 +1207,7 @@ export default function DashboardPage() {
                                   <span>Hiring Scorecard: STAR 9/10 • Technical Depth: High</span>
                                 </div>
                               )}
-                              <div className="p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-slate-700 text-black dark:text-slate-100 rounded-bl-none shadow-sm font-normal">
+                              <div className="p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-slate-700 text-black dark:text-slate-100 rounded-bl-none shadow-sm font-normal">
                                 {msg.content}
                               </div>
                             </div>
@@ -1240,8 +1240,8 @@ export default function DashboardPage() {
 
                     {coachLoading && (
                       <div className="flex justify-start">
-                        <div className="bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-slate-700 p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold shadow-sm">
-                          <Loader2 className="w-3.5 h-3.5 animate-spin text-[#00685F] dark:text-[#2DD4BF]" />
+                        <div className="bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-slate-700 p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold shadow-sm">
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-[#476550] dark:text-[#A2BCA8]" />
                           <span>Hiring Manager is evaluating your answer...</span>
                         </div>
                       </div>
@@ -1257,7 +1257,7 @@ export default function DashboardPage() {
                       className={`p-3 rounded-xl border transition-all flex items-center justify-center ${
                         isRecording 
                           ? "bg-rose-500 text-white border-rose-600 animate-pulse" 
-                          : "bg-white dark:bg-[#141B20] border-[#E2E8F0] dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50"
+                          : "bg-white dark:bg-[#222828] border-[#D8E2DA] dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50"
                       }`}
                       title={isRecording ? "Listening..." : "Speak response"}
                     >
@@ -1284,7 +1284,7 @@ export default function DashboardPage() {
                             ? "Listening to your voice..." 
                             : "Type or speak your answer..."
                       }
-                      className="flex-1 p-3 rounded-xl border border-[#E2E8F0] dark:border-slate-700 bg-white dark:bg-[#141B20] text-sm font-medium text-black dark:text-white focus:outline-none focus:border-[#00685F]"
+                      className="flex-1 p-3 rounded-xl border border-[#D8E2DA] dark:border-slate-700 bg-white dark:bg-[#222828] text-sm font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
                     />
                     <button
                       onClick={() => {
@@ -1295,7 +1295,7 @@ export default function DashboardPage() {
                         }
                       }}
                       disabled={coachLoading || (!chatInput.trim() && isProSubscriber())}
-                      className="bg-[#00685F] hover:bg-[#005049] text-white px-5 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-50 btn-tactile flex items-center gap-1.5"
+                      className="bg-[#476550] hover:bg-[#3A5342] text-white px-5 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-50 btn-tactile flex items-center gap-1.5"
                     >
                       <span>{!isProSubscriber() && usageQuota.interviewMessagesSent >= 3 ? "Upgrade" : "Send"}</span>
                     </button>

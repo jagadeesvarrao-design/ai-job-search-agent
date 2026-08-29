@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%" fill="none">
-  <!-- Minimalist ZenScout AI Icon Mark (1:1 Square) -->
+  <!-- Minimalist ZenScout AI Icon Mark - Aneevarp Master Palette -->
   <defs>
-    <linearGradient id="iconTealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00685F" />
-      <stop offset="100%" stop-color="#2DD4BF" />
+    <linearGradient id="iconSageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#476550" />
+      <stop offset="100%" stop-color="#A2BCA8" />
     </linearGradient>
     <linearGradient id="iconGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2DD4BF" stop-opacity="0.3" />
-      <stop offset="100%" stop-color="#00685F" stop-opacity="0" />
+      <stop offset="0%" stop-color="#A2BCA8" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#476550" stop-opacity="0" />
     </linearGradient>
   </defs>
 
@@ -15,21 +15,21 @@
   <path d="M 80 80 L 140 20 A 80 80 0 0 0 80 0 Z" fill="url(#iconGlow)" />
 
   <!-- Outer Radar Scope Ring -->
-  <circle cx="80" cy="80" r="70" stroke="#00685F" stroke-width="5" stroke-linecap="round" />
+  <circle cx="80" cy="80" r="70" stroke="#476550" stroke-width="5" stroke-linecap="round" />
   
   <!-- Inner Concentric Arc -->
-  <circle cx="80" cy="80" r="46" stroke="#00685F" stroke-width="3" stroke-dasharray="4 6" opacity="0.6" />
+  <circle cx="80" cy="80" r="46" stroke="#476550" stroke-width="3" stroke-dasharray="4 6" opacity="0.6" />
 
   <!-- Cardinal Radar Ticks -->
-  <line x1="80" y1="2" x2="80" y2="18" stroke="#00685F" stroke-width="4" stroke-linecap="round" />
-  <line x1="80" y1="142" x2="80" y2="158" stroke="#00685F" stroke-width="4" stroke-linecap="round" />
-  <line x1="2" y1="80" x2="18" y2="80" stroke="#00685F" stroke-width="4" stroke-linecap="round" />
-  <line x1="142" y1="80" x2="158" y2="80" stroke="#00685F" stroke-width="4" stroke-linecap="round" />
+  <line x1="80" y1="2" x2="80" y2="18" stroke="#476550" stroke-width="4" stroke-linecap="round" />
+  <line x1="80" y1="142" x2="80" y2="158" stroke="#476550" stroke-width="4" stroke-linecap="round" />
+  <line x1="2" y1="80" x2="18" y2="80" stroke="#476550" stroke-width="4" stroke-linecap="round" />
+  <line x1="142" y1="80" x2="158" y2="80" stroke="#476550" stroke-width="4" stroke-linecap="round" />
 
   <!-- Minimalist Aneevarp Apex "A" Delta -->
-  <path d="M 45 125 L 80 32 L 115 125" stroke="url(#iconTealGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-  <line x1="58" y1="92" x2="102" y2="92" stroke="url(#iconTealGrad)" stroke-width="5" stroke-linecap="round" />
+  <path d="M 45 125 L 80 32 L 115 125" stroke="url(#iconSageGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <line x1="58" y1="92" x2="102" y2="92" stroke="url(#iconSageGrad)" stroke-width="5" stroke-linecap="round" />
 
   <!-- Central AI Node Spark -->
-  <circle cx="80" cy="80" r="8" fill="#2DD4BF" stroke="#00685F" stroke-width="2.5" />
+  <circle cx="80" cy="80" r="8" fill="#A2BCA8" stroke="#476550" stroke-width="2.5" />
 </svg>

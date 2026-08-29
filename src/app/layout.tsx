@@ -24,7 +24,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#00685F",
+  themeColor: "#476550",
 };
 
 export const metadata: Metadata = {
@@ -161,12 +161,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#F5FAF8] dark:bg-[#0B0F12] text-[#09090B] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#00685F] selection:text-white transition-colors duration-200">
+      <body className="min-h-full flex flex-col bg-[#FCFAF5] dark:bg-[#1A1F1F] text-[#09090B] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#476550] selection:text-white transition-colors duration-200">
         
         {/* Web Accessibility: Skip to Main Content (RPwD Act 2016 / WCAG 2.1 AA) */}
         <a 
           href="#main-content" 
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-[#00685F] focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:font-bold focus:shadow-xl focus:outline-none"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-[#476550] focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:font-bold focus:shadow-xl focus:outline-none"
         >
           Skip to main content
         </a>
@@ -183,30 +183,30 @@ export default function RootLayout({
         </AuthProvider>
         
         {/* Statutory Enterprise Footer */}
-        <footer className="w-full bg-white dark:bg-[#141B20] border-t border-[#E2E8F0] dark:border-[#232D36] mt-auto">
+        <footer className="w-full bg-white dark:bg-[#222828] border-t border-[#D8E2DA] dark:border-[#2D3636] mt-auto">
           <div className="w-full py-8 px-4 md:px-8 max-w-[1280px] mx-auto flex flex-col gap-6">
             
             {/* Top Footer Row */}
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
                 <div className="flex items-center gap-2 font-black text-base text-black dark:text-white">
-                  <div className="bg-[#00685F] text-white p-1.5 rounded-lg shadow-sm">
+                  <div className="bg-[#476550] text-white p-1.5 rounded-lg shadow-sm">
                     <Briefcase className="w-3.5 h-3.5" />
                   </div>
                   <span>ZenScout AI</span>
                 </div>
-                <span className="text-xs text-[#1E293B] dark:text-slate-300 font-medium md:border-l md:border-[#E2E8F0] dark:md:border-[#232D36] md:pl-3">
+                <span className="text-xs text-[#1E293B] dark:text-slate-300 font-medium md:border-l md:border-[#D8E2DA] dark:md:border-[#2D3636] md:pl-3">
                   © {new Date().getFullYear()} ZenScout AI. Engineered by <strong className="text-black dark:text-white">Aneevarp Solutions</strong>.
                 </span>
               </div>
 
               {/* Navigation links */}
               <nav className="flex flex-wrap justify-center gap-6 text-xs font-bold text-[#0F172A] dark:text-slate-200" aria-label="Footer Navigation">
-                <Link href="/about" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors">About</Link>
-                <Link href="/contact" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors">Contact & Grievance</Link>
-                <Link href="/blog" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors">Blog</Link>
-                <Link href="/privacy" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors">Privacy Policy (DPDP)</Link>
-                <Link href="/terms" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors">Terms of Service</Link>
+                <Link href="/about" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors">About</Link>
+                <Link href="/contact" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors">Contact & Grievance</Link>
+                <Link href="/blog" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors">Blog</Link>
+                <Link href="/privacy" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors">Privacy Policy (DPDP)</Link>
+                <Link href="/terms" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors">Terms of Service</Link>
               </nav>
             </div>
 
@@ -216,7 +216,7 @@ export default function RootLayout({
                 <span>Operating Entity: <strong>Aneevarp Solutions</strong> (Hyderabad, Telangana, India) • Country of Origin: <strong>India</strong></span>
               </div>
               <div className="flex items-center gap-3">
-                <span>Grievance Desk: <a href="mailto:aneevarpsolutions@gmail.com" className="text-[#00685F] dark:text-[#2DD4BF] underline">aneevarpsolutions@gmail.com</a></span>
+                <span>Grievance Desk: <a href="mailto:aneevarpsolutions@gmail.com" className="text-[#476550] dark:text-[#A2BCA8] underline">aneevarpsolutions@gmail.com</a></span>
                 <span>•</span>
                 <span>DPDP Act 2023 Compliant</span>
               </div>

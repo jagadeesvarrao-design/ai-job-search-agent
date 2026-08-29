@@ -61,7 +61,7 @@ export default function Home() {
       title: "Scanning Live Google Jobs Network",
       sub: "Querying 10,000+ verified tech postings tailored to your seniority & city.",
       icon: Search,
-      color: "text-[#00685F] dark:text-[#2DD4BF]",
+      color: "text-[#476550] dark:text-[#A2BCA8]",
       bg: "bg-teal-50 dark:bg-teal-950/60",
       border: "border-teal-200 dark:border-teal-800"
     },
@@ -81,7 +81,7 @@ export default function Home() {
       title: "Synthesizing Custom Cover Letter",
       sub: "Mapping quantified achievements to the hiring manager's core challenges.",
       icon: Zap,
-      color: "text-[#00685F] dark:text-[#2DD4BF]",
+      color: "text-[#476550] dark:text-[#A2BCA8]",
       bg: "bg-teal-50 dark:bg-teal-950/60",
       border: "border-teal-200 dark:border-teal-800"
     },
@@ -152,20 +152,20 @@ export default function Home() {
         <div className="absolute top-20 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
 
         {/* Ecosystem Pill */}
-        <div className="bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36] shadow-soft px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full mb-6 sm:mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all hover:scale-105 max-w-[95vw]">
+        <div className="bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full mb-6 sm:mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all hover:scale-105 max-w-[95vw]">
           <Sparkles className="w-4 h-4 text-orange-500 animate-spin duration-3000 flex-shrink-0" />
-          <span className="text-[11px] sm:text-xs md:text-sm font-bold text-[#171D1C] dark:text-slate-200 truncate">
-            Part of the <strong className="text-[#00685F] dark:text-[#2DD4BF]">ZenResume & Aneevarp Solutions</strong> Career Suite
+          <span className="text-[11px] sm:text-xs md:text-sm font-bold text-[#1A1F1F] dark:text-slate-200 truncate">
+            Part of the <strong className="text-[#476550] dark:text-[#A2BCA8]">ZenResume & Aneevarp Solutions</strong> Career Suite
           </span>
         </div>
         
         {/* Hero Headline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 sm:mb-6 max-w-4xl text-[#171D1C] dark:text-white leading-[1.15] px-2">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 sm:mb-6 max-w-4xl text-[#1A1F1F] dark:text-white leading-[1.15] px-2">
           Automate your <br className="hidden sm:block" />
           <span className="text-gradient">Job Hunt</span> with ZenScout AI
         </h1>
         
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#545F73] dark:text-slate-300 max-w-2xl mb-8 sm:mb-10 leading-relaxed font-normal px-2">
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#596060] dark:text-slate-300 max-w-2xl mb-8 sm:mb-10 leading-relaxed font-normal px-2">
           Upload your resume and let 4 autonomous AI agents discover live opportunities, score skill compatibility, write tailored cover letters, and coach you through interviews.
         </p>
 
@@ -173,14 +173,14 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 sm:mb-16 z-10 w-full sm:w-auto px-3 sm:px-0 max-w-md sm:max-w-none">
           <Link 
             href="/profile" 
-            className="bg-[#00685F] hover:bg-[#005049] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 btn-tactile group w-full sm:w-auto min-h-[48px]"
+            className="bg-[#476550] hover:bg-[#3A5342] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 btn-tactile group w-full sm:w-auto min-h-[48px]"
           >
             <span>Audit Resume & Target Jobs</span>
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link 
             href="/dashboard" 
-            className="bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36] hover:bg-[#F8FAFC] dark:hover:bg-[#1A2228] text-[#171D1C] dark:text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center transition-all shadow-soft hover:shadow-md hover:-translate-y-0.5 active:scale-95 btn-tactile w-full sm:w-auto min-h-[48px]"
+            className="bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-[#F8FAFC] dark:hover:bg-[#1F2525] text-[#1A1F1F] dark:text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center transition-all shadow-soft hover:shadow-md hover:-translate-y-0.5 active:scale-95 btn-tactile w-full sm:w-auto min-h-[48px]"
           >
             Launch Dashboard
           </Link>
@@ -188,35 +188,35 @@ export default function Home() {
 
         {/* INTERACTIVE ANIMATED JOB SCANNER WORKSPACE */}
         <div className="w-full max-w-4xl mx-auto my-4 relative">
-          <div className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-2xl p-5 sm:p-7 md:p-8 text-left relative overflow-hidden">
+          <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl p-5 sm:p-7 md:p-8 text-left relative overflow-hidden">
             {/* Animated Laser Scanning Beam */}
-            <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00685F] dark:via-[#2DD4BF] to-transparent opacity-80 animate-scan pointer-events-none shadow-[0_0_15px_#00685F]"></div>
+            <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#476550] dark:via-[#A2BCA8] to-transparent opacity-80 animate-scan pointer-events-none shadow-[0_0_15px_#476550]"></div>
 
             {/* Top Interactive Status Bar */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-teal-50 dark:bg-teal-950/60 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-center shadow-sm flex-shrink-0">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center shadow-sm flex-shrink-0">
                   <Cpu className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-sm text-[#171D1C] dark:text-white flex items-center gap-2">
+                  <h3 className="font-extrabold text-sm text-[#1A1F1F] dark:text-white flex items-center gap-2">
                     <span>Autonomous Multi-Agent Pipeline</span>
-                    <span className="text-[10px] bg-teal-50 dark:bg-teal-950/80 text-[#00685F] dark:text-[#2DD4BF] border border-teal-200 dark:border-teal-800 px-2 py-0.5 rounded-full font-bold">LIVE</span>
+                    <span className="text-[10px] bg-teal-50 dark:bg-teal-950/80 text-[#476550] dark:text-[#A2BCA8] border border-teal-200 dark:border-teal-800 px-2 py-0.5 rounded-full font-bold">LIVE</span>
                   </h3>
-                  <p className="text-xs text-[#545F73] dark:text-slate-400">Streaming live candidate matching & interview simulation</p>
+                  <p className="text-xs text-[#596060] dark:text-slate-400">Streaming live candidate matching & interview simulation</p>
                 </div>
               </div>
 
               {/* Dynamic Step Tabs */}
-              <div className="flex flex-wrap items-center gap-1 bg-[#F8FAFC] dark:bg-[#1A2228] p-1 rounded-xl border border-[#E2E8F0] dark:border-[#232D36]">
+              <div className="flex flex-wrap items-center gap-1 bg-[#F8FAFC] dark:bg-[#1F2525] p-1 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636]">
                 {pipelineSteps.map((s, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveStep(idx)}
                     className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       activeStep === idx 
-                        ? "bg-[#00685F] text-white shadow-sm scale-105" 
-                        : "text-[#545F73] dark:text-slate-400 hover:text-[#171D1C] dark:hover:text-white"
+                        ? "bg-[#476550] text-white shadow-sm scale-105" 
+                        : "text-[#596060] dark:text-slate-400 hover:text-[#1A1F1F] dark:hover:text-white"
                     }`}
                   >
                     {idx + 1}. {s.agent.split(" ")[1]}
@@ -233,7 +233,7 @@ export default function Home() {
                 const Icon = step.icon;
 
                 return (
-                  <div key={idx} className="bg-gradient-to-br from-[#F8FAFC] to-white dark:from-[#1A2228] dark:to-[#141B20] rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] p-5 sm:p-6 animate-in fade-in zoom-in-95 duration-300">
+                  <div key={idx} className="bg-gradient-to-br from-[#F8FAFC] to-white dark:from-[#1F2525] dark:to-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] p-5 sm:p-6 animate-in fade-in zoom-in-95 duration-300">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
                       <div className="flex items-center gap-3">
                         <div className={`p-3 rounded-2xl ${step.bg} ${step.color}`}>
@@ -243,29 +243,29 @@ export default function Home() {
                           <span className={`text-[11px] font-black uppercase tracking-wider ${step.color}`}>
                             {step.agent} • {step.badge}
                           </span>
-                          <h4 className="text-base sm:text-lg font-extrabold text-[#171D1C] dark:text-white mt-0.5">
+                          <h4 className="text-base sm:text-lg font-extrabold text-[#1A1F1F] dark:text-white mt-0.5">
                             {step.title}
                           </h4>
                         </div>
                       </div>
 
                       {/* Live Counter / Match Badge */}
-                      <div className="bg-white dark:bg-[#141B20] px-4 py-2 rounded-xl border border-[#E2E8F0] dark:border-[#232D36] shadow-sm self-start sm:self-auto">
-                        <span className="text-xs text-[#545F73] dark:text-slate-400 font-medium block text-right">ATS Compatibility</span>
-                        <div className="text-xl font-black text-[#00685F] dark:text-[#2DD4BF] text-right">
+                      <div className="bg-white dark:bg-[#222828] px-4 py-2 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm self-start sm:self-auto">
+                        <span className="text-xs text-[#596060] dark:text-slate-400 font-medium block text-right">ATS Compatibility</span>
+                        <div className="text-xl font-black text-[#476550] dark:text-[#A2BCA8] text-right">
                           {simulatedMatch}% Match
                         </div>
                       </div>
                     </div>
 
-                    <p className="text-xs sm:text-sm text-[#545F73] dark:text-slate-300 leading-relaxed mb-4">
+                    <p className="text-xs sm:text-sm text-[#596060] dark:text-slate-300 leading-relaxed mb-4">
                       {step.sub}
                     </p>
 
                     {/* Progress Bar Animation */}
                     <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                       <div 
-                        className="bg-gradient-to-r from-[#00685F] to-emerald-500 h-2 rounded-full transition-all duration-500" 
+                        className="bg-gradient-to-r from-[#476550] to-emerald-500 h-2 rounded-full transition-all duration-500" 
                         style={{ width: `${simulatedMatch}%` }}
                       ></div>
                     </div>
@@ -276,47 +276,47 @@ export default function Home() {
 
             {/* 3 Pipeline Overview Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-5">
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] flex items-center gap-3 hover:shadow-sm transition-all">
-                <div className="p-2 rounded-lg bg-teal-100 dark:bg-teal-950 text-[#00685F] dark:text-[#2DD4BF]">
+              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
+                <div className="p-2 rounded-lg bg-teal-100 dark:bg-teal-950 text-[#476550] dark:text-[#A2BCA8]">
                   <Search className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase text-[#00685F] dark:text-[#2DD4BF]">Scout</span>
-                  <p className="text-xs font-bold text-[#171D1C] dark:text-white">18 Live Jobs</p>
+                  <span className="text-[10px] font-bold uppercase text-[#476550] dark:text-[#A2BCA8]">Scout</span>
+                  <p className="text-xs font-bold text-[#1A1F1F] dark:text-white">18 Live Jobs</p>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] flex items-center gap-3 hover:shadow-sm transition-all">
+              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
                 <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
                   <FileCheck className="w-4 h-4" />
                 </div>
                 <div>
                   <span className="text-[10px] font-bold uppercase text-emerald-700 dark:text-emerald-300">Filter</span>
-                  <p className="text-xs font-bold text-[#171D1C] dark:text-white">98% Fit Score</p>
+                  <p className="text-xs font-bold text-[#1A1F1F] dark:text-white">98% Fit Score</p>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] flex items-center gap-3 hover:shadow-sm transition-all">
-                <div className="p-2 rounded-lg bg-teal-100 dark:bg-teal-950 text-[#00685F] dark:text-[#2DD4BF]">
+              <div className="p-3.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] flex items-center gap-3 hover:shadow-sm transition-all">
+                <div className="p-2 rounded-lg bg-teal-100 dark:bg-teal-950 text-[#476550] dark:text-[#A2BCA8]">
                   <Zap className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase text-[#00685F] dark:text-[#2DD4BF]">Factory</span>
-                  <p className="text-xs font-bold text-[#171D1C] dark:text-white">Letter Ready</p>
+                  <span className="text-[10px] font-bold uppercase text-[#476550] dark:text-[#A2BCA8]">Factory</span>
+                  <p className="text-xs font-bold text-[#1A1F1F] dark:text-white">Letter Ready</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Floating Aesthetic Badges */}
-          <div className="hidden lg:flex items-center gap-2 bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36] shadow-soft-hover px-4 py-2.5 rounded-2xl absolute -bottom-4 -left-6 animate-float">
+          <div className="hidden lg:flex items-center gap-2 bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft-hover px-4 py-2.5 rounded-2xl absolute -bottom-4 -left-6 animate-float">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span className="text-xs font-bold text-[#171D1C] dark:text-slate-200">Zero-Backend Privacy (No DB)</span>
+            <span className="text-xs font-bold text-[#1A1F1F] dark:text-slate-200">Zero-Backend Privacy (No DB)</span>
           </div>
 
-          <div className="hidden lg:flex items-center gap-2 bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36] shadow-soft-hover px-4 py-2.5 rounded-2xl absolute -top-4 -right-6 animate-float-delayed">
-            <Bot className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
-            <span className="text-xs font-bold text-[#171D1C] dark:text-slate-200">Gemini 2.5 Flash Mock Coach</span>
+          <div className="hidden lg:flex items-center gap-2 bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft-hover px-4 py-2.5 rounded-2xl absolute -top-4 -right-6 animate-float-delayed">
+            <Bot className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
+            <span className="text-xs font-bold text-[#1A1F1F] dark:text-slate-200">Gemini 2.5 Flash Mock Coach</span>
           </div>
         </div>
       </section>
@@ -324,9 +324,9 @@ export default function Home() {
       {/* HOW IT WORKS SECTION (Step-By-Step Interactive Visual) */}
       <section className="py-12 sm:py-16 md:py-20 flex flex-col items-center">
         <div className="mb-10 sm:mb-14">
-          <span className="text-xs uppercase tracking-widest text-[#00685F] dark:text-[#2DD4BF] font-extrabold mb-2 block">Seamless Workflow</span>
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black mb-3 text-[#171D1C] dark:text-white">How ZenScout AI Works</h2>
-          <p className="text-[#545F73] dark:text-slate-300 max-w-xl mx-auto text-sm sm:text-base">
+          <span className="text-xs uppercase tracking-widest text-[#476550] dark:text-[#A2BCA8] font-extrabold mb-2 block">Seamless Workflow</span>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black mb-3 text-[#1A1F1F] dark:text-white">How ZenScout AI Works</h2>
+          <p className="text-[#596060] dark:text-slate-300 max-w-xl mx-auto text-sm sm:text-base">
             From raw resume to confirmed job interviews in 3 automated steps.
           </p>
         </div>
@@ -355,22 +355,22 @@ export default function Home() {
               tag: "Mock Hiring Round"
             }
           ].map((item, i) => (
-            <div key={i} className="bg-white dark:bg-[#141B20] rounded-3xl p-6 sm:p-8 border border-[#E2E8F0] dark:border-[#232D36] shadow-soft hover:shadow-soft-hover hover:-translate-y-1.5 transition-all duration-300 relative group flex flex-col justify-between">
+            <div key={i} className="bg-white dark:bg-[#222828] rounded-3xl p-6 sm:p-8 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft hover:shadow-soft-hover hover:-translate-y-1.5 transition-all duration-300 relative group flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-start mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-teal-50 dark:bg-teal-950/60 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-center font-black text-lg group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center font-black text-lg group-hover:scale-110 transition-transform">
                     <item.icon className="w-6 h-6" />
                   </div>
                   <span className="text-3xl font-black text-slate-200 dark:text-slate-700 group-hover:text-teal-200 dark:group-hover:text-teal-700 transition-colors">
                     {item.step}
                   </span>
                 </div>
-                <span className="text-[11px] font-bold text-[#00685F] dark:text-[#2DD4BF] uppercase tracking-wider block mb-1">{item.tag}</span>
-                <h3 className="text-xl font-bold text-[#171D1C] dark:text-white mb-3">{item.title}</h3>
-                <p className="text-[#545F73] dark:text-slate-300 text-sm leading-relaxed">{item.desc}</p>
+                <span className="text-[11px] font-bold text-[#476550] dark:text-[#A2BCA8] uppercase tracking-wider block mb-1">{item.tag}</span>
+                <h3 className="text-xl font-bold text-[#1A1F1F] dark:text-white mb-3">{item.title}</h3>
+                <p className="text-[#596060] dark:text-slate-300 text-sm leading-relaxed">{item.desc}</p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center text-xs font-bold text-[#00685F] dark:text-[#2DD4BF] group-hover:translate-x-1 transition-transform">
+              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center text-xs font-bold text-[#476550] dark:text-[#A2BCA8] group-hover:translate-x-1 transition-transform">
                 <span>Explore Step {item.step} &rarr;</span>
               </div>
             </div>
@@ -381,9 +381,9 @@ export default function Home() {
       {/* 4 SPECIALIZED AI AGENTS GRID */}
       <section className="py-12 sm:py-16 md:py-20 flex flex-col items-center">
         <div className="mb-10 sm:mb-14">
-          <span className="text-xs uppercase tracking-widest text-[#00685F] dark:text-[#2DD4BF] font-extrabold mb-2 block">Autonomous Architecture</span>
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black mb-3 text-[#171D1C] dark:text-white">4 Specialized AI Agents</h2>
-          <p className="text-[#545F73] dark:text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
+          <span className="text-xs uppercase tracking-widest text-[#476550] dark:text-[#A2BCA8] font-extrabold mb-2 block">Autonomous Architecture</span>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black mb-3 text-[#1A1F1F] dark:text-white">4 Specialized AI Agents</h2>
+          <p className="text-[#596060] dark:text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
             Each agent handles a specific bottleneck in the traditional job application process.
           </p>
         </div>
@@ -395,17 +395,17 @@ export default function Home() {
             { icon: Zap, title: "3. Agent Factory", badge: "Synthesis", desc: "Generates tailored, 3-paragraph executive cover letters highlighting your quantifiable impact." },
             { icon: Bot, title: "4. Agent Coach", badge: "Preparation", desc: "Simulates interactive behavioral and technical hiring manager interviews with real-time feedback." }
           ].map((feature, i) => (
-            <div key={i} className="bg-white dark:bg-[#141B20] rounded-3xl p-6 sm:p-8 text-left border border-[#E2E8F0] dark:border-[#232D36] shadow-soft hover:shadow-soft-hover hover:-translate-y-1 transition-all duration-300 group">
+            <div key={i} className="bg-white dark:bg-[#222828] rounded-3xl p-6 sm:p-8 text-left border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft hover:shadow-soft-hover hover:-translate-y-1 transition-all duration-300 group">
               <div className="flex justify-between items-start mb-6">
-                <div className="bg-teal-50 dark:bg-teal-950/60 text-[#00685F] dark:text-[#2DD4BF] w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8] w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                   <feature.icon className="w-6 h-6" />
                 </div>
-                <span className="text-[11px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-[#EAEFED] dark:bg-slate-800 text-[#3D4947] dark:text-slate-300">
+                <span className="text-[11px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-[#EAEFED] dark:bg-slate-800 text-[#596060] dark:text-slate-300">
                   {feature.badge}
                 </span>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-[#171D1C] dark:text-white mb-2 sm:mb-3">{feature.title}</h3>
-              <p className="text-[#545F73] dark:text-slate-300 leading-relaxed text-xs sm:text-sm">{feature.desc}</p>
+              <h3 className="text-lg sm:text-xl font-bold text-[#1A1F1F] dark:text-white mb-2 sm:mb-3">{feature.title}</h3>
+              <p className="text-[#596060] dark:text-slate-300 leading-relaxed text-xs sm:text-sm">{feature.desc}</p>
             </div>
           ))}
         </div>
@@ -413,7 +413,7 @@ export default function Home() {
 
       {/* ZENRESUME CROSS-PROMOTION BANNER SECTION */}
       <section className="py-10 sm:py-12 w-full max-w-5xl mx-auto text-left">
-        <div className="bg-gradient-to-r from-[#00685F] via-[#0D9488] to-[#0284C7] rounded-3xl p-6 sm:p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-r from-[#476550] via-[#55735E] to-[#0284C7] rounded-3xl p-6 sm:p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 relative z-10">
@@ -434,7 +434,7 @@ export default function Home() {
               href="https://zenresume.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-teal-50 text-[#00685F] font-black text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-md hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2 flex-shrink-0 btn-tactile w-full md:w-auto min-h-[44px]"
+              className="bg-white hover:bg-teal-50 text-[#476550] font-black text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-md hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2 flex-shrink-0 btn-tactile w-full md:w-auto min-h-[44px]"
             >
               <span>Build on ZenResume Free</span>
               <ExternalLink className="w-4 h-4" />
@@ -445,13 +445,13 @@ export default function Home() {
 
       {/* ZERO-BACKEND PRIVACY GUARANTEE & FOUNDER TRUST COMMITMENT */}
       <section className="py-12 sm:py-16 w-full max-w-5xl mx-auto text-left">
-        <div className="bg-white dark:bg-[#141B20] rounded-3xl p-6 sm:p-8 md:p-12 border border-[#E2E8F0] dark:border-[#232D36] shadow-soft flex flex-col md:flex-row items-center gap-8 sm:gap-10 relative overflow-hidden">
+        <div className="bg-white dark:bg-[#222828] rounded-3xl p-6 sm:p-8 md:p-12 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex flex-col md:flex-row items-center gap-8 sm:gap-10 relative overflow-hidden">
           <div className="flex-1">
-            <span className="text-xs uppercase tracking-widest text-[#00685F] dark:text-[#2DD4BF] font-bold mb-2 block">Privacy First Guarantee</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-[#171D1C] dark:text-white">
+            <span className="text-xs uppercase tracking-widest text-[#476550] dark:text-[#A2BCA8] font-bold mb-2 block">Privacy First Guarantee</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-5 text-[#1A1F1F] dark:text-white">
               100% Data Privacy.<br />Zero Database Storage.
             </h2>
-            <p className="text-[#545F73] dark:text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+            <p className="text-[#596060] dark:text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
               At <strong>Aneevarp Solutions</strong>, we believe your resume and career history belong exclusively to you. When you upload a PDF resume, it is encoded locally in your browser and processed statelessly without ever being stored in a central database.
             </p>
             <ul className="space-y-3">
@@ -461,8 +461,8 @@ export default function Home() {
                 "Direct, stateless encrypted streaming with Google Gemini AI.",
                 "Instantly and permanently wiped whenever you clear your browser cache."
               ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-[#171D1C] dark:text-slate-200 text-xs sm:text-sm font-medium">
-                  <div className="p-1 rounded-full bg-teal-50 dark:bg-teal-950/60 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0">
+                <li key={i} className="flex items-center gap-3 text-[#1A1F1F] dark:text-slate-200 text-xs sm:text-sm font-medium">
+                  <div className="p-1 rounded-full bg-teal-50 dark:bg-teal-950/60 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0">
                     <Check className="w-3.5 h-3.5" />
                   </div>
                   <span>{item}</span>
@@ -473,8 +473,8 @@ export default function Home() {
 
           {/* High-Trust Founder Commitment Card */}
           <div className="w-full md:w-88 flex-shrink-0">
-            <div className="bg-gradient-to-br from-[#F8FAFC] to-teal-50/60 dark:from-[#1A2228] dark:to-teal-950/40 rounded-3xl p-6 border border-teal-200/80 dark:border-teal-800/60 shadow-lg text-center space-y-3.5 relative">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-3xl overflow-hidden border-2 border-[#00685F] dark:border-[#2DD4BF] shadow-md relative group">
+            <div className="bg-gradient-to-br from-[#F8FAFC] to-teal-50/60 dark:from-[#1F2525] dark:to-teal-950/40 rounded-3xl p-6 border border-teal-200/80 dark:border-teal-800/60 shadow-lg text-center space-y-3.5 relative">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-3xl overflow-hidden border-2 border-[#476550] dark:border-[#A2BCA8] shadow-md relative group">
                 <img 
                   src="/founder.jpg" 
                   alt="Jagadeeswara Rao Peddada - Founder of Aneevarp Solutions"
@@ -483,13 +483,13 @@ export default function Home() {
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-wider bg-teal-100 dark:bg-teal-900/60 text-[#00685F] dark:text-[#2DD4BF] px-3 py-0.5 rounded-full border border-teal-200 dark:border-teal-800 inline-block">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-teal-100 dark:bg-teal-900/60 text-[#476550] dark:text-[#A2BCA8] px-3 py-0.5 rounded-full border border-teal-200 dark:border-teal-800 inline-block">
                   Founder's Privacy Pledge
                 </span>
-                <h4 className="font-black text-base text-[#171D1C] dark:text-white pt-1">
+                <h4 className="font-black text-base text-[#1A1F1F] dark:text-white pt-1">
                   Jagadeeswara Rao Peddada
                 </h4>
-                <p className="text-xs text-[#545F73] dark:text-slate-300 font-medium">
+                <p className="text-xs text-[#596060] dark:text-slate-300 font-medium">
                   Founder & Lead Architect @ Aneevarp Solutions
                 </p>
               </div>
@@ -499,7 +499,7 @@ export default function Home() {
               </p>
 
               <div className="pt-2.5 border-t border-slate-200/60 dark:border-slate-800/80 flex items-center justify-center gap-3 text-xs">
-                <Link href="/about" className="font-bold text-[#00685F] dark:text-[#2DD4BF] hover:underline inline-flex items-center gap-1">
+                <Link href="/about" className="font-bold text-[#476550] dark:text-[#A2BCA8] hover:underline inline-flex items-center gap-1">
                   <span>Read Full Origin Story</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
@@ -512,12 +512,12 @@ export default function Home() {
       {/* GOOGLE PROMOTION & FAQ SECTION */}
       <section className="py-12 sm:py-16 w-full max-w-4xl mx-auto text-left">
         <div className="text-center mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 bg-white dark:bg-[#141B20] border border-[#E2E8F0] dark:border-[#232D36] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#00685F] dark:text-[#2DD4BF] font-semibold mb-3">
+          <div className="inline-flex items-center gap-2 bg-white dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#A2BCA8] font-semibold mb-3">
             <HelpCircle className="w-4 h-4" />
             <span>Frequently Asked Questions</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#171D1C] dark:text-white mb-2 sm:mb-3">Everything You Need to Know</h2>
-          <p className="text-[#545F73] dark:text-slate-300 max-w-xl mx-auto text-xs sm:text-sm">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#1A1F1F] dark:text-white mb-2 sm:mb-3">Everything You Need to Know</h2>
+          <p className="text-[#596060] dark:text-slate-300 max-w-xl mx-auto text-xs sm:text-sm">
             Answers to common questions about automated job searching, AI ATS matching, and privacy.
           </p>
         </div>
@@ -528,18 +528,18 @@ export default function Home() {
             return (
               <div 
                 key={index} 
-                className="bg-white dark:bg-[#141B20] rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft overflow-hidden transition-all"
+                className="bg-white dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft overflow-hidden transition-all"
               >
                 <button
                   onClick={() => setOpenFaq(isOpen ? null : index)}
-                  className="w-full p-4 sm:p-6 text-left flex justify-between items-center gap-4 hover:bg-[#F8FAFC] dark:hover:bg-[#1A2228] transition-colors focus:outline-none"
+                  className="w-full p-4 sm:p-6 text-left flex justify-between items-center gap-4 hover:bg-[#F8FAFC] dark:hover:bg-[#1F2525] transition-colors focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-bold text-[#171D1C] dark:text-white text-sm sm:text-base md:text-lg">{faq.q}</span>
-                  <ChevronDown className={`w-5 h-5 text-[#00685F] dark:text-[#2DD4BF] transition-transform duration-200 flex-shrink-0 ${isOpen ? "rotate-180" : ""}`} />
+                  <span className="font-bold text-[#1A1F1F] dark:text-white text-sm sm:text-base md:text-lg">{faq.q}</span>
+                  <ChevronDown className={`w-5 h-5 text-[#476550] dark:text-[#A2BCA8] transition-transform duration-200 flex-shrink-0 ${isOpen ? "rotate-180" : ""}`} />
                 </button>
                 {isOpen && (
-                  <div className="px-4 sm:px-6 pb-4 sm:pb-6 text-xs sm:text-sm text-[#545F73] dark:text-slate-300 leading-relaxed border-t border-[#E2E8F0] dark:border-[#232D36] pt-4">
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-6 text-xs sm:text-sm text-[#596060] dark:text-slate-300 leading-relaxed border-t border-[#D8E2DA] dark:border-[#2D3636] pt-4">
                     {faq.a}
                   </div>
                 )}
@@ -551,7 +551,7 @@ export default function Home() {
 
       {/* CALL TO ACTION */}
       <section className="py-14 sm:py-20 flex flex-col items-center">
-        <div className="bg-[#00685F] p-8 sm:p-12 md:p-16 rounded-3xl max-w-4xl w-full text-center relative overflow-hidden shadow-xl text-white">
+        <div className="bg-[#476550] p-8 sm:p-12 md:p-16 rounded-3xl max-w-4xl w-full text-center relative overflow-hidden shadow-xl text-white">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-black mb-4 sm:mb-6">Accelerate Your Job Hunt with ZenScout AI</h2>
           <p className="text-teal-100 mb-8 sm:mb-10 max-w-xl mx-auto text-xs sm:text-sm md:text-base">
             Stop wasting hours on manual job applications. Let Aneevarp Solutions' autonomous ZenScout agent suite do the heavy lifting for you.
@@ -559,13 +559,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link 
               href="/profile" 
-              className="bg-white hover:bg-teal-50 text-[#00685F] px-8 py-3.5 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 btn-tactile min-h-[44px]"
+              className="bg-white hover:bg-teal-50 text-[#476550] px-8 py-3.5 sm:py-4 rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 btn-tactile min-h-[44px]"
             >
               <Target className="w-5 h-5" /> Start Automated Search
             </Link>
             <Link 
               href="/blog" 
-              className="bg-[#005049] hover:bg-[#00403a] text-white border border-teal-400/30 px-8 py-3.5 sm:py-4 rounded-xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-all active:scale-95 btn-tactile min-h-[44px]"
+              className="bg-[#3A5342] hover:bg-[#00403a] text-white border border-teal-400/30 px-8 py-3.5 sm:py-4 rounded-xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-all active:scale-95 btn-tactile min-h-[44px]"
             >
               Read Career Guides
             </Link>

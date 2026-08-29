@@ -77,10 +77,10 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
   return (
     <>
       <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
-        <div className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-2xl max-w-5xl w-full max-h-[94vh] flex flex-col overflow-hidden my-auto animate-in zoom-in-95 duration-200">
+        <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-5xl w-full max-h-[94vh] flex flex-col overflow-hidden my-auto animate-in zoom-in-95 duration-200">
           
           {/* Header Bar */}
-          <div className="px-5 sm:px-6 py-3.5 border-b border-[#E2E8F0] dark:border-[#232D36] bg-gradient-to-r from-teal-50/50 via-white to-amber-50/50 dark:from-[#141B20] dark:via-[#1A2228] dark:to-[#141B20] flex justify-between items-center flex-shrink-0">
+          <div className="px-5 sm:px-6 py-3.5 border-b border-[#D8E2DA] dark:border-[#2D3636] bg-gradient-to-r from-teal-50/50 via-white to-amber-50/50 dark:from-[#222828] dark:via-[#1F2525] dark:to-[#222828] flex justify-between items-center flex-shrink-0">
             <div className="flex items-center gap-2">
               <div className="bg-gradient-to-br from-amber-500 to-orange-500 text-white p-1.5 rounded-xl shadow-sm">
                 <Crown className="w-4 h-4" />
@@ -119,7 +119,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
                 <button
                   onClick={() => setAuthModalOpen(true)}
-                  className="bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white text-xs font-black py-2 px-3.5 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1.5 whitespace-nowrap self-stretch sm:self-auto justify-center"
+                  className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#6B9077] dark:hover:bg-[#55735E] text-white text-xs font-black py-2 px-3.5 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1.5 whitespace-nowrap self-stretch sm:self-auto justify-center"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   <span>Sign In / Create Account</span>
@@ -155,7 +155,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 </div>
                 <h3 className="text-base sm:text-lg font-black text-white flex flex-wrap items-center gap-2">
                   <span>Zen Suite Ultimate Cross-Pass</span>
-                  <span className="text-sm font-bold text-[#2DD4BF] bg-teal-950/80 px-2.5 py-0.5 rounded-lg border border-teal-500/40">
+                  <span className="text-sm font-bold text-[#A2BCA8] bg-teal-950/80 px-2.5 py-0.5 rounded-lg border border-teal-500/40">
                     {isINR ? "₹599/mo" : "$15.99/mo"}
                   </span>
                 </h3>
@@ -167,7 +167,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
               <button
                 onClick={() => handleCheckout("zen_suite")}
                 disabled={isUpgrading}
-                className="w-full md:w-auto bg-gradient-to-r from-[#00685F] to-[#2DD4BF] hover:from-[#005049] hover:to-[#14B8A6] text-slate-950 font-black py-3 px-6 rounded-2xl text-xs shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2 flex-shrink-0 relative z-10 cursor-pointer"
+                className="w-full md:w-auto bg-gradient-to-r from-[#476550] to-[#A2BCA8] hover:from-[#3A5342] hover:to-[#6B9077] text-slate-950 font-black py-3 px-6 rounded-2xl text-xs shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2 flex-shrink-0 relative z-10 cursor-pointer"
               >
                 <Zap className="w-4 h-4 fill-slate-950 text-slate-950" />
                 <span>Get Zen Suite Ultimate</span>
@@ -177,13 +177,13 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
             {/* Currency Switcher Bar */}
             <div className="flex items-center justify-between px-2 pt-1">
-              <span className="text-xs font-bold text-[#545F73] dark:text-slate-400">ZenScout Standalone Plans:</span>
+              <span className="text-xs font-bold text-[#596060] dark:text-slate-400">ZenScout Standalone Plans:</span>
               <div className="inline-flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
                 <button
                   onClick={() => setCurrency("INR")}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     currency === "INR" 
-                      ? "bg-[#00685F] text-white shadow-sm" 
+                      ? "bg-[#476550] text-white shadow-sm" 
                       : "text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white"
                   }`}
                 >
@@ -193,7 +193,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                   onClick={() => setCurrency("USD")}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     currency === "USD" 
-                      ? "bg-[#00685F] text-white shadow-sm" 
+                      ? "bg-[#476550] text-white shadow-sm" 
                       : "text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white"
                   }`}
                 >
@@ -206,7 +206,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 text-left pt-1">
               
               {/* PLAN 1: 1-MONTH STARTER */}
-              <div className="p-4 sm:p-5 rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] bg-white dark:bg-[#141B20] hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between shadow-sm">
+              <div className="p-4 sm:p-5 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#222828] hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between shadow-sm">
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
                     <h4 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">1-Month Starter</h4>
@@ -228,23 +228,23 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
                   <ul className="space-y-2 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>100% Ad-Free & Zero-Backend Data Privacy</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>25 Live Job Scout Runs / day</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>10 Tailored PDF Cover Letters / day</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>1 Full Text-Based Mock Interview Session / day</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>Core ATS Keyword Gap Diagnostics (5 Deep Audits / day • 150/mo)</strong></span>
                     </li>
                   </ul>
@@ -253,7 +253,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 <button
                   onClick={() => handleCheckout("monthly")}
                   disabled={isUpgrading}
-                  className="mt-5 w-full bg-slate-100 hover:bg-[#00685F] hover:text-white dark:bg-[#1A2228] dark:hover:bg-[#14B8A6] dark:hover:text-slate-950 text-[#00685F] dark:text-[#2DD4BF] font-black py-2.5 px-4 rounded-xl text-xs transition-all border border-[#00685F]/30 active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="mt-5 w-full bg-slate-100 hover:bg-[#476550] hover:text-white dark:bg-[#1F2525] dark:hover:bg-[#6B9077] dark:hover:text-slate-950 text-[#476550] dark:text-[#A2BCA8] font-black py-2.5 px-4 rounded-xl text-xs transition-all border border-[#476550]/30 active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Unlock 1-Month Starter</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -325,7 +325,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
               </div>
 
               {/* PLAN 3: ANNUAL PRO VIP */}
-              <div className="p-4 sm:p-5 rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] bg-white dark:bg-[#141B20] hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between shadow-sm">
+              <div className="p-4 sm:p-5 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#222828] hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between shadow-sm">
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
                     <h4 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">Annual Pro VIP</h4>
@@ -347,23 +347,23 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
                   <ul className="space-y-2 text-xs text-[#0F172A] dark:text-[#CBD5E1] font-medium">
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>✓ Everything in 3-Month Pass for 365 Days</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>✓ Recruiter Direct Cold-Outreach & DM Templates</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>✓ Offer Evaluation & Salary Negotiation Playbooks</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>✓ Priority Access to All Future Autonomous Agent Releases</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF] flex-shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
                       <span><strong>👑 VIP Lifetime Member Badge in App</strong></span>
                     </li>
                   </ul>
@@ -372,7 +372,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 <button
                   onClick={() => handleCheckout("annual")}
                   disabled={isUpgrading}
-                  className="mt-5 w-full bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-black py-2.5 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="mt-5 w-full bg-[#476550] hover:bg-[#3A5342] dark:bg-[#6B9077] dark:hover:bg-[#55735E] text-white font-black py-2.5 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Get Annual VIP Access</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -388,9 +388,9 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
           </div>
 
           {/* Footer Bar */}
-          <div className="px-5 py-3 border-t border-[#E2E8F0] dark:border-[#232D36] bg-slate-50 dark:bg-[#141B20] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="px-5 py-3 border-t border-[#D8E2DA] dark:border-[#2D3636] bg-slate-50 dark:bg-[#222828] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+              <ShieldCheck className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
               <span>100% Zero-Backend Privacy • Cancel Anytime • Aneevarp Solutions</span>
             </div>
             <div className="flex items-center gap-2 font-bold">

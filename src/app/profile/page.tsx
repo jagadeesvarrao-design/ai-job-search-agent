@@ -212,10 +212,10 @@ export default function ProfilePage() {
       {/* Top Header */}
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#171D1C] dark:text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1A1F1F] dark:text-white tracking-tight">
             Target Role & ATS Audit
           </h1>
-          <p className="text-xs sm:text-sm text-[#545F73] dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-[#596060] dark:text-slate-400 mt-1">
             Configure your target career parameters and audit your resume against automated ATS screening bots.
           </p>
         </div>
@@ -226,10 +226,10 @@ export default function ProfilePage() {
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border self-start sm:self-auto ${
             isPro
               ? "bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border-amber-300 dark:border-amber-700"
-              : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-[#00685F]"
+              : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-[#476550]"
           }`}
         >
-          {isPro ? <Crown className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> : <Zap className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" />}
+          {isPro ? <Crown className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> : <Zap className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" />}
           <span>
             {isPro 
               ? (tierState.billingCycle === "annual" ? "👑 Annual VIP Active" : tierState.billingCycle === "quarterly" ? "⚡ 3-Month Pass Active" : "⚡ 1-Month Starter") 
@@ -240,14 +240,14 @@ export default function ProfilePage() {
 
       <div className="flex flex-col gap-6">
         {/* Main Settings Card */}
-        <div className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-soft p-5 sm:p-8">
+        <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 sm:p-8">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             
             {/* Target Role & City Inputs */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-[#545F73] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Briefcase className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" /> Target Job Title
+                <label className="block text-xs font-bold text-[#596060] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Briefcase className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" /> Target Job Title
                 </label>
                 <input
                   type="text"
@@ -255,13 +255,13 @@ export default function ProfilePage() {
                   value={formData.role}
                   onChange={handleChange}
                   placeholder="e.g. Full Stack Developer, React Engineer"
-                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#00685F]"
+                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#545F73] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" /> Preferred Location / City
+                <label className="block text-xs font-bold text-[#596060] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" /> Preferred Location / City
                 </label>
                 <input
                   type="text"
@@ -269,7 +269,7 @@ export default function ProfilePage() {
                   value={formData.location}
                   onChange={handleChange}
                   placeholder="e.g. Bangalore, Hyderabad, Remote"
-                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#00685F]"
+                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
                 />
               </div>
             </div>
@@ -277,14 +277,14 @@ export default function ProfilePage() {
             {/* Experience Level & Target Salary */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-[#545F73] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" /> Experience Level
+                <label className="block text-xs font-bold text-[#596060] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" /> Experience Level
                 </label>
                 <select
                   name="experience"
                   value={formData.experience}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#00685F]"
+                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
                 >
                   <option value="Fresher">Fresher / 0 Years (College Graduate / Career Switcher)</option>
                   <option value="1-2 Years">Junior (1 - 2 Years)</option>
@@ -294,8 +294,8 @@ export default function ProfilePage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#545F73] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <IndianRupee className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" /> Expected Compensation (Optional)
+                <label className="block text-xs font-bold text-[#596060] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <IndianRupee className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" /> Expected Compensation (Optional)
                 </label>
                 <input
                   type="text"
@@ -303,17 +303,17 @@ export default function ProfilePage() {
                   value={formData.salary}
                   onChange={handleChange}
                   placeholder="e.g. ₹8,00,000 - ₹12,00,000 LPA"
-                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1A2228] border border-[#E2E8F0] dark:border-[#232D36] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#00685F]"
+                  className="w-full px-4 py-3 bg-[#F8FAFC] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-semibold text-black dark:text-white focus:outline-none focus:border-[#476550]"
                 />
               </div>
             </div>
 
             {/* Resume Upload Vault Area */}
             <div>
-              <label className="block text-xs font-bold text-[#545F73] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <FileText className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" /> Master Resume (PDF)
+              <label className="block text-xs font-bold text-[#596060] dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <FileText className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" /> Master Resume (PDF)
               </label>
-              <div className="border-2 border-dashed border-[#E2E8F0] dark:border-[#232D36] hover:border-[#00685F]/50 dark:hover:border-[#2DD4BF]/50 rounded-2xl p-6 sm:p-8 text-center bg-[#F8FAFC] dark:bg-[#1A2228] transition-all relative group cursor-pointer">
+              <div className="border-2 border-dashed border-[#D8E2DA] dark:border-[#2D3636] hover:border-[#476550]/50 dark:hover:border-[#A2BCA8]/50 rounded-2xl p-6 sm:p-8 text-center bg-[#F8FAFC] dark:bg-[#1F2525] transition-all relative group cursor-pointer">
                 <input
                   id="resume-file-input"
                   type="file"
@@ -322,18 +322,18 @@ export default function ProfilePage() {
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-teal-50 dark:bg-teal-950/40 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-teal-50 dark:bg-teal-950/40 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center group-hover:scale-110 transition-transform">
                     <UploadCloud className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
-                  <p className="font-bold text-sm text-[#171D1C] dark:text-white">Click or Drag & Drop PDF Resume</p>
-                  <p className="text-xs text-[#545F73] dark:text-slate-400">Instant ATS scanner & client-side vault encryption (Max 5MB)</p>
+                  <p className="font-bold text-sm text-[#1A1F1F] dark:text-white">Click or Drag & Drop PDF Resume</p>
+                  <p className="text-xs text-[#596060] dark:text-slate-400">Instant ATS scanner & client-side vault encryption (Max 5MB)</p>
 
                   {formData.resumeBase64 && !analyzingAts && (
                     <div className="flex flex-col items-center gap-1.5 mt-2 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 px-4 py-2.5 rounded-2xl animate-in fade-in">
                       <div className="inline-flex items-center gap-1.5 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                         <span>Active Vault Document:</span>
-                        <span className="font-extrabold text-[#00685F] dark:text-[#2DD4BF] bg-white dark:bg-slate-900 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800 max-w-[260px] sm:max-w-xs truncate">
+                        <span className="font-extrabold text-[#476550] dark:text-[#A2BCA8] bg-white dark:bg-slate-900 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800 max-w-[260px] sm:max-w-xs truncate">
                           {formData.resumeFileName || "Candidate_Resume.pdf"}
                         </span>
                       </div>
@@ -342,7 +342,7 @@ export default function ProfilePage() {
                   )}
 
                   {analyzingAts && (
-                    <div className="inline-flex items-center gap-2 bg-teal-50 dark:bg-teal-950/40 text-[#00685F] dark:text-[#2DD4BF] text-xs font-bold px-4 py-2 rounded-full border border-teal-200 dark:border-teal-800 mt-2">
+                    <div className="inline-flex items-center gap-2 bg-teal-50 dark:bg-teal-950/40 text-[#476550] dark:text-[#A2BCA8] text-xs font-bold px-4 py-2 rounded-full border border-teal-200 dark:border-teal-800 mt-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
                       <span>Auditing {formData.resumeFileName ? `"${formData.resumeFileName}"` : "Resume"} with ATS Engine...</span>
                     </div>
@@ -353,8 +353,8 @@ export default function ProfilePage() {
 
             {/* Action Buttons Cluster */}
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800/80 pt-4">
-              <div className="flex items-center gap-2 text-xs text-[#545F73] dark:text-slate-400">
-                <ShieldCheck className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+              <div className="flex items-center gap-2 text-xs text-[#596060] dark:text-slate-400">
+                <ShieldCheck className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
                 <span>Zero-Backend Privacy Guarantee</span>
               </div>
 
@@ -364,7 +364,7 @@ export default function ProfilePage() {
                   type="button"
                   onClick={() => runAtsAudit(formData.resumeBase64, formData.role)}
                   disabled={analyzingAts || !formData.resumeBase64}
-                  className="bg-gradient-to-r from-teal-600 to-[#00685F] hover:from-teal-700 hover:to-[#005049] text-white font-bold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                  className="bg-gradient-to-r from-teal-600 to-[#476550] hover:from-teal-700 hover:to-[#3A5342] text-white font-bold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                   title="Trigger instant ATS parsing on demand"
                 >
                   <RefreshCw className={`w-4 h-4 ${analyzingAts ? "animate-spin" : ""}`} />
@@ -376,7 +376,7 @@ export default function ProfilePage() {
                   disabled={loading || analyzingAts}
                   className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-xl transition-all border border-slate-300 dark:border-slate-700 flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 cursor-pointer"
                 >
-                  <Save className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+                  <Save className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
                   <span>Save Profile</span>
                 </button>
 
@@ -413,7 +413,7 @@ export default function ProfilePage() {
         {atsAnalysis && (
           (atsAnalysis.isNonResume || atsAnalysis.score === 0) ? (
             /* SPECIALIZED OPTION-2 SECOND CHANCE CARD (For Non-Resume Documents) */
-            <div className="bg-gradient-to-br from-white to-amber-50/50 dark:from-[#141B20] dark:to-amber-950/20 rounded-3xl border-2 border-amber-500/40 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500 space-y-5">
+            <div className="bg-gradient-to-br from-white to-amber-50/50 dark:from-[#222828] dark:to-amber-950/20 rounded-3xl border-2 border-amber-500/40 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500 space-y-5">
               {/* Ambient Glow */}
               <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -424,10 +424,10 @@ export default function ProfilePage() {
                     {isPro ? <Crown className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> : <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />}
                     <span>{isPro ? "PRO WORKSPACE • NON-RESUME DETECTED" : "HIRING COMMITTEE REALITY CHECK • NON-RESUME DETECTED"}</span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#171D1C] dark:text-white">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1A1F1F] dark:text-white">
                     No Candidate Profile Found
                   </h2>
-                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#545F73] dark:text-slate-400">
+                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#596060] dark:text-slate-400">
                     <span>Flagged Upload:</span>
                     <span className="inline-flex items-center gap-1 bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 px-2.5 py-0.5 rounded-md font-bold">
                       <FileText className="w-3 h-3 text-amber-600 dark:text-amber-400" />
@@ -437,7 +437,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* 0/100 Score Display */}
-                <div className="flex items-center gap-4 bg-white dark:bg-[#1A2228] p-3.5 rounded-2xl border border-amber-300 dark:border-amber-800 shadow-sm self-start md:self-auto">
+                <div className="flex items-center gap-4 bg-white dark:bg-[#1F2525] p-3.5 rounded-2xl border border-amber-300 dark:border-amber-800 shadow-sm self-start md:self-auto">
                   <div className="text-center">
                     <div className="text-3xl sm:text-4xl font-black text-amber-600 dark:text-amber-400 leading-none">
                       0<span className="text-base font-bold text-slate-400">/100</span>
@@ -450,7 +450,7 @@ export default function ProfilePage() {
               </div>
 
               {/* Dynamic Copy: Pro Subscribers vs Free Tier 2nd Chance */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-[#1A2228]/90 border border-amber-200 dark:border-amber-900/50 space-y-3">
+              <div className="p-4 sm:p-5 rounded-2xl bg-white/90 dark:bg-[#1F2525]/90 border border-amber-200 dark:border-amber-900/50 space-y-3">
                 <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
                   Recruiters and corporate ATS filters don’t give second chances for misaligned uploads. In real corporate hiring, submitting a project paper or non-resume document results in an instant automated rejection within 3 seconds.
                 </p>
@@ -479,7 +479,7 @@ export default function ProfilePage() {
             </div>
           ) : (
             /* STANDARD ATS ANALYSIS CARD (For Valid Resumes) */
-            <div className="bg-gradient-to-br from-white to-[#F0FDF4] dark:from-[#141B20] dark:to-[#0f241d] rounded-3xl border-2 border-emerald-500/30 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
+            <div className="bg-gradient-to-br from-white to-[#F0FDF4] dark:from-[#222828] dark:to-[#0f241d] rounded-3xl border-2 border-emerald-500/30 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
               {/* Ambient Glow */}
               <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -490,23 +490,23 @@ export default function ProfilePage() {
                     <Flame className="w-3.5 h-3.5 text-orange-500" />
                     <span>Real-Time ATS Screening Score</span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#171D1C] dark:text-white">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1A1F1F] dark:text-white">
                     Your Resume ATS Compatibility
                   </h2>
-                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#545F73] dark:text-slate-400">
-                    <span>Targeting: <strong className="text-[#171D1C] dark:text-white">{formData.role || "Target Role"}</strong></span>
+                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#596060] dark:text-slate-400">
+                    <span>Targeting: <strong className="text-[#1A1F1F] dark:text-white">{formData.role || "Target Role"}</strong></span>
                     <span>•</span>
                     <span className="inline-flex items-center gap-1 bg-emerald-100/70 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 px-2.5 py-0.5 rounded-md font-bold border border-emerald-200 dark:border-emerald-800">
-                      <FileText className="w-3 h-3 text-[#00685F] dark:text-[#2DD4BF]" />
+                      <FileText className="w-3 h-3 text-[#476550] dark:text-[#A2BCA8]" />
                       <span className="max-w-[220px] truncate">{formData.resumeFileName || "Candidate_Resume.pdf"}</span>
                     </span>
                   </div>
                 </div>
 
                 {/* Score Display */}
-                <div className="flex items-center gap-4 bg-white dark:bg-[#1A2228] p-3.5 rounded-2xl border border-emerald-200 dark:border-emerald-800 shadow-sm self-start md:self-auto">
+                <div className="flex items-center gap-4 bg-white dark:bg-[#1F2525] p-3.5 rounded-2xl border border-emerald-200 dark:border-emerald-800 shadow-sm self-start md:self-auto">
                   <div className="text-center">
-                    <div className="text-3xl sm:text-4xl font-black text-[#00685F] dark:text-[#2DD4BF] leading-none">
+                    <div className="text-3xl sm:text-4xl font-black text-[#476550] dark:text-[#A2BCA8] leading-none">
                       {atsAnalysis.score}<span className="text-base font-bold text-slate-400">/100</span>
                     </div>
                     <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-800 dark:text-emerald-300 block mt-1">
@@ -518,18 +518,18 @@ export default function ProfilePage() {
 
             {/* Analysis Summary */}
             <div className="py-5">
-              <p className="text-xs sm:text-sm text-[#3D4947] dark:text-slate-200 font-medium leading-relaxed bg-white/80 dark:bg-[#1A2228]/80 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/40">
+              <p className="text-xs sm:text-sm text-[#596060] dark:text-slate-200 font-medium leading-relaxed bg-white/80 dark:bg-[#1F2525]/80 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/40">
                 {atsAnalysis.summary}
               </p>
 
               {/* Strengths & Missing Elements Breakdown */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 {/* Strengths */}
-                <div className="bg-white dark:bg-[#1A2228] p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                <div className="bg-white dark:bg-[#1F2525] p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4" /> Detected Strengths
                   </h4>
-                  <ul className="space-y-1.5 text-xs text-[#545F73] dark:text-slate-300">
+                  <ul className="space-y-1.5 text-xs text-[#596060] dark:text-slate-300">
                     {atsAnalysis.strengths.map((item, i) => (
                       <li key={i} className="flex items-start gap-1.5">
                         <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -540,11 +540,11 @@ export default function ProfilePage() {
                 </div>
 
                 {/* ATS Risks / Missing Keywords */}
-                <div className="bg-white dark:bg-[#1A2228] p-4 rounded-2xl border border-amber-200 dark:border-amber-900/50">
+                <div className="bg-white dark:bg-[#1F2525] p-4 rounded-2xl border border-amber-200 dark:border-amber-900/50">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-1.5">
                     <AlertTriangle className="w-4 h-4" /> Critical ATS Filter Risks & Missing Keywords
                   </h4>
-                  <ul className="space-y-1.5 text-xs text-[#545F73] dark:text-slate-300">
+                  <ul className="space-y-1.5 text-xs text-[#596060] dark:text-slate-300">
                     {atsAnalysis.improvements.map((item, i) => (
                       <li key={i} className="flex items-start gap-1.5 text-amber-900 dark:text-amber-300">
                         <span className="text-amber-500 font-bold">•</span>
@@ -557,11 +557,11 @@ export default function ProfilePage() {
             </div>
 
             {/* NEXT STEP GUIDANCE BANNER (Direct Navigation to Dashboard) */}
-            <div className="my-5 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-[#2DD4BF]/50 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden animate-in fade-in slide-in-from-top-3">
+            <div className="my-5 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-[#A2BCA8]/50 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden animate-in fade-in slide-in-from-top-3">
               <div className="absolute -top-10 -right-10 w-48 h-48 bg-teal-500/20 rounded-full blur-2xl pointer-events-none"></div>
 
               <div className="space-y-1.5 relative z-10">
-                <div className="inline-flex items-center gap-1.5 bg-teal-500/20 text-[#2DD4BF] text-[11px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full border border-teal-500/30">
+                <div className="inline-flex items-center gap-1.5 bg-teal-500/20 text-[#A2BCA8] text-[11px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full border border-teal-500/30">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>Next Step: Autonomous Job Discovery</span>
                 </div>
@@ -575,7 +575,7 @@ export default function ProfilePage() {
 
               <Link
                 href="/dashboard"
-                className="w-full md:w-auto bg-gradient-to-r from-[#2DD4BF] to-teal-400 hover:from-teal-300 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer relative z-10"
+                className="w-full md:w-auto bg-gradient-to-r from-[#A2BCA8] to-teal-400 hover:from-teal-300 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer relative z-10"
               >
                 <span>Go to Dashboard & Find Jobs</span>
                 <ArrowRight className="w-4 h-4 text-slate-950" />
@@ -583,7 +583,7 @@ export default function ProfilePage() {
             </div>
 
             {/* MARKETING HOOK (ZenResume Sister App) */}
-            <div className="bg-gradient-to-r from-[#00685F] to-[#0D9488] rounded-2xl p-5 sm:p-7 text-white shadow-lg relative overflow-hidden mt-2">
+            <div className="bg-gradient-to-r from-[#476550] to-[#55735E] rounded-2xl p-5 sm:p-7 text-white shadow-lg relative overflow-hidden mt-2">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
 
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative z-10">
@@ -604,7 +604,7 @@ export default function ProfilePage() {
                   href="https://zenresume.vercel.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white hover:bg-teal-50 text-[#00685F] font-black text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md hover:shadow-xl hover:scale-105 active:scale-95 flex items-center gap-2 flex-shrink-0 btn-tactile"
+                  className="bg-white hover:bg-teal-50 text-[#476550] font-black text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-md hover:shadow-xl hover:scale-105 active:scale-95 flex items-center gap-2 flex-shrink-0 btn-tactile"
                 >
                   <span>Build on ZenResume Free</span>
                   <ArrowRight className="w-4 h-4" />
@@ -618,7 +618,7 @@ export default function ProfilePage() {
                 type="button"
                 onClick={() => runAtsAudit(formData.resumeBase64, formData.role)}
                 disabled={analyzingAts}
-                className="text-xs text-[#00685F] dark:text-[#2DD4BF] hover:underline font-semibold inline-flex items-center gap-1"
+                className="text-xs text-[#476550] dark:text-[#A2BCA8] hover:underline font-semibold inline-flex items-center gap-1"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${analyzingAts ? "animate-spin" : ""}`} />
                 <span>Re-analyze with updated role</span>

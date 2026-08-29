@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Autonomous AI multi-agent suite for discovering jobs, tailoring resumes, and mock interview coaching by Aneevarp Solutions.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#F5FAF8',
-    theme_color: '#00685F',
+    background_color: '#FCFAF5',
+    theme_color: '#476550',
     icons: [
       {
         src: '/favicon.ico',

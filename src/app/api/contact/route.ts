@@ -78,13 +78,13 @@ export async function POST(request: Request) {
           text: `Ticket ID: ${ticketId}\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
           html: `
             <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; color: #1e293b; padding: 24px;">
-              <div style="background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-                <div style="border-bottom: 2px solid #00685F; padding-bottom: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+              <div style="background: #ffffff; border-radius: 16px; border: 1px solid #D8E2DA; max-width: 600px; margin: auto; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="border-bottom: 2px solid #476550; padding-bottom: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
                   <div>
-                    <h2 style="margin: 0; color: #00685F; font-size: 20px;">ZenScout AI — Support Ticket</h2>
+                    <h2 style="margin: 0; color: #476550; font-size: 20px;">ZenScout AI — Support Ticket</h2>
                     <p style="margin: 4px 0 0; color: #64748b; font-size: 13px;">Aneevarp Solutions Legal & Ops Hub</p>
                   </div>
-                  <div style="background: #00685F; color: #ffffff; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: bold;">
+                  <div style="background: #476550; color: #ffffff; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: bold;">
                     #${ticketId}
                   </div>
                 </div>
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                   <tr>
                     <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold; width: 30%;">Ticket ID:</td>
-                    <td style="padding: 8px 0; color: #00685F; font-size: 14px; font-weight: bold;">${ticketId}</td>
+                    <td style="padding: 8px 0; color: #476550; font-size: 14px; font-weight: bold;">${ticketId}</td>
                   </tr>
                   <tr>
                     <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold;">Sender Name:</td>
@@ -100,12 +100,12 @@ export async function POST(request: Request) {
                   </tr>
                   <tr>
                     <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold;">Sender Email:</td>
-                    <td style="padding: 8px 0; color: #00685F; font-size: 14px; font-weight: 600;"><a href="mailto:${email}" style="color: #00685F; text-decoration: none;">${email}</a></td>
+                    <td style="padding: 8px 0; color: #476550; font-size: 14px; font-weight: 600;"><a href="mailto:${email}" style="color: #476550; text-decoration: none;">${email}</a></td>
                   </tr>
                 </table>
 
                 <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; color: #475569; margin-bottom: 8px;">Inquiry / Message:</div>
-                <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 12px; font-size: 14px; line-height: 1.6; color: #1e293b;">
+                <div style="background: #f8fafc; border: 1px solid #D8E2DA; padding: 16px; border-radius: 12px; font-size: 14px; line-height: 1.6; color: #1e293b;">
                   ${safeHtmlMessage}
                 </div>
 

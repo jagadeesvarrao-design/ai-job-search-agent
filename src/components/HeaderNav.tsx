@@ -75,7 +75,7 @@ export default function HeaderNav() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/90 dark:bg-[#0B0F12]/90 backdrop-blur-md border-b border-[#E2E8F0] dark:border-[#232D36] transition-colors">
+      <header className="sticky top-0 z-40 bg-white/90 dark:bg-[#1A1F1F]/90 backdrop-blur-md border-b border-[#D8E2DA] dark:border-[#2D3636] transition-colors">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Left: Brand Identity */}
@@ -85,23 +85,23 @@ export default function HeaderNav() {
             </div>
             <div className="flex flex-col text-left truncate">
               <span className="font-extrabold text-sm sm:text-base md:text-lg text-black dark:text-white leading-none tracking-tight">ZenScout AI</span>
-              <span className="text-[8px] sm:text-[9px] md:text-[10px] text-[#00685F] dark:text-[#2DD4BF] font-bold tracking-wider uppercase truncate">by Aneevarp Solutions</span>
+              <span className="text-[8px] sm:text-[9px] md:text-[10px] text-[#476550] dark:text-[#A2BCA8] font-bold tracking-wider uppercase truncate">by Aneevarp Solutions</span>
             </div>
           </Link>
 
           {/* Center: Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-xs sm:text-sm font-bold text-[#0F172A] dark:text-[#CBD5E1]" aria-label="Main Navigation">
-            <Link href="/dashboard" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Dashboard</Link>
-            <Link href="/profile" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">ATS Audit</Link>
-            <Link href="/pricing" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">Pricing</Link>
-            <Link href="/about" className="hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1">About</Link>
+            <Link href="/dashboard" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1">Dashboard</Link>
+            <Link href="/profile" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1">ATS Audit</Link>
+            <Link href="/pricing" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1">Pricing</Link>
+            <Link href="/about" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1">About</Link>
 
             {/* Zen Suite Cross-App Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setSuiteMenuOpen(!suiteMenuOpen)}
                 onBlur={() => setTimeout(() => setSuiteMenuOpen(false), 200)}
-                className="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-200 hover:text-[#00685F] dark:hover:text-[#2DD4BF] transition-colors py-1 cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-200 hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1 cursor-pointer"
               >
                 <Layers className="w-3.5 h-3.5 text-amber-500" />
                 <span>Zen Suite</span>
@@ -109,7 +109,7 @@ export default function HeaderNav() {
               </button>
 
               {suiteMenuOpen && (
-                <div className="absolute top-full right-0 mt-2 w-60 bg-white dark:bg-[#141B20] rounded-2xl border border-[#E2E8F0] dark:border-[#232D36] shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95">
+                <div className="absolute top-full right-0 mt-2 w-60 bg-white dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95">
                   <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 px-3 py-1 block">Aneevarp Zen Ecosystem</span>
                   
                   <a
@@ -193,7 +193,7 @@ export default function HeaderNav() {
             {/* Light / Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-1.5 sm:p-2 rounded-xl border border-[#E2E8F0] dark:border-[#232D36] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-black dark:text-amber-300 focus:outline-none active:scale-95 cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-black dark:text-amber-300 focus:outline-none active:scale-95 cursor-pointer"
               aria-label="Toggle Light and Dark Mode"
               title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
@@ -204,7 +204,7 @@ export default function HeaderNav() {
             {user ? (
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-teal-100 dark:bg-teal-900/40 hover:bg-teal-200 dark:hover:bg-teal-900/60 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-center transition-all active:scale-95 shadow-sm overflow-hidden cursor-pointer"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-teal-100 dark:bg-teal-900/40 hover:bg-teal-200 dark:hover:bg-teal-900/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center transition-all active:scale-95 shadow-sm overflow-hidden cursor-pointer"
                 aria-label="Account Settings"
                 title={user.displayName || user.email || "Account"}
               >
@@ -217,9 +217,9 @@ export default function HeaderNav() {
             ) : (
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="inline-flex items-center gap-1 bg-white dark:bg-[#1A2228] hover:bg-slate-100 dark:hover:bg-slate-800 text-black dark:text-white border border-[#E2E8F0] dark:border-[#232D36] text-xs font-bold py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-xl transition-all shadow-sm active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-1 bg-white dark:bg-[#1F2525] hover:bg-slate-100 dark:hover:bg-slate-800 text-black dark:text-white border border-[#D8E2DA] dark:border-[#2D3636] text-xs font-bold py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-xl transition-all shadow-sm active:scale-95 cursor-pointer"
               >
-                <LogIn className="w-3.5 h-3.5 text-[#00685F] dark:text-[#2DD4BF]" />
+                <LogIn className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" />
                 <span className="hidden sm:inline">Sign In</span>
               </button>
             )}
@@ -237,7 +237,7 @@ export default function HeaderNav() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white dark:bg-[#141B20] border-b border-[#E2E8F0] dark:border-[#232D36] px-4 sm:px-6 py-5 shadow-lg animate-in slide-in-from-top-4 duration-200 max-h-[85vh] overflow-y-auto">
+          <div className="lg:hidden bg-white dark:bg-[#222828] border-b border-[#D8E2DA] dark:border-[#2D3636] px-4 sm:px-6 py-5 shadow-lg animate-in slide-in-from-top-4 duration-200 max-h-[85vh] overflow-y-auto">
             <div className="flex flex-col gap-2.5 font-bold text-sm text-black dark:text-white">
               
               {/* Mobile Pro Upgrade Banner */}
@@ -270,7 +270,7 @@ export default function HeaderNav() {
                 className="w-full bg-slate-100 dark:bg-slate-800 text-black dark:text-white font-bold p-3 rounded-xl flex items-center justify-between text-xs mb-1"
               >
                 <span className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+                  <User className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
                   <span className="truncate max-w-[200px]">{user ? `Account: ${user.displayName || user.email}` : "Sign In / Create Account"}</span>
                 </span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -279,7 +279,7 @@ export default function HeaderNav() {
               <Link 
                 href="/dashboard" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-between"
               >
                 <span>Job Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -287,7 +287,7 @@ export default function HeaderNav() {
               <Link 
                 href="/profile" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 flex items-center justify-between"
               >
                 <span>Profile & ATS Audit</span>
                 <ArrowRight className="w-4 h-4" />
@@ -295,7 +295,7 @@ export default function HeaderNav() {
               <Link 
                 href="/blog" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 flex items-center justify-between"
               >
                 <span>Career Guides & Blog</span>
                 <ArrowRight className="w-4 h-4" />
@@ -303,7 +303,7 @@ export default function HeaderNav() {
               <Link 
                 href="/pricing" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 flex items-center justify-between"
               >
                 <span>Pro Pricing Plans</span>
                 <ArrowRight className="w-4 h-4" />
@@ -311,7 +311,7 @@ export default function HeaderNav() {
               <Link 
                 href="/about" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#F5FAF8] dark:hover:bg-slate-800 flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 flex items-center justify-between"
               >
                 <span>About Aneevarp Solutions</span>
                 <ArrowRight className="w-4 h-4" />
@@ -338,7 +338,7 @@ export default function HeaderNav() {
                   href="https://zenresume.online/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[#00685F] dark:text-[#2DD4BF] font-black p-2.5 rounded-xl flex items-center justify-between text-xs"
+                  className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[#476550] dark:text-[#A2BCA8] font-black p-2.5 rounded-xl flex items-center justify-between text-xs"
                 >
                   <span className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-orange-500" />
@@ -368,13 +368,13 @@ export default function HeaderNav() {
       {/* MOBILE & FOLDABLE FLOATING BOTTOM NAVIGATION DOCK */}
       <nav 
         aria-label="Mobile Bottom Navigation"
-        className="lg:hidden fixed bottom-3 inset-x-3 z-40 max-w-lg mx-auto bg-white/90 dark:bg-[#141B20]/90 backdrop-blur-xl border border-[#E2E8F0] dark:border-[#232D36] rounded-2xl shadow-2xl p-1.5 flex items-center justify-around animate-in fade-in slide-in-from-bottom-3"
+        className="lg:hidden fixed bottom-3 inset-x-3 z-40 max-w-lg mx-auto bg-white/90 dark:bg-[#222828]/90 backdrop-blur-xl border border-[#D8E2DA] dark:border-[#2D3636] rounded-2xl shadow-2xl p-1.5 flex items-center justify-around animate-in fade-in slide-in-from-bottom-3"
       >
         <Link
           href="/dashboard"
           className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-300 active:scale-95 transition-all flex-1"
         >
-          <Briefcase className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+          <Briefcase className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
           <span className="text-[10px] font-bold mt-0.5">Jobs</span>
         </Link>
 
@@ -382,7 +382,7 @@ export default function HeaderNav() {
           href="/profile"
           className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-300 active:scale-95 transition-all flex-1"
         >
-          <FileText className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+          <FileText className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
           <span className="text-[10px] font-bold mt-0.5">ATS Audit</span>
         </Link>
 
@@ -404,7 +404,7 @@ export default function HeaderNav() {
           onClick={() => setAuthModalOpen(true)}
           className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-300 active:scale-95 transition-all flex-1"
         >
-          <User className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+          <User className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
           <span className="text-[10px] font-bold mt-0.5">{user ? "Vault" : "Sign In"}</span>
         </button>
 

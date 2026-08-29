@@ -2,38 +2,55 @@
 
 @layer base {
   :root {
-    --background: #f5faf8;
-    --foreground: #09090b;
-    --card-surface: #ffffff;
-    --border-subtle: #e2e8f0;
-    --primary: #00685f;
-    --primary-hover: #005049;
-    --primary-light: #89f5e7;
-    --secondary: #1e293b;
-    --secondary-container: #d5e0f8;
-    --input-bg: #f8fafc;
-    --modal-bg: #ffffff;
-    --text-heading: #09090b;
-    --text-body: #0f172a;
-    --text-muted: #475569;
+    /* Aneevarp Solutions Master Palette */
+    --color-primary: #476550;         /* Forest Sage Emerald */
+    --color-primary-hover: #3A5342;   /* Darker Emerald Hover */
+    --color-primary-light: #E8F0EB;   /* Soft Emerald Tint */
+    --color-slate-deep: #1A1F1F;      /* Deep Obsidian Slate */
+    --color-ivory-base: #FCFAF5;      /* Page Background Ivory */
+    --color-surface: #FAF9F6;         /* Card Surface Off-White */
+    --color-surface-low: #F4F4F0;     /* Icon Box Surface */
+    --color-secondary: #596060;       /* Paragraph Charcoal */
+    --color-secondary-light: #7D8787; /* Subtitle / Muted Grey */
+    --color-sage-muted: #A2BCA8;      /* Decorative Ambient Sage */
+    --color-white: #FFFFFF;           /* Pure White */
+    --color-border-sage: rgba(162, 188, 168, 0.35); /* Frosted Border */
+    --color-overlay-modal: rgba(26, 31, 31, 0.82);    /* Modal Backdrop */
+
+    /* Semantic Mappings (Light Mode) */
+    --background: #FCFAF5;
+    --foreground: #1A1F1F;
+    --card-surface: #FAF9F6;
+    --border-subtle: #D8E2DA;
+    --primary: #476550;
+    --primary-hover: #3A5342;
+    --primary-light: #E8F0EB;
+    --secondary: #596060;
+    --secondary-container: #E8F0EB;
+    --input-bg: #F4F4F0;
+    --modal-bg: #FAF9F6;
+    --text-heading: #1A1F1F;
+    --text-body: #596060;
+    --text-muted: #7D8787;
   }
 
   html.dark,
   .dark {
-    --background: #0b0f12;
-    --foreground: #f8fafc;
-    --card-surface: #141b20;
-    --border-subtle: #232d36;
-    --primary: #14b8a6;
-    --primary-hover: #2dd4bf;
-    --primary-light: #004d40;
-    --secondary: #94a3b8;
-    --secondary-container: #1e293b;
-    --input-bg: #1a2228;
-    --modal-bg: #141b20;
-    --text-heading: #ffffff;
-    --text-body: #f1f5f9;
-    --text-muted: #cbd5e1;
+    /* Semantic Mappings (Dark Mode) */
+    --background: #1A1F1F;
+    --foreground: #FCFAF5;
+    --card-surface: #222828;
+    --border-subtle: #2D3636;
+    --primary: #A2BCA8;
+    --primary-hover: #B8CEBE;
+    --primary-light: #253029;
+    --secondary: #D4DCD6;
+    --secondary-container: #29342E;
+    --input-bg: #151919;
+    --modal-bg: #222828;
+    --text-heading: #FCFAF5;
+    --text-body: #E8F0EB;
+    --text-muted: #A2BCA8;
   }
 
   body {
@@ -57,16 +74,16 @@
 
 @layer utilities {
   .shadow-soft {
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 4px 20px rgba(26, 31, 31, 0.05);
   }
   .dark .shadow-soft {
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.45);
   }
   .shadow-soft-hover {
-    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 8px 30px rgba(71, 101, 80, 0.12);
   }
   .dark .shadow-soft-hover {
-    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.65);
   }
   .card-surface {
     background-color: var(--card-surface);
@@ -75,7 +92,7 @@
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .card-surface:hover {
-    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 8px 30px rgba(71, 101, 80, 0.1);
     transform: translateY(-2px);
   }
   .btn-tactile {
@@ -83,28 +100,28 @@
   }
   .btn-tactile:hover {
     transform: translateY(-1px);
-    box-shadow: 0px 4px 14px rgba(0, 104, 95, 0.22);
+    box-shadow: 0px 4px 14px rgba(71, 101, 80, 0.25);
   }
   .btn-tactile:active {
     transform: scale(0.97);
   }
   .glass {
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(250, 249, 246, 0.92);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    border: 1px solid rgba(162, 188, 168, 0.35);
   }
   .dark .glass {
-    background: rgba(20, 27, 32, 0.85);
-    border-color: rgba(35, 45, 54, 0.9);
+    background: rgba(34, 40, 40, 0.85);
+    border-color: rgba(162, 188, 168, 0.22);
   }
   .text-gradient {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    background-image: linear-gradient(135deg, #004d40 0%, #00685f 50%, #0369a1 100%);
+    background-image: linear-gradient(135deg, #3A5342 0%, #476550 50%, #6B9077 100%);
   }
   .dark .text-gradient {
-    background-image: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 50%, #38bdf8 100%);
+    background-image: linear-gradient(135deg, #FCFAF5 0%, #A2BCA8 50%, #B8CEBE 100%);
   }
 }
 

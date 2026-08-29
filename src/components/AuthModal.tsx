@@ -104,12 +104,12 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
 
   return (
     <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-[#141B20] rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-2xl max-w-md w-full overflow-hidden my-auto animate-in zoom-in-95 duration-200">
+      <div className="bg-white dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-md w-full overflow-hidden my-auto animate-in zoom-in-95 duration-200">
         
         {/* Modal Header */}
-        <div className="px-6 py-5 border-b border-[#E2E8F0] dark:border-[#232D36] flex justify-between items-center bg-gradient-to-r from-teal-50/40 via-white to-blue-50/40 dark:from-[#141B20] dark:via-[#1A2228] dark:to-[#141B20]">
+        <div className="px-6 py-5 border-b border-[#D8E2DA] dark:border-[#2D3636] flex justify-between items-center bg-gradient-to-r from-teal-50/40 via-white to-blue-50/40 dark:from-[#222828] dark:via-[#1F2525] dark:to-[#222828]">
           <div className="flex items-center gap-2.5">
-            <div className="bg-[#00685F] text-white p-2 rounded-xl shadow-sm">
+            <div className="bg-[#476550] text-white p-2 rounded-xl shadow-sm">
               <Briefcase className="w-4 h-4" />
             </div>
             <div>
@@ -136,7 +136,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
           {user ? (
             /* Logged in state */
             <div className="space-y-4 text-center">
-              <div className="w-16 h-16 rounded-full bg-teal-100 dark:bg-teal-900/40 text-[#00685F] dark:text-[#2DD4BF] flex items-center justify-center text-xl font-bold mx-auto">
+              <div className="w-16 h-16 rounded-full bg-teal-100 dark:bg-teal-900/40 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center text-xl font-bold mx-auto">
                 {user.photoURL ? (
                   <img src={user.photoURL} alt={user.displayName || "User"} className="w-full h-full rounded-full object-cover" />
                 ) : (
@@ -191,7 +191,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
               <button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full bg-white dark:bg-[#1A2228] hover:bg-slate-50 dark:hover:bg-slate-800 text-black dark:text-white border border-[#E2E8F0] dark:border-[#232D36] font-bold py-3 px-4 rounded-2xl text-xs transition-all flex items-center justify-center gap-2.5 shadow-sm active:scale-95 disabled:opacity-50"
+                className="w-full bg-white dark:bg-[#1F2525] hover:bg-slate-50 dark:hover:bg-slate-800 text-black dark:text-white border border-[#D8E2DA] dark:border-[#2D3636] font-bold py-3 px-4 rounded-2xl text-xs transition-all flex items-center justify-center gap-2.5 shadow-sm active:scale-95 disabled:opacity-50"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -236,7 +236,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                         value={displayName}
                         onChange={(e) => setDisplayName(e.target.value)}
                         placeholder="Alex Kumar"
-                        className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#232D36] bg-white dark:bg-[#1A2228] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#00685F]"
+                        className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
                       />
                     </div>
                   </div>
@@ -252,7 +252,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@example.com"
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#232D36] bg-white dark:bg-[#1A2228] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#00685F]"
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
                     />
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#232D36] bg-white dark:bg-[#1A2228] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#00685F]"
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-white dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
                     />
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-black py-3 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 disabled:opacity-50 mt-2"
+                  className="w-full bg-[#476550] hover:bg-[#3A5342] dark:bg-[#6B9077] dark:hover:bg-[#55735E] text-white font-black py-3 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 disabled:opacity-50 mt-2"
                 >
                   {loading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -298,7 +298,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                         setMode("signup");
                         setError("");
                       }}
-                      className="text-[#00685F] dark:text-[#2DD4BF] font-bold hover:underline"
+                      className="text-[#476550] dark:text-[#A2BCA8] font-bold hover:underline"
                     >
                       Sign Up Free
                     </button>
@@ -311,7 +311,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                         setMode("signin");
                         setError("");
                       }}
-                      className="text-[#00685F] dark:text-[#2DD4BF] font-bold hover:underline"
+                      className="text-[#476550] dark:text-[#A2BCA8] font-bold hover:underline"
                     >
                       Sign In
                     </button>
@@ -323,7 +323,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
         </div>
 
         {/* Security Footer */}
-        <div className="px-6 py-3 bg-slate-50 dark:bg-[#1A2228]/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-1.5 text-[10px] text-slate-400 font-medium">
+        <div className="px-6 py-3 bg-slate-50 dark:bg-[#1F2525]/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-1.5 text-[10px] text-slate-400 font-medium">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
           <span>Encrypted Authentication via Firebase • Zero-Knowledge Storage</span>
         </div>

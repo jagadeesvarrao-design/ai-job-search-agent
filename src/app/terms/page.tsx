@@ -15,23 +15,23 @@ export default function TermsOfService() {
     <div className="max-w-4xl mx-auto py-8 px-2 md:px-4">
       {/* Header */}
       <div className="mb-8">
-        <div className="inline-flex items-center gap-1.5 bg-[#00685F]/10 dark:bg-teal-900/30 text-[#00685F] dark:text-[#2DD4BF] text-xs font-black px-3.5 py-1.5 rounded-full mb-3">
-          <Scale className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
+        <div className="inline-flex items-center gap-1.5 bg-[#476550]/10 dark:bg-teal-900/30 text-[#476550] dark:text-[#A2BCA8] text-xs font-black px-3.5 py-1.5 rounded-full mb-3">
+          <Scale className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
           <span>STATUTORY USER AGREEMENT & LEGAL TERMS</span>
         </div>
-        <h1 className="text-3xl md:text-5xl font-extrabold text-[#171D1C] dark:text-white tracking-tight mb-2">
+        <h1 className="text-3xl md:text-5xl font-extrabold text-[#1A1F1F] dark:text-white tracking-tight mb-2">
           Terms of Service
         </h1>
-        <p className="text-xs text-[#545F73] dark:text-slate-400 font-bold">
+        <p className="text-xs text-[#596060] dark:text-slate-400 font-bold">
           Last Updated & Effective Date: August 24, 2026 | Governing Law: India (Hyderabad Jurisdiction)
         </p>
       </div>
       
-      <div className="space-y-6 text-[#3D4947] dark:text-[#CBD5E1] text-sm md:text-base leading-relaxed">
+      <div className="space-y-6 text-[#596060] dark:text-[#CBD5E1] text-sm md:text-base leading-relaxed">
         
         {/* 1. Legal Agreement & Electronic Record */}
-        <section className="bg-white dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-sm space-y-3">
-          <div className="flex items-center gap-2 text-[#00685F] dark:text-[#2DD4BF] font-bold text-lg">
+        <section className="bg-white dark:bg-[#222828] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-[#476550] dark:text-[#A2BCA8] font-bold text-lg">
             <FileText className="w-5 h-5" />
             <h2>1. Legal Agreement & Electronic Record Under IT Act 2000</h2>
           </div>
@@ -44,8 +44,8 @@ export default function TermsOfService() {
         </section>
 
         {/* 2. Prohibited Content & User Rules */}
-        <section className="bg-white dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-sm space-y-3">
-          <div className="flex items-center gap-2 text-[#00685F] dark:text-[#2DD4BF] font-bold text-lg">
+        <section className="bg-white dark:bg-[#222828] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-[#476550] dark:text-[#A2BCA8] font-bold text-lg">
             <Ban className="w-5 h-5" />
             <h2>2. Mandatory User Rules & Prohibition of Unlawful Content (Rule 3(1)(b))</h2>
           </div>
@@ -62,8 +62,8 @@ export default function TermsOfService() {
         </section>
 
         {/* 3. Scope of Service & Intellectual Property */}
-        <section className="bg-white dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-sm space-y-3">
-          <div className="flex items-center gap-2 text-[#00685F] dark:text-[#2DD4BF] font-bold text-lg">
+        <section className="bg-white dark:bg-[#222828] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-[#476550] dark:text-[#A2BCA8] font-bold text-lg">
             <Building2 className="w-5 h-5" />
             <h2>3. Intellectual Property Rights & Licensing</h2>
           </div>
@@ -76,8 +76,8 @@ export default function TermsOfService() {
         </section>
 
         {/* 4. Consumer Protection (E-Commerce) Rules 2020 & Pricing */}
-        <section className="bg-white dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-sm space-y-3">
-          <div className="flex items-center gap-2 text-[#00685F] dark:text-[#2DD4BF] font-bold text-lg">
+        <section className="bg-white dark:bg-[#222828] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-[#476550] dark:text-[#A2BCA8] font-bold text-lg">
             <CheckCircle2 className="w-5 h-5" />
             <h2>4. Subscriptions, Pricing & Consumer Protection Disclosures</h2>
           </div>
@@ -92,8 +92,8 @@ export default function TermsOfService() {
         </section>
 
         {/* 5. Limitation of Liability */}
-        <section className="bg-white dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#E2E8F0] dark:border-[#232D36] shadow-sm space-y-3">
-          <div className="flex items-center gap-2 text-[#00685F] dark:text-[#2DD4BF] font-bold text-lg">
+        <section className="bg-white dark:bg-[#222828] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-[#476550] dark:text-[#A2BCA8] font-bold text-lg">
             <AlertTriangle className="w-5 h-5" />
             <h2>5. Disclaimer of Employment Warranties & Limitation of Liability</h2>
           </div>
@@ -103,18 +103,18 @@ export default function TermsOfService() {
         </section>
 
         {/* 6. Governing Law & Dispute Resolution */}
-        <section className="bg-emerald-50/40 dark:bg-emerald-950/20 p-6 md:p-8 rounded-3xl border-2 border-[#00685F]/30 dark:border-[#2DD4BF]/30 shadow-sm space-y-3">
-          <div className="flex items-center gap-2 text-[#00685F] dark:text-[#2DD4BF] font-extrabold text-lg">
+        <section className="bg-emerald-50/40 dark:bg-emerald-950/20 p-6 md:p-8 rounded-3xl border-2 border-[#476550]/30 dark:border-[#A2BCA8]/30 shadow-sm space-y-3">
+          <div className="flex items-center gap-2 text-[#476550] dark:text-[#A2BCA8] font-extrabold text-lg">
             <Scale className="w-5 h-5" />
             <h2>6. Governing Law & Exclusive Territorial Jurisdiction</h2>
           </div>
           <p className="text-xs">
             These Terms shall be governed by, interpreted, and construed in accordance with the laws of <strong>India</strong>. The courts located in <strong>Hyderabad, Telangana, India</strong> shall have exclusive territorial jurisdiction over any legal disputes, claims, or arbitration proceedings arising under this agreement.
           </p>
-          <div className="p-4 bg-white dark:bg-[#141B20] rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
+          <div className="p-4 bg-white dark:bg-[#222828] rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
             <strong>Grievance & Legal Notice Desk:</strong><br />
             Attn: Grievance Officer, Aneevarp Solutions<br />
-            Email: <a href="mailto:aneevarpsolutions@gmail.com" className="text-[#00685F] dark:text-[#2DD4BF] underline font-bold">aneevarpsolutions@gmail.com</a><br />
+            Email: <a href="mailto:aneevarpsolutions@gmail.com" className="text-[#476550] dark:text-[#A2BCA8] underline font-bold">aneevarpsolutions@gmail.com</a><br />
             Address: Hyderabad, Telangana - 500081, India
           </div>
         </section>
