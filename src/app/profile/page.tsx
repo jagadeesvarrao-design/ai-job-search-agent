@@ -148,6 +148,9 @@ export default function ProfilePage() {
           ...prev,
           atsScore: data.analysis.score
         }));
+        if (!data.analysis.isNonResume && data.analysis.score > 0) {
+          showToast("success", "ATS Audit Complete!", `Your resume scored ${data.analysis.score}/100! Click "Go to Dashboard" to scout matching jobs.`);
+        }
       }
     } catch (err: any) {
       console.error("ATS Analysis error:", err);
@@ -355,7 +358,7 @@ export default function ProfilePage() {
                 <span>Zero-Backend Privacy Guarantee</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+              <div className="flex flex-wrap items-center gap-2.5">
                 {/* Instant ATS Scan / Re-Audit Button for 3-Month & Annual VIP subscribers */}
                 <button
                   type="button"
@@ -371,11 +374,21 @@ export default function ProfilePage() {
                 <button
                   type="submit"
                   disabled={loading || analyzingAts}
-                  className="bg-[#00685F] hover:bg-[#005049] dark:bg-[#14B8A6] dark:hover:bg-[#0D9488] text-white font-semibold text-sm px-6 sm:px-8 py-3 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 btn-tactile disabled:opacity-50"
+                  className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-xl transition-all border border-slate-300 dark:border-slate-700 flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 cursor-pointer"
                 >
-                  <Save className="w-4 h-4" />
+                  <Save className="w-4 h-4 text-[#00685F] dark:text-[#2DD4BF]" />
                   <span>Save Profile</span>
                 </button>
+
+                {/* Direct Navigation to Dashboard CTA */}
+                <Link
+                  href="/dashboard"
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  title="Launch Autonomous Job Scouting on Dashboard"
+                >
+                  <span>Go to Dashboard</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </div>
           </form>
@@ -541,6 +554,32 @@ export default function ProfilePage() {
                   </ul>
                 </div>
               </div>
+            </div>
+
+            {/* NEXT STEP GUIDANCE BANNER (Direct Navigation to Dashboard) */}
+            <div className="my-5 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-[#2DD4BF]/50 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden animate-in fade-in slide-in-from-top-3">
+              <div className="absolute -top-10 -right-10 w-48 h-48 bg-teal-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+              <div className="space-y-1.5 relative z-10">
+                <div className="inline-flex items-center gap-1.5 bg-teal-500/20 text-[#2DD4BF] text-[11px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full border border-teal-500/30">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Next Step: Autonomous Job Discovery</span>
+                </div>
+                <h3 className="text-base sm:text-lg md:text-xl font-black text-white">
+                  Resume Audited! Ready to Find Matching Jobs?
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 font-medium max-w-xl leading-relaxed">
+                  Head over to your <strong>Dashboard</strong> where our Autonomous Scout & Match Agents will search real-time job openings tailored to your target profile.
+                </p>
+              </div>
+
+              <Link
+                href="/dashboard"
+                className="w-full md:w-auto bg-gradient-to-r from-[#2DD4BF] to-teal-400 hover:from-teal-300 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer relative z-10"
+              >
+                <span>Go to Dashboard & Find Jobs</span>
+                <ArrowRight className="w-4 h-4 text-slate-950" />
+              </Link>
             </div>
 
             {/* MARKETING HOOK (ZenResume Sister App) */}
