@@ -160,6 +160,32 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
+        {/* Instant Cache Invalidation & Master Palette Enforcement Script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  // 1. Unregister stale legacy service workers caching old HTML/CSS
+                  if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(function(regs) {
+                      for (var i = 0; i < regs.length; i++) {
+                        regs[i].unregister();
+                      }
+                    });
+                  }
+                  // 2. Clear stale dark theme cache across all devices so Master Palette loads instantly
+                  var v = localStorage.getItem("theme_version");
+                  if (v !== "aneevarp_v3") {
+                    localStorage.removeItem("theme");
+                    localStorage.setItem("theme_version", "aneevarp_v3");
+                    document.documentElement.classList.remove("dark");
+                  }
+                } catch(e) {}
+              })();
+            `
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-[#FCFAF5] dark:bg-[#1A1F1F] text-[#1A1F1F] dark:text-[#FCFAF5] font-sans antialiased selection:bg-[#476550] selection:text-white transition-colors duration-200">
         

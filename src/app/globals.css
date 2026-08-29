@@ -53,6 +53,11 @@
     --text-muted: #A2BCA8;
   }
 
+  html {
+    background-color: var(--background);
+    color: var(--text-body);
+  }
+
   body {
     background-color: var(--background);
     color: var(--text-body);

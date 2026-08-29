@@ -70,6 +70,19 @@ const nextConfig = {
               "frame-ancestors 'none'",
             ].join("; "),
           },
+          // Cache-Busting for HTML Documents (Ensures instant updates across all client devices)
+          {
+            key: "Cache-Control",
+            value: "no-cache, no-store, max-age=0, must-revalidate",
+          },
+          {
+            key: "Pragma",
+            value: "no-cache",
+          },
+          {
+            key: "Expires",
+            value: "0",
+          },
         ],
       },
     ];
