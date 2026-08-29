@@ -161,7 +161,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#FCFAF5] dark:bg-[#1A1F1F] text-[#09090B] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#476550] selection:text-white transition-colors duration-200">
+      <body className="min-h-full flex flex-col bg-[#FCFAF5] dark:bg-[#1A1F1F] text-[#1A1F1F] dark:text-[#FCFAF5] font-sans antialiased selection:bg-[#476550] selection:text-white transition-colors duration-200">
         
         {/* Web Accessibility: Skip to Main Content (RPwD Act 2016 / WCAG 2.1 AA) */}
         <a 

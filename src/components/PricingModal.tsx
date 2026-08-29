@@ -146,7 +146,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
             {/* 🌟 ZEN SUITE ULTIMATE ALL-IN-ONE CROSS-APP BUNDLE */}
             <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-teal-400/60 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-80 h-80 bg-[#E8F0EB]0/10 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#476550]/10 rounded-full blur-3xl pointer-events-none"></div>
               
               <div className="space-y-1.5 max-w-xl relative z-10">
                 <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full shadow-sm">

@@ -116,7 +116,7 @@ export default function PricingPage() {
 
       {/* 🌟 ZEN SUITE ULTIMATE ALL-IN-ONE CROSS-APP BUNDLE */}
       <div className="my-6 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-teal-400/60 shadow-2xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-left relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#E8F0EB]0/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#476550]/15 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="space-y-2 max-w-2xl relative z-10">
           <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">

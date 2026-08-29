@@ -754,7 +754,7 @@ export default function DashboardPage() {
               <CheckCircle2 className="w-4 h-4 text-[#A2BCA8] flex-shrink-0" />
               <span className="font-semibold text-slate-200">1. Query Real-Time Jobs Index</span>
             </div>
-            <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[#E8F0EB]0/20 border border-teal-400 text-[#A2BCA8] animate-pulse font-extrabold shadow-sm">
+            <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[#476550]/20 border border-teal-400 text-[#A2BCA8] animate-pulse font-extrabold shadow-sm">
               <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" />
               <span>2. Match Candidate Profile</span>
             </div>

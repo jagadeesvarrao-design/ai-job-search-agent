@@ -62,7 +62,7 @@ export default function AboutPage() {
       {/* FOUNDER & LEAD ARCHITECT SPOTLIGHT */}
       <section className="bg-gradient-to-br from-white via-[#F8FAFC] to-teal-50/40 dark:from-[#222828] dark:via-[#1F2525] dark:to-teal-950/20 rounded-3xl p-6 sm:p-10 md:p-12 mb-14 border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft relative overflow-hidden">
         {/* Ambient Glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#E8F0EB]0/10 dark:bg-[#E8F0EB]0/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#476550]/10 dark:bg-[#476550]/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-10 relative z-10">
           {/* Founder Portrait */}

@@ -148,8 +148,8 @@ export default function Home() {
       {/* HERO SECTION WITH ANIMATED SCANNER & LIVE PIPELINE */}
       <section className="flex flex-col items-center justify-center min-h-[85vh] py-8 sm:py-12 md:py-16 relative">
         {/* Ambient Decorative Blurs */}
-        <div className="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#E8F0EB]0/10 dark:bg-[#E8F0EB]0/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
-        <div className="absolute top-20 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#E8F0EB]0/10 dark:bg-[#E8F0EB]0/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+        <div className="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#476550]/10 dark:bg-[#476550]/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+        <div className="absolute top-20 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#476550]/10 dark:bg-[#476550]/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
 
         {/* Ecosystem Pill */}
         <div className="bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full mb-6 sm:mb-8 inline-flex items-center gap-2 hover:shadow-md transition-all hover:scale-105 max-w-[95vw]">

@@ -42,7 +42,7 @@ export const NotificationToast: React.FC<NotificationToastProps> = ({ toasts, on
           bg: "bg-emerald-950/90 dark:bg-emerald-950/95 border-emerald-500/50 text-emerald-100",
           icon: <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />,
           accent: "text-emerald-400",
-          progressBg: "bg-[#E8F0EB]0"
+          progressBg: "bg-[#476550]"
         };
       case "scout":
         return {

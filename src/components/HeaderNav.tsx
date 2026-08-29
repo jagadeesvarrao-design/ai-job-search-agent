@@ -49,17 +49,10 @@ export default function HeaderNav() {
     checkTier();
     window.addEventListener("user-tier-updated", checkTier);
 
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setIsDark(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      setIsDark(false);
-      document.documentElement.classList.remove("dark");
-      if (!savedTheme) {
-        localStorage.setItem("theme", "light");
-      }
-    }
+    // Enforce Aneevarp Master Palette (Ivory Base #FCFAF5 + Forest Sage #476550)
+    setIsDark(false);
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
 
     return () => window.removeEventListener("user-tier-updated", checkTier);
   }, []);

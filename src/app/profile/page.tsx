@@ -481,7 +481,7 @@ export default function ProfilePage() {
             /* STANDARD ATS ANALYSIS CARD (For Valid Resumes) */
             <div className="bg-gradient-to-br from-white to-[#F0FDF4] dark:from-[#222828] dark:to-[#0f241d] rounded-3xl border-2 border-emerald-500/30 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
               {/* Ambient Glow */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-[#E8F0EB]0/10 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#476550]/10 rounded-full blur-3xl pointer-events-none"></div>
 
               {/* Score Header */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-emerald-100 dark:border-emerald-900/40">
@@ -558,10 +558,10 @@ export default function ProfilePage() {
 
             {/* NEXT STEP GUIDANCE BANNER (Direct Navigation to Dashboard) */}
             <div className="my-5 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-[#A2BCA8]/50 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden animate-in fade-in slide-in-from-top-3">
-              <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#E8F0EB]0/20 rounded-full blur-2xl pointer-events-none"></div>
+              <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#476550]/20 rounded-full blur-2xl pointer-events-none"></div>
 
               <div className="space-y-1.5 relative z-10">
-                <div className="inline-flex items-center gap-1.5 bg-[#E8F0EB]0/20 text-[#A2BCA8] text-[11px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full border border-teal-500/30">
+                <div className="inline-flex items-center gap-1.5 bg-[#476550]/20 text-[#A2BCA8] text-[11px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full border border-teal-500/30">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>Next Step: Autonomous Job Discovery</span>
                 </div>
