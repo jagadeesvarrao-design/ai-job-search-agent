@@ -38,7 +38,8 @@ import {
   Zap,
   Lock,
   LayoutGrid,
-  List
+  List,
+  BookOpen
 } from "lucide-react";
 import Link from "next/link";
 import { 
@@ -975,6 +976,28 @@ export default function DashboardPage() {
                       </div>
                     ))
                   )}
+
+                  {/* Contextual Offer Audit Prompt for Kanban Offers Column */}
+                  {status === "Offers" && columnJobs.length > 0 && (
+                    <div className="mt-2 p-3 rounded-2xl bg-[#E8F0EB] dark:bg-[#1F2525] border border-emerald-300 dark:border-emerald-800/60 text-xs">
+                      <div className="flex items-center gap-1.5 font-bold text-emerald-800 dark:text-emerald-300 mb-1">
+                        <Award className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <span>Audit Offer on ZenDoc AI</span>
+                      </div>
+                      <p className="text-[11px] text-[#596060] dark:text-slate-300 mb-2 leading-relaxed">
+                        Scan your employment contract for non-compete clauses, notice periods, and bonus terms.
+                      </p>
+                      <a
+                        href="https://pdf-analizing-and-answering-bot.vercel.app/?utm_source=zenscout_ai&utm_medium=kanban_offers_column"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 bg-[#476550] hover:bg-[#3A5342] text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer"
+                      >
+                        <span>Audit Contract Free</span>
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -1079,8 +1102,9 @@ export default function DashboardPage() {
                     </div>
                   </div>
 
-                  {selectedJob.applyLink && (
-                    <div className="pt-2">
+                  {/* Contextual Action Cluster: Official Apply + ZenResume Auto-Tailor */}
+                  <div className="pt-2 flex flex-wrap items-center gap-3">
+                    {selectedJob.applyLink && (
                       <a
                         href={selectedJob.applyLink}
                         target="_blank"
@@ -1088,6 +1112,39 @@ export default function DashboardPage() {
                         className="inline-flex items-center gap-2 bg-[#476550] hover:bg-[#3A5342] text-white font-black px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-95 btn-tactile text-xs sm:text-sm"
                       >
                         Apply Directly on Official Portal <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+
+                    <a
+                      href={`https://zenresume.online/?target_role=${encodeURIComponent(selectedJob.title)}&company=${encodeURIComponent(selectedJob.company)}&utm_source=zenscout_ai&utm_medium=job_modal_tailor`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-[#E8F0EB] hover:bg-teal-100 dark:bg-[#1A1F1F]/60 text-[#476550] dark:text-[#A2BCA8] border border-[#A2BCA8]/40 font-bold px-5 py-3.5 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile text-xs sm:text-sm"
+                    >
+                      <FileText className="w-4 h-4" />
+                      <span>Tailor Targeted Resume on ZenResume</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                    </a>
+                  </div>
+
+                  {/* Contextual Offer Audit Hook (ZenDoc AI) */}
+                  {selectedJob.status === "Offers" && (
+                    <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-emerald-500/15 border-2 border-emerald-500/40 text-black dark:text-white shadow-md animate-in fade-in slide-in-from-bottom-2 space-y-2">
+                      <div className="flex items-center gap-2 text-xs font-black text-emerald-800 dark:text-emerald-300">
+                        <Award className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                        <span>OFFER RECEIVED FROM {selectedJob.company.toUpperCase()}! 🥂</span>
+                      </div>
+                      <p className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
+                        Before signing, protect your intellectual property, compensation, and career autonomy. Upload your offer letter or employment contract to <strong>ZenDoc AI</strong> to audit non-compete clauses, notice periods, and bonus terms in seconds.
+                      </p>
+                      <a
+                        href={`https://pdf-analizing-and-answering-bot.vercel.app/?company=${encodeURIComponent(selectedJob.company)}&utm_source=zenscout_ai&utm_medium=offer_contract_audit`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-sm transition-all active:scale-95 cursor-pointer mt-1"
+                      >
+                        <span>Audit Employment Contract on ZenDoc AI Free</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     </div>
                   )}
@@ -1299,6 +1356,25 @@ export default function DashboardPage() {
                     >
                       <span>{!isProSubscriber() && usageQuota.interviewMessagesSent >= 3 ? "Upgrade" : "Send"}</span>
                     </button>
+                  </div>
+
+                  {/* Contextual Sister App Integration: Research Company PDFs on ZenDoc AI */}
+                  <div className="mt-3 p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#1F2525] border border-[#A2BCA8]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2 text-xs text-[#1A1F1F] dark:text-slate-200">
+                      <BookOpen className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
+                      <span>
+                        Need to master <strong>{selectedJob?.company || "Target Company"}'s</strong> architecture & domain PDFs for this round?
+                      </span>
+                    </div>
+                    <a
+                      href={`https://pdf-analizing-and-answering-bot.vercel.app/?utm_source=zenscout_ai&utm_medium=coach_interview_prep&company=${encodeURIComponent(selectedJob?.company || "")}&role=${encodeURIComponent(selectedJob?.title || "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 bg-[#476550] hover:bg-[#3A5342] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-sm transition-all active:scale-95 flex-shrink-0"
+                    >
+                      <span>Prep with ZenDoc AI</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
                   </div>
                 </div>
               )}

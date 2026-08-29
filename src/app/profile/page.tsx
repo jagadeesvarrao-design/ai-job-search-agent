@@ -540,18 +540,31 @@ export default function ProfilePage() {
                 </div>
 
                 {/* ATS Risks / Missing Keywords */}
-                <div className="bg-[#FAF9F6] dark:bg-[#1F2525] p-4 rounded-2xl border border-amber-200 dark:border-amber-900/50">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-1.5">
-                    <AlertTriangle className="w-4 h-4" /> Critical ATS Filter Risks & Missing Keywords
-                  </h4>
-                  <ul className="space-y-1.5 text-xs text-[#596060] dark:text-slate-300">
-                    {atsAnalysis.improvements.map((item, i) => (
-                      <li key={i} className="flex items-start gap-1.5 text-amber-900 dark:text-amber-300">
-                        <span className="text-amber-500 font-bold">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <div className="bg-[#FAF9F6] dark:bg-[#1F2525] p-4 rounded-2xl border border-amber-200 dark:border-amber-900/50 flex flex-col justify-between">
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-1.5">
+                      <AlertTriangle className="w-4 h-4" /> Critical ATS Filter Risks & Missing Keywords
+                    </h4>
+                    <ul className="space-y-1.5 text-xs text-[#596060] dark:text-slate-300">
+                      {atsAnalysis.improvements.map((item, i) => (
+                        <li key={i} className="flex items-start gap-1.5 text-amber-900 dark:text-amber-300">
+                          <span className="text-amber-500 font-bold">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Contextual Deep Link: Fix on ZenResume */}
+                  <a
+                    href={`https://zenresume.online/?target_role=${encodeURIComponent(formData.role || "Software Engineer")}&utm_source=zenscout_ai&utm_medium=ats_audit_gaps`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3.5 w-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 font-bold text-xs py-2 px-3 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 btn-tactile cursor-pointer"
+                  >
+                    <span>⚡ Fix & Auto-Inject Keywords in ZenResume Free</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
                 </div>
               </div>
             </div>
