@@ -126,11 +126,11 @@ export default function PricingPage() {
           <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white flex flex-wrap items-center gap-3">
             <span>Zen Suite Ultimate Cross-Pass</span>
             <span className="text-sm sm:text-base font-bold text-[#A2BCA8] bg-[#1A1F1F]/80 px-3 py-1 rounded-xl border border-teal-500/40">
-              {isINR ? "₹599/month" : "$15.99/mo"}
+              {isINR ? "₹599/month" : "$29/month"}
             </span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            One unified master subscription unlocking <strong>ZenScout AI</strong> (Unlimited Pro Scouting & AI Voice Coach), <strong>ZenDoc AI</strong> (Unlimited Document AI & Multi-File OCR), and <strong>ZenResume</strong> (Unlimited ATS Templates) seamlessly across all devices using your single Google/Email login.
+            One unified master subscription unlocking <strong>ZenScout AI</strong> (Unlimited Pro Scouting & AI Voice Coach), <strong>ZenDoc AI</strong> (Unlimited Document AI & Multi-File OCR), and <strong>ZenResume</strong> (Unlimited ATS Templates) seamlessly across all devices using your single Google/Email login for 1 full month.
           </p>
         </div>
 
@@ -191,7 +191,7 @@ export default function PricingPage() {
             
             <div className="mb-4">
               <span className="text-4xl font-black text-black dark:text-white">
-                {isINR ? "₹299" : "$9"}
+                {isINR ? "₹299" : "$19"}
               </span>
               <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "month" : "mo"}</span>
             </div>
@@ -244,15 +244,15 @@ export default function PricingPage() {
             <div className="flex justify-between items-center mb-2 mt-1">
               <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">3-Month Pass</h3>
               <span className="text-[10px] bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-300 px-2.5 py-1 rounded-full font-bold">
-                Save 25%
+                Save 21%
               </span>
             </div>
             
             <div className="mb-4">
               <span className="text-4xl font-black text-black dark:text-white">
-                {isINR ? "₹699" : "$19"}
+                {isINR ? "₹699" : "$45"}
               </span>
-              <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "3 months (₹233/mo)" : "3 mos ($6.33/mo)"}</span>
+              <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "3 months (₹233/mo)" : "3 mos ($15/mo)"}</span>
             </div>
 
             <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-amber-200 dark:border-amber-900/40">
@@ -303,15 +303,15 @@ export default function PricingPage() {
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">Annual Pro VIP</h3>
               <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 px-2.5 py-1 rounded-full font-bold">
-                Save 60%
+                Save 56%
               </span>
             </div>
             
             <div className="mb-4">
               <span className="text-4xl font-black text-black dark:text-white">
-                {isINR ? "₹1,999" : "$49"}
+                {isINR ? "₹1,999" : "$99"}
               </span>
-              <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "year (₹166/mo)" : "yr ($4.08/mo)"}</span>
+              <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "year (₹166/mo)" : "yr ($8.25/mo)"}</span>
             </div>
 
             <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">

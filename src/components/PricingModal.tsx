@@ -156,11 +156,11 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 <h3 className="text-base sm:text-lg font-black text-white flex flex-wrap items-center gap-2">
                   <span>Zen Suite Ultimate Cross-Pass</span>
                   <span className="text-sm font-bold text-[#A2BCA8] bg-[#1A1F1F]/80 px-2.5 py-0.5 rounded-lg border border-teal-500/40">
-                    {isINR ? "₹599/mo" : "$15.99/mo"}
+                    {isINR ? "₹599/mo" : "$29/mo"}
                   </span>
                 </h3>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  One unified subscription unlocking <strong>ZenScout AI</strong> (Unlimited Pro), <strong>ZenDoc AI</strong> (Unlimited Document AI), and <strong>ZenResume</strong> (Unlimited ATS Templates) seamlessly across all devices.
+                  One unified subscription unlocking <strong>ZenScout AI</strong> (Unlimited Pro), <strong>ZenDoc AI</strong> (Unlimited Document AI), and <strong>ZenResume</strong> (Unlimited ATS Templates) seamlessly across all devices for 1 full month.
                 </p>
               </div>
 
@@ -217,7 +217,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                   
                   <div className="mb-2">
                     <span className="text-3xl font-black text-black dark:text-white">
-                      {isINR ? "₹299" : "$9"}
+                      {isINR ? "₹299" : "$19"}
                     </span>
                     <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "month" : "mo"}</span>
                   </div>
@@ -271,15 +271,15 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                   <div className="flex justify-between items-center mb-1.5">
                     <h4 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">3-Month Pass</h4>
                     <span className="text-[10px] bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-300 px-2 py-0.5 rounded-full font-bold">
-                      Save 25%
+                      Save 21%
                     </span>
                   </div>
                   
                   <div className="mb-2">
                     <span className="text-3xl font-black text-black dark:text-white">
-                      {isINR ? "₹699" : "$19"}
+                      {isINR ? "₹699" : "$45"}
                     </span>
-                    <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "3 months (₹233/mo)" : "3 mos ($6.33/mo)"}</span>
+                    <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "3 months (₹233/mo)" : "3 mos ($15/mo)"}</span>
                   </div>
 
                   <p className="text-[11px] text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-3 pb-3 border-b border-amber-200 dark:border-amber-900/40">
@@ -330,15 +330,15 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
                   <div className="flex justify-between items-center mb-1.5">
                     <h4 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">Annual Pro VIP</h4>
                     <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">
-                      Save 60%
+                      Save 56%
                     </span>
                   </div>
                   
                   <div className="mb-2">
                     <span className="text-3xl font-black text-black dark:text-white">
-                      {isINR ? "₹1,999" : "$49"}
+                      {isINR ? "₹1,999" : "$99"}
                     </span>
-                    <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "year (₹166/mo)" : "yr ($4.08/mo)"}</span>
+                    <span className="text-xs text-slate-500 font-semibold"> / {isINR ? "year (₹166/mo)" : "yr ($8.25/mo)"}</span>
                   </div>
 
                   <p className="text-[11px] text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mb-3 pb-3 border-b border-slate-100 dark:border-slate-800">

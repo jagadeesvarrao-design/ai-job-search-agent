@@ -91,9 +91,9 @@ export const PRICING_DATA = {
     inr: 299,
     inrPeriod: "month",
     inrMonthlyEquivalent: 299,
-    usd: 9,
+    usd: 19,
     usdPeriod: "mo",
-    usdMonthlyEquivalent: 9,
+    usdMonthlyEquivalent: 19,
     tag: "Light Hunt",
     subtext: "Essential AI tools for single-role targeted applications."
   },
@@ -101,9 +101,9 @@ export const PRICING_DATA = {
     inr: 699,
     inrPeriod: "3 months",
     inrMonthlyEquivalent: 233,
-    usd: 19,
+    usd: 45,
     usdPeriod: "3 mos",
-    usdMonthlyEquivalent: 6.33,
+    usdMonthlyEquivalent: 15,
     tag: "Most Popular • Covers Full 60–90 Day Hiring Cycle",
     subtext: "Everything you need from initial resume submission to signed offer letter."
   },
@@ -111,21 +111,21 @@ export const PRICING_DATA = {
     inr: 1999,
     inrPeriod: "year",
     inrMonthlyEquivalent: 166,
-    usd: 49,
+    usd: 99,
     usdPeriod: "yr",
-    usdMonthlyEquivalent: 4.08,
-    tag: "Best Long-Term Value (Save 60%)",
+    usdMonthlyEquivalent: 8.25,
+    tag: "Best Long-Term Value (Save 56%)",
     subtext: "For continuous career growth, promotions, and lateral career switches."
   },
   zen_suite: {
     inr: 599,
     inrPeriod: "month",
     inrMonthlyEquivalent: 599,
-    usd: 15.99,
+    usd: 29,
     usdPeriod: "mo",
-    usdMonthlyEquivalent: 15.99,
-    tag: "🌟 ALL-IN-ONE ZEN SUITE CROSS-PASS",
-    subtext: "Unlocks ZenScout AI + ZenDoc AI + ZenResume simultaneously under a single subscription."
+    usdMonthlyEquivalent: 29,
+    tag: "🌟 ALL-IN-ONE ZEN SUITE CROSS-PASS (1-MONTH VIP)",
+    subtext: "Unlocks ZenScout AI + ZenDoc AI + ZenResume simultaneously for 1 full month under a single subscription."
   }
 };
 
