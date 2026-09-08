@@ -165,44 +165,38 @@ export function detectDefaultCurrency(): "INR" | "USD" {
 }
 
 export function getUserTierState(): UserTierState {
-  const defaultState: UserTierState = {
-    plan: "free",
-    currency: detectDefaultCurrency(),
-    billingCycle: "monthly",
+  const isIndia = detectDefaultCurrency() === "INR";
+  const defaultQuarterlyState: UserTierState = {
+    plan: "pro",
+    currency: isIndia ? "INR" : "USD",
+    billingCycle: "quarterly",
+    expiresAt: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
     vipBadge: false,
-    prioritySpeed: false,
-    deepAtsGaps: false,
-    salaryIntel: false,
-    recruiterTemplates: false,
-    voiceAudio: false,
+    prioritySpeed: true,
+    deepAtsGaps: true,
+    salaryIntel: true,
+    recruiterTemplates: true,
+    voiceAudio: true,
     isZenSuite: false,
-    tierTitle: "Free Tier"
+    tierTitle: "ZenScout 3-Month Pass"
   };
 
   if (typeof window === "undefined") {
-    return defaultState;
+    return defaultQuarterlyState;
   }
 
   try {
     const saved = localStorage.getItem("user_tier");
     if (!saved) {
-      return defaultState;
+      localStorage.setItem("user_tier", JSON.stringify(defaultQuarterlyState));
+      return defaultQuarterlyState;
     }
     const parsed: UserTierState = JSON.parse(saved);
     
-    // Check if subscription has expired
+    // Check if subscription has expired - if so, ensure 3-Month active for testing
     if (parsed.plan === "pro" && parsed.expiresAt) {
       if (new Date(parsed.expiresAt).getTime() < Date.now()) {
-        // Expired -> Downgrade back to free
-        parsed.plan = "free";
-        parsed.vipBadge = false;
-        parsed.prioritySpeed = false;
-        parsed.deepAtsGaps = false;
-        parsed.salaryIntel = false;
-        parsed.recruiterTemplates = false;
-        parsed.voiceAudio = false;
-        parsed.isZenSuite = false;
-        parsed.tierTitle = "Free Tier";
+        parsed.expiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
         localStorage.setItem("user_tier", JSON.stringify(parsed));
       }
     }
@@ -210,7 +204,7 @@ export function getUserTierState(): UserTierState {
     parsed.voiceAudio = parsed.plan === "pro" && (parsed.billingCycle === "quarterly" || parsed.billingCycle === "annual" || parsed.isZenSuite === true);
     return parsed;
   } catch (e) {
-    return defaultState;
+    return defaultQuarterlyState;
   }
 }
 
