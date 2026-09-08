@@ -71,8 +71,8 @@ export async function POST(request: Request) {
     const extractedDoc = await extractTextFromBase64PdfAsync(resumeBase64);
 
     // 1. Try Gemini 2.5 Flash if available
-    const geminiKey = process.env.GEMINI_API_KEY;
-    if (geminiKey && geminiKey.startsWith("AIzaSy")) {
+    const geminiKey = (process.env.GEMINI_API_KEY || "").trim();
+    if (geminiKey && geminiKey !== "dummy" && geminiKey.length > 20) {
       try {
         const jobsList = jobs.slice(0, 25).map((j: any) => ({
           id: sanitizeString(j.id, 100),

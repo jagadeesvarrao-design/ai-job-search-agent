@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sanitizeString, validateBase64Pdf } from "@/lib/security";
 import { extractTextFromBase64PdfAsync } from "@/lib/pdf-parser";
-import { evaluateResumeAts } from "@/lib/ats-engine";
+import { evaluateResumeAts, resolveRoleSkillMatrix } from "@/lib/ats-engine";
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -13,7 +13,10 @@ export async function POST(request: Request) {
     // Rate limit: 25 ATS analyses per minute per IP
     const rateCheck = checkRateLimit(`ats:${ip}`, 25, 60000);
     if (!rateCheck.allowed) {
-      return NextResponse.json({ success: false, error: "Too many ATS analysis requests. Please wait a moment before trying again." }, { status: 429 });
+      return NextResponse.json({ 
+        success: false, 
+        error: "Too many ATS analysis requests. Please wait a moment before trying again." 
+      }, { status: 429 });
     }
 
     const body = await request.json().catch(() => ({}));
@@ -22,59 +25,80 @@ export async function POST(request: Request) {
     // Validate Base64 PDF file (Max 5MB)
     const pdfValidation = validateBase64Pdf(resumeBase64, 5 * 1024 * 1024);
     if (!pdfValidation.valid) {
-      return NextResponse.json({ success: false, error: pdfValidation.error || "Valid PDF resume file is required." }, { status: 400 });
+      return NextResponse.json({ 
+        success: false, 
+        error: pdfValidation.error || "Valid PDF resume file is required." 
+      }, { status: 400 });
     }
 
     const targetRole = sanitizeString(role || "Software Engineer", 100).trim();
     const extractedDoc = await extractTextFromBase64PdfAsync(resumeBase64);
+    const resumeText = extractedDoc.text.trim();
 
-    const docText = extractedDoc.text.toLowerCase();
-    const hasResumeMarkers = docText.includes("@") || docText.includes(".com") || docText.includes("linkedin") || docText.includes("github") || docText.includes("education") || docText.includes("experience") || docText.includes("skills") || docText.includes("projects") || docText.includes("b.tech") || docText.includes("summary") || docText.includes("zenresume");
+    // Baseline deterministic analysis as ground truth
+    const deterministicAnalysis = evaluateResumeAts(resumeText, targetRole, extractedDoc.numPages);
 
-    const prompt = `
-      You are an industry-grade ATS (Applicant Tracking System) Screening Engine evaluating a candidate's resume for the Target Role: "${targetRole}".
-
-      === EVALUATION RULES ===
-      1. DOCUMENT IDENTIFICATION:
-         - Document page count: ${extractedDoc.numPages} pages.
-         - Does the document represent a candidate profile / resume (contains education, contact details, projects, or professional skills)?
-         - If and only if it is a multi-page government policy paper, textbook, or non-resume invoice (>4 pages without any candidate background):
-           * score: 0
-           * tier: "Invalid Document / Non-Resume"
-           * isNonResume: true
-         - Otherwise:
-           * isNonResume: false
-           * Evaluate candidate skills against "${targetRole}".
-
-      2. SCORING GUIDELINES:
-         - High match (e.g. AI / Software skills matching target role): Score 85 - 96.
-         - Moderate match: Score 65 - 84.
-         - Severe domain mismatch (e.g. Software CV applied for Mechanical / Medical / Civil): Score 15 - 35.
-
-      3. OUTPUT FORMAT:
-         - Return ONLY valid JSON matching this schema:
-         {
-           "score": 90,
-           "tier": "string",
-           "isNonResume": false,
-           "strengths": ["string"],
-           "improvements": ["string"],
-           "keyMissingSkills": ["string"],
-           "summary": "string"
-         }
-
-      === TARGET ROLE ===
-      ${targetRole}
-
-      === EXTRACTED RESUME TEXT (${extractedDoc.numPages} Pages) ===
-      ${extractedDoc.text || "Standard candidate CV."}
-    `;
+    // If deterministic parser flags invalid document / non-resume, return immediately
+    if (deterministicAnalysis.isNonResume || deterministicAnalysis.score === 0) {
+      return NextResponse.json({ success: true, analysis: deterministicAnalysis });
+    }
 
     const apiKey = (process.env.GEMINI_API_KEY || "").trim();
+    const roleMatrix = resolveRoleSkillMatrix(targetRole);
 
-    // 1. Attempt Gemini if configured
-    if (apiKey && extractedDoc.text.length > 50) {
+    // Attempt Gemini 2.5 Flash for deep semantic evaluation if configured
+    if (apiKey && resumeText.length > 50) {
       try {
+        const prompt = `
+You are an expert Enterprise Applicant Tracking System (ATS) screening algorithm and Senior Technical Recruiter.
+Analyze the candidate's extracted resume against the Target Role: "${targetRole}".
+
+=== TARGET ROLE BENCHMARK ===
+- Domain: ${roleMatrix.domain}
+- Primary Core Required Skills: ${roleMatrix.coreSkills.join(", ")}
+- Supporting Libraries & Frameworks: ${roleMatrix.supportingSkills.join(", ")}
+- Production, DevOps & Cloud Standards: ${roleMatrix.productionSkills.join(", ")}
+
+=== SCORING METHODOLOGY (Total: 0 to 100) ===
+Evaluate across these 5 strict dimensions:
+1. Core Domain Technical Skills (0–40 pts): Mandatory foundational requirements matched.
+2. Experience & Project Alignment (0–20 pts): Practical depth, project relevance, and title matching.
+3. Supporting Frameworks & Tooling (0–15 pts): Secondary libraries, state management, databases.
+4. Production, Cloud, CI/CD & Testing (0–15 pts): Docker, AWS/GCP, automated testing, version control.
+5. Quantified Impact & Parsability (0–10 pts): Metrics (%, $, latency, scale, user count) and clean structure.
+
+=== SCORING CALIBRATION BENCHMARKS ===
+- 88 - 98: High match. Resume demonstrates comprehensive mastery of core domain requirements, production deployment, and measurable project impact.
+- 75 - 87: Strong match. Solid core domain proficiency with minor gaps in secondary tools or production testing.
+- 55 - 74: Moderate match. Junior profile or missing significant core technologies required for ${targetRole}.
+- 35 - 54: Low match. Significant technology stack misalignment or lack of relevant domain experience.
+- 15 - 34: Severe domain mismatch (e.g., Non-tech background applying for software/AI role or vice versa).
+- 0: Non-resume document (policy paper, textbook, invoice, blank text).
+
+=== EXTRACTED RESUME TEXT (${extractedDoc.numPages} Page(s)) ===
+${resumeText}
+
+=== REQUIRED JSON OUTPUT FORMAT ===
+Return ONLY valid JSON matching this schema:
+{
+  "score": <number between 0 and 100>,
+  "tier": "<Excellent (Top 5% Match) | Strong / Highly Competitive | Moderate / Needs Optimization | Below Benchmark / Gaps Detected | Severe Domain Mismatch | Invalid Document / Non-Resume>",
+  "isNonResume": false,
+  "matchedCoreSkills": ["<string: exact skills from resume matching target role>"],
+  "missingCoreSkills": ["<string: exact critical skills missing for target role>"],
+  "strengths": [
+    "<string: specific strength citing technologies/achievements present in resume>",
+    "<string: specific strength citing impact or credentials present in resume>"
+  ],
+  "improvements": [
+    "<string: actionable improvement targeting specific missing keywords for ${targetRole}>",
+    "<string: actionable improvement regarding metrics or production capabilities>"
+  ],
+  "keyMissingSkills": ["<string: top 3-4 missing keywords>"],
+  "summary": "<string: comprehensive 2-3 sentence overview of ATS compatibility and recommendations>"
+}
+`;
+
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
         const response = await fetch(url, {
           method: "POST",
@@ -90,7 +114,8 @@ export async function POST(request: Request) {
               }
             ],
             generationConfig: {
-              responseMimeType: "application/json"
+              responseMimeType: "application/json",
+              temperature: 0.2
             }
           })
         });
@@ -102,13 +127,34 @@ export async function POST(request: Request) {
             const cleanJson = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
             const analysis = JSON.parse(cleanJson);
 
-            // Double check safeguard: If document has clear resume markers, ensure isNonResume is false and score is valid
-            if (hasResumeMarkers && (analysis.isNonResume || analysis.score === 0)) {
-              const safeAnalysis = evaluateResumeAts(extractedDoc.text, targetRole, extractedDoc.numPages);
-              return NextResponse.json({ success: true, analysis: safeAnalysis });
+            // Validate structure & score bounds
+            if (typeof analysis.score === "number" && !isNaN(analysis.score)) {
+              const validatedScore = Math.min(100, Math.max(0, Math.round(analysis.score)));
+              return NextResponse.json({
+                success: true,
+                analysis: {
+                  score: validatedScore,
+                  tier: sanitizeString(analysis.tier || deterministicAnalysis.tier, 60),
+                  isNonResume: Boolean(analysis.isNonResume),
+                  matchedCoreSkills: Array.isArray(analysis.matchedCoreSkills) && analysis.matchedCoreSkills.length > 0 
+                    ? analysis.matchedCoreSkills.slice(0, 10).map((s: string) => sanitizeString(s, 50)) 
+                    : deterministicAnalysis.matchedCoreSkills,
+                  missingCoreSkills: Array.isArray(analysis.missingCoreSkills) && analysis.missingCoreSkills.length > 0 
+                    ? analysis.missingCoreSkills.slice(0, 8).map((s: string) => sanitizeString(s, 50)) 
+                    : deterministicAnalysis.missingCoreSkills,
+                  strengths: Array.isArray(analysis.strengths) && analysis.strengths.length > 0 
+                    ? analysis.strengths.slice(0, 5).map((s: string) => sanitizeString(s, 300)) 
+                    : deterministicAnalysis.strengths,
+                  improvements: Array.isArray(analysis.improvements) && analysis.improvements.length > 0 
+                    ? analysis.improvements.slice(0, 5).map((s: string) => sanitizeString(s, 300)) 
+                    : deterministicAnalysis.improvements,
+                  keyMissingSkills: Array.isArray(analysis.keyMissingSkills) && analysis.keyMissingSkills.length > 0 
+                    ? analysis.keyMissingSkills.slice(0, 6).map((s: string) => sanitizeString(s, 50)) 
+                    : deterministicAnalysis.keyMissingSkills,
+                  summary: sanitizeString(analysis.summary || deterministicAnalysis.summary, 600)
+                }
+              });
             }
-
-            return NextResponse.json({ success: true, analysis });
           }
         }
       } catch (geminiErr: any) {
@@ -116,12 +162,11 @@ export async function POST(request: Request) {
       }
     }
 
-    // 2. High-Precision Deterministic ATS Engine (Guaranteed 100% accurate fallback)
-    const deterministicAnalysis = evaluateResumeAts(extractedDoc.text, targetRole, extractedDoc.numPages);
+    // High-Precision Deterministic ATS Engine Fallback
     return NextResponse.json({ success: true, analysis: deterministicAnalysis });
   } catch (error: any) {
-    console.error("ATS Analyzer Error:", error);
-    const fallback = evaluateResumeAts("", "AI Engineer", 1);
+    console.error("ATS Analyzer Route Error:", error);
+    const fallback = evaluateResumeAts("", "Software Engineer", 1);
     return NextResponse.json({ success: true, analysis: fallback });
   }
 }

@@ -11,13 +11,13 @@ export interface ExtractedPdfDocument {
 function decodePdfHexString(hex: string): string {
   try {
     const cleanHex = hex.replace(/[^0-9A-Fa-f]/g, "");
-    if (cleanHex.length % 2 !== 0) return "";
-    
+    if (!cleanHex || cleanHex.length % 2 !== 0) return "";
+
     // Check if UTF-16BE (2 bytes per char, e.g. 0048 0065)
     if (cleanHex.length >= 4 && cleanHex.startsWith("00")) {
       let str = "";
       for (let i = 0; i < cleanHex.length; i += 4) {
-        const charCode = parseInt(cleanHex.substr(i, 4), 16);
+        const charCode = parseInt(cleanHex.substring(i, i + 4), 16);
         if (charCode >= 32 && charCode <= 126) {
           str += String.fromCharCode(charCode);
         } else if (charCode === 10 || charCode === 13 || charCode === 9) {
@@ -30,7 +30,7 @@ function decodePdfHexString(hex: string): string {
     // Standard 1-byte hex
     let str = "";
     for (let i = 0; i < cleanHex.length; i += 2) {
-      const charCode = parseInt(cleanHex.substr(i, 2), 16);
+      const charCode = parseInt(cleanHex.substring(i, i + 2), 16);
       if (charCode >= 32 && charCode <= 126) {
         str += String.fromCharCode(charCode);
       } else if (charCode === 10 || charCode === 13 || charCode === 9) {
@@ -44,44 +44,119 @@ function decodePdfHexString(hex: string): string {
 }
 
 /**
- * Enterprise PDF extractor for Node.js
- * Extracts raw textual streams, hex-encoded glyphs, and character mappings
+ * Parse text operators from a raw PDF content stream (uncompressed or decompressed)
  */
-export async function extractTextFromBase64PdfAsync(base64Data: string): Promise<ExtractedPdfDocument> {
-  try {
-    const buffer = Buffer.from(base64Data, "base64");
-    
-    // 1. Try industry standard pdf-parse with ESM/CJS compatibility
-    try {
-      const pdfModule = await import("pdf-parse");
-      const pdfFn = (pdfModule as any).default || pdfModule;
-      if (typeof pdfFn === "function") {
-        const data = await pdfFn(buffer);
-        if (data && data.text && data.text.trim().length > 20) {
-          return {
-            text: data.text.trim(),
-            numPages: data.numpages || 1
-          };
+function extractTextFromStreamString(content: string): string {
+  let extracted = "";
+
+  // 1. Text chunks inside parentheses: (Text) Tj, (Text) ', (Text) "
+  const parenTjRegex = /\(((?:\\\(|\\\)|[^\)])*)\)\s*(?:Tj|'|")/g;
+  let m: RegExpExecArray | null;
+  while ((m = parenTjRegex.exec(content)) !== null) {
+    if (m[1]) {
+      extracted += m[1] + " ";
+    }
+  }
+
+  // 2. Text array chunks: [(T) 10 (e) 10 (x) 10 (t)] TJ
+  const tjArrayRegex = /\[(.*?)\]\s*TJ/g;
+  while ((m = tjArrayRegex.exec(content)) !== null) {
+    const arrayBody = m[1];
+    const subParen = /\(((?:\\\(|\\\)|[^\)])*)\)/g;
+    let sm: RegExpExecArray | null;
+    while ((sm = subParen.exec(arrayBody)) !== null) {
+      if (sm[1]) {
+        extracted += sm[1] + "";
+      }
+    }
+    // Also check for hex strings in TJ: [<0048> 10 <0065>] TJ
+    const subHex = /<([0-9A-Fa-f]+)>/g;
+    while ((sm = subHex.exec(arrayBody)) !== null) {
+      if (sm[1]) {
+        extracted += decodePdfHexString(sm[1]) + "";
+      }
+    }
+    extracted += " ";
+  }
+
+  // 3. Hex string operators: <48656C6C6F> Tj
+  const hexTjRegex = /<([0-9A-Fa-f]+)>\s*(?:Tj|'|")/g;
+  while ((m = hexTjRegex.exec(content)) !== null) {
+    if (m[1]) {
+      extracted += decodePdfHexString(m[1]) + " ";
+    }
+  }
+
+  // 4. BT ... ET blocks without standard Tj / TJ
+  if (!extracted || extracted.trim().length < 10) {
+    const btEtRegex = /BT([\s\S]*?)ET/g;
+    while ((m = btEtRegex.exec(content)) !== null) {
+      const block = m[1];
+      const directMatches = block.match(/\(((?:\\\(|\\\)|[^\)])*)\)/g);
+      if (directMatches) {
+        for (const item of directMatches) {
+          extracted += item.slice(1, -1) + " ";
         }
       }
-    } catch (parseErr) {
-      console.warn("Dynamic pdf-parse failed, running native stream extractor:", parseErr);
     }
-
-    // 2. Native zero-dependency stream & hex extractor fallback
-    return extractTextFromBase64Pdf(base64Data);
-  } catch (err) {
-    return extractTextFromBase64Pdf(base64Data);
   }
+
+  return extracted;
 }
 
+/**
+ * Clean and format raw extracted text
+ */
+function cleanExtractedText(raw: string): string {
+  return raw
+    .replace(/\\([0-7]{1,3})/g, (_, oct) => String.fromCharCode(parseInt(oct, 8)))
+    .replace(/\\r/g, "\n")
+    .replace(/\\n/g, "\n")
+    .replace(/\\t/g, " ")
+    .replace(/\\\(/g, "(")
+    .replace(/\\\)/g, ")")
+    .replace(/\\\\/g, "\\")
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, " ")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n\s*\n/g, "\n")
+    .trim();
+}
+
+/**
+ * Enterprise multi-modal PDF text and layout extractor
+ */
 export function extractTextFromBase64Pdf(base64Data: string): ExtractedPdfDocument {
   try {
-    const buffer = Buffer.from(base64Data, "base64");
+    const cleanBase64 = (base64Data || "").replace(/^data:application\/pdf;base64,/, "").trim();
+    const buffer = Buffer.from(cleanBase64, "base64");
+    if (!buffer || buffer.length === 0) {
+      return { text: "", numPages: 1 };
+    }
+
     let extractedText = "";
     let numPages = 1;
 
-    // Direct binary stream decompression
+    // Detect page count from PDF trailer/catalog
+    const rawContent = buffer.toString("binary");
+    const pagesCountMatch = 
+      rawContent.match(/\/Type\s*\/Pages[\s\S]*?\/Count\s+(\d+)/i) || 
+      rawContent.match(/\/Count\s+(\d+)[\s\S]*?\/Type\s*\/Pages/i) ||
+      rawContent.match(/\/Count\s+(\d+)/i);
+      
+    if (pagesCountMatch && pagesCountMatch[1]) {
+      const parsedPages = parseInt(pagesCountMatch[1], 10);
+      if (!isNaN(parsedPages) && parsedPages > 0) {
+        numPages = parsedPages;
+      }
+    }
+
+    // Also count '/Page' objects as secondary check
+    const pageObjects = rawContent.match(/\/Type\s*\/Page\b/g);
+    if (pageObjects && pageObjects.length > numPages) {
+      numPages = pageObjects.length;
+    }
+
+    // Direct stream extraction (both compressed & uncompressed)
     let pos = 0;
     const streamMarker = Buffer.from("stream");
     const endStreamMarker = Buffer.from("endstream");
@@ -106,62 +181,54 @@ export function extractTextFromBase64Pdf(base64Data: string): ExtractedPdfDocume
 
       const streamSlice = buffer.subarray(dataStart, dataEnd);
 
-      let decompressed = "";
+      // Attempt 1: Decompress zlib stream
+      let streamString = "";
       try {
-        decompressed = zlib.inflateSync(streamSlice).toString("latin1");
+        streamString = zlib.inflateSync(streamSlice).toString("latin1");
       } catch {
         try {
-          decompressed = zlib.inflateRawSync(streamSlice).toString("latin1");
+          streamString = zlib.inflateRawSync(streamSlice).toString("latin1");
         } catch {
-          decompressed = streamSlice.toString("latin1");
+          // Uncompressed raw stream
+          streamString = streamSlice.toString("latin1");
         }
       }
 
-      if (decompressed) {
-        const parenRegex = /\(((?:\\\(|\\\)|[^\)])*)\)\s*(?:Tj|'|")/g;
-        let m;
-        while ((m = parenRegex.exec(decompressed)) !== null) {
-          if (m[1]) extractedText += m[1] + " ";
-        }
-
-        const tjArrayRegex = /\[(.*?)\]\s*TJ/g;
-        while ((m = tjArrayRegex.exec(decompressed)) !== null) {
-          const sub = m[1].match(/\(((?:\\\(|\\\)|[^\)])*)\)/g);
-          if (sub) {
-            extractedText += sub.map(s => s.slice(1, -1)).join("") + " ";
-          }
+      if (streamString) {
+        const chunk = extractTextFromStreamString(streamString);
+        if (chunk) {
+          extractedText += chunk + "\n";
         }
       }
 
       pos = endIdx + 9;
     }
 
-    // Parse page count
-    const rawContent = buffer.toString("binary");
-    const pagesCountMatch = rawContent.match(/\/Type\s*\/Pages[\s\S]*?\/Count\s+(\d+)/i) || rawContent.match(/\/Count\s+(\d+)[\s\S]*?\/Type\s*\/Pages/i);
-    if (pagesCountMatch && pagesCountMatch[1]) {
-      numPages = parseInt(pagesCountMatch[1], 10) || 1;
+    // If stream parsing was sparse, also scan uncompressed global rawContent
+    if (extractedText.trim().length < 50) {
+      const globalChunk = extractTextFromStreamString(rawContent);
+      if (globalChunk.length > extractedText.length) {
+        extractedText += " " + globalChunk;
+      }
     }
 
-    // Clean up extracted text
-    const cleaned = extractedText
-      .replace(/\\([0-9]{3})/g, (_, oct) => String.fromCharCode(parseInt(oct, 8)))
-      .replace(/\\r/g, "\n")
-      .replace(/\\n/g, "\n")
-      .replace(/\\t/g, " ")
-      .replace(/\\\(/g, "(")
-      .replace(/\\\)/g, ")")
-      .replace(/\s+/g, " ")
-      .trim();
-
+    const cleaned = cleanExtractedText(extractedText);
     return {
       text: cleaned,
       numPages: Math.max(1, numPages)
     };
   } catch (err) {
+    console.error("PDF Extraction error:", err);
     return {
       text: "",
       numPages: 1
     };
   }
+}
+
+/**
+ * Async wrapper for PDF extraction with high resilience
+ */
+export async function extractTextFromBase64PdfAsync(base64Data: string): Promise<ExtractedPdfDocument> {
+  return extractTextFromBase64Pdf(base64Data);
 }
