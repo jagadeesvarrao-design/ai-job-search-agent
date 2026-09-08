@@ -2,123 +2,152 @@
 
 @layer base {
   :root {
-    /* 🌟 ZenResume & Aneevarp Master Palette (Light Mode) */
-    --color-primary: #476550;
-    --color-primary-hover: #3A5342;
-    --color-primary-light: #E8F0EB;
-    --color-slate-deep: #1A1F1F;
-    --color-ivory-base: #FCFAF5;
-    --color-surface: #FAF9F6;
-    --color-surface-low: #F4F4F0;
-    --color-secondary: #596060;
-    --color-secondary-light: #7D8787;
-    --color-sage-muted: #A2BCA8;
-    --color-white: #FFFFFF;
-    --color-border-sage: rgba(162, 188, 168, 0.35);
-    --color-overlay-modal: rgba(26, 31, 31, 0.82);
+    /* Brand Emerald & Mint Accents */
+    --color-primary: #476550;         /* Forest Sage Emerald */
+    --color-primary-hover: #3A5342;   /* Darker Emerald */
+    --color-primary-light: #E8F0EB;   /* Soft Emerald Tint */
+    --color-teal-accent: #2DD4BF;     /* Luminous Mint / Teal */
+    --color-amber-accent: #F59E0B;    /* Warm Amber (Badges/AI) */
+    --color-emerald-success: #10B981; /* Live Status Dot */
 
-    /* Semantic Mappings (Light Mode) */
-    --background: #FCFAF5;
-    --foreground: #1A1F1F;
-    --card-surface: #FAF9F6;
-    --border-subtle: #D8E2DA;
-    --border-glass: rgba(162, 188, 168, 0.35);
+    /* Light Theme Canvas */
+    --bg-main: #FCFAF5;               /* Warm Serene Ivory */
+    --bg-surface: #FAF9F6;            /* Card Surface */
+    --bg-surface-elevated: #FFFFFF;   /* Elevated Input/Card */
+    --bg-input: #FFFFFF;              /* Search/Form Inputs */
+    
+    /* Light Theme Typography */
+    --text-main: #1A1F1F;             /* Deep Slate Headline */
+    --text-sub: #475569;              /* Paragraph Charcoal */
+    --text-muted: #7D8787;            /* Subtitle Grey */
+
+    /* Light Theme Borders & Shadows */
+    --border-subtle: rgba(162, 188, 168, 0.35);
+    --border-focus: #00846D;
+    --shadow-card: 0 4px 20px rgba(26, 31, 31, 0.05);
+    --shadow-hover: 0 12px 36px rgba(71, 101, 80, 0.14);
+    --shadow-glow: 0 4px 14px rgba(0, 104, 86, 0.25);
+    
+    /* Radii & Transitions */
+    --radius-pill: 9999px;
+    --radius-xl: 20px;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --transition-smooth: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Legacy / Utility Mappings */
+    --background: var(--bg-main);
+    --foreground: var(--text-main);
+    --card-surface: var(--bg-surface);
+    --border-glass: var(--border-subtle);
     --border-glass-strong: rgba(71, 101, 80, 0.35);
-    --primary: #476550;
-    --primary-hover: #3A5342;
-    --primary-light: #E8F0EB;
-    --secondary: #596060;
-    --secondary-container: #E8F0EB;
-    --input-bg: #F4F4F0;
-    --modal-bg: #FAF9F6;
-    --text-heading: #1A1F1F;
-    --text-body: #596060;
-    --text-muted: #7D8787;
+    --primary: var(--color-primary);
+    --primary-hover: var(--color-primary-hover);
+    --primary-light: var(--color-primary-light);
+    --secondary: var(--text-sub);
+    --secondary-container: var(--color-primary-light);
+    --input-bg: var(--bg-input);
+    --modal-bg: var(--bg-surface);
+    --text-heading: var(--text-main);
+    --text-body: var(--text-sub);
     --primary-glow: rgba(71, 101, 80, 0.12);
     --primary-glow-strong: rgba(71, 101, 80, 0.25);
   }
 
-  html.dark,
+  [data-theme="dark"],
   .dark,
-  [data-theme="dark"] {
-    /* 🌟 ZenResume Master Palette (Dark Mode) */
-    --color-primary: #2DD4BF;
-    --color-primary-hover: #5EEAD4;
+  html.dark {
+    /* Brand Emerald & Mint Accents */
+    --color-primary: #2DD4BF;         /* Luminous Mint Teal */
+    --color-primary-hover: #5EEAD4;   /* Bright Teal */
     --color-primary-light: rgba(45, 212, 191, 0.15);
-    --color-slate-deep: #F8FAFC;
-    --color-ivory-base: #0B0F12;
-    --color-surface: #141B20;
-    --color-surface-low: #1A2228;
-    --color-secondary: #CBD5E1;
-    --color-secondary-light: #94A3B8;
-    --color-sage-muted: #476550;
-    --color-white: #141B20;
-    --color-border-sage: rgba(45, 212, 191, 0.18);
-    --color-overlay-modal: rgba(11, 15, 18, 0.85);
+    --color-teal-accent: #2DD4BF;
+    --color-amber-accent: #F59E0B;
+    --color-emerald-success: #34D399;
 
-    /* Semantic Mappings (Dark Mode) */
-    --background: #0B0F12;
-    --foreground: #F8FAFC;
-    --card-surface: #141B20;
-    --border-subtle: #232D36;
-    --border-glass: rgba(45, 212, 191, 0.18);
+    /* Dark Theme Canvas */
+    --bg-main: #0B0F12;               /* Deep Obsidian Charcoal */
+    --bg-surface: #141B20;            /* Dark Glass Surface */
+    --bg-surface-elevated: #1E293B;   /* Elevated Cards & Inputs */
+    --bg-input: #1A2228;
+    
+    /* Dark Theme Typography */
+    --text-main: #F8FAFC;             /* Pure Crisp White */
+    --text-sub: #CBD5E1;              /* Soft Slate */
+    --text-muted: #94A3B8;            /* Muted Slate */
+
+    /* Dark Theme Borders & Shadows */
+    --border-subtle: rgba(45, 212, 191, 0.2);
+    --border-focus: #2DD4BF;
+    --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.6);
+    --shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 24px rgba(45, 212, 191, 0.2);
+    --shadow-glow: 0 4px 20px rgba(45, 212, 191, 0.35);
+
+    /* Legacy / Utility Mappings */
+    --background: var(--bg-main);
+    --foreground: var(--text-main);
+    --card-surface: var(--bg-surface);
+    --border-glass: var(--border-subtle);
     --border-glass-strong: rgba(45, 212, 191, 0.35);
-    --primary: #2DD4BF;
-    --primary-hover: #5EEAD4;
-    --primary-light: rgba(45, 212, 191, 0.15);
-    --secondary: #CBD5E1;
-    --secondary-container: #1A2228;
-    --input-bg: #1A2228;
-    --modal-bg: #141B20;
-    --text-heading: #F8FAFC;
-    --text-body: #CBD5E1;
-    --text-muted: #94A3B8;
+    --primary: var(--color-primary);
+    --primary-hover: var(--color-primary-hover);
+    --primary-light: var(--color-primary-light);
+    --secondary: var(--text-sub);
+    --secondary-container: var(--bg-input);
+    --input-bg: var(--bg-input);
+    --modal-bg: var(--bg-surface);
+    --text-heading: var(--text-main);
+    --text-body: var(--text-sub);
     --primary-glow: rgba(45, 212, 191, 0.2);
     --primary-glow-strong: rgba(45, 212, 191, 0.38);
   }
 
   html {
-    background-color: var(--background);
-    color: var(--text-body);
+    background-color: var(--bg-main);
+    color: var(--text-sub);
   }
 
   body {
-    background-color: var(--background);
-    color: var(--text-body);
+    background-color: var(--bg-main);
+    color: var(--text-sub);
     min-height: 100vh;
     font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    font-weight: 400;
+    line-height: 1.6;
+    transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-outfit), 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    letter-spacing: -0.025em;
-    color: var(--text-heading);
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    color: var(--text-main);
   }
 
-  p, span, label {
-    color: inherit;
+  p, span, label, input, button, select, textarea {
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .font-counter,
+  .match-percentage,
+  .metric-number {
+    font-family: var(--font-outfit), 'Outfit', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
   .shadow-peaceful {
-    box-shadow: 0 4px 20px rgba(26, 31, 31, 0.05);
-  }
-  .dark .shadow-peaceful {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--shadow-card);
   }
   .shadow-soft {
-    box-shadow: 0px 4px 20px rgba(26, 31, 31, 0.05);
-  }
-  .dark .shadow-soft {
-    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--shadow-card);
   }
   .shadow-soft-hover {
-    box-shadow: 0px 12px 36px rgba(71, 101, 80, 0.15);
-  }
-  .dark .shadow-soft-hover {
-    box-shadow: 0px 14px 44px rgba(0, 0, 0, 0.65);
+    box-shadow: var(--shadow-hover);
   }
   
   /* Text Gradients */
@@ -127,139 +156,164 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .dark .text-gradient {
-    background: linear-gradient(135deg, #2DD4BF 0%, #34D399 50%, #60A5FA 100%);
+  .dark .text-gradient,
+  [data-theme="dark"] .text-gradient {
+    background: linear-gradient(135deg, #2DD4BF 0%, #5EEAD4 50%, #60A5FA 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  /* ZenResume Tactile Card */
+  /* Luxury Card Surface */
   .card-surface {
-    background-color: var(--card-surface);
+    background-color: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 1.25rem;
-    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
   }
   .card-surface:hover {
-    box-shadow: 0 14px 36px rgba(71, 101, 80, 0.14);
-    border-color: var(--border-glass-strong);
-    transform: translateY(-3px);
-  }
-  .dark .card-surface:hover {
-    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.65);
-    border-color: rgba(45, 212, 191, 0.35);
-    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--border-focus);
+    transform: translateY(-2px);
   }
 
-  /* ZenResume Tactile Spring Button */
+  /* Luxury Tactile Button */
   .btn-tactile {
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    min-height: 44px;
   }
   .btn-tactile:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0px 10px 28px rgba(71, 101, 80, 0.3);
-  }
-  .dark .btn-tactile:hover {
-    box-shadow: 0px 12px 32px rgba(45, 212, 191, 0.35);
+    box-shadow: var(--shadow-hover);
   }
   .btn-tactile:active {
     transform: scale(0.97);
   }
 
-  /* ZenResume Hero Primary Pill CTA */
+  /* Glowing Primary Action CTA */
   .stitch-hero-cta {
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, #00846D 0%, #476550 100%);
     color: #FFFFFF;
-    border: 0.8px solid rgba(130, 247, 216, 0.3);
-    border-radius: 9999px;
-    box-shadow: 0 10px 28px rgba(71, 101, 80, 0.3);
-    font-weight: 700;
+    border: 1px solid rgba(130, 247, 216, 0.35);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-glow);
+    font-family: var(--font-outfit), 'Outfit', sans-serif;
+    font-weight: 800;
+    transition: var(--transition-smooth);
+    min-height: 48px;
   }
-  .dark .stitch-hero-cta {
+  .stitch-hero-cta:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 36px rgba(71, 101, 80, 0.35);
+    background: linear-gradient(135deg, #00967B 0%, #3A5342 100%);
+  }
+  .dark .stitch-hero-cta,
+  [data-theme="dark"] .stitch-hero-cta {
     background: linear-gradient(135deg, #2DD4BF 0%, #00846D 100%);
     color: #061B18;
-    border: 0.8px solid rgba(130, 247, 216, 0.4);
-    box-shadow: 0 12px 32px rgba(0, 104, 86, 0.45);
+    border: 1px solid rgba(130, 247, 216, 0.5);
+    box-shadow: var(--shadow-glow);
+  }
+  .dark .stitch-hero-cta:hover,
+  [data-theme="dark"] .stitch-hero-cta:hover {
+    box-shadow: 0 14px 40px rgba(45, 212, 191, 0.45);
+    background: linear-gradient(135deg, #5EEAD4 0%, #00967B 100%);
   }
 
-  /* Suite Pill Badge */
+  /* Autonomous Top Pill Badge */
   .suite-pill-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.35rem 0.95rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.02em;
     background: rgba(71, 101, 80, 0.08);
     border: 1px solid rgba(71, 101, 80, 0.25);
-    color: #476550;
+    color: var(--color-primary);
+    min-height: 36px;
   }
-  .dark .suite-pill-badge {
+  .dark .suite-pill-badge,
+  [data-theme="dark"] .suite-pill-badge {
     background: rgba(45, 212, 191, 0.1);
     border-color: rgba(45, 212, 191, 0.3);
-    color: #2DD4BF;
+    color: var(--color-teal-accent);
   }
 
-  /* 1-Click Fast-Track Hero Role Chip */
+  /* Fast-Track Role Preset Chip */
   .hero-role-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    padding: 0.4rem 0.85rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
     font-weight: 600;
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    background: #FAF9F6;
-    border: 1px solid #D8E2DA;
-    color: #1A1F1F;
+    transition: var(--transition-smooth);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main);
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(26, 31, 31, 0.04);
+    min-height: 38px;
+    white-space: nowrap;
   }
   .hero-role-chip:hover {
-    transform: translateY(-2px) scale(1.03);
-    background: #FFFFFF;
-    border-color: #476550;
-    color: #476550;
-    box-shadow: 0 6px 16px rgba(71, 101, 80, 0.15);
+    transform: translateY(-2px) scale(1.02);
+    background: var(--bg-surface-elevated);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-hover);
   }
-  .dark .hero-role-chip {
-    background: #141B20;
-    border-color: rgba(45, 212, 191, 0.2);
-    color: #F8FAFC;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  .dark .hero-role-chip,
+  [data-theme="dark"] .hero-role-chip {
+    background: var(--bg-surface);
+    border-color: var(--border-subtle);
+    color: var(--text-main);
   }
-  .dark .hero-role-chip:hover {
-    background: #1A2228;
-    border-color: #2DD4BF;
-    color: #2DD4BF;
+  .dark .hero-role-chip:hover,
+  [data-theme="dark"] .hero-role-chip:hover {
+    background: var(--bg-input);
+    border-color: var(--color-teal-accent);
+    color: var(--color-teal-accent);
     box-shadow: 0 6px 20px rgba(45, 212, 191, 0.25);
   }
 
   /* Frosted Glass Navigation Pill / Dock */
   .glass-dock {
     background: rgba(252, 250, 245, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(162, 188, 168, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
   }
-  .dark .glass-dock {
-    background: rgba(11, 15, 18, 0.85);
-    border-color: rgba(45, 212, 191, 0.16);
+  .dark .glass-dock,
+  [data-theme="dark"] .glass-dock {
+    background: rgba(11, 15, 18, 0.88);
+    border-bottom: 1px solid rgba(45, 212, 191, 0.15);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
-  /* Ambient Pulse Glow */
-  .ambient-glow {
-    position: absolute;
+  /* Live Pulse Status Dot */
+  .live-status-dot {
+    width: 8px;
+    height: 8px;
     border-radius: 9999px;
-    filter: blur(80px);
-    pointer-events: none;
-    z-index: 0;
+    background-color: var(--color-emerald-success);
+    position: relative;
+    display: inline-block;
+  }
+  .live-status-dot::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 9999px;
+    background-color: var(--color-emerald-success);
+    opacity: 0.6;
+    animation: pulseLiveDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }
 
@@ -276,9 +330,9 @@
 }
 
 @keyframes pulseLiveDot {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.7); }
-  70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(45, 212, 191, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
+  0% { transform: scale(0.95); opacity: 0.8; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(0.95); opacity: 0; }
 }
 
 @keyframes subtleFloat {
@@ -319,5 +373,9 @@
 
 .animate-subtle-float {
   animation: subtleFloat 4s ease-in-out infinite;
+}
+
+.animate-scan {
+  animation: laserScan 3s linear infinite;
 }
 
