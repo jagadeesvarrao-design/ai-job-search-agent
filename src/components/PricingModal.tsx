@@ -22,7 +22,7 @@ import {
   Building2,
   FileCheck
 } from "lucide-react";
-import { setUserPlan, getUserTierState, PRICING_DATA } from "@/lib/user-tier";
+import { setUserPlan, getUserTierState, PRICING_DATA, detectDefaultCurrency } from "@/lib/user-tier";
 import { useAuth } from "@/lib/auth-context";
 import AuthModal from "@/components/AuthModal";
 
@@ -41,21 +41,7 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
   // Auto-detect or retrieve preferred currency
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("preferred_currency") as "INR" | "USD" | null;
-      if (saved === "USD" || saved === "INR") {
-        setCurrency(saved);
-        return;
-      }
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      if (tz.includes("Calcutta") || tz.includes("Kolkata") || tz.includes("Asia/Kolkata") || tz.includes("Asia/Colombo")) {
-        setCurrency("INR");
-      } else {
-        setCurrency("USD");
-      }
-    } catch (e) {
-      setCurrency("INR");
-    }
+    setCurrency(detectDefaultCurrency());
   }, []);
 
   const handleCurrencyChange = (newCurrency: "INR" | "USD") => {
