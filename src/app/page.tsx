@@ -151,28 +151,26 @@ export default function Home() {
         <div className="absolute top-0 left-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#476550]/15 dark:bg-[#2DD4BF]/15 rounded-full blur-3xl pointer-events-none animate-ambient-pulse"></div>
         <div className="absolute top-20 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#00846D]/15 dark:bg-[#2DD4BF]/10 rounded-full blur-3xl pointer-events-none animate-ambient-pulse"></div>
 
-        {/* Ecosystem Pill */}
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[rgba(45,212,191,0.2)] shadow-peaceful px-4 sm:px-6 py-2 rounded-full mb-6 sm:mb-8 inline-flex items-center gap-2.5 hover:shadow-md transition-all hover:scale-105 max-w-[95vw]">
-          <span className="w-2 h-2 rounded-full bg-[#476550] dark:bg-[#2DD4BF] animate-live-dot"></span>
-          <span className="text-[11px] sm:text-xs md:text-sm font-bold text-[#1A1F1F] dark:text-[#CBD5E1] truncate">
-            Part of the <strong className="text-[#476550] dark:text-[#2DD4BF]">ZenResume & Aneevarp Solutions</strong> Career Suite
-          </span>
+        {/* Ecosystem Pill Badge */}
+        <div className="suite-pill-badge mb-6 sm:mb-8 hover:scale-105 transition-transform cursor-default">
+          <Sparkles className="w-4 h-4 text-amber-500 fill-amber-500" />
+          <span>Part of the <strong className="text-[#476550] dark:text-[#2DD4BF]">Aneevarp Solutions</strong> Career Suite</span>
         </div>
         
         {/* Hero Headline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 sm:mb-6 max-w-4xl text-[#1A1F1F] dark:text-white leading-[1.15] px-2">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 sm:mb-6 max-w-4xl text-[#1A1F1F] dark:text-white leading-[1.12] px-2">
           Automate your <br className="hidden sm:block" />
-          <span className="bg-gradient-to-r from-[#476550] via-[#00846D] to-[#2DD4BF] dark:from-[#2DD4BF] dark:via-[#5EEAD4] dark:to-white bg-clip-text text-transparent">
-            Job Hunt
-          </span> with ZenScout AI
+          <span className="text-gradient">
+            Job Hunt & Interviews
+          </span> in Minutes
         </h1>
         
         <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#596060] dark:text-[#CBD5E1] max-w-2xl mb-8 sm:mb-10 leading-relaxed font-normal px-2">
-          Upload your resume and let 4 autonomous AI agents discover live opportunities, score skill compatibility, write tailored cover letters, and coach you through interviews.
+          Let 4 autonomous AI agents scout real-time Google Jobs, score ATS resume compatibility, synthesize customized cover letters, and coach you through live voice interviews.
         </p>
 
         {/* Tactile Call-To-Action Buttons (ZenResume Style Pill CTA) */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 sm:mb-16 z-10 w-full sm:w-auto px-3 sm:px-0 max-w-md sm:max-w-none">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 z-10 w-full sm:w-auto px-3 sm:px-0 max-w-md sm:max-w-none">
           <Link 
             href="/profile" 
             className="stitch-hero-cta btn-tactile animate-shimmer px-8 py-4 text-sm sm:text-base flex items-center justify-center gap-2 group w-full sm:w-auto min-h-[50px] shadow-[0_10px_28px_rgba(71,101,80,0.3)] dark:shadow-[0_12px_32px_rgba(45,212,191,0.35)]"
@@ -182,10 +180,37 @@ export default function Home() {
           </Link>
           <Link 
             href="/dashboard" 
-            className="bg-[#FCFAF5] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[rgba(45,212,191,0.25)] hover:bg-[#F4F4F0] dark:hover:bg-[#1A2228] text-[#1A1F1F] dark:text-white px-8 py-4 rounded-full font-bold text-sm sm:text-base flex items-center justify-center transition-all shadow-peaceful hover:shadow-soft-hover active:scale-95 btn-tactile w-full sm:w-auto min-h-[50px]"
+            className="bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] hover:bg-[#F4F4F0] dark:hover:bg-[#1A2228] text-[#1A1F1F] dark:text-white px-8 py-4 rounded-full font-bold text-sm sm:text-base flex items-center justify-center transition-all shadow-peaceful hover:shadow-soft-hover active:scale-95 btn-tactile w-full sm:w-auto min-h-[50px]"
           >
-            Launch Dashboard
+            Launch Live Dashboard
           </Link>
+        </div>
+
+        {/* 1-Click Fast-Track Hero Role Chips (ZenResume Style) */}
+        <div className="flex flex-col items-center gap-2 mb-10 sm:mb-14 z-10">
+          <span className="text-[11px] sm:text-xs font-bold text-[#596060] dark:text-[#94A3B8] inline-flex items-center gap-1.5">
+            <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+            <span>Or launch instant search with pre-configured role presets:</span>
+          </span>
+          <div className="flex flex-wrap justify-center gap-2 max-w-2xl px-2">
+            {[
+              { title: "Software Engineer", query: "Software Engineer" },
+              { title: "Frontend Developer", query: "Frontend Developer React" },
+              { title: "Full Stack Engineer", query: "Full Stack Developer" },
+              { title: "AI / ML Engineer", query: "AI Machine Learning Engineer" },
+              { title: "Data Analyst", query: "Data Analyst Python SQL" },
+              { title: "Cloud DevOps", query: "DevOps Cloud Engineer AWS" }
+            ].map((chip, idx) => (
+              <Link
+                key={idx}
+                href={`/dashboard?q=${encodeURIComponent(chip.query)}`}
+                className="hero-role-chip btn-tactile"
+              >
+                <span>{chip.title}</span>
+                <ArrowRight className="w-3 h-3 opacity-60" />
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* INTERACTIVE ANIMATED JOB SCANNER WORKSPACE */}

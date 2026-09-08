@@ -186,8 +186,24 @@ export default function DashboardPage() {
         setJobs(parsedJobs);
       }
 
-      const savedProfile = localStorage.getItem("my_profile");
-      if (savedProfile) {
+      // Check URL query parameters for fast-track role presets from Hero
+      if (typeof window !== "undefined") {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryPreset = urlParams.get("q") || urlParams.get("role") || "";
+        const locPreset = urlParams.get("location") || urlParams.get("loc") || "";
+        if (queryPreset) {
+          setSearchRole(queryPreset);
+        } else if (savedProfile) {
+          const parsed = JSON.parse(savedProfile);
+          if (parsed.role && !searchRole) setSearchRole(parsed.role);
+        }
+        if (locPreset) {
+          setSearchLocation(locPreset);
+        } else if (savedProfile) {
+          const parsed = JSON.parse(savedProfile);
+          if (parsed.location && !searchLocation) setSearchLocation(parsed.location);
+        }
+      } else if (savedProfile) {
         const parsed = JSON.parse(savedProfile);
         if (parsed.role && !searchRole) setSearchRole(parsed.role);
         if (parsed.location && !searchLocation) setSearchLocation(parsed.location);

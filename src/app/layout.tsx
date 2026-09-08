@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import HeaderNav from "@/components/HeaderNav";
 import CookieConsent from "@/components/CookieConsent";
@@ -14,9 +14,9 @@ const inter = Inter({
   preload: false,
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  variable: "--font-outfit",
   display: "swap",
   preload: false,
 });
@@ -154,7 +154,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakarta.variable} h-full antialiased`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} h-full antialiased`}>
       <head>
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Summary (llms.txt)" />
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full LLM Knowledge Base (llms-full.txt)" />
