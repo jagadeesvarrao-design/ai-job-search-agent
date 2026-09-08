@@ -32,6 +32,11 @@ export default function PricingPage() {
 
   useEffect(() => {
     try {
+      const saved = localStorage.getItem("preferred_currency") as "INR" | "USD" | null;
+      if (saved === "USD" || saved === "INR") {
+        setCurrency(saved);
+        return;
+      }
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (tz.includes("Calcutta") || tz.includes("Kolkata") || tz.includes("Asia/Kolkata") || tz.includes("Asia/Colombo")) {
         setCurrency("INR");
@@ -42,6 +47,13 @@ export default function PricingPage() {
       setCurrency("INR");
     }
   }, []);
+
+  const handleCurrencyChange = (newCurrency: "INR" | "USD") => {
+    setCurrency(newCurrency);
+    try {
+      localStorage.setItem("preferred_currency", newCurrency);
+    } catch (e) {}
+  };
 
   const handleCheckout = (planKey: "monthly" | "quarterly" | "annual" | "zen_suite") => {
     setIsUpgrading(true);
@@ -152,22 +164,24 @@ export default function PricingPage() {
           <p className="text-xs text-black dark:text-white font-medium">Looking for ZenScout AI standalone access only?</p>
         </div>
 
-        <div className="inline-flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+        <div className="inline-flex items-center bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-inner">
           <button
-            onClick={() => setCurrency("INR")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            type="button"
+            onClick={() => handleCurrencyChange("INR")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
               currency === "INR" 
-                ? "bg-[#476550] text-white shadow-sm" 
+                ? "bg-[#476550] text-white shadow-md scale-105" 
                 : "text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
             }`}
           >
             ₹ INR (India)
           </button>
           <button
-            onClick={() => setCurrency("USD")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            type="button"
+            onClick={() => handleCurrencyChange("USD")}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
               currency === "USD" 
-                ? "bg-[#476550] text-white shadow-sm" 
+                ? "bg-[#476550] text-white shadow-md scale-105" 
                 : "text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
             }`}
           >

@@ -39,9 +39,14 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
   const [showAuthWarning, setShowAuthWarning] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
-  // Auto-detect country/currency based on timezone
+  // Auto-detect or retrieve preferred currency
   useEffect(() => {
     try {
+      const saved = localStorage.getItem("preferred_currency") as "INR" | "USD" | null;
+      if (saved === "USD" || saved === "INR") {
+        setCurrency(saved);
+        return;
+      }
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (tz.includes("Calcutta") || tz.includes("Kolkata") || tz.includes("Asia/Kolkata") || tz.includes("Asia/Colombo")) {
         setCurrency("INR");
@@ -52,6 +57,13 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
       setCurrency("INR");
     }
   }, []);
+
+  const handleCurrencyChange = (newCurrency: "INR" | "USD") => {
+    setCurrency(newCurrency);
+    try {
+      localStorage.setItem("preferred_currency", newCurrency);
+    } catch (e) {}
+  };
 
   if (!isOpen) return null;
 
@@ -178,22 +190,24 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
             {/* Currency Switcher Bar */}
             <div className="flex items-center justify-between px-2 pt-1">
               <span className="text-xs font-bold text-[#596060] dark:text-slate-400">ZenScout Standalone Plans:</span>
-              <div className="inline-flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+              <div className="inline-flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner">
                 <button
-                  onClick={() => setCurrency("INR")}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                  type="button"
+                  onClick={() => handleCurrencyChange("INR")}
+                  className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
                     currency === "INR" 
-                      ? "bg-[#476550] text-white shadow-sm" 
+                      ? "bg-[#476550] text-white shadow-md scale-105" 
                       : "text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white"
                   }`}
                 >
                   ₹ INR (India)
                 </button>
                 <button
-                  onClick={() => setCurrency("USD")}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                  type="button"
+                  onClick={() => handleCurrencyChange("USD")}
+                  className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
                     currency === "USD" 
-                      ? "bg-[#476550] text-white shadow-sm" 
+                      ? "bg-[#476550] text-white shadow-md scale-105" 
                       : "text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white"
                   }`}
                 >
