@@ -103,20 +103,20 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
   };
 
   return (
-    <div className="fixed inset-0 bg-[#1A1F1F]/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
-      <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-md w-full overflow-hidden my-auto animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 bg-[#0B0F12]/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+      <div className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-2xl max-w-md w-full overflow-hidden my-auto animate-in zoom-in-95 duration-200">
         
         {/* Modal Header */}
-        <div className="px-6 py-5 border-b border-[#D8E2DA] dark:border-[#2D3636] flex justify-between items-center bg-gradient-to-r from-teal-50/40 via-white to-blue-50/40 dark:from-[#222828] dark:via-[#1F2525] dark:to-[#222828]">
+        <div className="px-6 py-5 border-b border-[#D8E2DA] dark:border-[#232D36] flex justify-between items-center bg-gradient-to-r from-teal-50/40 via-white to-blue-50/40 dark:from-[#141B20] dark:via-[#1A2228] dark:to-[#141B20]">
           <div className="flex items-center gap-2.5">
-            <div className="bg-[#476550] text-white p-2 rounded-xl shadow-sm">
+            <div className="bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] p-2 rounded-xl shadow-sm">
               <Briefcase className="w-4 h-4" />
             </div>
             <div>
               <h3 className="font-black text-lg text-black dark:text-white leading-tight">
                 {user ? "Your Account" : mode === "signin" ? "Sign In to ZenScout AI" : "Create Your Account"}
               </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+              <p className="text-[11px] text-slate-500 dark:text-[#94A3B8] font-medium">
                 {user ? "Manage your profile & subscriptions" : "Save your applications & sync across devices"}
               </p>
             </div>
@@ -124,7 +124,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-xl text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1A2228] transition-colors cursor-pointer"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -136,7 +136,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
           {user ? (
             /* Logged in state */
             <div className="space-y-4 text-center">
-              <div className="w-16 h-16 rounded-full bg-teal-100 dark:bg-teal-900/40 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center text-xl font-bold mx-auto">
+              <div className="w-16 h-16 rounded-full bg-teal-100 dark:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center text-xl font-bold mx-auto border border-transparent dark:border-[#2DD4BF]/20">
                 {user.photoURL ? (
                   <img src={user.photoURL} alt={user.displayName || "User"} className="w-full h-full rounded-full object-cover" />
                 ) : (
@@ -146,11 +146,11 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
 
               <div>
                 <h4 className="font-extrabold text-base text-black dark:text-white">{user.displayName || "ZenScout Member"}</h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{user.email}</p>
+                <p className="text-xs text-slate-500 dark:text-[#94A3B8] font-medium">{user.email}</p>
               </div>
 
-              <div className="p-3 bg-[#E8F0EB] dark:bg-emerald-950/40 border border-[#A2BCA8]/40 dark:border-emerald-900 rounded-xl text-xs text-emerald-800 dark:text-emerald-300 font-bold flex items-center justify-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <div className="p-3 bg-[#E8F0EB] dark:bg-[#1A2228] border border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30 rounded-xl text-xs text-emerald-800 dark:text-[#2DD4BF] font-bold flex items-center justify-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-[#2DD4BF]" />
                 <span>Account Active & Synced</span>
               </div>
 
@@ -160,7 +160,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                     await signOut();
                     onClose();
                   }}
-                  className="w-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold py-2.5 px-4 rounded-xl text-xs transition-all"
+                  className="w-full bg-slate-100 hover:bg-slate-200 dark:bg-[#1A2228] dark:hover:bg-[#232D36] text-slate-800 dark:text-white font-bold py-2.5 px-4 rounded-full text-xs transition-all cursor-pointer btn-tactile"
                 >
                   Sign Out
                 </button>
@@ -178,7 +178,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                       window.location.reload();
                     }
                   }}
-                  className="w-full bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 font-medium py-2 px-4 rounded-xl text-[11px] transition-all border border-rose-200/60 dark:border-rose-900/60"
+                  className="w-full bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 font-medium py-2 px-4 rounded-full text-[11px] transition-all border border-rose-200/60 dark:border-rose-900/60 cursor-pointer"
                 >
                   Delete All Local Workspace Data
                 </button>
@@ -191,7 +191,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
               <button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full bg-[#FAF9F6] dark:bg-[#1F2525] hover:bg-[#F4F4F0] dark:hover:bg-slate-800 text-black dark:text-white border border-[#D8E2DA] dark:border-[#2D3636] font-bold py-3 px-4 rounded-2xl text-xs transition-all flex items-center justify-center gap-2.5 shadow-sm active:scale-95 disabled:opacity-50"
+                className="w-full bg-[#FAF9F6] dark:bg-[#1A2228] hover:bg-[#F4F4F0] dark:hover:bg-[#232D36] text-black dark:text-white border border-[#D8E2DA] dark:border-[#232D36] font-bold py-3 px-4 rounded-full text-xs transition-all flex items-center justify-center gap-2.5 shadow-sm active:scale-95 disabled:opacity-50 btn-tactile cursor-pointer"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -203,9 +203,9 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
               </button>
 
               <div className="flex items-center my-3">
-                <div className="flex-1 border-t border-slate-200 dark:border-slate-800"></div>
-                <span className="px-3 text-[11px] text-slate-400 font-bold uppercase tracking-wider">or email</span>
-                <div className="flex-1 border-t border-slate-200 dark:border-slate-800"></div>
+                <div className="flex-1 border-t border-slate-200 dark:border-[#232D36]"></div>
+                <span className="px-3 text-[11px] text-slate-400 dark:text-[#94A3B8] font-bold uppercase tracking-wider">or email</span>
+                <div className="flex-1 border-t border-slate-200 dark:border-[#232D36]"></div>
               </div>
 
               {/* Error / Success Alerts */}
@@ -227,47 +227,47 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
               <form onSubmit={handleEmailAuth} className="space-y-3">
                 {mode === "signup" && (
                   <div>
-                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Your Name</label>
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8] block mb-1">Your Name</label>
                     <div className="relative">
-                      <User className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
+                      <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                       <input
                         type="text"
                         required
                         value={displayName}
                         onChange={(e) => setDisplayName(e.target.value)}
                         placeholder="Alex Kumar"
-                        className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#232D36] bg-[#FAF9F6] dark:bg-[#1A2228] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
                       />
                     </div>
                   </div>
                 )}
 
                 <div>
-                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Email Address</label>
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8] block mb-1">Email Address</label>
                   <div className="relative">
-                    <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
+                    <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@example.com"
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#232D36] bg-[#FAF9F6] dark:bg-[#1A2228] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Password</label>
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-[#94A3B8] block mb-1">Password</label>
                   <div className="relative">
-                    <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
+                    <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                     <input
                       type="password"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#FAF9F6] dark:bg-[#1F2525] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D8E2DA] dark:border-[#232D36] bg-[#FAF9F6] dark:bg-[#1A2228] text-xs font-medium text-black dark:text-white focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
                     />
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-[#476550] hover:bg-[#3A5342] dark:bg-[#6B9077] dark:hover:bg-[#55735E] text-white font-black py-3 px-4 rounded-xl text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 disabled:opacity-50 mt-2"
+                  className="w-full bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:hover:bg-[#5EEAD4] text-white dark:text-[#061B18] font-bold py-3.5 px-4 rounded-full text-xs transition-all shadow-md active:scale-95 btn-tactile flex items-center justify-center gap-1.5 disabled:opacity-50 mt-2 cursor-pointer"
                 >
                   {loading ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -291,27 +291,27 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
               {/* Mode Toggle Switch */}
               <div className="text-center pt-2">
                 {mode === "signin" ? (
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-[#94A3B8]">
                     Don't have an account?{" "}
                     <button
                       onClick={() => {
                         setMode("signup");
                         setError("");
                       }}
-                      className="text-[#476550] dark:text-[#A2BCA8] font-bold hover:underline"
+                      className="text-[#476550] dark:text-[#2DD4BF] font-bold hover:underline cursor-pointer"
                     >
                       Sign Up Free
                     </button>
                   </p>
                 ) : (
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-[#94A3B8]">
                     Already have an account?{" "}
                     <button
                       onClick={() => {
                         setMode("signin");
                         setError("");
                       }}
-                      className="text-[#476550] dark:text-[#A2BCA8] font-bold hover:underline"
+                      className="text-[#476550] dark:text-[#2DD4BF] font-bold hover:underline cursor-pointer"
                     >
                       Sign In
                     </button>
@@ -323,8 +323,8 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signin" }: A
         </div>
 
         {/* Security Footer */}
-        <div className="px-6 py-3 bg-[#F4F4F0] dark:bg-[#1F2525]/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-1.5 text-[10px] text-slate-400 font-medium">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+        <div className="px-6 py-3 bg-[#F4F4F0] dark:bg-[#1A2228]/50 border-t border-slate-100 dark:border-[#232D36] flex items-center justify-center gap-1.5 text-[10px] text-slate-400 dark:text-[#94A3B8] font-medium">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-[#2DD4BF]" />
           <span>Encrypted Authentication via Firebase • Zero-Knowledge Storage</span>
         </div>
       </div>

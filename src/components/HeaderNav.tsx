@@ -49,10 +49,15 @@ export default function HeaderNav() {
     checkTier();
     window.addEventListener("user-tier-updated", checkTier);
 
-    // Enforce Aneevarp Master Palette (Ivory Base #FCFAF5 + Forest Sage #476550)
-    setIsDark(false);
-    document.documentElement.classList.remove("dark");
-    localStorage.setItem("theme", "light");
+    // Initialize theme based on documentElement or storage
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "dark" || document.documentElement.classList.contains("dark")) {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
+    } else {
+      setIsDark(false);
+      document.documentElement.classList.remove("dark");
+    }
 
     return () => window.removeEventListener("user-tier-updated", checkTier);
   }, []);
@@ -71,53 +76,53 @@ export default function HeaderNav() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[#FAF9F6]/90 dark:bg-[#1A1F1F]/90 backdrop-blur-md border-b border-[#D8E2DA] dark:border-[#2D3636] transition-colors">
+      <header className="sticky top-0 z-40 bg-[#FCFAF5]/90 dark:bg-[#0B0F12]/90 backdrop-blur-xl border-b border-[#D8E2DA] dark:border-[rgba(45,212,191,0.15)] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Left: Brand Identity */}
           <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 border border-[#A2BCA8]/40 dark:border-teal-800 rounded-2xl group-hover:scale-105 transition-transform shadow-soft flex items-center justify-center p-1 flex-shrink-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 bg-[#E8F0EB] dark:bg-[#141B20] border border-[#A2BCA8]/40 dark:border-[rgba(45,212,191,0.25)] rounded-2xl group-hover:scale-105 transition-all shadow-sm flex items-center justify-center p-1.5 flex-shrink-0">
               <img src="/icon.svg" alt="ZenScout AI Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col text-left truncate">
               <span className="font-extrabold text-sm sm:text-base md:text-lg text-black dark:text-white leading-none tracking-tight">ZenScout AI</span>
-              <span className="text-[8px] sm:text-[9px] md:text-[10px] text-[#476550] dark:text-[#A2BCA8] font-bold tracking-wider uppercase truncate">by Aneevarp Solutions</span>
+              <span className="text-[8px] sm:text-[9px] md:text-[10px] text-[#476550] dark:text-[#2DD4BF] font-bold tracking-wider uppercase truncate">by Aneevarp Solutions</span>
             </div>
           </Link>
 
           {/* Center: Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-xs sm:text-sm font-bold text-[#1A1F1F] dark:text-[#CBD5E1]" aria-label="Main Navigation">
-            <Link href="/dashboard" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1">Dashboard</Link>
-            <Link href="/profile" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1">ATS Audit</Link>
-            <Link href="/pricing" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1">Pricing</Link>
-            <Link href="/about" className="hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1">About</Link>
+            <Link href="/dashboard" className="hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-colors py-1">Dashboard</Link>
+            <Link href="/profile" className="hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-colors py-1">ATS Audit</Link>
+            <Link href="/pricing" className="hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-colors py-1">Pricing</Link>
+            <Link href="/about" className="hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-colors py-1">About</Link>
 
             {/* Zen Suite Cross-App Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setSuiteMenuOpen(!suiteMenuOpen)}
                 onBlur={() => setTimeout(() => setSuiteMenuOpen(false), 200)}
-                className="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-200 hover:text-[#476550] dark:hover:text-[#A2BCA8] transition-colors py-1 cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-slate-700 dark:text-[#CBD5E1] hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-colors py-1 cursor-pointer"
               >
-                <Layers className="w-3.5 h-3.5 text-amber-500" />
+                <Layers className="w-3.5 h-3.5 text-[#00846D] dark:text-[#2DD4BF]" />
                 <span>Zen Suite</span>
                 <ChevronDown className="w-3 h-3 opacity-60" />
               </button>
 
               {suiteMenuOpen && (
-                <div className="absolute top-full right-0 mt-2 w-60 bg-[#FAF9F6] dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95">
-                  <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 px-3 py-1 block">Aneevarp Zen Ecosystem</span>
+                <div className="absolute top-full right-0 mt-2 w-64 bg-[#FAF9F6] dark:bg-[#141B20] rounded-2xl border border-[#D8E2DA] dark:border-[rgba(45,212,191,0.2)] shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95">
+                  <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 dark:text-[#94A3B8] px-3 py-1 block">Aneevarp Zen Ecosystem</span>
                   
                   <a
                     href="https://zenresume.online/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-black dark:text-white hover:bg-slate-100 dark:hover:bg-[#1A2228] transition-colors"
                   >
-                    <Sparkles className="w-4 h-4 text-orange-500" />
+                    <Sparkles className="w-4 h-4 text-emerald-500 dark:text-[#2DD4BF]" />
                     <div className="flex flex-col">
                       <span>ZenResume</span>
-                      <span className="text-[10px] text-slate-500 font-normal">ATS Resume Builder</span>
+                      <span className="text-[10px] text-slate-500 dark:text-[#94A3B8] font-normal">ATS Resume Builder</span>
                     </div>
                     <ExternalLink className="w-3 h-3 ml-auto opacity-40" />
                   </a>
@@ -126,12 +131,12 @@ export default function HeaderNav() {
                     href="https://pdf-analizing-and-answering-bot.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-black dark:text-white hover:bg-slate-100 dark:hover:bg-[#1A2228] transition-colors"
                   >
-                    <Brain className="w-4 h-4 text-purple-500" />
+                    <Brain className="w-4 h-4 text-purple-500 dark:text-purple-400" />
                     <div className="flex flex-col">
                       <span>ZenDoc AI</span>
-                      <span className="text-[10px] text-slate-500 font-normal">Document Intelligence</span>
+                      <span className="text-[10px] text-slate-500 dark:text-[#94A3B8] font-normal">Document Intelligence</span>
                     </div>
                     <ExternalLink className="w-3 h-3 ml-auto opacity-40" />
                   </a>
@@ -140,12 +145,12 @@ export default function HeaderNav() {
                     href="https://aneevarpsolutions.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-black dark:text-white hover:bg-slate-100 dark:hover:bg-[#1A2228] transition-colors"
                   >
-                    <Building className="w-4 h-4 text-teal-500" />
+                    <Building className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
                     <div className="flex flex-col">
                       <span>Aneevarp Solutions</span>
-                      <span className="text-[10px] text-slate-500 font-normal">Official Portal</span>
+                      <span className="text-[10px] text-slate-500 dark:text-[#94A3B8] font-normal">Official Portal</span>
                     </div>
                     <ExternalLink className="w-3 h-3 ml-auto opacity-40" />
                   </a>
@@ -154,7 +159,7 @@ export default function HeaderNav() {
             </div>
           </nav>
 
-          {/* Right: Actions Cluster (Clean & Uncluttered) */}
+          {/* Right: Actions Cluster (Matching ZenResume Pill Actions) */}
           <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
 
             {/* Pro Upgrade / Member Badge (Desktop/Tablet) */}
@@ -162,7 +167,7 @@ export default function HeaderNav() {
               {isZenSuite ? (
                 <button
                   onClick={() => setPricingModalOpen(true)}
-                  className="suite-badge inline-flex items-center gap-1.5 bg-gradient-to-r from-purple-700 via-indigo-600 to-amber-500 text-white text-xs font-black px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl shadow-md hover:scale-105 active:scale-95 transition-all border border-amber-300/40 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-800 via-teal-700 to-[#2DD4BF] text-white text-xs font-black px-4 py-2 rounded-full shadow-md hover:scale-105 active:scale-95 transition-all border border-[rgba(45,212,191,0.4)] cursor-pointer"
                 >
                   <Crown className="w-3.5 h-3.5 fill-amber-300 text-amber-300" />
                   <span>Zen Suite Ultimate</span>
@@ -170,17 +175,17 @@ export default function HeaderNav() {
               ) : isPro ? (
                 <button
                   onClick={() => setPricingModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#00846D] to-[#476550] dark:from-[#2DD4BF] dark:to-[#00846D] text-white dark:text-[#061B18] text-xs font-black px-4 py-2 rounded-full shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
                 >
-                  <Crown className="w-3.5 h-3.5 fill-white" />
+                  <Crown className="w-3.5 h-3.5 fill-current" />
                   <span>PRO ACTIVE</span>
                 </button>
               ) : (
                 <button
                   onClick={() => setPricingModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-500 hover:text-white text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 text-xs font-black px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl transition-all shadow-sm active:scale-95 group cursor-pointer"
+                  className="btn-tactile inline-flex items-center gap-1.5 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:hover:bg-[#5EEAD4] text-white dark:text-[#061B18] text-xs font-bold px-4 py-2 rounded-full shadow-[0_4px_14px_rgba(71,101,80,0.25)] dark:shadow-[0_4px_14px_rgba(45,212,191,0.3)] cursor-pointer"
                 >
-                  <Zap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 group-hover:text-white fill-amber-500" />
+                  <Zap className="w-3.5 h-3.5 fill-current" />
                   <span>Upgrade Pro</span>
                 </button>
               )}
@@ -189,18 +194,18 @@ export default function HeaderNav() {
             {/* Light / Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-1.5 sm:p-2 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-black dark:text-amber-300 focus:outline-none active:scale-95 cursor-pointer"
+              className="w-9 h-9 rounded-full border border-[#D8E2DA] dark:border-white/[0.15] bg-[#FAF9F6] dark:bg-white/[0.08] hover:bg-[#E8F0EB] dark:hover:bg-white/[0.14] transition-all flex items-center justify-center text-black dark:text-[#2DD4BF] focus:outline-none active:scale-95 cursor-pointer shadow-sm"
               aria-label="Toggle Light and Dark Mode"
               title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-slate-700 dark:text-slate-300" />}
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
 
             {/* User Account Button (Auth Trigger / Profile Avatar) */}
             {user ? (
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-teal-100 dark:bg-teal-900/40 hover:bg-teal-200 dark:hover:bg-teal-900/60 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-center transition-all active:scale-95 shadow-sm overflow-hidden cursor-pointer"
+                className="w-9 h-9 rounded-full bg-[#E8F0EB] dark:bg-[#1A2228] border border-[#A2BCA8]/40 dark:border-[rgba(45,212,191,0.3)] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center transition-all active:scale-95 shadow-sm overflow-hidden cursor-pointer"
                 aria-label="Account Settings"
                 title={user.displayName || user.email || "Account"}
               >
@@ -213,9 +218,9 @@ export default function HeaderNav() {
             ) : (
               <button
                 onClick={() => setAuthModalOpen(true)}
-                className="inline-flex items-center gap-1 bg-[#FAF9F6] dark:bg-[#1F2525] hover:bg-slate-100 dark:hover:bg-slate-800 text-black dark:text-white border border-[#D8E2DA] dark:border-[#2D3636] text-xs font-bold py-1.5 px-2.5 sm:py-2 sm:px-3 rounded-xl transition-all shadow-sm active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-1.5 bg-[#E8F0EB] dark:bg-white/[0.08] hover:bg-[#D4E4DA] dark:hover:bg-white/[0.14] text-[#476550] dark:text-white border border-[rgba(162,188,168,0.5)] dark:border-white/[0.18] text-xs font-bold py-1.5 px-3.5 sm:py-2 sm:px-4 rounded-full transition-all shadow-sm active:scale-95 cursor-pointer"
               >
-                <LogIn className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" />
+                <LogIn className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" />
                 <span className="hidden sm:inline">Sign In</span>
               </button>
             )}
@@ -223,7 +228,7 @@ export default function HeaderNav() {
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 sm:p-2 rounded-xl text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer"
+              className="lg:hidden p-1.5 sm:p-2 rounded-xl text-black dark:text-white hover:bg-slate-100 dark:hover:bg-[#141B20] transition-colors focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
@@ -233,7 +238,7 @@ export default function HeaderNav() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#FAF9F6] dark:bg-[#222828] border-b border-[#D8E2DA] dark:border-[#2D3636] px-4 sm:px-6 py-5 shadow-lg animate-in slide-in-from-top-4 duration-200 max-h-[85vh] overflow-y-auto">
+          <div className="lg:hidden bg-[#FAF9F6] dark:bg-[#141B20] border-b border-[#D8E2DA] dark:border-[rgba(45,212,191,0.15)] px-4 sm:px-6 py-5 shadow-2xl animate-in slide-in-from-top-4 duration-200 max-h-[85vh] overflow-y-auto">
             <div className="flex flex-col gap-2.5 font-bold text-sm text-black dark:text-white">
               
               {/* Mobile Pro Upgrade Banner */}
@@ -244,14 +249,14 @@ export default function HeaderNav() {
                 }}
                 className={`w-full text-white font-black p-3.5 rounded-2xl flex items-center justify-between text-xs shadow-sm mb-1 ${
                   isZenSuite 
-                    ? "bg-gradient-to-r from-purple-700 via-indigo-600 to-amber-500 border border-amber-300/40"
+                    ? "bg-gradient-to-r from-emerald-800 via-teal-700 to-[#2DD4BF] border border-[rgba(45,212,191,0.4)]"
                     : isPro 
-                      ? "bg-gradient-to-r from-amber-500 to-orange-500" 
-                      : "bg-gradient-to-r from-amber-500 to-orange-500"
+                      ? "bg-gradient-to-r from-[#00846D] to-[#476550]" 
+                      : "bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18]"
                 }`}
               >
                 <span className="flex items-center gap-2">
-                  <Crown className="w-4 h-4 fill-white" />
+                  <Crown className="w-4 h-4 fill-current" />
                   <span>{isZenSuite ? "👑 Zen Suite Ultimate Active" : isPro ? "ZenScout Pro Active" : "Upgrade to Pro (Ad-Free & Turbo Speed)"}</span>
                 </span>
                 <ArrowRight className="w-4 h-4" />
@@ -263,10 +268,10 @@ export default function HeaderNav() {
                   setMobileMenuOpen(false);
                   setAuthModalOpen(true);
                 }}
-                className="w-full bg-slate-100 dark:bg-slate-800 text-black dark:text-white font-bold p-3 rounded-xl flex items-center justify-between text-xs mb-1"
+                className="w-full bg-slate-100 dark:bg-[#1A2228] text-black dark:text-white font-bold p-3 rounded-xl flex items-center justify-between text-xs mb-1"
               >
                 <span className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
+                  <User className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
                   <span className="truncate max-w-[200px]">{user ? `Account: ${user.displayName || user.email}` : "Sign In / Create Account"}</span>
                 </span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -275,7 +280,7 @@ export default function HeaderNav() {
               <Link 
                 href="/dashboard" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 text-[#476550] dark:text-[#A2BCA8] flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-between"
               >
                 <span>Job Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -283,7 +288,7 @@ export default function HeaderNav() {
               <Link 
                 href="/profile" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-[#1A2228] flex items-center justify-between"
               >
                 <span>Profile & ATS Audit</span>
                 <ArrowRight className="w-4 h-4" />
@@ -291,7 +296,7 @@ export default function HeaderNav() {
               <Link 
                 href="/blog" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-[#1A2228] flex items-center justify-between"
               >
                 <span>Career Guides & Blog</span>
                 <ArrowRight className="w-4 h-4" />
@@ -299,7 +304,7 @@ export default function HeaderNav() {
               <Link 
                 href="/pricing" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-[#1A2228] flex items-center justify-between"
               >
                 <span>Pro Pricing Plans</span>
                 <ArrowRight className="w-4 h-4" />
@@ -307,16 +312,29 @@ export default function HeaderNav() {
               <Link 
                 href="/about" 
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-slate-800 flex items-center justify-between"
+                className="py-2.5 px-3 rounded-xl hover:bg-[#FCFAF5] dark:hover:bg-[#1A2228] flex items-center justify-between"
               >
                 <span>About Aneevarp Solutions</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
 
               {/* Cross-App Navigation Links */}
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
-                <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 px-1">Zen Suite Apps</span>
+              <div className="pt-3 border-t border-slate-100 dark:border-[#232D36] flex flex-col gap-2">
+                <span className="text-[10px] uppercase font-black tracking-wider text-slate-400 dark:text-[#94A3B8] px-1">Zen Suite Apps</span>
                 
+                <a
+                  href="https://zenresume.online/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#E8F0EB] dark:bg-[#1A2228] border border-[#A2BCA8]/40 dark:border-[rgba(45,212,191,0.25)] text-[#476550] dark:text-[#2DD4BF] font-black p-2.5 rounded-xl flex items-center justify-between text-xs"
+                >
+                  <span className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-emerald-500 dark:text-[#2DD4BF]" />
+                    ZenResume ATS Builder
+                  </span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+
                 <a
                   href="https://pdf-analizing-and-answering-bot.vercel.app/"
                   target="_blank"
@@ -331,26 +349,13 @@ export default function HeaderNav() {
                 </a>
 
                 <a
-                  href="https://zenresume.online/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#E8F0EB] dark:bg-emerald-950/40 border border-[#A2BCA8]/40 dark:border-emerald-800 text-[#476550] dark:text-[#A2BCA8] font-black p-2.5 rounded-xl flex items-center justify-between text-xs"
-                >
-                  <span className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-orange-500" />
-                    ZenResume ATS Builder
-                  </span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-
-                <a
                   href="https://aneevarpsolutions.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold p-2.5 rounded-xl flex items-center justify-between text-xs"
+                  className="bg-slate-100 dark:bg-[#1A2228] text-slate-800 dark:text-[#CBD5E1] font-bold p-2.5 rounded-xl flex items-center justify-between text-xs"
                 >
                   <span className="flex items-center gap-2">
-                    <Building className="w-4 h-4 text-teal-500" />
+                    <Building className="w-4 h-4 text-teal-500 dark:text-[#2DD4BF]" />
                     Aneevarp Solutions Portal
                   </span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -364,32 +369,32 @@ export default function HeaderNav() {
       {/* MOBILE & FOLDABLE FLOATING BOTTOM NAVIGATION DOCK */}
       <nav 
         aria-label="Mobile Bottom Navigation"
-        className="lg:hidden fixed bottom-3 inset-x-3 z-40 max-w-lg mx-auto bg-[#FAF9F6]/90 dark:bg-[#222828]/90 backdrop-blur-xl border border-[#D8E2DA] dark:border-[#2D3636] rounded-2xl shadow-2xl p-1.5 flex items-center justify-around animate-in fade-in slide-in-from-bottom-3"
+        className="lg:hidden fixed bottom-3 inset-x-3 z-40 max-w-lg mx-auto bg-[#FAF9F6]/95 dark:bg-[#141B20]/95 backdrop-blur-xl border border-[#D8E2DA] dark:border-[rgba(45,212,191,0.2)] rounded-full shadow-2xl p-1.5 flex items-center justify-around animate-in fade-in slide-in-from-bottom-3"
       >
         <Link
           href="/dashboard"
-          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#1A1F1F] dark:text-slate-300 active:scale-95 transition-all flex-1"
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-full hover:bg-slate-100 dark:hover:bg-[#1A2228] text-[#1A1F1F] dark:text-[#CBD5E1] active:scale-95 transition-all flex-1"
         >
-          <Briefcase className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
+          <Briefcase className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
           <span className="text-[10px] font-bold mt-0.5">Jobs</span>
         </Link>
 
         <Link
           href="/profile"
-          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#1A1F1F] dark:text-slate-300 active:scale-95 transition-all flex-1"
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-full hover:bg-slate-100 dark:hover:bg-[#1A2228] text-[#1A1F1F] dark:text-[#CBD5E1] active:scale-95 transition-all flex-1"
         >
-          <FileText className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
+          <FileText className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
           <span className="text-[10px] font-bold mt-0.5">ATS Audit</span>
         </Link>
 
         <button
           onClick={() => setPricingModalOpen(true)}
-          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-900 dark:text-amber-300 active:scale-95 transition-all flex-1"
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-full hover:bg-[#E8F0EB] dark:hover:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] active:scale-95 transition-all flex-1"
         >
           {isZenSuite ? (
             <Crown className="w-4 h-4 text-amber-400 fill-amber-400" />
           ) : isPro ? (
-            <Crown className="w-4 h-4 text-amber-500 fill-amber-500" />
+            <Crown className="w-4 h-4 text-[#2DD4BF] fill-[#2DD4BF]" />
           ) : (
             <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
           )}
@@ -398,18 +403,18 @@ export default function HeaderNav() {
 
         <button
           onClick={() => setAuthModalOpen(true)}
-          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-[#1A1F1F] dark:text-slate-300 active:scale-95 transition-all flex-1"
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-full hover:bg-slate-100 dark:hover:bg-[#1A2228] text-[#1A1F1F] dark:text-[#CBD5E1] active:scale-95 transition-all flex-1"
         >
-          <User className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />
+          <User className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
           <span className="text-[10px] font-bold mt-0.5">{user ? "Vault" : "Sign In"}</span>
         </button>
 
         <button
           onClick={toggleDarkMode}
-          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-black dark:text-amber-300 active:scale-95 transition-all flex-1"
+          className="flex flex-col items-center justify-center py-1.5 px-3 rounded-full hover:bg-slate-100 dark:hover:bg-[#1A2228] text-black dark:text-[#2DD4BF] active:scale-95 transition-all flex-1"
           aria-label="Toggle Theme"
         >
-          {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
           <span className="text-[10px] font-bold mt-0.5">{isDark ? "Light" : "Dark"}</span>
         </button>
       </nav>

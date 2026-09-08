@@ -49,9 +49,9 @@ export default function CookieConsent() {
       aria-label="Cookie consent banner"
       className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50 animate-in fade-in slide-in-from-bottom-5 duration-300"
     >
-      <div className="bg-[#FAF9F6] dark:bg-[#222828] p-6 rounded-3xl border-2 border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl transition-colors">
+      <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 rounded-3xl border-2 border-[#D8E2DA] dark:border-[#232D36] shadow-2xl transition-colors">
         <div className="flex items-start gap-3.5 mb-3">
-          <div className="p-2.5 bg-[#E8F0EB] dark:bg-[#1A1F1F]/50 rounded-2xl text-[#476550] dark:text-[#A2BCA8] flex-shrink-0">
+          <div className="p-2.5 bg-[#E8F0EB] dark:bg-[#1A2228] rounded-2xl text-[#476550] dark:text-[#2DD4BF] flex-shrink-0">
             <Cookie className="w-5 h-5" />
           </div>
           <div className="flex-1">
@@ -60,7 +60,7 @@ export default function CookieConsent() {
             </h3>
             <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mt-1.5 leading-relaxed">
               We and our trusted partners (including Google AdSense) use cookies to analyze site traffic, personalize content, and serve relevant advertising. Read our{" "}
-              <Link href="/privacy" className="text-[#476550] dark:text-[#A2BCA8] hover:underline font-bold">
+              <Link href="/privacy" className="text-[#476550] dark:text-[#2DD4BF] hover:underline font-bold">
                 Privacy Policy
               </Link>{" "}
               to learn more.
@@ -68,16 +68,16 @@ export default function CookieConsent() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 mt-4 pt-3 border-t border-[#D8E2DA] dark:border-[#2D3636]">
+        <div className="flex items-center gap-3 mt-4 pt-3 border-t border-[#D8E2DA] dark:border-[#232D36]">
           <button
             onClick={handleAccept}
-            className="flex-1 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#6B9077] dark:hover:bg-[#55735E] text-white text-xs font-black py-3 px-4 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile"
+            className="flex-1 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:hover:bg-[#5EEAD4] text-white dark:text-[#061B18] text-xs font-bold py-3 px-4 rounded-full transition-all shadow-sm active:scale-95 btn-tactile cursor-pointer"
           >
             Accept All
           </button>
           <button
             onClick={handleDecline}
-            className="flex-1 bg-[#F4F4F0] hover:bg-slate-200 dark:bg-[#1F2525] dark:hover:bg-[#2D3636] text-black dark:text-[#CBD5E1] border border-[#D8E2DA] dark:border-[#2D3636] text-xs font-bold py-3 px-4 rounded-xl transition-all active:scale-95"
+            className="flex-1 bg-[#F4F4F0] hover:bg-slate-200 dark:bg-[#1A2228] dark:hover:bg-[#232D36] text-black dark:text-[#CBD5E1] border border-[#D8E2DA] dark:border-[#232D36] text-xs font-bold py-3 px-4 rounded-full transition-all active:scale-95 btn-tactile cursor-pointer"
           >
             Decline Non-Essential
           </button>

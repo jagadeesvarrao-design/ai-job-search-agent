@@ -72,19 +72,19 @@ interface Job {
 }
 
 const COLUMNS: { status: JobStatus; icon: any; color: string; bg: string; border: string }[] = [
-  { status: "New Matches", icon: Sparkles, color: "text-[#476550]", bg: "bg-[#E8F0EB]", border: "border-[#A2BCA8]/40" },
-  { status: "Saved", icon: Bookmark, color: "text-[#596060]", bg: "bg-[#F4F4F0]", border: "border-slate-200" },
-  { status: "Applied", icon: Send, color: "text-[#0284C7]", bg: "bg-sky-50", border: "border-sky-200" },
-  { status: "Interviewing", icon: MessageSquare, color: "text-[#3B82F6]", bg: "bg-blue-50", border: "border-blue-200" },
-  { status: "Offers", icon: Award, color: "text-[#22C55E]", bg: "bg-[#E8F0EB]", border: "border-[#A2BCA8]/40" },
-  { status: "Rejected", icon: Ban, color: "text-[#EF4444]", bg: "bg-rose-50", border: "border-rose-200" },
+  { status: "New Matches", icon: Sparkles, color: "text-[#476550] dark:text-[#2DD4BF]", bg: "bg-[#E8F0EB] dark:bg-[#2DD4BF]/15", border: "border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30" },
+  { status: "Saved", icon: Bookmark, color: "text-[#596060] dark:text-[#CBD5E1]", bg: "bg-[#F4F4F0] dark:bg-[#1A2228]", border: "border-[#D8E2DA] dark:border-[#232D36]" },
+  { status: "Applied", icon: Send, color: "text-[#0284C7] dark:text-sky-400", bg: "bg-sky-50 dark:bg-sky-950/40", border: "border-sky-200 dark:border-sky-800/60" },
+  { status: "Interviewing", icon: MessageSquare, color: "text-[#3B82F6] dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-950/40", border: "border-blue-200 dark:border-blue-800/60" },
+  { status: "Offers", icon: Award, color: "text-[#22C55E] dark:text-emerald-400", bg: "bg-[#E8F0EB] dark:bg-emerald-950/40", border: "border-[#A2BCA8]/40 dark:border-emerald-800/60" },
+  { status: "Rejected", icon: Ban, color: "text-[#EF4444] dark:text-rose-400", bg: "bg-rose-50 dark:bg-rose-950/40", border: "border-rose-200 dark:border-rose-900/60" },
 ];
 
 type ChatMessage = { role: "user" | "assistant", content: string };
 
 function renderFormattedDescription(desc?: string) {
   if (!desc) {
-    return <p className="text-slate-500 dark:text-slate-400">No full job description available.</p>;
+    return <p className="text-[#596060] dark:text-[#CBD5E1]">No full job description available.</p>;
   }
 
   const lines = desc
@@ -95,14 +95,14 @@ function renderFormattedDescription(desc?: string) {
     .filter(Boolean);
 
   return (
-    <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-[#1A1F1F] dark:text-slate-200 font-normal">
+    <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-[#1A1F1F] dark:text-[#CBD5E1] font-normal">
       {lines.map((line, idx) => {
         const isHeader = /^(Position:|What You Will Be Doing|What We're Looking For|Responsibilities|Requirements|Qualifications|Nice to Haves|Compensation And Benefits|Compensation & Benefits|About Us|About the Role|Key Duties)/i.test(line);
         const isBullet = line.startsWith("•") || line.startsWith("-");
 
         if (isHeader) {
           return (
-            <h5 key={idx} className="font-extrabold text-xs sm:text-sm text-[#476550] dark:text-[#A2BCA8] pt-3 pb-1 border-t border-slate-200 dark:border-slate-800 first:border-0 first:pt-0 uppercase tracking-wider block">
+            <h5 key={idx} className="font-extrabold text-xs sm:text-sm text-[#476550] dark:text-[#2DD4BF] pt-3 pb-1 border-t border-[#D8E2DA] dark:border-[#232D36] first:border-0 first:pt-0 uppercase tracking-wider block">
               {line}
             </h5>
           );
@@ -111,7 +111,7 @@ function renderFormattedDescription(desc?: string) {
         if (isBullet) {
           return (
             <div key={idx} className="flex items-start gap-2 pl-2">
-              <span className="text-[#476550] dark:text-[#A2BCA8] font-black text-sm leading-tight flex-shrink-0 mt-0.5">•</span>
+              <span className="text-[#476550] dark:text-[#2DD4BF] font-black text-sm leading-tight flex-shrink-0 mt-0.5">•</span>
               <span className="flex-1">{line.replace(/^[•-]\s*/, "")}</span>
             </div>
           );
@@ -530,18 +530,18 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* 0. LIVE SUBSCRIPTION TIER & QUOTA METER */}
-      <div className="bg-[#FAF9F6] dark:bg-[#222828] p-4 md:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-4 md:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className={`p-2.5 rounded-xl flex items-center justify-center ${
             isPro 
               ? "bg-amber-500/20 text-amber-500" 
-              : "bg-[#E8F0EB] dark:bg-[#1A1F1F]/40 text-[#476550] dark:text-[#A2BCA8]"
+              : "bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF]"
           }`}>
             {isPro ? <Crown className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-sm text-black dark:text-white">
+              <span className="font-extrabold text-sm text-[#1A1F1F] dark:text-[#F8FAFC]">
                 {isPro 
                   ? (tierInfo.isZenSuite 
                       ? "ANEEVARP ZEN SUITE ULTIMATE"
@@ -553,16 +553,16 @@ export default function DashboardPage() {
                   : "Free Tier Workspace"}
               </span>
               {isPro ? (
-                <span className="text-[10px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black px-2 py-0.5 rounded-full">
+                <span className="text-[10px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black px-2.5 py-0.5 rounded-full">
                   {tierInfo.isZenSuite ? "👑 ZEN SUITE ULTIMATE VIP" : (tierInfo.billingCycle === "annual" ? "👑 VIP UNLIMITED" : tierInfo.billingCycle === "quarterly" ? "⚡ UNLIMITED AI" : "100% AD-FREE")}
                 </span>
               ) : (
-                <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full">
+                <span className="text-[10px] bg-slate-100 dark:bg-[#1A2228] text-[#596060] dark:text-[#CBD5E1] font-bold px-2.5 py-0.5 rounded-full border border-[#D8E2DA] dark:border-[#232D36]">
                   Standard Limits (Ads Enabled)
                 </span>
               )}
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-[#596060] dark:text-[#94A3B8] mt-0.5">
               {isPro 
                 ? (tierInfo.isZenSuite
                     ? `⚡ All-in-One Cross-Suite Pass Active (ZenScout + ZenDoc + ZenResume) • Truly Unlimited AI Scouting, Letters & AI Voice Coach • Priority 2x Server Speed • 100% Ad-Free`
@@ -579,7 +579,7 @@ export default function DashboardPage() {
         {!isPro ? (
           <button
             onClick={() => setPricingModalOpen(true)}
-            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-black py-2.5 px-4 rounded-xl shadow-sm active:scale-95 transition-all"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-black py-2.5 px-5 rounded-full shadow-sm btn-tactile active:scale-95 transition-all"
           >
             <Crown className="w-3.5 h-3.5" />
             <span>Upgrade to Pro (Compare Plans)</span>
@@ -587,13 +587,13 @@ export default function DashboardPage() {
         ) : tierInfo.billingCycle === "monthly" ? (
           <button
             onClick={() => setPricingModalOpen(true)}
-            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-500 hover:text-white text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 text-xs font-bold py-2 px-3 rounded-xl transition-all shadow-sm active:scale-95"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-500 hover:text-white text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 text-xs font-bold py-2 px-4 rounded-full btn-tactile transition-all shadow-sm active:scale-95"
           >
             <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
             <span>Upgrade to 3-Month Unlimited</span>
           </button>
         ) : (
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-[#E8F0EB] dark:bg-emerald-950/40 px-3 py-1.5 rounded-xl border border-[#A2BCA8]/40 dark:border-emerald-900">
+          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-[#E8F0EB] dark:bg-emerald-950/40 px-3.5 py-1.5 rounded-full border border-[#A2BCA8]/40 dark:border-emerald-900">
             <CheckCircle2 className="w-4 h-4" />
             <span>{tierInfo.billingCycle === "annual" ? "👑 VIP Member Status Active" : "⚡ 3-Month Unlimited Active"}</span>
           </div>
@@ -602,18 +602,18 @@ export default function DashboardPage() {
 
       {/* CONDITIONAL ADSENSE SPONSOR BANNER (Displayed ONLY on Free Tier) */}
       {!isPro && (
-        <div className="bg-[#F4F4F0] dark:bg-[#1F2525] p-3.5 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-3.5 rounded-2xl border border-dashed border-[#D8E2DA] dark:border-[#232D36] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div className="flex items-center gap-2.5">
-            <span className="text-[9px] font-black uppercase tracking-widest bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded">
+            <span className="text-[9px] font-black uppercase tracking-widest bg-slate-200 dark:bg-[#1A2228] text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded">
               Ad / Sponsor
             </span>
-            <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
+            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] font-medium">
               Targeting tech jobs? Level up your profile with verified certifications & ZenResume ATS templates.
             </p>
           </div>
           <button
             onClick={() => setPricingModalOpen(true)}
-            className="text-[11px] font-bold text-[#476550] dark:text-[#A2BCA8] hover:underline whitespace-nowrap"
+            className="text-[11px] font-bold text-[#476550] dark:text-[#2DD4BF] hover:underline whitespace-nowrap"
           >
             Remove ads with ZenScout Pro &rarr;
           </button>
@@ -622,49 +622,49 @@ export default function DashboardPage() {
 
       {/* 1. TOP ANALYTICS & STATS BAR */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 text-[#476550] dark:text-[#A2BCA8]">
+        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF]">
             <Briefcase className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Total Scouted</span>
-            <span className="text-2xl font-black text-black dark:text-white">{totalScouted}</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block">Total Scouted</span>
+            <span className="text-2xl font-black text-[#1A1F1F] dark:text-[#F8FAFC]">{totalScouted}</span>
           </div>
         </div>
 
-        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
+        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex items-center gap-4">
           <div className="p-3 rounded-xl bg-[#E8F0EB] dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Avg Match Score</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block">Avg Match Score</span>
             <span className="text-2xl font-black text-emerald-700 dark:text-emerald-300">{avgMatch > 0 ? `${avgMatch}%` : "—"}</span>
           </div>
         </div>
 
-        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
+        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex items-center gap-4">
           <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-[#0284C7] dark:text-sky-300">
             <Send className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Applications Sent</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block">Applications Sent</span>
             <span className="text-2xl font-black text-[#0284C7] dark:text-sky-300">{appliedCount}</span>
           </div>
         </div>
 
-        <div className="bg-[#FAF9F6] dark:bg-[#222828] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft flex items-center gap-4">
+        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex items-center gap-4">
           <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
             <Award className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Interviews & Offers</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block">Interviews & Offers</span>
             <span className="text-2xl font-black text-purple-700 dark:text-purple-300">{interviewsCount}</span>
           </div>
         </div>
       </section>
 
       {/* 2. LIVE SEARCH & FILTER CONTROL BAR */}
-      <section className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 md:p-6">
+      <section className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft p-5 md:p-6">
         <div className="flex flex-col lg:flex-row items-center gap-4">
           {/* Target Role Input */}
           <div className="flex-1 w-full relative">
@@ -674,7 +674,7 @@ export default function DashboardPage() {
               value={searchRole}
               onChange={(e) => setSearchRole(e.target.value)}
               placeholder="Search Role (e.g. React Developer, Frontend Engineer, Data Scientist)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#A2BCA8] focus:ring-2 focus:ring-[#476550]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] rounded-xl text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC] placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#476550]/20 dark:focus:ring-[#2DD4BF]/20"
             />
           </div>
 
@@ -686,7 +686,7 @@ export default function DashboardPage() {
               value={searchLocation}
               onChange={(e) => setSearchLocation(e.target.value)}
               placeholder="City (e.g. Bangalore, Hyderabad)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#A2BCA8] focus:ring-2 focus:ring-[#476550]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] rounded-xl text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC] placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#476550]/20 dark:focus:ring-[#2DD4BF]/20"
             />
           </div>
 
@@ -694,10 +694,10 @@ export default function DashboardPage() {
           <button
             type="button"
             onClick={() => setRemoteOnly(!remoteOnly)}
-            className={`px-4 py-3 rounded-xl border text-xs font-bold flex items-center gap-2 transition-all w-full lg:w-auto justify-center ${
+            className={`px-4 py-3 rounded-full border text-xs font-bold flex items-center gap-2 transition-all w-full lg:w-auto justify-center btn-tactile ${
               remoteOnly 
-                ? "bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" 
-                : "bg-[#F4F4F0] dark:bg-[#1F2525] border-[#D8E2DA] dark:border-[#2D3636] text-[#596060] dark:text-slate-300 hover:text-black dark:hover:text-white"
+                ? "bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 border-[#476550] dark:border-[#2DD4BF] text-[#476550] dark:text-[#2DD4BF]" 
+                : "bg-[#F4F4F0] dark:bg-[#1A2228] border-[#D8E2DA] dark:border-[#232D36] text-[#596060] dark:text-[#CBD5E1] hover:text-[#1A1F1F] dark:hover:text-white"
             }`}
           >
             <Globe className="w-4 h-4" />
@@ -709,16 +709,16 @@ export default function DashboardPage() {
             <button
               onClick={handleRunFilter}
               disabled={filtering}
-              className="bg-[#FAF9F6] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] hover:bg-[#F0F5F2] dark:hover:bg-[#2D3636] text-black dark:text-white font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-[#FAF9F6] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] hover:bg-[#F0F5F2] dark:hover:bg-[#232D36] text-[#1A1F1F] dark:text-[#F8FAFC] font-bold text-xs py-3 px-5 rounded-full transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
             >
-              {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#476550] dark:text-[#A2BCA8]" /> : <Filter className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" />}
+              {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#476550] dark:text-[#2DD4BF]" /> : <Filter className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />}
               <span>Score ATS</span>
             </button>
 
             <button
               onClick={handleRunScout}
               disabled={scouting}
-              className="bg-[#476550] hover:bg-[#3A5342] text-white font-bold text-xs py-3 px-6 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white font-bold text-xs py-3 px-6 rounded-full transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
             >
               {scouting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
               <span>Search Live Jobs</span>
@@ -729,11 +729,11 @@ export default function DashboardPage() {
 
       {/* LIVE MULTI-STEP AGENT PIPELINE MONITOR */}
       {(scouting || filtering) && (
-        <section className="bg-gradient-to-r from-teal-950/90 via-slate-900 to-teal-950/90 border-2 border-[#476550]/60 rounded-3xl p-5 text-white shadow-xl animate-in fade-in slide-in-from-top-2 space-y-4">
+        <section className="bg-gradient-to-r from-teal-950/90 via-slate-900 to-teal-950/90 border-2 border-[#476550]/60 dark:border-[#2DD4BF]/40 rounded-3xl p-5 text-white shadow-xl animate-in fade-in slide-in-from-top-2 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-teal-800/40 pb-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#476550] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
-                <Loader2 className="w-4 h-4 animate-spin text-[#A2BCA8]" />
+              <div className="w-8 h-8 rounded-xl bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] flex items-center justify-center flex-shrink-0 shadow-sm">
+                <Loader2 className="w-4 h-4 animate-spin text-[#A2BCA8] dark:text-[#061B18]" />
               </div>
               <div>
                 <h4 className="font-black text-sm sm:text-base text-white leading-tight">
@@ -744,7 +744,7 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <span className="text-[11px] font-black bg-[#476550]/50 border border-[#A2BCA8]/50 text-[#A2BCA8] px-3 py-1 rounded-full self-start sm:self-auto shadow-sm">
+            <span className="text-[11px] font-black bg-[#476550]/50 dark:bg-[#2DD4BF]/20 border border-[#A2BCA8]/50 dark:border-[#2DD4BF]/40 text-[#A2BCA8] dark:text-[#2DD4BF] px-3 py-1 rounded-full self-start sm:self-auto shadow-sm">
               Stage 2 of 3 • Neural Matching
             </span>
           </div>
@@ -752,10 +752,10 @@ export default function DashboardPage() {
           {/* 3-Step Progress Stage Nodes */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
             <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-teal-900/40 border border-teal-500/30">
-              <CheckCircle2 className="w-4 h-4 text-[#A2BCA8] flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-[#A2BCA8] dark:text-[#2DD4BF] flex-shrink-0" />
               <span className="font-semibold text-slate-200">1. Query Real-Time Jobs Index</span>
             </div>
-            <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[#476550]/20 border border-teal-400 text-[#A2BCA8] animate-pulse font-extrabold shadow-sm">
+            <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[#476550]/20 border border-teal-400 text-[#A2BCA8] dark:text-[#2DD4BF] animate-pulse font-extrabold shadow-sm">
               <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" />
               <span>2. Match Candidate Profile</span>
             </div>
@@ -770,22 +770,22 @@ export default function DashboardPage() {
       {/* 3. OPPORTUNITY PIPELINE HEADER & VIEW TOGGLE */}
       <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
         <div className="flex items-center gap-2.5">
-          <h2 className="text-lg sm:text-xl font-black text-black dark:text-white tracking-tight">
+          <h2 className="text-lg sm:text-xl font-black text-[#1A1F1F] dark:text-[#F8FAFC] tracking-tight">
             {viewMode === "board" ? "Pipeline Kanban Board" : "Opportunity Feed & Scoreboard"}
           </h2>
-          <span className="text-xs font-black text-[#476550] dark:text-[#A2BCA8] bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 px-3 py-1 rounded-full border border-[#A2BCA8]/40 dark:border-teal-800/80 shadow-sm">
+          <span className="text-xs font-black text-[#476550] dark:text-[#2DD4BF] bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 px-3 py-1 rounded-full border border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30 shadow-sm">
             {jobs.length} Active Opportunities
           </span>
         </div>
 
         {/* View Switcher Segmented Control */}
-        <div className="inline-flex p-1 rounded-2xl bg-[#F0F5F2] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] shadow-inner self-start sm:self-auto">
+        <div className="inline-flex p-1 rounded-2xl bg-[#F0F5F2] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] shadow-inner self-start sm:self-auto">
           <button
             onClick={() => setViewMode("board")}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all btn-tactile ${
               viewMode === "board"
-                ? "bg-[#476550] text-white shadow-sm"
-                : "text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                ? "bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] shadow-sm"
+                : "text-[#596060] dark:text-[#94A3B8] hover:text-[#1A1F1F] dark:hover:text-white"
             }`}
           >
             <LayoutGrid className="w-3.5 h-3.5" />
@@ -793,10 +793,10 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setViewMode("list")}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all btn-tactile ${
               viewMode === "list"
-                ? "bg-[#476550] text-white shadow-sm"
-                : "text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                ? "bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] shadow-sm"
+                : "text-[#596060] dark:text-[#94A3B8] hover:text-[#1A1F1F] dark:hover:text-white"
             }`}
           >
             <List className="w-3.5 h-3.5" />
@@ -809,10 +809,10 @@ export default function DashboardPage() {
       {viewMode === "list" && (
         <section className="space-y-3">
           {jobs.length === 0 ? (
-            <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] p-12 text-center text-slate-500 shadow-soft">
+            <div className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] p-12 text-center text-slate-500 shadow-soft">
               <Search className="w-10 h-10 mx-auto mb-3 text-slate-400 opacity-40" />
-              <h3 className="text-base font-bold text-black dark:text-white">No Opportunities Scouted Yet</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              <h3 className="text-base font-bold text-[#1A1F1F] dark:text-[#F8FAFC]">No Opportunities Scouted Yet</h3>
+              <p className="text-xs text-[#596060] dark:text-[#94A3B8] mt-1">
                 Enter your target role above and click "Search Live Jobs" to populate your feed!
               </p>
             </div>
@@ -823,13 +823,13 @@ export default function DashboardPage() {
               .map(job => (
                 <div
                   key={job.id}
-                  className="bg-[#FAF9F6] dark:bg-[#222828] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] p-4 sm:p-5 shadow-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                  className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] p-4 sm:p-5 shadow-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
                 >
                   <div className="min-w-0 flex-1 space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 
                         onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
-                        className="font-extrabold text-sm sm:text-base text-black dark:text-white group-hover:text-[#476550] dark:group-hover:text-[#A2BCA8] transition-colors cursor-pointer"
+                        className="font-extrabold text-sm sm:text-base text-[#1A1F1F] dark:text-[#F8FAFC] group-hover:text-[#476550] dark:group-hover:text-[#2DD4BF] transition-colors cursor-pointer"
                       >
                         {job.title}
                       </h3>
@@ -837,29 +837,29 @@ export default function DashboardPage() {
                         <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full flex-shrink-0 ${
                           job.matchScore >= 80 ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800" :
                           job.matchScore >= 60 ? "bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800" :
-                          "bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300"
+                          "bg-slate-200 dark:bg-[#1A2228] text-slate-800 dark:text-slate-300 border border-slate-300 dark:border-[#232D36]"
                         }`}>
                           {job.matchScore}% Match
                         </span>
                       )}
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-[#1A2228] text-slate-600 dark:text-slate-300 border border-[#D8E2DA] dark:border-[#232D36]">
                         {job.status}
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-[#1A1F1F] dark:text-slate-300 font-medium">
-                      <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {job.company}</span>
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
+                      <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" /> {job.company}</span>
                       <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {job.location}</span>
                       {job.salary && <span className="flex items-center gap-1 font-bold text-emerald-700 dark:text-emerald-400"><IndianRupee className="w-3.5 h-3.5" /> {job.salary}</span>}
                     </div>
                   </div>
 
                   {/* Actions & Status Dropdown */}
-                  <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 dark:border-slate-800/80">
+                  <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-[#D8E2DA] dark:border-[#232D36]">
                     <select
                       value={job.status}
                       onChange={(e) => updateJobStatus(job.id, e.target.value as JobStatus)}
-                      className="text-xs font-bold bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] text-black dark:text-white px-3 py-2 rounded-xl focus:outline-none focus:border-[#476550] cursor-pointer"
+                      className="text-xs font-bold bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] text-[#1A1F1F] dark:text-[#F8FAFC] px-3 py-2 rounded-xl focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] cursor-pointer"
                     >
                       {COLUMNS.map(c => (
                         <option key={c.status} value={c.status}>{c.status}</option>
@@ -868,7 +868,7 @@ export default function DashboardPage() {
 
                     <button
                       onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
-                      className="text-xs font-bold bg-[#476550] hover:bg-[#3A5342] text-white px-4 py-2 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1"
+                      className="text-xs font-bold bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white px-4 py-2 rounded-full transition-all shadow-sm active:scale-95 flex items-center gap-1 btn-tactile"
                     >
                       <span>Details</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -876,7 +876,7 @@ export default function DashboardPage() {
 
                     <button
                       onClick={() => { setSelectedJob(job); setActiveTab("cover_letter"); handleGenerateCoverLetter(job); }}
-                      className="text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 rounded-xl transition-all"
+                      className="text-xs font-bold bg-slate-100 dark:bg-[#1A2228] hover:bg-slate-200 dark:hover:bg-[#232D36] text-slate-800 dark:text-slate-200 border border-[#D8E2DA] dark:border-[#232D36] px-3 py-2 rounded-full transition-all btn-tactile"
                       title="Draft tailored cover letter"
                     >
                       <FileText className="w-3.5 h-3.5" />
@@ -884,7 +884,7 @@ export default function DashboardPage() {
 
                     <button
                       onClick={() => { setSelectedJob(job); setActiveTab("coach"); }}
-                      className="text-xs font-bold bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 hover:bg-teal-100 text-[#476550] dark:text-[#A2BCA8] border border-[#A2BCA8]/40 dark:border-teal-800 px-3 py-2 rounded-xl transition-all"
+                      className="text-xs font-bold bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 hover:bg-teal-100 text-[#476550] dark:text-[#2DD4BF] border border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30 px-3 py-2 rounded-full transition-all btn-tactile"
                       title="Practice mock interview"
                     >
                       <Bot className="w-3.5 h-3.5" />
@@ -895,7 +895,7 @@ export default function DashboardPage() {
                         href={job.applyLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 p-2 rounded-xl transition-all"
+                        className="text-xs font-bold bg-slate-100 dark:bg-[#1A2228] hover:bg-slate-200 dark:hover:bg-[#232D36] text-slate-700 dark:text-slate-300 border border-[#D8E2DA] dark:border-[#232D36] p-2 rounded-full transition-all btn-tactile"
                         title="Apply directly on portal"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -917,17 +917,17 @@ export default function DashboardPage() {
             return (
               <div 
                 key={status} 
-                className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-soft p-5 sm:p-6 flex flex-col min-h-[340px] transition-all hover:shadow-soft-hover"
+                className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft p-5 sm:p-6 flex flex-col min-h-[340px] transition-all hover:shadow-soft-hover"
               >
                 {/* Card Header */}
-                <div className="flex justify-between items-center w-full mb-4 pb-3 border-b border-[#D8E2DA] dark:border-[#2D3636]">
+                <div className="flex justify-between items-center w-full mb-4 pb-3 border-b border-[#D8E2DA] dark:border-[#232D36]">
                   <div className="flex items-center gap-2">
                     <div className={`p-2 rounded-xl ${bg} ${color}`}>
                       <Icon className="w-4 h-4" />
                     </div>
-                    <h2 className="font-extrabold text-sm text-black dark:text-white tracking-tight">{status}</h2>
+                    <h2 className="font-extrabold text-sm text-[#1A1F1F] dark:text-[#F8FAFC] tracking-tight">{status}</h2>
                   </div>
-                  <span className="bg-[#EAEFED] dark:bg-slate-800 text-black dark:text-white font-extrabold text-xs px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700">
+                  <span className="bg-[#EAEFED] dark:bg-[#1A2228] text-[#1A1F1F] dark:text-[#F8FAFC] font-extrabold text-xs px-3 py-1 rounded-full border border-[#D8E2DA] dark:border-[#232D36]">
                     {columnJobs.length}
                   </span>
                 </div>
@@ -935,41 +935,41 @@ export default function DashboardPage() {
                 {/* Jobs List inside status card */}
                 <div className="flex-1 flex flex-col gap-3 overflow-y-auto max-h-[480px]">
                   {columnJobs.length === 0 ? (
-                    <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-[#596060] dark:text-slate-400">
+                    <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-[#596060] dark:text-[#94A3B8]">
                       <Icon className={`w-8 h-8 ${color} opacity-30 mb-2`} />
-                      <p className="text-sm font-bold text-black dark:text-white">No jobs in {status}</p>
-                      <span className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Drag or move opportunities here</span>
+                      <p className="text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC]">No jobs in {status}</p>
+                      <span className="text-xs text-[#7D8787] dark:text-[#94A3B8] mt-0.5">Drag or move opportunities here</span>
                     </div>
                   ) : (
                     columnJobs.map(job => (
                       <div 
                         key={job.id}
                         onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
-                        className="p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F4F4F0] dark:bg-[#1F2525] hover:bg-[#FAF9F6] dark:hover:bg-[#1F2930] hover:border-[#476550]/50 dark:hover:border-[#A2BCA8]/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group flex flex-col gap-2 relative"
+                        className="p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] bg-[#F4F4F0] dark:bg-[#1A2228] hover:bg-[#FAF9F6] dark:hover:bg-[#1F2930] hover:border-[#476550]/50 dark:hover:border-[#2DD4BF]/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group flex flex-col gap-2 relative"
                       >
                         <div className="flex justify-between items-start gap-2">
-                          <h3 className="font-extrabold text-sm text-black dark:text-white group-hover:text-[#476550] dark:group-hover:text-[#A2BCA8] transition-colors line-clamp-1">
+                          <h3 className="font-extrabold text-sm text-[#1A1F1F] dark:text-[#F8FAFC] group-hover:text-[#476550] dark:group-hover:text-[#2DD4BF] transition-colors line-clamp-1">
                             {job.title}
                           </h3>
                           {job.matchScore > 0 && (
                             <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full flex-shrink-0 ${
                               job.matchScore >= 80 ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800" :
                               job.matchScore >= 60 ? "bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800" :
-                              "bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300"
+                              "bg-slate-200 dark:bg-[#141B20] text-slate-800 dark:text-slate-300 border border-slate-300 dark:border-[#232D36]"
                             }`}>
                               {job.matchScore}% Match
                             </span>
                           )}
                         </div>
 
-                        <div className="flex items-center gap-3 text-xs text-[#1A1F1F] dark:text-slate-300 font-medium">
-                          <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {job.company}</span>
+                        <div className="flex items-center gap-3 text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">
+                          <span className="flex items-center gap-1 font-bold"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" /> {job.company}</span>
                           <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {job.location}</span>
                         </div>
 
-                        <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 dark:border-slate-800/80 mt-1">
-                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">{job.postedAt || "Verified active"}</span>
-                          <span className="text-xs font-bold text-[#476550] dark:text-[#A2BCA8] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
+                        <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 dark:border-[#232D36] mt-1">
+                          <span className="text-[10px] text-[#7D8787] dark:text-[#94A3B8] font-medium">{job.postedAt || "Verified active"}</span>
+                          <span className="text-xs font-bold text-[#476550] dark:text-[#2DD4BF] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
                             View details &rarr;
                           </span>
                         </div>
@@ -979,19 +979,19 @@ export default function DashboardPage() {
 
                   {/* Contextual Offer Audit Prompt for Kanban Offers Column */}
                   {status === "Offers" && columnJobs.length > 0 && (
-                    <div className="mt-2 p-3 rounded-2xl bg-[#E8F0EB] dark:bg-[#1F2525] border border-emerald-300 dark:border-emerald-800/60 text-xs">
+                    <div className="mt-2 p-3 rounded-2xl bg-[#E8F0EB] dark:bg-[#1A2228] border border-emerald-300 dark:border-emerald-800/60 text-xs">
                       <div className="flex items-center gap-1.5 font-bold text-emerald-800 dark:text-emerald-300 mb-1">
                         <Award className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                         <span>Audit Offer on ZenDoc AI</span>
                       </div>
-                      <p className="text-[11px] text-[#596060] dark:text-slate-300 mb-2 leading-relaxed">
+                      <p className="text-[11px] text-[#596060] dark:text-[#CBD5E1] mb-2 leading-relaxed">
                         Scan your employment contract for non-compete clauses, notice periods, and bonus terms.
                       </p>
                       <a
                         href="https://pdf-analizing-and-answering-bot.vercel.app/?utm_source=zenscout_ai&utm_medium=kanban_offers_column"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 bg-[#476550] hover:bg-[#3A5342] text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer"
+                        className="inline-flex items-center gap-1 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-sm btn-tactile transition-all active:scale-95 cursor-pointer"
                       >
                         <span>Audit Contract Free</span>
                         <ExternalLink className="w-2.5 h-2.5" />
@@ -1007,23 +1007,23 @@ export default function DashboardPage() {
 
       {/* 4. JOB DETAIL, COVER LETTER PDF & AI COACH MODAL */}
       {selectedJob && (
-        <div className="fixed inset-0 bg-[#1A1F1F]/70 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-          <div className="bg-[#FAF9F6] dark:bg-[#222828] rounded-3xl border border-[#D8E2DA] dark:border-[#2D3636] shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 bg-[#0B0F12]/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+          <div className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="p-4 sm:p-6 border-b border-[#D8E2DA] dark:border-[#2D3636] flex justify-between items-start bg-[#F4F4F0] dark:bg-[#1F2525] gap-3">
+            <div className="p-4 sm:p-6 border-b border-[#D8E2DA] dark:border-[#232D36] flex justify-between items-start bg-[#F4F4F0] dark:bg-[#1A2228] gap-3">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                  <h2 className="text-lg sm:text-2xl font-black text-black dark:text-white leading-snug break-words">{selectedJob.title}</h2>
+                  <h2 className="text-lg sm:text-2xl font-black text-[#1A1F1F] dark:text-[#F8FAFC] leading-snug break-words">{selectedJob.title}</h2>
                   {selectedJob.matchScore > 0 && (
                     <span className="text-[11px] sm:text-xs font-black px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
                       {selectedJob.matchScore}% Match
                     </span>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-bold text-[#1A1F1F] dark:text-slate-300">
-                  <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.company}</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.location}</span>
-                  {selectedJob.salary && <span className="flex items-center gap-1"><IndianRupee className="w-3.5 h-3.5 text-[#476550] dark:text-[#A2BCA8]" /> {selectedJob.salary}</span>}
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-bold text-[#1A1F1F] dark:text-[#CBD5E1]">
+                  <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" /> {selectedJob.company}</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" /> {selectedJob.location}</span>
+                  {selectedJob.salary && <span className="flex items-center gap-1"><IndianRupee className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" /> {selectedJob.salary}</span>}
                 </div>
               </div>
               <button 
@@ -1031,7 +1031,7 @@ export default function DashboardPage() {
                   if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
                   setSelectedJob(null);
                 }}
-                className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors flex-shrink-0"
+                className="p-1.5 sm:p-2 rounded-full text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-[#141B20] transition-colors flex-shrink-0"
                 aria-label="Close Modal"
               >
                 <X className="w-5 h-5" />
@@ -1039,11 +1039,11 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Navigation Tabs (Scrollable on small screens) */}
-            <div className="flex border-b border-[#D8E2DA] dark:border-[#2D3636] px-3 sm:px-6 bg-[#FAF9F6] dark:bg-[#222828] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
+            <div className="flex border-b border-[#D8E2DA] dark:border-[#232D36] px-3 sm:px-6 bg-[#FAF9F6] dark:bg-[#141B20] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
               <button
                 onClick={() => setActiveTab("details")}
                 className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all whitespace-nowrap ${
-                  activeTab === "details" ? "border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" : "border-transparent text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                  activeTab === "details" ? "border-[#476550] dark:border-[#2DD4BF] text-[#476550] dark:text-[#2DD4BF]" : "border-transparent text-[#596060] dark:text-[#94A3B8] hover:text-[#1A1F1F] dark:hover:text-white"
                 }`}
               >
                 Job Description
@@ -1054,7 +1054,7 @@ export default function DashboardPage() {
                   if (!coverLetter) handleGenerateCoverLetter(selectedJob);
                 }}
                 className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  activeTab === "cover_letter" ? "border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" : "border-transparent text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                  activeTab === "cover_letter" ? "border-[#476550] dark:border-[#2DD4BF] text-[#476550] dark:text-[#2DD4BF]" : "border-transparent text-[#596060] dark:text-[#94A3B8] hover:text-[#1A1F1F] dark:hover:text-white"
                 }`}
               >
                 <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -1063,7 +1063,7 @@ export default function DashboardPage() {
               <button
                 onClick={() => setActiveTab("coach")}
                 className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  activeTab === "coach" ? "border-[#476550] dark:border-[#A2BCA8] text-[#476550] dark:text-[#A2BCA8]" : "border-transparent text-[#596060] dark:text-slate-400 hover:text-black dark:hover:text-white"
+                  activeTab === "coach" ? "border-[#476550] dark:border-[#2DD4BF] text-[#476550] dark:text-[#2DD4BF]" : "border-transparent text-[#596060] dark:text-[#94A3B8] hover:text-[#1A1F1F] dark:hover:text-white"
                 }`}
               >
                 <Bot className="w-4 h-4" />
@@ -1072,21 +1072,21 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Content */}
-            <div className="p-4 sm:p-6 overflow-y-auto flex-1 text-sm text-[#1A1F1F] dark:text-slate-200">
+            <div className="p-4 sm:p-6 overflow-y-auto flex-1 text-sm text-[#1A1F1F] dark:text-[#CBD5E1]">
               {/* TAB 1: DETAILS */}
               {activeTab === "details" && (
                 <div className="space-y-6">
                   <div>
-                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#596060] dark:text-slate-400 mb-2.5">Move Status</h4>
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#596060] dark:text-[#94A3B8] mb-2.5">Move Status</h4>
                     <div className="flex flex-wrap gap-2">
                       {COLUMNS.map(col => (
                         <button
                           key={col.status}
                           onClick={() => updateJobStatus(selectedJob.id, col.status)}
-                          className={`px-3.5 py-1.5 rounded-xl text-xs transition-all ${
+                          className={`px-3.5 py-1.5 rounded-full text-xs transition-all btn-tactile ${
                             selectedJob.status === col.status
-                              ? "bg-[#476550] text-white shadow-md font-black ring-2 ring-[#476550]/30"
-                              : "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700/80 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold"
+                              ? "bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] shadow-md font-black ring-2 ring-[#476550]/30 dark:ring-[#2DD4BF]/30"
+                              : "bg-slate-100 dark:bg-[#1A2228] text-slate-800 dark:text-[#CBD5E1] border border-[#D8E2DA] dark:border-[#232D36] hover:bg-slate-200 dark:hover:bg-[#232D36] font-bold"
                           }`}
                         >
                           {col.status}
@@ -1096,8 +1096,8 @@ export default function DashboardPage() {
                   </div>
 
                   <div>
-                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#596060] dark:text-slate-400 mb-2.5">Role Overview & Responsibilities</h4>
-                    <div className="p-5 sm:p-6 rounded-2xl bg-[#F4F4F0] dark:bg-[#1F2525] border border-[#D8E2DA] dark:border-[#2D3636] shadow-sm">
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#596060] dark:text-[#94A3B8] mb-2.5">Role Overview & Responsibilities</h4>
+                    <div className="p-5 sm:p-6 rounded-2xl bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] shadow-sm">
                       {renderFormattedDescription(selectedJob.description)}
                     </div>
                   </div>
@@ -1109,7 +1109,7 @@ export default function DashboardPage() {
                         href={selectedJob.applyLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-[#476550] hover:bg-[#3A5342] text-white font-black px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-95 btn-tactile text-xs sm:text-sm"
+                        className="inline-flex items-center gap-2 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white font-black px-6 py-3.5 rounded-full transition-all shadow-md active:scale-95 btn-tactile text-xs sm:text-sm"
                       >
                         Apply Directly on Official Portal <ExternalLink className="w-4 h-4" />
                       </a>
@@ -1119,7 +1119,7 @@ export default function DashboardPage() {
                       href={`https://zenresume.online/?target_role=${encodeURIComponent(selectedJob.title)}&company=${encodeURIComponent(selectedJob.company)}&utm_source=zenscout_ai&utm_medium=job_modal_tailor`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-[#E8F0EB] hover:bg-teal-100 dark:bg-[#1A1F1F]/60 text-[#476550] dark:text-[#A2BCA8] border border-[#A2BCA8]/40 font-bold px-5 py-3.5 rounded-xl transition-all shadow-sm active:scale-95 btn-tactile text-xs sm:text-sm"
+                      className="inline-flex items-center gap-2 bg-[#E8F0EB] hover:bg-teal-100 dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] border border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30 font-bold px-5 py-3.5 rounded-full transition-all shadow-sm active:scale-95 btn-tactile text-xs sm:text-sm"
                     >
                       <FileText className="w-4 h-4" />
                       <span>Tailor Targeted Resume on ZenResume</span>
@@ -1134,14 +1134,14 @@ export default function DashboardPage() {
                         <Award className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                         <span>OFFER RECEIVED FROM {selectedJob.company.toUpperCase()}! 🥂</span>
                       </div>
-                      <p className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
+                      <p className="text-xs text-slate-700 dark:text-[#CBD5E1] leading-relaxed font-medium">
                         Before signing, protect your intellectual property, compensation, and career autonomy. Upload your offer letter or employment contract to <strong>ZenDoc AI</strong> to audit non-compete clauses, notice periods, and bonus terms in seconds.
                       </p>
                       <a
                         href={`https://pdf-analizing-and-answering-bot.vercel.app/?company=${encodeURIComponent(selectedJob.company)}&utm_source=zenscout_ai&utm_medium=offer_contract_audit`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-sm transition-all active:scale-95 cursor-pointer mt-1"
+                        className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-2.5 px-5 rounded-full shadow-sm btn-tactile transition-all active:scale-95 cursor-pointer mt-1"
                       >
                         <span>Audit Employment Contract on ZenDoc AI Free</span>
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -1154,14 +1154,14 @@ export default function DashboardPage() {
               {/* TAB 2: COVER LETTER WITH 1-CLICK PDF EXPORT */}
               {activeTab === "cover_letter" && (
                 <div className="space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F4F4F0] dark:bg-[#1F2525] p-3.5 rounded-xl border border-[#D8E2DA] dark:border-[#2D3636]">
-                    <p className="text-xs text-[#1A1F1F] dark:text-slate-300 font-medium">Synthesized with Gemini 2.5 Flash mapping your experience.</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F4F4F0] dark:bg-[#1A2228] p-3.5 rounded-xl border border-[#D8E2DA] dark:border-[#232D36]">
+                    <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">Synthesized with Gemini 2.5 Flash mapping your experience.</p>
                     
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleCopyCoverLetter}
                         disabled={factoryLoading || !coverLetter}
-                        className="text-xs bg-[#FAF9F6] dark:bg-slate-800 border border-[#D8E2DA] dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-black dark:text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all"
+                        className="text-xs bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] hover:bg-slate-100 dark:hover:bg-[#232D36] text-[#1A1F1F] dark:text-[#F8FAFC] font-bold px-3 py-1.5 rounded-full flex items-center gap-1 transition-all btn-tactile"
                       >
                         {copiedLetter ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{copiedLetter ? "Copied!" : "Copy"}</span>
@@ -1170,7 +1170,7 @@ export default function DashboardPage() {
                       <button
                         onClick={handlePrintCoverLetter}
                         disabled={factoryLoading || !coverLetter}
-                        className="text-xs bg-[#476550] hover:bg-[#3A5342] text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition-all shadow-sm"
+                        className="text-xs bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white font-bold px-4 py-1.5 rounded-full flex items-center gap-1 transition-all shadow-sm btn-tactile"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>Download PDF</span>
@@ -1179,7 +1179,7 @@ export default function DashboardPage() {
                       <button
                         onClick={() => handleGenerateCoverLetter(selectedJob)}
                         disabled={factoryLoading}
-                        className="text-xs text-[#476550] dark:text-[#A2BCA8] hover:underline font-bold flex items-center gap-1 pl-1"
+                        className="text-xs text-[#476550] dark:text-[#2DD4BF] hover:underline font-bold flex items-center gap-1 pl-1"
                       >
                         <RefreshCw className={`w-3.5 h-3.5 ${factoryLoading ? "animate-spin" : ""}`} />
                       </button>
@@ -1188,15 +1188,15 @@ export default function DashboardPage() {
 
                   {factoryLoading ? (
                     <div className="p-12 flex flex-col items-center justify-center text-center gap-3">
-                      <Loader2 className="w-8 h-8 animate-spin text-[#476550] dark:text-[#A2BCA8]" />
-                      <p className="font-bold text-sm text-black dark:text-white">Agent Factory is drafting your tailored cover letter...</p>
+                      <Loader2 className="w-8 h-8 animate-spin text-[#476550] dark:text-[#2DD4BF]" />
+                      <p className="font-bold text-sm text-[#1A1F1F] dark:text-[#F8FAFC]">Agent Factory is drafting your tailored cover letter...</p>
                     </div>
                   ) : (
                     <textarea
                       value={coverLetter}
                       onChange={(e) => setCoverLetter(e.target.value)}
                       rows={13}
-                      className="w-full p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] bg-[#F4F4F0] dark:bg-[#1F2525] text-black dark:text-slate-100 leading-relaxed font-sans text-sm focus:outline-none focus:border-[#476550]"
+                      className="w-full p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] bg-[#F4F4F0] dark:bg-[#1A2228] text-[#1A1F1F] dark:text-[#CBD5E1] leading-relaxed font-sans text-sm focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
                     />
                   )}
                 </div>
@@ -1206,9 +1206,9 @@ export default function DashboardPage() {
               {activeTab === "coach" && (
                 <div className="flex flex-col h-[430px]">
                   {/* Coach Controls Bar */}
-                  <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3 text-xs">
-                    <span className="font-bold text-black dark:text-white flex items-center gap-1.5">
-                      <Bot className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8]" /> Mock Interview Simulation
+                  <div className="flex items-center justify-between pb-3 border-b border-[#D8E2DA] dark:border-[#232D36] mb-3 text-xs">
+                    <span className="font-bold text-[#1A1F1F] dark:text-[#F8FAFC] flex items-center gap-1.5">
+                      <Bot className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Mock Interview Simulation
                     </span>
                     
                     {hasVoiceAudioAccess() ? (
@@ -1220,10 +1220,10 @@ export default function DashboardPage() {
                             window.speechSynthesis.cancel();
                           }
                         }}
-                        className={`flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg border transition-all ${
+                        className={`flex items-center gap-1 font-bold px-3 py-1 rounded-full border transition-all btn-tactile ${
                           voiceAudioEnabled 
-                            ? "bg-[#E8F0EB] dark:bg-[#1A1F1F]/60 border-teal-300 dark:border-teal-800 text-[#476550] dark:text-[#A2BCA8]" 
-                            : "bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400"
+                            ? "bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 border-[#A2BCA8]/40 dark:border-[#2DD4BF]/40 text-[#476550] dark:text-[#2DD4BF]" 
+                            : "bg-slate-100 dark:bg-[#1A2228] border-slate-300 dark:border-[#232D36] text-slate-500 dark:text-slate-400"
                         }`}
                       >
                         {voiceAudioEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
@@ -1232,7 +1232,7 @@ export default function DashboardPage() {
                     ) : (
                       <button
                         onClick={() => setPricingModalOpen(true)}
-                        className="flex items-center gap-1.5 font-bold px-2.5 py-1 rounded-lg border border-amber-300 dark:border-amber-700/60 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 text-[11px] shadow-sm hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all"
+                        className="flex items-center gap-1.5 font-bold px-3 py-1 rounded-full border border-amber-300 dark:border-amber-700/60 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 text-[11px] shadow-sm hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all btn-tactile"
                         title="Live AI Voice Audio playback is available on the 3-Month Pass and Annual VIP"
                       >
                         <Lock className="w-3 h-3 text-amber-600 dark:text-amber-400" />
@@ -1242,18 +1242,18 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Chat Message Thread */}
-                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F4F4F0] dark:bg-[#1F2525] rounded-2xl border border-[#D8E2DA] dark:border-[#2D3636] mb-3">
+                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F4F4F0] dark:bg-[#1A2228] rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] mb-3">
                     {chatMessages.length === 0 ? (
-                      <div className="text-center py-10 text-[#596060] dark:text-slate-400">
-                        <Bot className="w-10 h-10 mx-auto mb-2 text-[#476550] dark:text-[#A2BCA8]" />
-                        <p className="font-bold text-sm text-black dark:text-white">Start your mock interview with the Hiring Manager</p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Type "Hello, I am ready to begin" or tap the mic below!</p>
+                      <div className="text-center py-10 text-[#596060] dark:text-[#94A3B8]">
+                        <Bot className="w-10 h-10 mx-auto mb-2 text-[#476550] dark:text-[#2DD4BF]" />
+                        <p className="font-bold text-sm text-[#1A1F1F] dark:text-[#F8FAFC]">Start your mock interview with the Hiring Manager</p>
+                        <p className="text-xs text-[#7D8787] dark:text-[#94A3B8] mt-1">Type "Hello, I am ready to begin" or tap the mic below!</p>
                       </div>
                     ) : (
                       chatMessages.map((msg, i) => (
                         <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                           {msg.role === "user" ? (
-                            <div className="max-w-[85%] p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#476550] text-white rounded-br-none font-medium shadow-sm">
+                            <div className="max-w-[85%] p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] rounded-br-none font-medium shadow-sm">
                               {msg.content}
                             </div>
                           ) : (
@@ -1264,7 +1264,7 @@ export default function DashboardPage() {
                                   <span>Hiring Scorecard: STAR 9/10 • Technical Depth: High</span>
                                 </div>
                               )}
-                              <div className="p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-slate-700 text-black dark:text-slate-100 rounded-bl-none shadow-sm font-normal">
+                              <div className="p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] text-[#1A1F1F] dark:text-[#CBD5E1] rounded-bl-none shadow-sm font-normal">
                                 {msg.content}
                               </div>
                             </div>
@@ -1275,18 +1275,18 @@ export default function DashboardPage() {
 
                     {/* IN-CHAT UPGRADE CARD (Triggered when 3 Free Turns are Completed) */}
                     {!isProSubscriber() && usageQuota.interviewMessagesSent >= 3 && (
-                      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 border-2 border-amber-500/40 text-black dark:text-white shadow-lg animate-in fade-in slide-in-from-bottom-2 space-y-3">
+                      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 border-2 border-amber-500/40 text-[#1A1F1F] dark:text-[#F8FAFC] shadow-lg animate-in fade-in slide-in-from-bottom-2 space-y-3">
                         <div className="flex items-center gap-2 text-xs font-black text-amber-800 dark:text-amber-300">
                           <Crown className="w-4 h-4 text-amber-500 fill-amber-500" />
                           <span>FREE EVALUATION COMPLETE • UNLOCK FULL-LENGTH SESSIONS</span>
                         </div>
-                        <p className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
+                        <p className="text-xs text-[#596060] dark:text-[#CBD5E1] leading-relaxed font-medium">
                           Build bulletproof interview muscle memory, unlock live voice sparring, and practice unlimited full-length rounds across all your applications.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center gap-2 pt-1">
                           <button
                             onClick={() => setPricingModalOpen(true)}
-                            className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs py-2.5 px-4 rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5"
+                            className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs py-2.5 px-5 rounded-full shadow-md btn-tactile active:scale-95 transition-all flex items-center justify-center gap-1.5"
                           >
                             <Zap className="w-3.5 h-3.5 fill-white" />
                             <span>Accelerate My Career & Unlock Full Practice &rarr;</span>
@@ -1297,8 +1297,8 @@ export default function DashboardPage() {
 
                     {coachLoading && (
                       <div className="flex justify-start">
-                        <div className="bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-slate-700 p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold shadow-sm">
-                          <Loader2 className="w-3.5 h-3.5 animate-spin text-[#476550] dark:text-[#A2BCA8]" />
+                        <div className="bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold shadow-sm">
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-[#476550] dark:text-[#2DD4BF]" />
                           <span>Hiring Manager is evaluating your answer...</span>
                         </div>
                       </div>
@@ -1311,10 +1311,10 @@ export default function DashboardPage() {
                       type="button"
                       onClick={toggleSpeechRecognition}
                       disabled={!isProSubscriber() && usageQuota.interviewMessagesSent >= 3}
-                      className={`p-3 rounded-xl border transition-all flex items-center justify-center ${
+                      className={`p-3 rounded-full border transition-all flex items-center justify-center btn-tactile ${
                         isRecording 
                           ? "bg-rose-500 text-white border-rose-600 animate-pulse" 
-                          : "bg-[#FAF9F6] dark:bg-[#222828] border-[#D8E2DA] dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50"
+                          : "bg-[#FAF9F6] dark:bg-[#141B20] border-[#D8E2DA] dark:border-[#232D36] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1A2228] disabled:opacity-50"
                       }`}
                       title={isRecording ? "Listening..." : "Speak response"}
                     >
@@ -1341,7 +1341,7 @@ export default function DashboardPage() {
                             ? "Listening to your voice..." 
                             : "Type or speak your answer..."
                       }
-                      className="flex-1 p-3 rounded-xl border border-[#D8E2DA] dark:border-slate-700 bg-[#FAF9F6] dark:bg-[#222828] text-sm font-medium text-black dark:text-white focus:outline-none focus:border-[#476550]"
+                      className="flex-1 p-3 rounded-full border border-[#D8E2DA] dark:border-[#232D36] bg-[#FAF9F6] dark:bg-[#141B20] text-sm font-medium text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
                     />
                     <button
                       onClick={() => {
@@ -1352,16 +1352,16 @@ export default function DashboardPage() {
                         }
                       }}
                       disabled={coachLoading || (!chatInput.trim() && isProSubscriber())}
-                      className="bg-[#476550] hover:bg-[#3A5342] text-white px-5 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-50 btn-tactile flex items-center gap-1.5"
+                      className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white px-6 py-3 rounded-full font-bold text-sm transition-all disabled:opacity-50 btn-tactile flex items-center gap-1.5"
                     >
                       <span>{!isProSubscriber() && usageQuota.interviewMessagesSent >= 3 ? "Upgrade" : "Send"}</span>
                     </button>
                   </div>
 
                   {/* Contextual Sister App Integration: Research Company PDFs on ZenDoc AI */}
-                  <div className="mt-3 p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#1F2525] border border-[#A2BCA8]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
-                    <div className="flex items-center gap-2 text-xs text-[#1A1F1F] dark:text-slate-200">
-                      <BookOpen className="w-4 h-4 text-[#476550] dark:text-[#A2BCA8] flex-shrink-0" />
+                  <div className="mt-3 p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#1A2228] border border-[#A2BCA8]/40 dark:border-[#232D36] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2 text-xs text-[#1A1F1F] dark:text-[#CBD5E1]">
+                      <BookOpen className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF] flex-shrink-0" />
                       <span>
                         Need to master <strong>{selectedJob?.company || "Target Company"}'s</strong> architecture & domain PDFs for this round?
                       </span>
@@ -1370,7 +1370,7 @@ export default function DashboardPage() {
                       href={`https://pdf-analizing-and-answering-bot.vercel.app/?utm_source=zenscout_ai&utm_medium=coach_interview_prep&company=${encodeURIComponent(selectedJob?.company || "")}&role=${encodeURIComponent(selectedJob?.title || "")}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 bg-[#476550] hover:bg-[#3A5342] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-sm transition-all active:scale-95 flex-shrink-0"
+                      className="inline-flex items-center gap-1.5 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-sm btn-tactile transition-all active:scale-95 flex-shrink-0"
                     >
                       <span>Prep with ZenDoc AI</span>
                       <ExternalLink className="w-3 h-3" />
