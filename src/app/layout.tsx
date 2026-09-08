@@ -189,7 +189,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#FCFAF5] dark:bg-[#0B0F12] text-[#1A1F1F] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#476550] selection:text-white dark:selection:bg-[#2DD4BF] dark:selection:text-[#061B18] transition-colors duration-300">
+      <body className="min-h-full flex flex-col bg-[#FCFAF5] dark:bg-[#06110D] text-[#1A1F1F] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#476550] selection:text-white dark:selection:bg-[#2DD4BF] dark:selection:text-[#061B18] transition-colors duration-300">
         
         {/* Web Accessibility: Skip to Main Content (RPwD Act 2016 / WCAG 2.1 AA) */}
         <a 
@@ -211,7 +211,7 @@ export default function RootLayout({
         </AuthProvider>
         
         {/* Statutory Enterprise Footer */}
-        <footer className="w-full bg-[#FAF9F6] dark:bg-[#0B0F12] border-t border-[#D8E2DA] dark:border-[rgba(45,212,191,0.15)] mt-auto transition-colors duration-300">
+        <footer className="w-full bg-[#FAF9F6] dark:bg-[#06110D] border-t border-[#D8E2DA] dark:border-[rgba(45,212,191,0.15)] mt-auto transition-colors duration-300">
           <div className="w-full py-8 px-4 md:px-8 max-w-[1280px] mx-auto flex flex-col gap-6">
             
             {/* Top Footer Row */}

@@ -66,22 +66,22 @@
     --color-amber-accent: #F59E0B;
     --color-emerald-success: #34D399;
 
-    /* Dark Theme Canvas */
-    --bg-main: #0B0F12;               /* Deep Obsidian Charcoal */
-    --bg-surface: #141B20;            /* Dark Glass Surface */
-    --bg-surface-elevated: #1E293B;   /* Elevated Cards & Inputs */
-    --bg-input: #1A2228;
+    /* Dark Theme Canvas - Matching ZenResume.online Exact Obsidian Tone */
+    --bg-main: #06110D;               /* Deep Obsidian Forest Black */
+    --bg-surface: #0D1714;            /* Obsidian Green Card Surface */
+    --bg-surface-elevated: #13221C;   /* Elevated Cards & Inputs */
+    --bg-input: #121E1A;              /* Sleek Deep Input Well */
     
     /* Dark Theme Typography */
     --text-main: #F8FAFC;             /* Pure Crisp White */
-    --text-sub: #CBD5E1;              /* Soft Slate */
+    --text-sub: #CBD5E1;              /* Soft Silver Slate */
     --text-muted: #94A3B8;            /* Muted Slate */
 
     /* Dark Theme Borders & Shadows */
-    --border-subtle: rgba(45, 212, 191, 0.2);
+    --border-subtle: rgba(45, 212, 191, 0.18);
     --border-focus: #2DD4BF;
-    --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.6);
-    --shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 24px rgba(45, 212, 191, 0.2);
+    --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.7);
+    --shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 24px rgba(45, 212, 191, 0.2);
     --shadow-glow: 0 4px 20px rgba(45, 212, 191, 0.35);
 
     /* Legacy / Utility Mappings */
@@ -292,9 +292,14 @@
   }
   .dark .glass-dock,
   [data-theme="dark"] .glass-dock {
-    background: rgba(11, 15, 18, 0.88);
+    background: rgba(6, 17, 13, 0.92);
     border-bottom: 1px solid rgba(45, 212, 191, 0.15);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ZenResume Soft Center Emerald Radial Bloom */
+  .zen-ambient-glow {
+    background: radial-gradient(circle at 50% 30%, rgba(20, 60, 45, 0.5) 0%, rgba(6, 17, 13, 0) 70%);
   }
 
   /* Live Pulse Status Dot */
