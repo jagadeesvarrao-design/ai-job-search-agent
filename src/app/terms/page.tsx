@@ -85,7 +85,7 @@ export default function TermsOfService() {
             In compliance with the <strong>Consumer Protection (E-Commerce) Rules, 2020</strong> and the <strong>Guidelines for Prevention and Regulation of Dark Patterns, 2023</strong>:
           </p>
           <ul className="list-disc pl-6 space-y-2 text-xs">
-            <li><strong>Transparent Pricing:</strong> All subscription rates (₹299 for 1-Month, ₹699 for 3-Month, ₹1,999 for Annual Pro) are stated transparently without hidden recurring surcharges or surprise billing.</li>
+            <li><strong>Transparent Pricing:</strong> All subscription rates (₹299 / $19 for 1-Month, ₹699 / $45 for 3-Month, ₹1,999 / $99 for Annual Pro, and ₹599 / $29 for Zen Suite) are clearly displayed at checkout in the user's localized currency without hidden recurring surcharges or surprise billing.</li>
             <li><strong>Zero Dark Patterns:</strong> We do not employ fake urgency timers, forced bundled purchases, deceptive subscription renewals, or pre-ticked opt-in checkboxes.</li>
             <li><strong>Refund Policy:</strong> Due to the immediate delivery of unlimited AI compute and digital career acceleration tools, subscription fees are non-refundable except where required by applicable statutory consumer protection laws.</li>
           </ul>

@@ -133,13 +133,7 @@ export function detectDefaultCurrency(): "INR" | "USD" {
   if (typeof window === "undefined") return "INR";
   
   try {
-    // 1. If user previously manually selected a currency, respect it
-    const saved = localStorage.getItem("preferred_currency");
-    if (saved === "INR" || saved === "USD") {
-      return saved;
-    }
-
-    // 2. Check Browser Timezone
+    // 1. Check Browser Timezone
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
     const isIndianTimezone = 
       timeZone.includes("Calcutta") || 
@@ -152,7 +146,7 @@ export function detectDefaultCurrency(): "INR" | "USD" {
       return "INR";
     }
 
-    // 3. Check Browser Languages (fallback check)
+    // 2. Check Browser Languages (fallback check)
     const languages = navigator.languages || [navigator.language || ""];
     const isIndianLocale = languages.some(lang => 
       lang.toLowerCase().includes("-in") || 
@@ -163,7 +157,7 @@ export function detectDefaultCurrency(): "INR" | "USD" {
       return "INR";
     }
 
-    // 4. Default for all international / non-Indian users is USD
+    // 3. Default for all international / non-Indian users is strictly USD
     return "USD";
   } catch (e) {
     return "USD";

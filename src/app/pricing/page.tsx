@@ -143,37 +143,10 @@ export default function PricingPage() {
         </button>
       </div>
 
-      {/* Currency Switcher Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 my-6 p-4 rounded-2xl bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636] text-left shadow-sm">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">Standalone Plans</span>
-          <p className="text-xs text-black dark:text-white font-medium">Looking for ZenScout AI standalone access only?</p>
-        </div>
-
-        <div className="inline-flex items-center bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-inner">
-          <button
-            type="button"
-            onClick={() => handleCurrencyChange("INR")}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-              currency === "INR" 
-                ? "bg-[#476550] text-white shadow-md scale-105" 
-                : "text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
-            }`}
-          >
-            ₹ INR (India)
-          </button>
-          <button
-            type="button"
-            onClick={() => handleCurrencyChange("USD")}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-              currency === "USD" 
-                ? "bg-[#476550] text-white shadow-md scale-105" 
-                : "text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
-            }`}
-          >
-            $ USD (Global)
-          </button>
-        </div>
+      {/* Standalone Plans Subheading */}
+      <div className="text-left my-6">
+        <span className="text-xs font-bold uppercase tracking-wider text-[#476550] dark:text-[#A2BCA8] block">Standalone Plans</span>
+        <h2 className="text-xl sm:text-2xl font-black text-black dark:text-white">ZenScout AI Dedicated Access</h2>
       </div>
 
       {/* 3. VALUE LADDER CARDS (3-Column Desktop, Stacked Mobile) */}
@@ -366,7 +339,7 @@ export default function PricingPage() {
         <div className="p-5 rounded-2xl bg-[#FAF9F6] dark:bg-[#222828] border border-[#D8E2DA] dark:border-[#2D3636]">
           <h4 className="font-bold text-sm text-black dark:text-white mb-1">How does Zen Suite Ultimate work across ZenDoc AI, ZenScout, and ZenResume?</h4>
           <p className="text-xs text-[#596060] dark:text-slate-300 leading-relaxed">
-            When you subscribe to Zen Suite Ultimate (₹599/mo / $15.99/mo), your single Google or Email account automatically unlocks all premium features across all 3 platforms without needing separate subscriptions.
+            When you subscribe to Zen Suite Ultimate ({isINR ? "₹599/mo" : "$29/mo"}), your single Google or Email account automatically unlocks all premium features across all 3 platforms without needing separate subscriptions.
           </p>
         </div>
 

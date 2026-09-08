@@ -21,7 +21,7 @@ function generateCoachReply(job: any, messages: any[], isFreeTierLastTurn: boole
 
 Here's the reality: in high-paying tech interviews, the difference between a rejection and a top-tier offer comes down to handling the unexpected 4th, 5th, and 6th architectural follow-ups under pressure.
 
-🌟 Unlock Zen Suite Ultimate (₹599/mo) — Get full unlimited access to ZenScout Pro Senior Manager mock interview rounds, voice simulations, plus ZenDoc AI Pro & ZenResume!`;
+🌟 Unlock Zen Suite Ultimate — Get full unlimited access to ZenScout Pro Senior Manager mock interview rounds, voice simulations, plus ZenDoc AI Pro & ZenResume!`;
   }
 
   if (isZenSuite) {
@@ -111,7 +111,7 @@ export async function POST(request: Request) {
         let closingInstruction = "";
         if (isFreeTierLastTurn && !isSuiteUser) {
           closingInstruction = `
-          SPECIAL INSTRUCTION: This is the 3rd turn for a free user. Evaluate the candidate's last answer, then provide the standard conversion message recommending Zen Suite Ultimate (₹599/mo) and ZenScout Pro.
+          SPECIAL INSTRUCTION: This is the 3rd turn for a free user. Evaluate the candidate's last answer, then provide the standard conversion message recommending Zen Suite Ultimate and ZenScout Pro.
           `;
         }
 

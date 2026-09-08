@@ -173,33 +173,9 @@ export default function PricingModal({ isOpen, onClose }: PricingModalProps) {
               </button>
             </div>
 
-            {/* Currency Switcher Bar */}
-            <div className="flex items-center justify-between px-2 pt-1">
-              <span className="text-xs font-bold text-[#596060] dark:text-slate-400">ZenScout Standalone Plans:</span>
-              <div className="inline-flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner">
-                <button
-                  type="button"
-                  onClick={() => handleCurrencyChange("INR")}
-                  className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
-                    currency === "INR" 
-                      ? "bg-[#476550] text-white shadow-md scale-105" 
-                      : "text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white"
-                  }`}
-                >
-                  ₹ INR (India)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleCurrencyChange("USD")}
-                  className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
-                    currency === "USD" 
-                      ? "bg-[#476550] text-white shadow-md scale-105" 
-                      : "text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white"
-                  }`}
-                >
-                  $ USD (Global)
-                </button>
-              </div>
+            {/* Standalone Plans Subheading */}
+            <div className="text-left px-2 pt-1">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#476550] dark:text-[#A2BCA8] block">Standalone Plans</span>
             </div>
 
             {/* 3. VALUE LADDER CARDS (3-Column Desktop, Stacked Mobile) */}

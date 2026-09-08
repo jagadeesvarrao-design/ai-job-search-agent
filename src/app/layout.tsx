@@ -11,12 +11,14 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: false,
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta",
   display: "swap",
+  preload: false,
 });
 
 export const viewport: Viewport = {
