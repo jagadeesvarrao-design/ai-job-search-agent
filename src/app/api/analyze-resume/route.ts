@@ -3,6 +3,7 @@ import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sanitizeString, validateBase64Pdf } from "@/lib/security";
 import { extractTextFromBase64PdfAsync } from "@/lib/pdf-parser";
 import { evaluateResumeAts, resolveRoleSkillMatrix } from "@/lib/ats-engine";
+import { getGeminiApiKey } from "@/lib/gemini-config";
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -34,24 +35,20 @@ export async function POST(request: Request) {
     const targetRole = sanitizeString(role || "Software Engineer", 100).trim();
     const extractedDoc = await extractTextFromBase64PdfAsync(resumeBase64);
     const resumeText = extractedDoc.text.trim();
+    const cleanBase64 = resumeBase64.replace(/^data:application\/pdf;base64,/, "").trim();
 
     // Baseline deterministic analysis as ground truth
     const deterministicAnalysis = evaluateResumeAts(resumeText, targetRole, extractedDoc.numPages);
 
-    // If deterministic parser flags invalid document / non-resume, return immediately
-    if (deterministicAnalysis.isNonResume || deterministicAnalysis.score === 0) {
-      return NextResponse.json({ success: true, analysis: deterministicAnalysis });
-    }
-
-    const apiKey = (process.env.GEMINI_API_KEY || "").trim();
+    const apiKey = getGeminiApiKey();
     const roleMatrix = resolveRoleSkillMatrix(targetRole);
 
-    // Attempt Gemini 2.5 Flash for deep semantic evaluation if configured
-    if (apiKey && resumeText.length > 50) {
+    // Attempt Gemini 2.5 Flash Multimodal Vision for deep semantic evaluation
+    if (apiKey) {
       try {
         const prompt = `
 You are an expert Enterprise Applicant Tracking System (ATS) screening algorithm and Senior Technical Recruiter.
-Analyze the candidate's extracted resume against the Target Role: "${targetRole}".
+Analyze the candidate's resume (inspecting both the attached PDF document visually and any extracted text) against the Target Role: "${targetRole}".
 
 === TARGET ROLE BENCHMARK ===
 - Domain: ${roleMatrix.domain}
@@ -75,8 +72,8 @@ Evaluate across these 5 strict dimensions:
 - 15 - 34: Severe domain mismatch (e.g., Non-tech background applying for software/AI role or vice versa).
 - 0: Non-resume document (policy paper, textbook, invoice, blank text).
 
-=== EXTRACTED RESUME TEXT (${extractedDoc.numPages} Page(s)) ===
-${resumeText}
+=== EXTRACTED TEXT HINT (${extractedDoc.numPages} Page(s)) ===
+${resumeText || "(Scanned / Rasterized PDF - visually read the attached PDF pages directly)"}
 
 === REQUIRED JSON OUTPUT FORMAT ===
 Return ONLY valid JSON matching this schema:
@@ -95,22 +92,39 @@ Return ONLY valid JSON matching this schema:
     "<string: actionable improvement regarding metrics or production capabilities>"
   ],
   "keyMissingSkills": ["<string: top 3-4 missing keywords>"],
-  "summary": "<string: comprehensive 2-3 sentence overview of ATS compatibility and recommendations>"
+  "summary": "<string: comprehensive 2-3 sentence overview of ATS compatibility and recommendations>",
+  "candidateProfile": {
+    "name": "<string: candidate full name or null>",
+    "targetRole": "<string: best matching professional title extracted directly from resume, e.g. Full Stack Developer, Frontend Engineer, Data Scientist, etc.>",
+    "location": "<string: city / state / country or Remote or null>",
+    "experienceLevel": "<Fresher | 1-3 Years | 3-5 Years | 5+ Years>"
+  }
 }
 `;
 
+        const parts: any[] = [];
+        if (cleanBase64) {
+          parts.push({
+            inlineData: {
+              mimeType: "application/pdf",
+              data: cleanBase64
+            }
+          });
+        }
+        parts.push({ text: prompt });
+
+        console.log("Analyzing with Gemini API Key prefix:", apiKey ? `${apiKey.substring(0, 6)}... (length ${apiKey.length})` : "NONE");
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
         const response = await fetch(url, {
           method: "POST",
           headers: { 
-            "Content-Type": "application/json",
-            "x-goog-api-key": apiKey
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             contents: [
               {
                 role: "user",
-                parts: [{ text: prompt }]
+                parts: parts
               }
             ],
             generationConfig: {
@@ -130,6 +144,9 @@ Return ONLY valid JSON matching this schema:
             // Validate structure & score bounds
             if (typeof analysis.score === "number" && !isNaN(analysis.score)) {
               const validatedScore = Math.min(100, Math.max(0, Math.round(analysis.score)));
+              const rawProf = analysis.candidateProfile || {};
+              const detProf = deterministicAnalysis.candidateProfile || {};
+
               return NextResponse.json({
                 success: true,
                 analysis: {
@@ -151,15 +168,28 @@ Return ONLY valid JSON matching this schema:
                   keyMissingSkills: Array.isArray(analysis.keyMissingSkills) && analysis.keyMissingSkills.length > 0 
                     ? analysis.keyMissingSkills.slice(0, 6).map((s: string) => sanitizeString(s, 50)) 
                     : deterministicAnalysis.keyMissingSkills,
-                  summary: sanitizeString(analysis.summary || deterministicAnalysis.summary, 600)
+                  summary: sanitizeString(analysis.summary || deterministicAnalysis.summary, 600),
+                  candidateProfile: {
+                    name: rawProf.name ? sanitizeString(rawProf.name, 60) : detProf.name || undefined,
+                    targetRole: rawProf.targetRole ? sanitizeString(rawProf.targetRole, 60) : (detProf.targetRole || targetRole),
+                    location: rawProf.location ? sanitizeString(rawProf.location, 60) : undefined,
+                    experienceLevel: ["Fresher", "1-3 Years", "3-5 Years", "5+ Years"].includes(rawProf.experienceLevel)
+                      ? rawProf.experienceLevel
+                      : (detProf.experienceLevel || "1-3 Years")
+                  }
                 }
               });
             }
           }
+        } else {
+          const errText = await response.text();
+          console.error("Gemini API non-ok status:", response.status, errText);
         }
       } catch (geminiErr: any) {
-        console.warn("Gemini cloud API call bypassed, running deterministic ATS engine:", geminiErr.message);
+        console.error("Gemini cloud API call failed:", geminiErr);
       }
+    } else {
+      console.warn("No GEMINI_API_KEY present in environment.");
     }
 
     // High-Precision Deterministic ATS Engine Fallback

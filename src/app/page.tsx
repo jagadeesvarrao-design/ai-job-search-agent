@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import AdaptiveSearchCapsule from "@/components/AdaptiveSearchCapsule";
 import { 
   ArrowRight, 
   Sparkles, 
@@ -585,117 +586,84 @@ Part of the Aneevarp Solutions Career Suite`
       />
 
       {/* ========================================================================= */}
-      {/* 4. HERO SECTION (Exact visual parity with ZenResume Dark Mode Screenshot 1) */}
+      {/* 4. HERO SECTION (Exact visual parity with Aneevarp Zen Suite Screenshots) */}
       {/* ========================================================================= */}
-      <section className="flex flex-col items-center justify-center pt-8 sm:pt-14 pb-10 sm:pb-14 relative w-full overflow-hidden">
-        {/* Soft Radial Center Emerald Glow (ZenResume darkmode signature glow) */}
-        <div className="absolute inset-0 zen-ambient-glow pointer-events-none -z-10"></div>
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-emerald-600/10 dark:bg-[#2DD4BF]/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+      <section className="flex flex-col items-center justify-center pt-8 sm:pt-14 pb-8 sm:pb-12 relative w-full overflow-hidden">
+        {/* Soft Ambient Left Glow (Matching screenshots 1 & 2) */}
+        <div className="absolute top-0 left-10 w-[550px] h-[350px] bg-emerald-600/10 dark:bg-[#2DD4BF]/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
-        {/* Top Pill Badge: Part of the Aneevarp Solutions Career Suite */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[rgba(71,101,80,0.08)] dark:bg-[rgba(20,45,35,0.7)] border border-[#A2BCA8]/40 dark:border-[rgba(45,212,191,0.3)] text-xs sm:text-sm font-extrabold text-[#476550] dark:text-[#2DD4BF] shadow-sm mb-6 hover:scale-105 transition-transform cursor-default">
-          <span className="text-base">🤖</span>
-          <span>Part of the Aneevarp Solutions Career Suite</span>
-          <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-500 ml-0.5" />
+        {/* Top Pill Badge (Exact match to screenshots 1 & 2) */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E1ECE3]/80 dark:bg-[#0E2018]/80 border border-[#CBD8CF] dark:border-[#1B3A2B] text-xs font-medium text-[#2E4234] dark:text-[#8CA595] shadow-xs mb-6 hover:scale-105 transition-transform cursor-default">
+          <span className="w-2 h-2 rounded-full bg-[#3D5644] dark:bg-[#52B788] animate-pulse"></span>
+          <span>Next-Gen Autonomous Job Intelligence • Aneevarp Zen Suite</span>
         </div>
         
-        {/* Main Display Headline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 sm:mb-6 max-w-4xl text-[#1A1F1F] dark:text-[#F8FAFC] leading-[1.12] px-2 font-display">
-          Let AI Scout & Apply to <br className="hidden sm:block" />
-          <span className="text-[#00846D] dark:text-[#2DD4BF] drop-shadow-[0_0_20px_rgba(45,212,191,0.3)]">
-            200+ Verified Jobs
-          </span> While You Sleep.
+        {/* Main Display Headline with Italic Display Accent */}
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[62px] font-extrabold tracking-tight mb-5 max-w-5xl text-[#1A1F1F] dark:text-white px-2 leading-[1.14]">
+          Enterprise Autonomous Job Search Grounded in <br className="hidden sm:inline" />
+          <span className="italic font-serif font-black text-[#3D5644] dark:text-[#5DA179] pr-1">
+            Real-Time Precision
+          </span>
         </h1>
         
-        {/* Subtitle */}
-        <p className="text-sm sm:text-base md:text-lg text-[#475569] dark:text-[#CBD5E1] max-w-2xl mb-8 leading-relaxed font-normal px-2">
-          Why waste 3 hours manually applying or ₹499 on paid subscription traps? Crawl live job boards (Google Jobs, LinkedIn, Indeed), score your resume match rate in real-time, and auto-tailor application cover letters with 1 click — <strong>100% Free Forever</strong> with Zero-Backend privacy.
+        {/* Subtitle with Keyword Bold Highlights */}
+        <p className="text-sm sm:text-base md:text-lg text-[#4B5563] dark:text-[#94A3B8] max-w-3xl mb-8 leading-relaxed font-normal px-2">
+          Extract actionable job matches and tailor applications from live market feeds. Powered by{" "}
+          <strong className="font-bold text-[#1A1F1F] dark:text-white">Google Gemini 2.5 Flash</strong>, in-memory{" "}
+          <strong className="font-bold text-[#1A1F1F] dark:text-white">Multi-Factor ATS Engine</strong>, and an innovative{" "}
+          <strong className="font-bold text-[#1A1F1F] dark:text-white">Voice AI Interview Coach</strong> with Zero-Backend Data Privacy.
         </p>
 
-        {/* Primary Hero CTA Button (Large Pill Button matching ZenResume screenshot) */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mb-8">
-          <button
-            onClick={() => {
-              const el = document.getElementById("category-blueprints");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#476550] hover:bg-[#3A5342] dark:bg-[#237A57] dark:hover:bg-[#10B981] text-white font-extrabold text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all shadow-[0_6px_20px_rgba(71,101,80,0.25)] dark:shadow-[0_6px_24px_rgba(35,122,87,0.45)] hover:scale-105 active:scale-95 btn-tactile cursor-pointer"
+        {/* Hero CTA Action Buttons (Solid Sage Launch Button & White/Dark Sandbox Button) */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full max-w-md mb-8">
+          <Link
+            href="/dashboard"
+            className="w-full sm:w-auto bg-[#3D5644] hover:bg-[#344A3B] dark:bg-[#3D5644] dark:hover:bg-[#476550] text-white font-extrabold text-xs uppercase tracking-wider py-3.5 px-6 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 btn-tactile whitespace-nowrap"
           >
-            <span>⚡ Scout Live Jobs Free</span>
-            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-          </button>
+            <Zap className="w-4 h-4 fill-current" />
+            <span>Launch ZenScout AI</span>
+          </Link>
+          <Link
+            href="/profile"
+            className="w-full sm:w-auto bg-white hover:bg-[#F2F6F3] dark:bg-[#0B1712] dark:hover:bg-[#11231C] border border-[#CBD8CF] dark:border-[#1E382B] text-[#1A1F1F] dark:text-white font-extrabold text-xs uppercase tracking-wider py-3.5 px-6 rounded-xl shadow-xs flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 btn-tactile whitespace-nowrap"
+          >
+            <Play className="w-3.5 h-3.5 fill-current" />
+            <span>Try Interactive Sandbox</span>
+          </Link>
         </div>
 
-        {/* 1-Click Fast-Track Hero Role Chips (Exact match to Screenshot 1) */}
-        <div className="flex flex-col items-center gap-2.5 mb-8 z-10 w-full">
-          <span className="text-[11px] sm:text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] inline-flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-            <span>Or launch instantly with pre-filled role blueprints:</span>
-          </span>
-          <div className="flex flex-wrap justify-center gap-2 max-w-3xl px-2">
-            {[
-              { icon: "💻", title: "Software Engineer", query: "Software Engineer" },
-              { icon: "🎓", title: "TCS NQT Fresher", query: "TCS NQT Fresher" },
-              { icon: "📊", title: "Data Analyst", query: "Data Analyst Python SQL" },
-              { icon: "☁️", title: "AWS Cloud Dev", query: "AWS Cloud DevOps Engineer" },
-              { icon: "🏛️", title: "Campus Placement", query: "Campus Placement Fresher 2025" }
-            ].map((chip, idx) => (
-              <Link
-                key={idx}
-                href={`/dashboard?q=${encodeURIComponent(chip.query)}`}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#FAF9F6] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1B2A24] text-[#1A1F1F] dark:text-[#CBD5E1] hover:border-[#476550] dark:hover:border-[#2DD4BF] hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-all btn-tactile shadow-sm"
-              >
-                <span>{chip.icon}</span>
-                <span>{chip.title}</span>
-              </Link>
-            ))}
+        {/* Tech Stack Pills Row (Exact match to Screenshots 1 & 2) */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10 max-w-4xl px-2">
+          <div className="bg-white/90 dark:bg-[#0B1712] border border-[#D5DDD6] dark:border-[#1B3A2B] px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#2D3A30] dark:text-[#CBD5E1] flex items-center gap-2 shadow-xs">
+            <span className="font-black text-[#4285F4]">G</span>
+            <span>Google Cloud Run</span>
+          </div>
+          <div className="bg-white/90 dark:bg-[#0B1712] border border-[#D5DDD6] dark:border-[#1B3A2B] px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#2D3A30] dark:text-[#CBD5E1] flex items-center gap-2 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#3D5644] dark:text-[#2DD4BF]" />
+            <span>Gemini 2.5 Flash</span>
+          </div>
+          <div className="bg-white/90 dark:bg-[#0B1712] border border-[#D5DDD6] dark:border-[#1B3A2B] px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#2D3A30] dark:text-[#CBD5E1] flex items-center gap-2 shadow-xs">
+            <Search className="w-3.5 h-3.5 text-amber-500" />
+            <span>Google Jobs Live Index</span>
+          </div>
+          <div className="bg-white/90 dark:bg-[#0B1712] border border-[#D5DDD6] dark:border-[#1B3A2B] px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#2D3A30] dark:text-[#CBD5E1] flex items-center gap-2 shadow-xs">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <span>Zero-Backend Vault</span>
+          </div>
+          <div className="bg-white/90 dark:bg-[#0B1712] border border-[#D5DDD6] dark:border-[#1B3A2B] px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#2D3A30] dark:text-[#CBD5E1] flex items-center gap-2 shadow-xs">
+            <Layers className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+            <span>FAISS In-Memory</span>
           </div>
         </div>
 
         {/* ========================================================================= */}
-        {/* REAL-TIME COMMAND SEARCH BAR */}
+        {/* ADAPTIVE MULTI-TIER SEARCH CAPSULE */}
         {/* ========================================================================= */}
-        <div className="w-full max-w-3xl mb-4 z-10">
-          <form 
-            onSubmit={handleConsoleSubmit}
-            className="bg-[#FAF9F6] dark:bg-[#0D1714] p-2 sm:p-2.5 rounded-3xl md:rounded-full border border-[rgba(162,188,168,0.4)] dark:border-[rgba(45,212,191,0.25)] shadow-[0_8px_30px_rgba(26,31,31,0.08)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.7)] flex flex-col md:flex-row items-center gap-2 transition-all hover:border-[#476550] dark:hover:border-[#2DD4BF]"
-          >
-            {/* Target Role Input */}
-            <div className="flex items-center gap-2.5 px-4 py-2.5 w-full md:flex-1 bg-white dark:bg-[#121E1A] md:bg-transparent md:dark:bg-transparent rounded-2xl md:rounded-none">
-              <Search className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF] flex-shrink-0" />
-              <input
-                type="text"
-                value={targetRole}
-                onChange={(e) => setTargetRole(e.target.value)}
-                placeholder="Target Role (e.g. Full-Stack Engineer, React, Node.js)"
-                className="w-full bg-transparent text-xs sm:text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC] placeholder:text-[#7D8787] focus:outline-none min-h-[40px]"
-              />
-            </div>
-
-            <div className="hidden md:block w-px h-8 bg-[rgba(162,188,168,0.3)] dark:bg-[rgba(45,212,191,0.2)]"></div>
-
-            {/* Target Location Input */}
-            <div className="flex items-center gap-2 px-4 py-2.5 w-full md:w-56 bg-white dark:bg-[#121E1A] md:bg-transparent md:dark:bg-transparent rounded-2xl md:rounded-none">
-              <MapPin className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF] flex-shrink-0" />
-              <input
-                type="text"
-                value={targetLocation}
-                onChange={(e) => setTargetLocation(e.target.value)}
-                placeholder="Location (e.g. Remote, Bangalore)"
-                className="w-full bg-transparent text-xs sm:text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC] placeholder:text-[#7D8787] focus:outline-none min-h-[40px]"
-              />
-            </div>
-
-            {/* Action CTA Button */}
-            <button
-              type="submit"
-              className="stitch-hero-cta btn-tactile w-full md:w-auto px-7 py-3 text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md font-extrabold whitespace-nowrap"
-            >
-              <span>⚡ Search</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
-        </div>
+        <AdaptiveSearchCapsule 
+          initialRole={targetRole}
+          initialLocation={targetLocation}
+          className="mb-4 z-10"
+        />
       </section>
 
       {/* ========================================================================= */}
@@ -708,32 +676,39 @@ Part of the Aneevarp Solutions Career Suite`
           Select your career stage or domain to preview recruiter-tested Google XYZ bullet points, inspect high-priority ATS keywords, and scout live matches.
         </p>
 
-        {/* Filter Tabs Carousel matching Screenshot 2 */}
-        <div className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto pb-4 mb-6 no-scrollbar px-1">
-          {[
-            { id: "all", label: "All Roles", icon: "☀️" },
-            { id: "freshers", label: "Freshers & Students", icon: "🎓" },
-            { id: "tech", label: "Software & Tech", icon: "💻" },
-            { id: "data", label: "Data Science & AI", icon: "📊" },
-            { id: "cloud", label: "Cloud & DevOps", icon: "☁️" },
-            { id: "management", label: "Management & Finance", icon: "💼" }
-          ].map((tab) => {
-            const isActive = activeCategory === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveCategory(tab.id)}
-                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer btn-tactile ${
-                  isActive
-                    ? "bg-[#2DD4BF] text-[#061B18] shadow-[0_4px_16px_rgba(45,212,191,0.4)] scale-105"
-                    : "bg-[#FAF9F6] dark:bg-[#0D1714] text-[#475569] dark:text-[#94A3B8] border border-[#D8E2DA] dark:border-[#1C2E27] hover:text-[#1A1F1F] dark:hover:text-white hover:border-[#476550] dark:hover:border-[#2DD4BF]"
-                }`}
-              >
-                <span>{tab.icon}</span>
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+        {/* Filter Tabs Carousel with Horizontal Edge Fade Mask */}
+        <div className="relative w-full max-w-4xl mx-auto mb-4">
+          <div className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto pb-3 no-scrollbar horizontal-scroll-fade px-3">
+            {[
+              { id: "all", label: "All Roles", icon: "☀️" },
+              { id: "freshers", label: "Freshers & Students", icon: "🎓" },
+              { id: "tech", label: "Software & Tech", icon: "💻" },
+              { id: "data", label: "Data Science & AI", icon: "📊" },
+              { id: "cloud", label: "Cloud & DevOps", icon: "☁️" },
+              { id: "management", label: "Management & Finance", icon: "💼" }
+            ].map((tab) => {
+              const isActive = activeCategory === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveCategory(tab.id)}
+                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer btn-tactile ${
+                    isActive
+                      ? "bg-[#2DD4BF] text-[#061B18] shadow-[0_4px_16px_rgba(45,212,191,0.4)] scale-105"
+                      : "bg-[#FAF9F6] dark:bg-[#0D1714] text-[#475569] dark:text-[#94A3B8] border border-[#D8E2DA] dark:border-[#1C2E27] hover:text-[#1A1F1F] dark:hover:text-white hover:border-[#476550] dark:hover:border-[#2DD4BF]"
+                  }`}
+                >
+                  <span>{tab.icon}</span>
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile Swipe Cue */}
+        <div className="flex sm:hidden items-center justify-center gap-1 text-[11px] font-bold text-[#7D8787] dark:text-[#94A3B8] mb-6">
+          <span>← Swipe horizontally to see all blueprints →</span>
         </div>
 
         {/* Large Featured Interactive Showcase Card (Screenshot 2 exact parity) */}
@@ -821,7 +796,7 @@ Part of the Aneevarp Solutions Career Suite`
                   <div className="w-9 h-9 rounded-xl bg-[#E8F0EB] dark:bg-[#13221C] flex items-center justify-center text-base">
                     {card.icon}
                   </div>
-                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-[#E8F0EB] dark:bg-[#0E201B] text-[#476550] dark:text-[#2DD4BF] border border-[#A2BCA8]/40 dark:border-[#1F3E34]">
+                  <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-md bg-slate-100 dark:bg-[#121E1A] text-[#7D8787] dark:text-[#94A3B8] border border-[#D8E2DA] dark:border-[#1F3E34]">
                     {card.badge}
                   </span>
                 </div>
@@ -974,13 +949,9 @@ Part of the Aneevarp Solutions Career Suite`
                       {job.tags.map((tag, idx) => (
                         <span
                           key={idx}
-                          className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${
-                            tag.matched
-                              ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60"
-                              : "bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800/60"
-                          }`}
+                          className={tag.matched ? "badge-success-chip text-[11px]" : "badge-warning-chip text-[11px]"}
                         >
-                          {tag.matched ? `✅ ${tag.text}` : `⚠️ ${tag.text}`}
+                          {tag.matched ? `✓ ${tag.text}` : `• ${tag.text}`}
                         </span>
                       ))}
                     </div>
@@ -991,7 +962,7 @@ Part of the Aneevarp Solutions Career Suite`
                     {/* ⚡ 1-Click Auto-Tailor Cover Letter */}
                     <button
                       onClick={() => handleGenerateCoverLetter(job)}
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:hover:bg-[#5EEAD4] text-white dark:text-[#061B18] text-xs font-bold py-2.5 px-3 rounded-full btn-tactile shadow-sm cursor-pointer"
+                      className="btn-primary text-xs flex-1 py-2 px-3"
                     >
                       <Zap className="w-3.5 h-3.5 fill-current" />
                       <span>1-Click Auto-Tailor</span>
@@ -1002,7 +973,7 @@ Part of the Aneevarp Solutions Career Suite`
                       href={job.applyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-1 px-3 py-2.5 rounded-full text-xs font-bold text-[#1A1F1F] dark:text-[#F8FAFC] bg-[#FAF9F6] dark:bg-[#13221C] border border-[rgba(162,188,168,0.4)] dark:border-[#1F352C] hover:border-[#476550] dark:hover:border-[#2DD4BF] transition-all btn-tactile"
+                      className="btn-secondary text-xs py-2 px-3"
                       title="View original posting on source"
                     >
                       <span>Source</span>
@@ -1108,7 +1079,7 @@ Part of the Aneevarp Solutions Career Suite`
                     </p>
 
                     {/* Progress Bar Animation */}
-                    <div className="w-full bg-slate-200/60 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                    <div className="w-full bg-[#D8E2DA]/60 dark:bg-[#121E1A] rounded-full h-2.5 overflow-hidden">
                       <div 
                         className="bg-gradient-to-r from-[#476550] via-[#00846D] to-[#2DD4BF] h-2.5 rounded-full transition-all duration-500" 
                         style={{ width: `${simulatedMatch}%` }}

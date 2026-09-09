@@ -21,7 +21,7 @@ export default function BlogIndex() {
   return (
     <div className="max-w-5xl mx-auto py-8 px-2 md:px-4">
       <div className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#2DD4BF] font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#2DD4BF] font-semibold mb-4">
           <BookOpen className="w-4 h-4" />
           <span>Aneevarp Solutions Career Research Lab</span>
         </div>
@@ -35,11 +35,11 @@ export default function BlogIndex() {
         {blogPosts.map((post) => (
           <article 
             key={post.slug} 
-            className="bg-[#FAF9F6] dark:bg-[#141B20] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft hover:shadow-soft-hover hover:border-[#476550]/40 dark:hover:border-[#2DD4BF]/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+            className="bg-[#FAF9F6] dark:bg-[#0D1714] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft hover:shadow-soft-hover hover:border-[#476550]/40 dark:hover:border-[#2DD4BF]/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
           >
             <div>
               <div className="flex items-center justify-between gap-4 mb-4">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-[#E8F0EB] dark:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] border border-teal-100 dark:border-[#2DD4BF]/20">
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-[#E8F0EB] dark:bg-[#121E1A] text-[#476550] dark:text-[#2DD4BF] border border-teal-100 dark:border-[#2DD4BF]/20">
                   <Tag className="w-3 h-3" />
                   {post.category}
                 </span>
@@ -60,9 +60,9 @@ export default function BlogIndex() {
               </p>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 dark:border-[#232D36] flex items-center justify-between">
+            <div className="pt-4 border-t border-slate-100 dark:border-[#1A2E26] flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-[#D5E0F8] dark:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center text-xs font-bold border border-transparent dark:border-[#2DD4BF]/20">
+                <div className="w-8 h-8 rounded-full bg-[#D5E0F8] dark:bg-[#121E1A] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center text-xs font-bold border border-transparent dark:border-[#2DD4BF]/20">
                   {post.author.avatar}
                 </div>
                 <div className="flex flex-col">
@@ -86,7 +86,7 @@ export default function BlogIndex() {
       {/* AdSense Placement Section */}
       <aside 
         aria-label="Sponsored Content" 
-        className="mt-16 p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] shadow-soft text-center text-xs text-[#596060] dark:text-[#CBD5E1]"
+        className="mt-16 p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft text-center text-xs text-[#596060] dark:text-[#CBD5E1]"
       >
         <span className="uppercase tracking-wider font-semibold text-[10px] text-slate-400 dark:text-[#94A3B8] block mb-1">Advertisements & Career Resources</span>
         <p className="text-slate-500 dark:text-[#94A3B8]">AdSense auto-ads or relevant career partner resources will appear here non-intrusively.</p>

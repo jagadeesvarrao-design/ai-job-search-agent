@@ -27,6 +27,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   themeColor: "#476550",
+  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {
@@ -189,7 +190,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#FCFAF5] dark:bg-[#06110D] text-[#1A1F1F] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#476550] selection:text-white dark:selection:bg-[#2DD4BF] dark:selection:text-[#061B18] transition-colors duration-300">
+      <body className="min-h-full flex flex-col bg-[#F7F9F6] dark:bg-[#07130E] text-[#1A1F1F] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#476550] selection:text-white dark:selection:bg-[#2DD4BF] dark:selection:text-[#061B18] transition-colors duration-300">
         
         {/* Web Accessibility: Skip to Main Content (RPwD Act 2016 / WCAG 2.1 AA) */}
         <a 
@@ -205,7 +206,7 @@ export default function RootLayout({
           <HeaderNav />
 
           {/* Main Workspace */}
-          <main id="main-content" className="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-6 md:py-8">
+          <main id="main-content" className="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-6 pb-24 lg:pb-8">
             {children}
           </main>
         </AuthProvider>
@@ -223,7 +224,7 @@ export default function RootLayout({
                   </div>
                   <span>ZenScout AI</span>
                 </div>
-                <span className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium md:border-l md:border-[#D8E2DA] dark:md:border-[#232D36] md:pl-3">
+                <span className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium md:border-l md:border-[#D8E2DA] dark:md:border-[#1A2E26] md:pl-3">
                   © {new Date().getFullYear()} ZenScout AI. Engineered by <strong className="text-black dark:text-white">Aneevarp Solutions</strong>.
                 </span>
               </div>
@@ -239,7 +240,7 @@ export default function RootLayout({
             </div>
 
             {/* Bottom Statutory Disclosure Bar */}
-            <div className="pt-4 border-t border-slate-200/60 dark:border-[#232D36] text-[11px] text-[#7D8787] dark:text-[#94A3B8] flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+            <div className="pt-4 border-t border-slate-200/60 dark:border-[#1A2E26] text-[11px] text-[#7D8787] dark:text-[#94A3B8] flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
               <div>
                 <span>Operating Entity: <strong>Aneevarp Solutions</strong> (Hyderabad, Telangana, India) • Country of Origin: <strong>India</strong></span>
               </div>

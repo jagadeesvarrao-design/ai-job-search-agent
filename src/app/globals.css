@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 481px;
+  --breakpoint-md: 769px;
+  --breakpoint-lg: 1025px;
+  --breakpoint-xl: 1441px;
+  --breakpoint-2xl: 1921px;
+}
+
 @layer base {
   :root {
     /* Brand Emerald & Mint Accents */
@@ -109,7 +120,9 @@
   }
 
   body {
-    background-color: var(--bg-main);
+    background-color: #F7F9F6;
+    background-image: radial-gradient(circle at 14% 30%, rgba(206, 226, 214, 0.45) 0%, rgba(230, 240, 233, 0.22) 42%, rgba(247, 249, 246, 0) 70%);
+    background-attachment: fixed;
     color: var(--text-sub);
     min-height: 100vh;
     font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -117,6 +130,13 @@
     line-height: 1.6;
     transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     overflow-x: hidden;
+  }
+
+  html.dark body,
+  .dark body {
+    background-color: #07130E;
+    background-image: radial-gradient(circle at 14% 28%, rgba(32, 72, 50, 0.45) 0%, rgba(14, 38, 27, 0.25) 42%, rgba(7, 19, 14, 0) 70%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -320,6 +340,170 @@
     opacity: 0.6;
     animation: pulseLiveDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+  /* Standardized Action Buttons */
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    padding: 0.625rem 1.25rem;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: var(--shadow-glow);
+    cursor: pointer;
+  }
+  .dark .btn-primary, [data-theme="dark"] .btn-primary {
+    color: #06110D;
+    font-weight: 700;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(45, 212, 191, 0.35);
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-secondary {
+    background-color: var(--bg-surface-elevated);
+    color: var(--text-main);
+    border: 1px solid var(--border-subtle);
+    font-weight: 500;
+    border-radius: var(--radius-pill);
+    padding: 0.625rem 1.25rem;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  .btn-secondary:hover:not(:disabled) {
+    border-color: var(--border-focus);
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+  .btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-pro {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(45, 212, 191, 0.12) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #D97706;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 1rem;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    cursor: pointer;
+  }
+  .dark .btn-pro, [data-theme="dark"] .btn-pro {
+    color: #FBBF24;
+    border-color: rgba(245, 158, 11, 0.5);
+  }
+  .btn-pro:hover {
+    border-color: #F59E0B;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(45, 212, 191, 0.22) 100%);
+    transform: translateY(-1px);
+  }
+
+  /* Standardized Chips / Badges */
+  .badge-warning-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #B45309;
+  }
+  .dark .badge-warning-chip, [data-theme="dark"] .badge-warning-chip {
+    color: #FCD34D;
+    background-color: rgba(245, 158, 11, 0.18);
+    border-color: rgba(245, 158, 11, 0.45);
+  }
+
+  .badge-success-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #047857;
+  }
+  .dark .badge-success-chip, [data-theme="dark"] .badge-success-chip {
+    color: #6EE7B7;
+    background-color: rgba(16, 185, 129, 0.18);
+    border-color: rgba(16, 185, 129, 0.45);
+  }
+
+  /* Fluid Responsive Typography */
+  .fluid-hero-title {
+    font-size: clamp(1.85rem, 4.5vw + 0.5rem, 4.25rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+  }
+  .fluid-section-title {
+    font-size: clamp(1.35rem, 3vw + 0.25rem, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .fluid-body {
+    font-size: clamp(0.85rem, 1vw + 0.2rem, 1.05rem);
+    line-height: 1.6;
+  }
+
+  /* Dynamic Viewport & Safe Area Utilities */
+  .h-dvh {
+    height: 100dvh;
+  }
+  .min-h-dvh {
+    min-height: 100dvh;
+  }
+  .max-h-dvh {
+    max-height: 100dvh;
+  }
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 16px));
+  }
+  .bottom-safe {
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 12px));
+  }
+
+  /* Frictionless Horizontal Scroll Fade Mask */
+  .horizontal-scroll-fade {
+    mask-image: linear-gradient(to right, transparent 0%, black 16px, black calc(100% - 24px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 16px, black calc(100% - 24px), transparent 100%);
+  }
+
+  /* Mobile Touch Target Guarantees */
+  @media (pointer: coarse) {
+    .btn-tactile, .btn-primary, .btn-secondary, .btn-pro, button, input, select, textarea {
+      min-height: 44px;
+    }
+  }
 }
 
 /* Keyframe Animations */
@@ -383,4 +567,21 @@
 .animate-scan {
   animation: laserScan 3s linear infinite;
 }
+
+@keyframes waveBar {
+  0%, 100% {
+    height: 6px;
+    opacity: 0.4;
+  }
+  50% {
+    height: 28px;
+    opacity: 1;
+  }
+}
+
+.animate-wave-1 { animation: waveBar 1.1s ease-in-out infinite 0.1s; }
+.animate-wave-2 { animation: waveBar 1.1s ease-in-out infinite 0.25s; }
+.animate-wave-3 { animation: waveBar 1.1s ease-in-out infinite 0.4s; }
+.animate-wave-4 { animation: waveBar 1.1s ease-in-out infinite 0.15s; }
+.animate-wave-5 { animation: waveBar 1.1s ease-in-out infinite 0.35s; }
 

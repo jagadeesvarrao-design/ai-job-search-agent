@@ -16,7 +16,7 @@ export default function AboutPage() {
     <div className="max-w-5xl mx-auto py-8 px-2 md:px-4">
       {/* Header */}
       <div className="text-center mb-14">
-        <div className="inline-flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#2DD4BF] font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#2DD4BF] font-semibold mb-4">
           <Building2 className="w-4 h-4" />
           <span>A Product of Aneevarp Solutions</span>
         </div>
@@ -28,7 +28,7 @@ export default function AboutPage() {
 
       {/* 3 Value Pillars */}
       <div className="grid md:grid-cols-3 gap-6 mb-14">
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft text-center">
+        <div className="bg-[#FAF9F6] dark:bg-[#0D1714] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft text-center">
           <div className="w-14 h-14 bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 rounded-2xl flex items-center justify-center mx-auto mb-6 text-[#476550] dark:text-[#2DD4BF]">
             <Target className="w-7 h-7" />
           </div>
@@ -38,7 +38,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft text-center">
+        <div className="bg-[#FAF9F6] dark:bg-[#0D1714] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft text-center">
           <div className="w-14 h-14 bg-amber-50 dark:bg-amber-950/40 rounded-2xl flex items-center justify-center mx-auto mb-6 text-amber-600 dark:text-amber-400">
             <Zap className="w-7 h-7" />
           </div>
@@ -48,7 +48,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft text-center">
+        <div className="bg-[#FAF9F6] dark:bg-[#0D1714] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft text-center">
           <div className="w-14 h-14 bg-purple-50 dark:bg-purple-950/40 rounded-2xl flex items-center justify-center mx-auto mb-6 text-purple-600 dark:text-purple-400">
             <ShieldCheck className="w-7 h-7" />
           </div>
@@ -60,7 +60,7 @@ export default function AboutPage() {
       </div>
 
       {/* FOUNDER & LEAD ARCHITECT SPOTLIGHT */}
-      <section className="bg-gradient-to-br from-white via-[#F8FAFC] to-teal-50/40 dark:from-[#141B20] dark:via-[#1A2228] dark:to-teal-950/20 rounded-3xl p-6 sm:p-10 md:p-12 mb-14 border border-[#D8E2DA] dark:border-[#232D36] shadow-soft relative overflow-hidden">
+      <section className="bg-gradient-to-br from-white via-[#F8FAFC] to-teal-50/40 dark:from-[#0D1714] dark:via-[#121E1A] dark:to-teal-950/20 rounded-3xl p-6 sm:p-10 md:p-12 mb-14 border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft relative overflow-hidden">
         {/* Ambient Glow */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#476550]/10 dark:bg-[#2DD4BF]/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -92,7 +92,7 @@ export default function AboutPage() {
                 href="https://github.com/jagadeesvarrao-design"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:underline inline-flex items-center gap-1 bg-slate-100 dark:bg-[#1A2228] px-3 py-1 rounded-full border border-slate-200 dark:border-[#232D36] btn-tactile"
+                className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:underline inline-flex items-center gap-1 bg-slate-100 dark:bg-[#121E1A] px-3 py-1 rounded-full border border-slate-200 dark:border-[#1A2E26] btn-tactile"
               >
                 <span>GitHub</span>
                 <ExternalLink className="w-3 h-3" />
@@ -117,7 +117,7 @@ export default function AboutPage() {
             </p>
 
             {/* Created Ecosystem Tools */}
-            <div className="pt-3 border-t border-slate-200/80 dark:border-[#232D36]">
+            <div className="pt-3 border-t border-slate-200/80 dark:border-[#1A2E26]">
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block mb-2.5">
                 Platforms Engineered by Jagadeeswara Rao:
               </span>
@@ -126,7 +126,7 @@ export default function AboutPage() {
                   href="https://zenresume.online"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] hover:border-[#476550] dark:hover:border-[#2DD4BF] transition-all flex items-center justify-between group shadow-sm btn-tactile"
+                  className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] hover:border-[#476550] dark:hover:border-[#2DD4BF] transition-all flex items-center justify-between group shadow-sm btn-tactile"
                 >
                   <div className="text-left">
                     <span className="text-xs font-black text-[#1A1F1F] dark:text-[#F8FAFC] block group-hover:text-[#476550] dark:group-hover:text-[#2DD4BF] transition-colors">ZenResume</span>
@@ -135,12 +135,12 @@ export default function AboutPage() {
                   <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#476550] dark:group-hover:text-[#2DD4BF]" />
                 </a>
 
-                <div className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#1A2228] border border-[#476550]/40 dark:border-[#2DD4BF]/40 shadow-sm text-left">
+                <div className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#121E1A] border border-[#476550]/40 dark:border-[#2DD4BF]/40 shadow-sm text-left">
                   <span className="text-xs font-black text-[#476550] dark:text-[#2DD4BF] block">ZenScout AI</span>
                   <span className="text-[10px] text-[#7D8787] dark:text-[#94A3B8]">Autonomous Job Scout</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] text-left shadow-sm">
+                <div className="p-3 rounded-2xl bg-[#FAF9F6] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] text-left shadow-sm">
                   <span className="text-xs font-black text-[#1A1F1F] dark:text-[#F8FAFC] block">ZenDoc AI</span>
                   <span className="text-[10px] text-[#7D8787] dark:text-[#94A3B8]">Document & Data AI</span>
                 </div>
@@ -151,7 +151,7 @@ export default function AboutPage() {
       </section>
       
       {/* PARENT COMPANY & STATUTORY SPOTLIGHT */}
-      <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-8 md:p-12 rounded-3xl mb-14 border border-[#D8E2DA] dark:border-[#232D36] shadow-soft">
+      <div className="bg-[#FAF9F6] dark:bg-[#0D1714] p-8 md:p-12 rounded-3xl mb-14 border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft">
         <div className="flex items-center gap-2 mb-4 text-[#476550] dark:text-[#2DD4BF]">
           <Award className="w-5 h-5" />
           <span className="text-xs uppercase tracking-widest font-bold">Parent Company & Corporate Disclosures</span>
@@ -164,7 +164,7 @@ export default function AboutPage() {
           Following the launch of <strong>ZenResume</strong>, our team developed <strong>ZenScout AI</strong> to empower candidates with multi-agent automation: scouting live positions, scoring resume compatibility, crafting tailored cover letters, and simulating hiring manager interviews.
         </p>
 
-        <div className="grid sm:grid-cols-3 gap-4 pt-6 border-t border-[#D8E2DA] dark:border-[#232D36]">
+        <div className="grid sm:grid-cols-3 gap-4 pt-6 border-t border-[#D8E2DA] dark:border-[#1A2E26]">
           <div className="flex flex-col gap-1">
             <span className="text-xs text-[#7D8787] dark:text-[#94A3B8]">Legal Entity</span>
             <span className="text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC]">Aneevarp Solutions</span>

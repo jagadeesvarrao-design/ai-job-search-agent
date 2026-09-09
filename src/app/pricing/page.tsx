@@ -60,7 +60,7 @@ export default function PricingPage() {
     <div className="max-w-5xl mx-auto py-6 sm:py-10 px-2 sm:px-4 text-center">
       {/* Header */}
       <div className="mb-6">
-        <div className="inline-flex items-center gap-1.5 bg-[#476550]/10 dark:bg-teal-900/30 text-[#476550] dark:text-[#A2BCA8] text-xs font-black px-4 py-1.5 rounded-full mb-3">
+        <div className="inline-flex items-center gap-1.5 bg-[rgba(71,101,80,0.08)] dark:bg-[rgba(45,212,191,0.12)] text-[#476550] dark:text-[#2DD4BF] text-xs font-black px-4 py-1.5 rounded-full mb-3">
           <Crown className="w-4 h-4 text-amber-500" />
           <span>ZENScout PRO & ZEN SUITE ACCELERATION</span>
         </div>
@@ -89,7 +89,7 @@ export default function PricingPage() {
 
           <button
             onClick={() => setAuthModalOpen(true)}
-            className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#6B9077] dark:hover:bg-[#55735E] text-white text-xs font-black py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1.5 whitespace-nowrap self-stretch sm:self-auto justify-center cursor-pointer"
+            className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#237A57] dark:hover:bg-[#10B981] text-white text-xs font-black py-2.5 px-4 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1.5 whitespace-nowrap self-stretch sm:self-auto justify-center cursor-pointer"
           >
             <LogIn className="w-4 h-4" />
             <span>Sign In / Create Account</span>
@@ -113,7 +113,7 @@ export default function PricingPage() {
       )}
 
       {/* 🌟 ZEN SUITE ULTIMATE ALL-IN-ONE CROSS-APP BUNDLE */}
-      <div className="my-6 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#00846D] via-[#476550] to-[#2DD4BF] dark:from-[#0B0F12] dark:via-[#141B20] dark:to-[#0B0F12] border-2 border-[rgba(45,212,191,0.35)] shadow-2xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-left relative overflow-hidden">
+      <div className="my-6 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#00846D] via-[#476550] to-[#2DD4BF] dark:from-[#06110D] dark:via-[#0D1714] dark:to-[#06110D] border-2 border-[rgba(45,212,191,0.35)] shadow-2xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-left relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 dark:bg-[rgba(45,212,191,0.1)] rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="space-y-2 max-w-2xl relative z-10">
@@ -123,7 +123,7 @@ export default function PricingPage() {
           </div>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white flex flex-wrap items-center gap-3">
             <span>Zen Suite Ultimate Cross-Pass</span>
-            <span className="text-sm sm:text-base font-bold text-[#FCFAF5] dark:text-[#2DD4BF] bg-black/30 dark:bg-[#1A2228] px-3.5 py-1 rounded-full border border-white/20 dark:border-[rgba(45,212,191,0.3)]">
+            <span className="text-sm sm:text-base font-bold text-[#FCFAF5] dark:text-[#2DD4BF] bg-black/30 dark:bg-[#121E1A] px-3.5 py-1 rounded-full border border-white/20 dark:border-[rgba(45,212,191,0.3)]">
               {isINR ? "₹599/month" : "$29/month"}
             </span>
           </h2>
@@ -157,7 +157,7 @@ export default function PricingPage() {
           <div>
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-extrabold text-sm text-black dark:text-white uppercase tracking-wider">1-Month Starter</h3>
-              <span className="text-[10px] bg-slate-100 dark:bg-[#1A2228] text-slate-700 dark:text-[#CBD5E1] px-3 py-1 rounded-full font-bold">
+              <span className="text-[10px] bg-slate-100 dark:bg-[#121E1A] text-slate-700 dark:text-[#CBD5E1] px-3 py-1 rounded-full font-bold">
                 Light Hunt
               </span>
             </div>
@@ -169,7 +169,7 @@ export default function PricingPage() {
               <span className="text-xs text-slate-500 dark:text-[#94A3B8] font-semibold"> / {isINR ? "month" : "mo"}</span>
             </div>
 
-            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-200/70 dark:border-[#232D36]">
+            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-200/70 dark:border-[#1A2E26]">
               Essential AI tools for single-role targeted applications.
             </p>
 
@@ -200,7 +200,7 @@ export default function PricingPage() {
           <button
             onClick={() => handleCheckout("monthly")}
             disabled={isUpgrading}
-            className="mt-8 w-full bg-[#E8F0EB] hover:bg-[#476550] hover:text-white dark:bg-[#1A2228] dark:hover:bg-[#2DD4BF] dark:hover:text-[#061B18] text-[#476550] dark:text-[#2DD4BF] font-black py-3.5 px-4 rounded-full text-xs transition-all border border-[rgba(162,188,168,0.5)] dark:border-[rgba(45,212,191,0.25)] active:scale-95 btn-tactile flex items-center justify-center gap-1.5 cursor-pointer"
+            className="mt-8 w-full bg-[#E8F0EB] hover:bg-[#476550] hover:text-white dark:bg-[#121E1A] dark:hover:bg-[#2DD4BF] dark:hover:text-[#061B18] text-[#476550] dark:text-[#2DD4BF] font-black py-3.5 px-4 rounded-full text-xs transition-all border border-[rgba(162,188,168,0.5)] dark:border-[rgba(45,212,191,0.25)] active:scale-95 btn-tactile flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span>Unlock 1-Month Starter</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -228,7 +228,7 @@ export default function PricingPage() {
               <span className="text-xs text-slate-500 dark:text-[#94A3B8] font-semibold"> / {isINR ? "3 months (₹233/mo)" : "3 mos ($15/mo)"}</span>
             </div>
 
-            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-200/70 dark:border-[#232D36]">
+            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-200/70 dark:border-[#1A2E26]">
               Everything you need from initial resume submission to signed offer letter.
             </p>
 
@@ -287,7 +287,7 @@ export default function PricingPage() {
               <span className="text-xs text-slate-500 dark:text-[#94A3B8] font-semibold"> / {isINR ? "year (₹166/mo)" : "yr ($8.25/mo)"}</span>
             </div>
 
-            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-200/70 dark:border-[#232D36]">
+            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] font-medium mb-6 pb-4 border-b border-slate-200/70 dark:border-[#1A2E26]">
               For continuous career growth, promotions, and lateral career switches.
             </p>
 

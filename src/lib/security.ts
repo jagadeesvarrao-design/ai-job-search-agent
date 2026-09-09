@@ -68,21 +68,24 @@ export function validateBase64Pdf(base64Data: unknown, maxSizeBytes: number = 5 
     return { valid: false, error: "Invalid or missing PDF payload." };
   }
 
+  // Strip data URL prefix if present (e.g. data:application/pdf;base64,...)
+  const cleanBase64 = base64Data.replace(/^data:application\/pdf;base64,/, "").replace(/\s/g, "");
+
   // Check size in bytes (Base64 is ~4/3 of binary size)
-  const estimatedBytes = (base64Data.length * 3) / 4;
+  const estimatedBytes = (cleanBase64.length * 3) / 4;
   if (estimatedBytes > maxSizeBytes) {
     return { valid: false, error: `File size exceeds maximum allowed limit (${Math.round(maxSizeBytes / (1024 * 1024))}MB).` };
   }
 
   // Basic Base64 character set validation
   const base64Regex = /^[A-Za-z0-9+/=]+$/;
-  const sample = base64Data.substring(0, 1000).replace(/\s/g, '');
+  const sample = cleanBase64.substring(0, 1000);
   if (!base64Regex.test(sample)) {
     return { valid: false, error: "Malformatted Base64 encoding." };
   }
 
   // Verify PDF Magic Bytes ("%PDF" in base64 starts with "JVBERi0")
-  if (!base64Data.startsWith("JVBERi0") && !base64Data.substring(0, 50).includes("JVBERi0")) {
+  if (!cleanBase64.startsWith("JVBERi0") && !cleanBase64.substring(0, 50).includes("JVBERi0")) {
     return { valid: false, error: "Invalid file format. Only genuine PDF documents are supported." };
   }
 

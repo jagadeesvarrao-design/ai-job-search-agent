@@ -4,8 +4,7 @@ import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sanitizeString, validateBase64Pdf } from "@/lib/security";
 import { extractTextFromBase64PdfAsync } from "@/lib/pdf-parser";
 import { evaluateResumeAts } from "@/lib/ats-engine";
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
+import { getGeminiApiKey } from "@/lib/gemini-config";
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -71,9 +70,11 @@ export async function POST(request: Request) {
     const extractedDoc = await extractTextFromBase64PdfAsync(resumeBase64);
 
     // 1. Try Gemini 2.5 Flash if available
-    const geminiKey = (process.env.GEMINI_API_KEY || "").trim();
-    if (geminiKey && geminiKey !== "dummy" && geminiKey.length > 20) {
+    const geminiKey = getGeminiApiKey();
+    if (geminiKey && !geminiKey.startsWith("sk-") && geminiKey.length > 20) {
       try {
+        const ai = new GoogleGenAI({ apiKey: geminiKey });
+        const cleanBase64 = resumeBase64.replace(/^data:application\/pdf;base64,/, "").trim();
         const jobsList = jobs.slice(0, 25).map((j: any) => ({
           id: sanitizeString(j.id, 100),
           title: sanitizeString(j.title, 200),
@@ -93,7 +94,7 @@ export async function POST(request: Request) {
             {
               role: "user",
               parts: [
-                { inlineData: { data: resumeBase64, mimeType: "application/pdf" } },
+                { inlineData: { data: cleanBase64, mimeType: "application/pdf" } },
                 { text: prompt }
               ]
             }

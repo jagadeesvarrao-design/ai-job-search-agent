@@ -2,28 +2,24 @@
 import { useState, useEffect } from "react";
 import { 
   Save, 
-  User, 
   MapPin, 
   IndianRupee, 
   Briefcase, 
   Clock, 
-  FileText, 
   CheckCircle2, 
   UploadCloud, 
-  ShieldCheck,
-  Sparkles,
-  ArrowRight,
-  ExternalLink,
-  AlertTriangle,
-  Flame,
-  Zap,
-  TrendingUp,
-  Target,
-  RefreshCw,
-  Loader2,
-  Check,
-  Crown,
-  Lock
+  ShieldCheck, 
+  ArrowRight, 
+  ExternalLink, 
+  AlertTriangle, 
+  Flame, 
+  Zap, 
+  RefreshCw, 
+  Loader2, 
+  Check, 
+  Crown, 
+  Copy, 
+  Edit3 
 } from "lucide-react";
 import Link from "next/link";
 import { 
@@ -40,10 +36,177 @@ interface AtsAnalysis {
   score: number;
   tier: string;
   isNonResume?: boolean;
+  matchedCoreSkills?: string[];
+  missingCoreSkills?: string[];
   strengths: string[];
   improvements: string[];
   keyMissingSkills: string[];
   summary: string;
+  candidateProfile?: {
+    name?: string;
+    targetRole?: string;
+    location?: string;
+    experienceLevel?: string;
+  };
+}
+
+/**
+ * Animated SVG Radial Score Gauge
+ */
+function AtsRadialGauge({ score, tier }: { score: number; tier: string }) {
+  const radius = 42;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (Math.min(100, Math.max(0, score)) / 100) * circumference;
+  
+  // Color palette matching design system
+  const strokeColor = score >= 85 ? "#10B981" : score >= 70 ? "#2DD4BF" : score >= 45 ? "#F59E0B" : "#EF4444";
+
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center">
+        <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            className="text-slate-200 dark:text-[#1E293B]"
+            strokeWidth="8"
+            stroke="currentColor"
+            fill="transparent"
+          />
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            stroke={strokeColor}
+            strokeWidth="8"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            fill="transparent"
+            style={{ transition: "stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1)" }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+          <span className="text-2xl sm:text-3xl font-black text-[#1A1F1F] dark:text-[#F8FAFC] leading-none">
+            {score}
+          </span>
+          <span className="text-[10px] font-bold text-[#7D8787] dark:text-[#94A3B8] mt-0.5">
+            /100
+          </span>
+        </div>
+      </div>
+      <span
+        className="mt-2 text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full"
+        style={{ color: strokeColor, backgroundColor: `${strokeColor}18` }}
+      >
+        {tier}
+      </span>
+    </div>
+  );
+}
+
+/**
+ * Smart Keyword Highlighting Component
+ */
+function HighlightedAtsText({
+  text,
+  missingKeywords = [],
+  matchedKeywords = [],
+  variant = "neutral"
+}: {
+  text: string;
+  missingKeywords?: string[];
+  matchedKeywords?: string[];
+  variant?: "missing" | "strength" | "neutral";
+}) {
+  if (!text) return null;
+
+  const defaultTechKeywords = [
+    "React", "Next.js", "NextJS", "TypeScript", "JavaScript", "Node.js", "NodeJS", "Express.js", "Express",
+    "Python", "FastAPI", "Flask", "Django", "PostgreSQL", "Postgres", "MongoDB", "MySQL", "SQLite", "Redis",
+    "Docker", "Kubernetes", "AWS/GCP", "AWS", "GCP", "Azure", "CI/CD", "Git", "GitHub", "Prisma", "Prisma ORM",
+    "Tailwind CSS", "Tailwind", "HTML", "CSS", "HTML/CSS", "HTML5", "CSS3", "REST APIs", "REST API", "REST",
+    "WebSockets", "WebSocket", "GraphQL", "Jest", "Cypress", "PyTest", "ChromaDB", "LLM", "LLMs", "LangChain",
+    "LlamaIndex", "Machine Learning", "Deep Learning", "Computer Vision", "NLP", "STAR", "JARVIS", "PROMPT LABS",
+    "OmniGraph", "System Design", "Microservices", "Serverless", "Linux"
+  ];
+
+  const allKeywords = Array.from(
+    new Set([...missingKeywords, ...matchedKeywords, ...defaultTechKeywords])
+  ).filter(k => Boolean(k && k.trim().length > 1));
+
+  if (allKeywords.length === 0) {
+    return <span>{text}</span>;
+  }
+
+  const escaped = allKeywords
+    .sort((a, b) => b.length - a.length)
+    .map(k => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+  const regex = new RegExp(`(\\b(?:${escaped.join("|")})\\b)`, "gi");
+  const parts = text.split(regex);
+
+  const missingLower = new Set(missingKeywords.map(k => k.toLowerCase().trim()));
+  const matchedLower = new Set(matchedKeywords.map(k => k.toLowerCase().trim()));
+
+  return (
+    <span>
+      {parts.map((part, idx) => {
+        if (!part) return null;
+        const lower = part.toLowerCase().trim();
+        const isMissing = missingLower.has(lower);
+        const isMatched = matchedLower.has(lower);
+        const isKnownTech = defaultTechKeywords.some(k => k.toLowerCase() === lower);
+
+        if (variant === "missing" && (isMissing || isKnownTech)) {
+          return (
+            <span
+              key={idx}
+              className="inline-block font-black text-amber-950 dark:text-amber-200 bg-amber-200/90 dark:bg-amber-950/90 px-1.5 py-0.5 mx-0.5 rounded-md border border-amber-400/80 dark:border-amber-700/80 shadow-xs"
+            >
+              {part}
+            </span>
+          );
+        }
+
+        if (variant === "strength" && (isMatched || isKnownTech)) {
+          return (
+            <span
+              key={idx}
+              className="inline-block font-black text-emerald-950 dark:text-emerald-200 bg-emerald-200/90 dark:bg-emerald-950/90 px-1.5 py-0.5 mx-0.5 rounded-md border border-emerald-400/80 dark:border-emerald-700/80 shadow-xs"
+            >
+              {part}
+            </span>
+          );
+        }
+
+        if (isMissing) {
+          return (
+            <span
+              key={idx}
+              className="inline-block font-black text-amber-950 dark:text-amber-200 bg-amber-200/90 dark:bg-amber-950/90 px-1.5 py-0.5 mx-0.5 rounded-md border border-amber-400/80 dark:border-amber-700/80 shadow-xs"
+            >
+              {part}
+            </span>
+          );
+        }
+
+        if (isMatched) {
+          return (
+            <span
+              key={idx}
+              className="inline-block font-black text-emerald-950 dark:text-emerald-200 bg-emerald-200/90 dark:bg-emerald-950/90 px-1.5 py-0.5 mx-0.5 rounded-md border border-emerald-400/80 dark:border-emerald-700/80 shadow-xs"
+            >
+              {part}
+            </span>
+          );
+        }
+
+        return <span key={idx}>{part}</span>;
+      })}
+    </span>
+  );
 }
 
 export default function ProfilePage() {
@@ -55,6 +218,8 @@ export default function ProfilePage() {
   const [pricingModalOpen, setPricingModalOpen] = useState(false);
   const [tierState, setTierState] = useState({ plan: "free", billingCycle: "monthly" as any });
   const [usageQuota, setUsageQuota] = useState({ atsAuditsToday: 0 });
+  const [copiedKeywords, setCopiedKeywords] = useState(false);
+  const [atsError, setAtsError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     role: "",
@@ -89,10 +254,14 @@ export default function ProfilePage() {
     setMounted(true);
     const savedProfile = localStorage.getItem("my_profile");
     if (savedProfile) {
-      const parsed = JSON.parse(savedProfile);
-      setFormData(parsed);
-      if (parsed.atsAnalysis) {
-        setAtsAnalysis(parsed.atsAnalysis);
+      try {
+        const parsed = JSON.parse(savedProfile);
+        setFormData(parsed);
+        if (parsed.atsAnalysis) {
+          setAtsAnalysis(parsed.atsAnalysis);
+        }
+      } catch (err) {
+        console.error("Failed to parse saved profile:", err);
       }
     }
 
@@ -106,14 +275,20 @@ export default function ProfilePage() {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => {
+      const updated = { ...prev, [name]: value };
+      localStorage.setItem("my_profile", JSON.stringify({ ...updated, atsAnalysis }));
+      return updated;
+    });
   };
-
-  const [atsError, setAtsError] = useState<string | null>(null);
 
   // Run ATS audit using Gemini 2.5 Flash
   const runAtsAudit = async (resumeData: string, roleTitle: string) => {
-    if (!resumeData) return;
+    if (!resumeData) {
+      showToast("warning", "No Resume Attached", "Please drop your PDF resume into the upload vault first.");
+      return;
+    }
 
     // Check ATS Audit Quota for current tier
     const auditCheck = recordAtsAuditRun();
@@ -124,15 +299,17 @@ export default function ProfilePage() {
     setUsageQuota(getUsageQuota());
 
     setAtsError(null);
-    setAtsAnalysis(null);
     setAnalyzingAts(true);
+
+    const activeRole = (roleTitle || formData.role || "Software Engineer").trim();
+
     try {
       const res = await fetch("/api/analyze-resume", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         cache: "no-store",
         body: JSON.stringify({
-          role: roleTitle || formData.role || "Software Engineer",
+          role: activeRole,
           resumeBase64: resumeData
         })
       });
@@ -144,18 +321,38 @@ export default function ProfilePage() {
 
       if (data.analysis) {
         setAtsAnalysis(data.analysis);
-        setFormData(prev => ({
-          ...prev,
-          atsScore: data.analysis.score
-        }));
-        if (!data.analysis.isNonResume && data.analysis.score > 0) {
-          showToast("success", "ATS Audit Complete!", `Your resume scored ${data.analysis.score}/100! Click "Go to Dashboard" to scout matching jobs.`);
+        const candProf = data.analysis.candidateProfile;
+
+        // Auto-fill extracted values while keeping role fully editable
+        setFormData(prev => {
+          const updated = {
+            ...prev,
+            atsScore: data.analysis.score,
+            role: prev.role || candProf?.targetRole || activeRole,
+            location: prev.location || candProf?.location || "",
+            experience: prev.experience !== "Fresher" ? prev.experience : (candProf?.experienceLevel || prev.experience)
+          };
+          localStorage.setItem("my_profile", JSON.stringify({ ...updated, atsAnalysis: data.analysis }));
+          return updated;
+        });
+
+        if (candProf?.targetRole && !formData.role) {
+          showToast(
+            "success", 
+            "Profile Auto-Filled!", 
+            `Target Role detected as "${candProf.targetRole}". You can edit this role at any time below.`
+          );
+        } else if (!data.analysis.isNonResume && data.analysis.score > 0) {
+          showToast(
+            "success", 
+            "ATS Audit Complete!", 
+            `Score: ${data.analysis.score}/100 for "${activeRole}". Click "Go to Dashboard" to scout matching jobs.`
+          );
         }
       }
     } catch (err: any) {
       console.error("ATS Analysis error:", err);
       setAtsError(err.message || "Could not complete ATS analysis. Please upload a standard 1-2 page PDF resume.");
-      setAtsAnalysis(null);
     } finally {
       setAnalyzingAts(false);
     }
@@ -188,7 +385,6 @@ export default function ProfilePage() {
         console.error("Error reading file:", err);
         setLoading(false);
       } finally {
-        // Reset file input so subsequent uploads of same or new file always trigger onChange
         e.target.value = "";
       }
     }
@@ -204,439 +400,500 @@ export default function ProfilePage() {
     showToast("success", "Profile Saved", "Career profile and ATS intelligence saved to local vault!");
   };
 
+  const handleCopyKeywords = (keywords: string[]) => {
+    if (!keywords || keywords.length === 0) return;
+    navigator.clipboard.writeText(keywords.join(", "));
+    setCopiedKeywords(true);
+    showToast("info", "Keywords Copied", "Missing keywords copied to clipboard!");
+    setTimeout(() => setCopiedKeywords(false), 2500);
+  };
+
   const isPro = mounted && (tierState.plan === "pro" || isProSubscriber());
   const limits = getCurrentTierLimits();
 
+  const missingKeywordsList = Array.from(
+    new Set([...(atsAnalysis?.missingCoreSkills || []), ...(atsAnalysis?.keyMissingSkills || [])])
+  );
+
   return (
-    <div className="max-w-4xl mx-auto py-4 sm:py-6 px-2 sm:px-4">
+    <div className="max-w-4xl mx-auto py-4 sm:py-6 px-3 sm:px-6 space-y-6">
       {/* Top Header */}
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#D8E2DA] dark:border-[#1A2E26]">
         <div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC] tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC] tracking-tight">
             Target Role & ATS Audit
           </h1>
-          <p className="text-xs sm:text-sm text-[#596060] dark:text-[#CBD5E1] mt-1">
-            Configure your target career parameters and audit your resume against automated ATS screening bots.
+          <p className="text-xs sm:text-sm text-[#7D8787] dark:text-[#94A3B8] mt-1">
+            Drop your resume to auto-detect your profile, audit ATS compliance, and scout matching high-yield jobs.
           </p>
         </div>
 
         {/* Tier Status Indicator */}
         <button
           onClick={() => setPricingModalOpen(true)}
-          className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border self-start sm:self-auto btn-tactile ${
-            isPro
-              ? "bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border-amber-300 dark:border-amber-700"
-              : "bg-slate-100 dark:bg-[#1A2228] text-[#596060] dark:text-[#CBD5E1] border-[#D8E2DA] dark:border-[#232D36] hover:border-[#476550] dark:hover:border-[#2DD4BF]"
-          }`}
+          className={isPro ? "btn-pro self-start sm:self-auto" : "btn-secondary text-xs self-start sm:self-auto py-1.5 px-3.5"}
         >
           {isPro ? <Crown className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> : <Zap className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" />}
           <span>
             {isPro 
-              ? (tierState.billingCycle === "annual" ? "👑 Annual VIP Active" : tierState.billingCycle === "quarterly" ? "⚡ 3-Month Pass Active" : "⚡ 1-Month Starter") 
-              : `Free Tier (${usageQuota.atsAuditsToday}/3 Daily Audits)`}
+              ? (tierState.billingCycle === "annual" ? "Annual VIP Active" : tierState.billingCycle === "quarterly" ? "3-Month Pass Active" : "1-Month Starter") 
+              : `Free Tier (${usageQuota.atsAuditsToday}/3 Audits)`}
           </span>
         </button>
       </div>
 
-      <div className="flex flex-col gap-6">
-        {/* Main Settings Card */}
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft p-5 sm:p-8">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            
-            {/* Target Role & City Inputs */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Briefcase className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Target Job Title
-                </label>
-                <input
-                  type="text"
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  placeholder="e.g. Full Stack Developer, React Engineer"
-                  className="w-full px-4 py-3 bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] rounded-xl text-sm font-semibold text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Preferred Location / City
-                </label>
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  placeholder="e.g. Bangalore, Hyderabad, Remote"
-                  className="w-full px-4 py-3 bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] rounded-xl text-sm font-semibold text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
-                />
-              </div>
+      {/* SECTION 1: HERO RESUME DROPZONE (FIRST THING USER SEES) */}
+      <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] p-5 sm:p-7 shadow-sm transition-all hover:border-[#476550]/40 dark:hover:border-[#2DD4BF]/40">
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xs">
+              1
             </div>
-
-            {/* Experience Level & Target Salary */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Experience Level
-                </label>
-                <select
-                  name="experience"
-                  value={formData.experience}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] rounded-xl text-sm font-semibold text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
-                >
-                  <option value="Fresher">Fresher / 0 Years (College Graduate / Career Switcher)</option>
-                  <option value="1-2 Years">Junior (1 - 2 Years)</option>
-                  <option value="3-5 Years">Mid-Level (3 - 5 Years)</option>
-                  <option value="5+ Years">Senior / Lead (5+ Years)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <IndianRupee className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Expected Compensation (Optional)
-                </label>
-                <input
-                  type="text"
-                  name="salary"
-                  value={formData.salary}
-                  onChange={handleChange}
-                  placeholder="e.g. ₹8,00,000 - ₹12,00,000 LPA"
-                  className="w-full px-4 py-3 bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] rounded-xl text-sm font-semibold text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
-                />
-              </div>
-            </div>
-
-            {/* Resume Upload Vault Area */}
             <div>
-              <label className="block text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <FileText className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Master Resume (PDF)
-              </label>
-              <div className="border-2 border-dashed border-[#D8E2DA] dark:border-[#232D36] hover:border-[#476550]/50 dark:hover:border-[#2DD4BF]/50 rounded-2xl p-6 sm:p-8 text-center bg-[#F4F4F0] dark:bg-[#1A2228] transition-all relative group cursor-pointer">
-                <input
-                  id="resume-file-input"
-                  type="file"
-                  accept="application/pdf"
-                  onChange={handleFileChange}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                />
-                <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <UploadCloud className="w-6 h-6 sm:w-7 sm:h-7" />
-                  </div>
-                  <p className="font-bold text-sm text-[#1A1F1F] dark:text-[#F8FAFC]">Click or Drag & Drop PDF Resume</p>
-                  <p className="text-xs text-[#596060] dark:text-[#94A3B8]">Instant ATS scanner & client-side vault encryption (Max 5MB)</p>
-
-                  {formData.resumeBase64 && !analyzingAts && (
-                    <div className="flex flex-col items-center gap-1.5 mt-2 bg-[#E8F0EB] dark:bg-emerald-950/40 border border-[#A2BCA8]/40 dark:border-emerald-800 px-4 py-2.5 rounded-2xl animate-in fade-in">
-                      <div className="inline-flex items-center gap-1.5 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                        <span>Active Vault Document:</span>
-                        <span className="font-extrabold text-[#476550] dark:text-[#2DD4BF] bg-[#FAF9F6] dark:bg-[#141B20] px-2 py-0.5 rounded-md border border-[#A2BCA8]/40 dark:border-emerald-800 max-w-[260px] sm:max-w-xs truncate">
-                          {formData.resumeFileName || "Candidate_Resume.pdf"}
-                        </span>
-                      </div>
-                      <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-medium">Click anywhere to replace or upload a new PDF</span>
-                    </div>
-                  )}
-
-                  {analyzingAts && (
-                    <div className="inline-flex items-center gap-2 bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] text-xs font-bold px-4 py-2 rounded-full border border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30 mt-2">
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Auditing {formData.resumeFileName ? `"${formData.resumeFileName}"` : "Resume"} with ATS Engine...</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons Cluster */}
-            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-[#D8E2DA] dark:border-[#232D36] pt-4">
-              <div className="flex items-center gap-2 text-xs text-[#596060] dark:text-[#94A3B8]">
-                <ShieldCheck className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
-                <span>Zero-Backend Privacy Guarantee</span>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2.5">
-                {/* Instant ATS Scan / Re-Audit Button for 3-Month & Annual VIP subscribers */}
-                <button
-                  type="button"
-                  onClick={() => runAtsAudit(formData.resumeBase64, formData.role)}
-                  disabled={analyzingAts || !formData.resumeBase64}
-                  className="bg-gradient-to-r from-teal-600 to-[#476550] hover:from-teal-700 hover:to-[#3A5342] dark:from-[#2DD4BF] dark:to-teal-600 text-white dark:text-[#061B18] font-bold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-full shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer btn-tactile"
-                  title="Trigger instant ATS parsing on demand"
-                >
-                  <RefreshCw className={`w-4 h-4 ${analyzingAts ? "animate-spin" : ""}`} />
-                  <span>{analyzingAts ? "Auditing Resume..." : "⚡ Re-Audit ATS for Target Role"}</span>
-                </button>
-
-                <button
-                  type="submit"
-                  disabled={loading || analyzingAts}
-                  className="bg-slate-100 hover:bg-slate-200 dark:bg-[#1A2228] dark:hover:bg-[#232D36] text-[#1A1F1F] dark:text-[#F8FAFC] font-semibold text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-full transition-all border border-[#D8E2DA] dark:border-[#232D36] flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 cursor-pointer"
-                >
-                  <Save className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
-                  <span>Save Profile</span>
-                </button>
-
-                {/* Direct Navigation to Dashboard CTA */}
-                <Link
-                  href="/dashboard"
-                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs sm:text-sm px-5 sm:px-6 py-3 rounded-full shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer btn-tactile"
-                  title="Launch Autonomous Job Scouting on Dashboard"
-                >
-                  <span>Go to Dashboard</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        {/* EXPLICIT ATS ERROR BANNER (Displayed if upload is invalid or analysis fails) */}
-        {atsError && (
-          <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/10 border-2 border-rose-500/30 text-[#1A1F1F] dark:text-[#F8FAFC] flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2">
-            <div className="p-2 rounded-xl bg-rose-500/20 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5">
-              <AlertTriangle className="w-5 h-5" />
-            </div>
-            <div className="space-y-1">
-              <h4 className="font-extrabold text-sm text-rose-800 dark:text-rose-300">ATS Audit Notice</h4>
-              <p className="text-xs text-[#596060] dark:text-[#CBD5E1] leading-relaxed font-medium">
-                {atsError}
+              <h2 className="text-base sm:text-lg font-bold text-[#1A1F1F] dark:text-[#F8FAFC]">
+                Upload Master Resume
+              </h2>
+              <p className="text-xs text-[#7D8787] dark:text-[#94A3B8]">
+                Multimodal AI auto-fills your profile while keeping every field completely editable.
               </p>
             </div>
           </div>
-        )}
+          <div className="hidden sm:flex items-center gap-1 text-[11px] text-[#7D8787] dark:text-[#94A3B8]">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <span>Encrypted in Browser Vault</span>
+          </div>
+        </div>
 
-        {/* HIGH-CONVERTING ATS SCORE & KEYWORD DIAGNOSTICS CARD */}
-        {atsAnalysis && (
-          (atsAnalysis.isNonResume || atsAnalysis.score === 0) ? (
-            /* SPECIALIZED OPTION-2 SECOND CHANCE CARD (For Non-Resume Documents) */
-            <div className="bg-gradient-to-br from-white to-amber-50/50 dark:from-[#141B20] dark:to-amber-950/20 rounded-3xl border-2 border-amber-500/40 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500 space-y-5">
-              {/* Ambient Glow */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        {/* Dropzone Container */}
+        <div className="border-2 border-dashed border-[#D8E2DA] dark:border-[#1A2E26] hover:border-[#476550] dark:hover:border-[#2DD4BF] rounded-2xl p-6 sm:p-8 text-center bg-[#FFFFFF] dark:bg-[#121E1A] transition-all relative group cursor-pointer">
+          <input
+            id="resume-file-input"
+            type="file"
+            accept="application/pdf"
+            onChange={handleFileChange}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          />
+          <div className="flex flex-col items-center justify-center gap-2.5">
+            <div className="w-14 h-14 rounded-2xl bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center group-hover:scale-110 transition-transform">
+              <UploadCloud className="w-7 h-7" />
+            </div>
+            <div>
+              <p className="font-extrabold text-sm sm:text-base text-[#1A1F1F] dark:text-[#F8FAFC]">
+                Click or Drag & Drop Your PDF Resume Here
+              </p>
+              <p className="text-xs text-[#7D8787] dark:text-[#94A3B8] mt-0.5">
+                Standard 1–2 page PDF (Max 5MB) • Instant ATS keyword scan
+              </p>
+            </div>
 
-              {/* Header */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-amber-200 dark:border-amber-900/40">
-                <div>
-                  <div className="inline-flex items-center gap-1.5 bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 text-xs font-black px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800 mb-2">
-                    {isPro ? <Crown className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> : <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />}
-                    <span>{isPro ? "PRO WORKSPACE • NON-RESUME DETECTED" : "HIRING COMMITTEE REALITY CHECK • NON-RESUME DETECTED"}</span>
-                  </div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">
-                    No Candidate Profile Found
-                  </h2>
-                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#596060] dark:text-[#94A3B8]">
-                    <span>Flagged Upload:</span>
-                    <span className="inline-flex items-center gap-1 bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 px-2.5 py-0.5 rounded-md font-bold">
-                      <FileText className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-                      <span className="max-w-[240px] truncate">{formData.resumeFileName || "Uploaded_Document.pdf"}</span>
-                    </span>
-                  </div>
+            {formData.resumeBase64 && !analyzingAts && (
+              <div className="flex flex-col sm:flex-row items-center gap-2 mt-2 bg-[#E8F0EB] dark:bg-emerald-950/40 border border-[#A2BCA8]/40 dark:border-emerald-800 px-4 py-2 rounded-xl animate-in fade-in">
+                <div className="inline-flex items-center gap-1.5 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                  <span>Vault Document:</span>
+                  <span className="font-extrabold text-[#476550] dark:text-[#2DD4BF] bg-[#FFFFFF] dark:bg-[#0D1714] px-2 py-0.5 rounded-md border border-[#A2BCA8]/40 dark:border-emerald-800 max-w-[220px] truncate">
+                    {formData.resumeFileName || "Candidate_Resume.pdf"}
+                  </span>
                 </div>
-
-                {/* 0/100 Score Display */}
-                <div className="flex items-center gap-4 bg-[#FAF9F6] dark:bg-[#1A2228] p-3.5 rounded-2xl border border-amber-300 dark:border-amber-800 shadow-sm self-start md:self-auto">
-                  <div className="text-center">
-                    <div className="text-3xl sm:text-4xl font-black text-amber-600 dark:text-amber-400 leading-none">
-                      0<span className="text-base font-bold text-slate-400">/100</span>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-amber-800 dark:text-amber-300 block mt-1">
-                      Invalid Document
-                    </span>
-                  </div>
-                </div>
+                <span className="text-[11px] text-[#7D8787] dark:text-[#94A3B8]">
+                  (Click to replace)
+                </span>
               </div>
+            )}
 
-              {/* Dynamic Copy: Pro Subscribers vs Free Tier 2nd Chance */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF9F6]/90 dark:bg-[#1A2228] border border-amber-200 dark:border-amber-900/50 space-y-3">
-                <p className="text-xs sm:text-sm text-[#1A1F1F] dark:text-[#CBD5E1] font-medium leading-relaxed">
-                  Recruiters and corporate ATS filters don’t give second chances for misaligned uploads. In real corporate hiring, submitting a project paper or non-resume document results in an instant automated rejection within 3 seconds.
+            {analyzingAts && (
+              <div className="inline-flex items-center gap-2 bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] text-xs font-bold px-4 py-2 rounded-full border border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30 mt-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Auditing {formData.resumeFileName ? `"${formData.resumeFileName}"` : "Resume"} with Gemini 2.5 Flash...</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* EXPLICIT ATS ERROR BANNER */}
+      {atsError && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-[#1A1F1F] dark:text-[#F8FAFC] flex items-start gap-3 animate-in fade-in">
+          <div className="p-2 rounded-xl bg-rose-500/20 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5">
+            <AlertTriangle className="w-5 h-5" />
+          </div>
+          <div className="space-y-1">
+            <h4 className="font-extrabold text-sm text-rose-800 dark:text-rose-300">ATS Audit Notice</h4>
+            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] leading-relaxed">
+              {atsError}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* SECTION 2: HIGH-CONVERTING ATS SCORE & KEYWORD DIAGNOSTICS CARD */}
+      {atsAnalysis && (
+        (atsAnalysis.isNonResume || atsAnalysis.score === 0) ? (
+          /* Non-Resume Notice */
+          <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-amber-300 dark:border-amber-800/60 p-5 sm:p-7 space-y-4 animate-in fade-in">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-amber-200 dark:border-amber-900/40">
+              <div>
+                <span className="badge-warning-chip mb-2">
+                  <AlertTriangle className="w-3.5 h-3.5" /> Non-Resume Document Detected
+                </span>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">
+                  No Candidate Work History Found
+                </h2>
+                <p className="text-xs text-[#7D8787] dark:text-[#94A3B8] mt-1">
+                  File uploaded: <strong>{formData.resumeFileName || "Uploaded_Document.pdf"}</strong>
                 </p>
-                {isPro ? (
-                  <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs font-semibold leading-relaxed">
-                    👑 <strong>Unlimited Pro Access Active:</strong> As a Pro member, you have unlimited ATS resume audits across all your target roles. To ensure your real applications pass modern corporate filters with a 95+ score, please upload your official 1–2 page candidate resume.
-                  </div>
-                ) : (
-                  <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs font-semibold leading-relaxed">
-                    ⚡ <strong>1-Time Courtesy Second Chance Unlocked:</strong> ZenScout AI normally enforces a strict <strong>1 Free ATS Audit per day</strong> for standard accounts. Because we take your career success seriously and want you to see where your profile truly stands, we have granted you a second chance today to upload your official candidate resume.
-                  </div>
-                )}
               </div>
 
-              {/* Action Button to Reupload */}
-              <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                <button
-                  type="button"
-                  onClick={() => document.getElementById("resume-file-input")?.click()}
-                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs sm:text-sm py-3 px-6 rounded-full shadow-md btn-tactile active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <UploadCloud className="w-4 h-4" />
-                  <span>{isPro ? "Upload Official Candidate Resume (Pro Access) →" : "Claim 2nd Chance & Upload Official Resume →"}</span>
-                </button>
+              <div className="flex items-center gap-4 bg-[#FFFFFF] dark:bg-[#121E1A] p-3 rounded-2xl border border-amber-300 dark:border-amber-800 self-start md:self-auto">
+                <div className="text-center px-4 py-1">
+                  <div className="text-3xl font-black text-amber-600 dark:text-amber-400">0/100</div>
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-[#7D8787] dark:text-[#94A3B8]">
+                    Invalid Format
+                  </span>
+                </div>
               </div>
             </div>
-          ) : (
-            /* STANDARD ATS ANALYSIS CARD (For Valid Resumes) */
-            <div className="bg-gradient-to-br from-white to-[#F0FDF4] dark:from-[#141B20] dark:to-[#0f241d] rounded-3xl border-2 border-emerald-500/30 dark:border-[#2DD4BF]/30 shadow-xl p-5 sm:p-8 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
-              {/* Ambient Glow */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-[#476550]/10 dark:bg-[#2DD4BF]/10 rounded-full blur-3xl pointer-events-none"></div>
 
-              {/* Score Header */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-emerald-100 dark:border-[#232D36]">
-                <div>
-                  <div className="inline-flex items-center gap-1.5 bg-emerald-100/80 dark:bg-[#2DD4BF]/15 text-emerald-900 dark:text-[#2DD4BF] text-xs font-extrabold px-3.5 py-1 rounded-full border border-emerald-300 dark:border-[#2DD4BF]/30 mb-2">
-                    <Flame className="w-3.5 h-3.5 text-orange-500" />
-                    <span>Real-Time ATS Screening Score</span>
-                  </div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">
-                    Your Resume ATS Compatibility
-                  </h2>
-                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-[#596060] dark:text-[#94A3B8]">
-                    <span>Targeting: <strong className="text-[#1A1F1F] dark:text-[#F8FAFC]">{formData.role || "Target Role"}</strong></span>
-                    <span>•</span>
-                    <span className="inline-flex items-center gap-1 bg-emerald-100/70 dark:bg-[#1A2228] text-emerald-900 dark:text-[#2DD4BF] px-2.5 py-0.5 rounded-md font-bold border border-[#A2BCA8]/40 dark:border-[#232D36]">
-                      <FileText className="w-3 h-3 text-[#476550] dark:text-[#2DD4BF]" />
-                      <span className="max-w-[220px] truncate">{formData.resumeFileName || "Candidate_Resume.pdf"}</span>
-                    </span>
-                  </div>
+            <p className="text-xs sm:text-sm text-[#475569] dark:text-[#CBD5E1] leading-relaxed">
+              Modern corporate ATS filters reject non-standard document formats within 3 seconds. Please upload your official candidate resume (PDF) to view verified matching keywords and score.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => document.getElementById("resume-file-input")?.click()}
+              className="btn-primary text-xs sm:text-sm"
+            >
+              <UploadCloud className="w-4 h-4" />
+              <span>Upload Official Resume PDF</span>
+            </button>
+          </div>
+        ) : (
+          /* STANDARD ATS ANALYSIS CARD */
+          <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-emerald-300/80 dark:border-[#2DD4BF]/40 p-5 sm:p-7 space-y-5 shadow-soft animate-in fade-in">
+            {/* Score & Header */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 pb-5 border-b border-[#D8E2DA] dark:border-[#1A2E26]">
+              <div className="space-y-1.5">
+                <div className="inline-flex items-center gap-1.5 text-emerald-800 dark:text-[#2DD4BF] text-xs font-bold">
+                  <Flame className="w-3.5 h-3.5 text-emerald-600 dark:text-[#2DD4BF]" />
+                  <span>Real-Time ATS Screening Score</span>
                 </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">
+                  Resume Match for &ldquo;{formData.role || "Target Role"}&rdquo;
+                </h2>
+                <p className="text-xs text-[#7D8787] dark:text-[#94A3B8]">
+                  Scored against current enterprise recruiter algorithms and required technical skills.
+                </p>
+              </div>
 
-                {/* Score Display */}
-                <div className="flex items-center gap-4 bg-[#FAF9F6] dark:bg-[#1A2228] p-3.5 rounded-2xl border border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30 shadow-sm self-start md:self-auto">
-                  <div className="text-center">
-                    <div className="text-3xl sm:text-4xl font-black text-[#476550] dark:text-[#2DD4BF] leading-none">
-                      {atsAnalysis.score}<span className="text-base font-bold text-slate-400">/100</span>
+              {/* Animated SVG Radial Gauge */}
+              <div className="self-center md:self-auto bg-[#FFFFFF] dark:bg-[#121E1A] p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-xs">
+                <AtsRadialGauge score={atsAnalysis.score} tier={atsAnalysis.tier} />
+              </div>
+            </div>
+
+            {/* Executive Summary */}
+            <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26]">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#476550] dark:text-[#2DD4BF] block mb-1">
+                Executive ATS Diagnostic Summary
+              </span>
+              <p className="text-xs sm:text-sm text-[#1A1F1F] dark:text-[#CBD5E1] leading-relaxed">
+                <HighlightedAtsText 
+                  text={atsAnalysis.summary} 
+                  missingKeywords={atsAnalysis.missingCoreSkills || atsAnalysis.keyMissingSkills || []}
+                  matchedKeywords={atsAnalysis.matchedCoreSkills || []}
+                  variant="neutral"
+                />
+              </p>
+            </div>
+
+            {/* Strengths & Missing Elements Breakdown */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Strengths Column */}
+              <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-emerald-200/80 dark:border-emerald-800/50 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 mb-3 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Detected Strengths & Matched Skills
+                  </h3>
+
+                  {/* Verified Skills Pill Cloud */}
+                  {(atsAnalysis.matchedCoreSkills && atsAnalysis.matchedCoreSkills.length > 0) && (
+                    <div className="mb-3 p-3 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/50">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 block mb-1.5">
+                        ✓ Verified Matching Keywords:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {atsAnalysis.matchedCoreSkills.map((skill, i) => (
+                          <span key={i} className="badge-success-chip text-[11px]">
+                            <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                            <span>{skill}</span>
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-800 dark:text-emerald-300 block mt-1">
-                      {atsAnalysis.tier}
-                    </span>
-                  </div>
+                  )}
+
+                  <ul className="space-y-2 text-xs text-[#475569] dark:text-[#CBD5E1]">
+                    {atsAnalysis.strengths.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 leading-relaxed">
+                        <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <span>
+                          <HighlightedAtsText 
+                            text={item} 
+                            matchedKeywords={atsAnalysis.matchedCoreSkills || []} 
+                            variant="strength" 
+                          />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
-            {/* Analysis Summary */}
-            <div className="py-5">
-              <p className="text-xs sm:text-sm text-[#596060] dark:text-[#CBD5E1] font-medium leading-relaxed bg-[#FAF9F6]/80 dark:bg-[#1A2228] p-4 rounded-2xl border border-emerald-100 dark:border-[#232D36]">
-                {atsAnalysis.summary}
-              </p>
+              {/* Missing Keywords Column */}
+              <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-amber-300/80 dark:border-amber-800/60 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
+                      <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" /> Critical Filter Risks & Gaps
+                    </h3>
 
-              {/* Strengths & Missing Elements Breakdown */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                {/* Strengths */}
-                <div className="bg-[#FAF9F6] dark:bg-[#1A2228] p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36]">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4" /> Detected Strengths
-                  </h4>
-                  <ul className="space-y-1.5 text-xs text-[#596060] dark:text-[#CBD5E1]">
-                    {atsAnalysis.strengths.map((item, i) => (
-                      <li key={i} className="flex items-start gap-1.5">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                        <span>{item}</span>
+                    {missingKeywordsList.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => handleCopyKeywords(missingKeywordsList)}
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 dark:text-amber-300 hover:text-amber-700 dark:hover:text-amber-100 bg-amber-100/80 dark:bg-amber-950/60 px-2 py-1 rounded-md border border-amber-300 dark:border-amber-700/60 cursor-pointer transition-all"
+                        title="Copy missing keywords to clipboard"
+                      >
+                        {copiedKeywords ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                        <span>{copiedKeywords ? "Copied!" : "Copy Keywords"}</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {missingKeywordsList.length > 0 && (
+                    <div className="mb-3 p-3 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 dark:text-amber-300 block mb-1.5">
+                        ⚠️ High-Priority Missing Keywords for {formData.role || "Target Role"}:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {missingKeywordsList.map((skill, i) => (
+                          <span key={i} className="badge-warning-chip text-[11px]">
+                            <span>+</span>
+                            <span>{skill}</span>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <ul className="space-y-2 text-xs text-[#475569] dark:text-[#CBD5E1]">
+                    {atsAnalysis.improvements.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-amber-950 dark:text-amber-200 leading-relaxed">
+                        <span className="text-amber-600 dark:text-amber-400 font-bold">•</span>
+                        <span>
+                          <HighlightedAtsText 
+                            text={item} 
+                            missingKeywords={missingKeywordsList} 
+                            variant="missing" 
+                          />
+                        </span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* ATS Risks / Missing Keywords */}
-                <div className="bg-[#FAF9F6] dark:bg-[#1A2228] p-4 rounded-2xl border border-amber-200 dark:border-amber-900/50 flex flex-col justify-between">
-                  <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-1.5">
-                      <AlertTriangle className="w-4 h-4" /> Critical ATS Filter Risks & Missing Keywords
-                    </h4>
-                    <ul className="space-y-1.5 text-xs text-[#596060] dark:text-[#CBD5E1]">
-                      {atsAnalysis.improvements.map((item, i) => (
-                        <li key={i} className="flex items-start gap-1.5 text-amber-900 dark:text-amber-300">
-                          <span className="text-amber-500 font-bold">•</span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Contextual Deep Link: Fix on ZenResume */}
-                  <a
-                    href={`https://zenresume.online/?target_role=${encodeURIComponent(formData.role || "Software Engineer")}&utm_source=zenscout_ai&utm_medium=ats_audit_gaps`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3.5 w-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 font-bold text-xs py-2 px-4 rounded-full transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 btn-tactile cursor-pointer"
-                  >
-                    <span>⚡ Fix & Auto-Inject Keywords in ZenResume Free</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* NEXT STEP GUIDANCE BANNER (Direct Navigation to Dashboard) */}
-            <div className="my-5 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 border-2 border-[#476550]/60 dark:border-[#2DD4BF]/40 shadow-xl text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative overflow-hidden animate-in fade-in slide-in-from-top-3">
-              <div className="absolute -top-10 -right-10 w-48 h-48 bg-[#476550]/20 dark:bg-[#2DD4BF]/20 rounded-full blur-2xl pointer-events-none"></div>
-
-              <div className="space-y-1.5 relative z-10">
-                <div className="inline-flex items-center gap-1.5 bg-[#476550]/20 dark:bg-[#2DD4BF]/20 text-[#A2BCA8] dark:text-[#2DD4BF] text-[11px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full border border-teal-500/30 dark:border-[#2DD4BF]/40">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Next Step: Autonomous Job Discovery</span>
-                </div>
-                <h3 className="text-base sm:text-lg md:text-xl font-black text-white">
-                  Resume Audited! Ready to Find Matching Jobs?
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-300 font-medium max-w-xl leading-relaxed">
-                  Head over to your <strong>Dashboard</strong> where our Autonomous Scout & Match Agents will search real-time job openings tailored to your target profile.
-                </p>
-              </div>
-
-              <Link
-                href="/dashboard"
-                className="w-full md:w-auto bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-lg hover:shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer relative z-10 btn-tactile"
-              >
-                <span>Go to Dashboard & Find Jobs</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* MARKETING HOOK (ZenResume Sister App) */}
-            <div className="bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] rounded-3xl p-5 sm:p-7 shadow-sm relative overflow-hidden mt-2">
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 relative z-10">
-                <div className="space-y-1.5 max-w-xl">
-                  <div className="inline-flex items-center gap-1.5 bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] text-[11px] font-bold px-3 py-0.5 rounded-full border border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30">
-                    <Zap className="w-3.5 h-3.5 text-amber-500" />
-                    <span>Aneevarp Solutions Career Suite</span>
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-black text-[#1A1F1F] dark:text-[#F8FAFC] tracking-tight leading-snug">
-                    Want a Guaranteed 95+ ATS Score?
-                  </h3>
-                  <p className="text-[#596060] dark:text-[#CBD5E1] text-xs sm:text-sm leading-relaxed">
-                    Don’t let corporate filtering bots discard your application. Build a single-column, ATS-certified resume tailored to your dream role using <strong>ZenResume</strong>.
-                  </p>
-                </div>
-
+                {/* ZenResume Sister App Deep Link */}
                 <a
-                  href="https://zenresume.online/?utm_source=zenscout_ai&utm_medium=profile_banner"
+                  href={`https://zenresume.online/?target_role=${encodeURIComponent(formData.role || "Software Engineer")}&utm_source=zenscout_ai&utm_medium=ats_audit_gaps`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all shadow-md active:scale-95 flex items-center gap-2 flex-shrink-0 btn-tactile"
+                  className="mt-4 w-full bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 font-bold text-xs py-2.5 px-4 rounded-full transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                 >
-                  <span>Build on ZenResume Free</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>⚡ Auto-Inject Missing Keywords on ZenResume Free</span>
+                  <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
             </div>
 
-            {/* Re-test CTA */}
-            <div className="mt-4 text-center">
+            {/* Direct Dashboard Scout CTA */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950 to-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <h4 className="font-bold text-sm sm:text-base text-white">
+                  ATS Verified. Ready to scout live openings?
+                </h4>
+                <p className="text-xs text-slate-300 mt-0.5">
+                  Launch autonomous crawler bots to match high-compatibility roles on your Dashboard.
+                </p>
+              </div>
+              <Link href="/dashboard" className="btn-primary text-xs sm:text-sm whitespace-nowrap">
+                <span>Go to Dashboard</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        )
+      )}
+
+      {/* SECTION 3: CANDIDATE CAREER PROFILE FORM (FULLY EDITABLE) */}
+      <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] p-5 sm:p-7 shadow-sm">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-8 h-8 rounded-full bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xs">
+            2
+          </div>
+          <div>
+            <h2 className="text-base sm:text-lg font-bold text-[#1A1F1F] dark:text-[#F8FAFC]">
+              Target Job Parameters & Preferences
+            </h2>
+            <p className="text-xs text-[#7D8787] dark:text-[#94A3B8]">
+              You have full control. Edit any field below at any time to re-target your search or re-run the ATS audit.
+            </p>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          {/* Target Role & Location Inputs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider flex items-center gap-1.5">
+                  <Briefcase className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Target Job Title
+                </label>
+                <span className="text-[10px] text-[#476550] dark:text-[#2DD4BF] font-semibold flex items-center gap-1">
+                  <Edit3 className="w-3 h-3" /> Fully Editable
+                </span>
+              </div>
+              <input
+                type="text"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                placeholder="e.g. Full Stack Developer, React Engineer, AI Engineer"
+                className="w-full px-4 py-3 bg-[#FFFFFF] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] rounded-xl text-sm font-semibold text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] transition-all"
+              />
+              <p className="text-[11px] text-[#7D8787] dark:text-[#94A3B8] mt-1">
+                You can change this role anytime to check your score for different career paths.
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                <MapPin className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Preferred Location / City
+              </label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="e.g. Bangalore, Hyderabad, Remote, San Francisco"
+                className="w-full px-4 py-3 bg-[#FFFFFF] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] rounded-xl text-sm font-semibold text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] transition-all"
+              />
+              <p className="text-[11px] text-[#7D8787] dark:text-[#94A3B8] mt-1">
+                Used to filter relevant geographic openings on the scout dashboard.
+              </p>
+            </div>
+          </div>
+
+          {/* Experience Level & Target Salary */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Experience Level
+              </label>
+              <select
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-[#FFFFFF] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] rounded-xl text-sm font-semibold text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] transition-all"
+              >
+                <option value="Fresher">Fresher / 0 Years (College Graduate / Career Switcher)</option>
+                <option value="1-3 Years">Junior (1 - 3 Years)</option>
+                <option value="3-5 Years">Mid-Level (3 - 5 Years)</option>
+                <option value="5+ Years">Senior / Lead (5+ Years)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-[#7D8787] dark:text-[#94A3B8] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                <IndianRupee className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Expected Compensation (Optional)
+              </label>
+              <input
+                type="text"
+                name="salary"
+                value={formData.salary}
+                onChange={handleChange}
+                placeholder="e.g. ₹8,00,000 - ₹15,00,000 LPA"
+                className="w-full px-4 py-3 bg-[#FFFFFF] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] rounded-xl text-sm font-semibold text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] transition-all"
+              />
+            </div>
+          </div>
+
+          {/* Action Buttons Cluster */}
+          <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-[#D8E2DA] dark:border-[#1A2E26]">
+            <div className="flex items-center gap-2 text-xs text-[#7D8787] dark:text-[#94A3B8]">
+              <ShieldCheck className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
+              <span>Zero-Backend Privacy Guarantee</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2.5">
+              {/* Dynamic Re-Audit for Updated Role */}
               <button
                 type="button"
                 onClick={() => runAtsAudit(formData.resumeBase64, formData.role)}
-                disabled={analyzingAts}
-                className="text-xs text-[#476550] dark:text-[#2DD4BF] hover:underline font-semibold inline-flex items-center gap-1"
+                disabled={analyzingAts || !formData.resumeBase64}
+                className="btn-secondary text-xs sm:text-sm disabled:opacity-50"
+                title="Re-run ATS audit for current job title"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${analyzingAts ? "animate-spin" : ""}`} />
-                <span>Re-analyze with updated role</span>
+                <span>{analyzingAts ? "Auditing..." : "⚡ Re-Audit ATS for This Role"}</span>
               </button>
+
+              <button
+                type="submit"
+                disabled={loading || analyzingAts}
+                className="btn-secondary text-xs sm:text-sm disabled:opacity-50"
+              >
+                <Save className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" />
+                <span>Save Profile</span>
+              </button>
+
+              <Link
+                href="/dashboard"
+                className="btn-primary text-xs sm:text-sm"
+                title="Launch Autonomous Job Scouting on Dashboard"
+              >
+                <span>Go to Dashboard</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
-        ) )}
+        </form>
+      </div>
+
+      {/* MARKETING SISTER APP BANNER (ZenResume) */}
+      <div className="bg-[#FAF9F6] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1A2E26] rounded-3xl p-5 sm:p-6 shadow-sm">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1 max-w-xl">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#476550] dark:text-[#2DD4BF]">
+              Aneevarp Solutions Career Suite
+            </span>
+            <h3 className="text-base sm:text-lg font-bold text-[#1A1F1F] dark:text-[#F8FAFC]">
+              Need an ATS-Certified Resume That Guarantees 95+?
+            </h3>
+            <p className="text-[#7D8787] dark:text-[#94A3B8] text-xs leading-relaxed">
+              Build a single-column, bot-compliant resume specifically tuned to your target role using <strong>ZenResume</strong>.
+            </p>
+          </div>
+
+          <a
+            href="https://zenresume.online/?utm_source=zenscout_ai&utm_medium=profile_banner"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary text-xs sm:text-sm whitespace-nowrap"
+          >
+            <span>Build on ZenResume Free</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
       </div>
 
       {/* Pricing Modal */}
@@ -654,3 +911,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+

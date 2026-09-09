@@ -53,7 +53,7 @@ export const NotificationToast: React.FC<NotificationToastProps> = ({ toasts, on
         };
       case "filter":
         return {
-          bg: "bg-indigo-950/95 dark:bg-[#0f172a]/95 border-indigo-500/50 text-indigo-100",
+          bg: "bg-indigo-950/95 dark:bg-[#0D1714]/95 border-indigo-500/50 text-indigo-100",
           icon: <Sparkles className="w-5 h-5 text-indigo-400 flex-shrink-0" />,
           accent: "text-indigo-400",
           progressBg: "bg-indigo-500"

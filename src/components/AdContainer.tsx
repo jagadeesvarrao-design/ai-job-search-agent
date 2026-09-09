@@ -30,9 +30,9 @@ export default function AdContainer({ slotId = "1234567890", format = "auto", cl
   return (
     <aside
       aria-label="Sponsored advertisement"
-      className={`my-6 p-4 rounded-2xl bg-[#F4F4F0] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] text-center transition-all ${className}`}
+      className={`my-6 p-4 rounded-2xl bg-[#F4F4F0] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1A2E26] text-center transition-all ${className}`}
     >
-      <div className="flex items-center justify-between text-[10px] text-slate-400 dark:text-[#94A3B8] uppercase tracking-widest font-bold mb-2 pb-1 border-b border-slate-200 dark:border-[#232D36]">
+      <div className="flex items-center justify-between text-[10px] text-slate-400 dark:text-[#94A3B8] uppercase tracking-widest font-bold mb-2 pb-1 border-b border-slate-200 dark:border-[#1A2E26]">
         <span>Sponsored Career Resource</span>
         <span>AdSense</span>
       </div>

@@ -125,6 +125,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await fbSignOut(auth);
       if (typeof window !== "undefined") {
+        localStorage.removeItem("user_tier");
+        localStorage.removeItem("zenscout_active_plan");
         window.dispatchEvent(new Event("user-tier-updated"));
       }
     } catch (error: any) {

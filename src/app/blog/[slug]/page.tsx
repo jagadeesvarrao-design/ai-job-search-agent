@@ -167,7 +167,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       {/* HEADER SECTION */}
       <header className="mb-8">
         <div className="flex flex-wrap items-center gap-3 mb-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-[#E8F0EB] dark:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] border border-teal-100 dark:border-[#2DD4BF]/20">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-[#E8F0EB] dark:bg-[#121E1A] text-[#476550] dark:text-[#2DD4BF] border border-teal-100 dark:border-[#2DD4BF]/20">
             <Tag className="w-3 h-3" />
             {post.category}
           </span>
@@ -190,15 +190,15 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         </p>
 
         {/* E-E-A-T AUTHOR & REVIEWER BYLINE */}
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-[#FAF9F6] dark:bg-[#0D1714] p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#D5E0F8] dark:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-sm border border-transparent dark:border-[#2DD4BF]/20">
+            <div className="w-10 h-10 rounded-full bg-[#D5E0F8] dark:bg-[#121E1A] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-sm border border-transparent dark:border-[#2DD4BF]/20">
               {post.author.avatar}
             </div>
             <div>
               <div className="text-sm font-bold text-[#1A1F1F] dark:text-white flex items-center gap-2">
                 {post.author.name}
-                <span className="text-[10px] bg-[#E8F0EB] dark:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] px-2 py-0.5 rounded-full font-semibold border border-teal-100 dark:border-[#2DD4BF]/20">
+                <span className="text-[10px] bg-[#E8F0EB] dark:bg-[#121E1A] text-[#476550] dark:text-[#2DD4BF] px-2 py-0.5 rounded-full font-semibold border border-teal-100 dark:border-[#2DD4BF]/20">
                   Verified Author
                 </span>
               </div>
@@ -206,7 +206,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-[#596060] dark:text-[#CBD5E1] bg-[#F4F4F0] dark:bg-[#1A2228] px-3 py-1.5 rounded-xl border border-slate-200 dark:border-[#232D36]">
+          <div className="flex items-center gap-2 text-xs text-[#596060] dark:text-[#CBD5E1] bg-[#F4F4F0] dark:bg-[#121E1A] px-3 py-1.5 rounded-xl border border-slate-200 dark:border-[#1A2E26]">
             <UserCheck className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />
             <span>Fact Checked by {post.reviewedBy}</span>
           </div>
@@ -214,7 +214,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </header>
 
       {/* ARTICLE BODY */}
-      <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-8 md:p-12 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft">
+      <div className="bg-[#FAF9F6] dark:bg-[#0D1714] p-8 md:p-12 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft">
         {renderContent(post.content)}
 
         {/* AD PLACEMENT (Auto-Hidden for Pro Subscribers) */}
@@ -222,9 +222,9 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </div>
 
       {/* E-E-A-T AUTHOR BIO BOX */}
-      <section aria-label="About the Author" className="mt-10 bg-[#FAF9F6] dark:bg-[#141B20] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft">
+      <section aria-label="About the Author" className="mt-10 bg-[#FAF9F6] dark:bg-[#0D1714] p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-          <div className="w-16 h-16 rounded-2xl bg-[#D5E0F8] dark:bg-[#1A2228] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xl flex-shrink-0 border border-transparent dark:border-[#2DD4BF]/20">
+          <div className="w-16 h-16 rounded-2xl bg-[#D5E0F8] dark:bg-[#121E1A] text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xl flex-shrink-0 border border-transparent dark:border-[#2DD4BF]/20">
             {post.author.avatar}
           </div>
           <div className="flex-1">
@@ -239,14 +239,14 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </section>
 
       {/* RELATED ARTICLES */}
-      <section className="mt-12 pt-8 border-t border-[#D8E2DA] dark:border-[#232D36]">
+      <section className="mt-12 pt-8 border-t border-[#D8E2DA] dark:border-[#1A2E26]">
         <h3 className="text-2xl font-bold text-[#1A1F1F] dark:text-white mb-6">Related Career Guides</h3>
         <div className="grid md:grid-cols-2 gap-6">
           {otherPosts.map((other) => (
             <Link 
               key={other.slug} 
               href={`/blog/${other.slug}`}
-              className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft hover:shadow-soft-hover hover:border-[#476550]/40 dark:hover:border-[#2DD4BF]/40 hover:-translate-y-1 transition-all block group"
+              className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft hover:shadow-soft-hover hover:border-[#476550]/40 dark:hover:border-[#2DD4BF]/40 hover:-translate-y-1 transition-all block group"
             >
               <span className="text-[11px] font-bold text-[#476550] dark:text-[#2DD4BF] block mb-2">{other.category}</span>
               <h4 className="text-lg font-bold text-[#1A1F1F] dark:text-white group-hover:text-[#476550] dark:group-hover:text-[#2DD4BF] transition-colors mb-2 leading-snug">

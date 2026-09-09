@@ -30,7 +30,7 @@ export default function TermsOfService() {
       <div className="space-y-6 text-[#596060] dark:text-[#CBD5E1] text-sm md:text-base leading-relaxed">
         
         {/* 1. Legal Agreement & Electronic Record */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <FileText className="w-5 h-5" />
             <h2>1. Legal Agreement & Electronic Record Under IT Act 2000</h2>
@@ -44,7 +44,7 @@ export default function TermsOfService() {
         </section>
 
         {/* 2. Prohibited Content & User Rules */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <Ban className="w-5 h-5" />
             <h2>2. Mandatory User Rules & Prohibition of Unlawful Content (Rule 3(1)(b))</h2>
@@ -62,7 +62,7 @@ export default function TermsOfService() {
         </section>
 
         {/* 3. Scope of Service & Intellectual Property */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <Building2 className="w-5 h-5" />
             <h2>3. Intellectual Property Rights & Licensing</h2>
@@ -76,7 +76,7 @@ export default function TermsOfService() {
         </section>
 
         {/* 4. Consumer Protection (E-Commerce) Rules 2020 & Pricing */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <CheckCircle2 className="w-5 h-5" />
             <h2>4. Subscriptions, Pricing & Consumer Protection Disclosures</h2>
@@ -92,7 +92,7 @@ export default function TermsOfService() {
         </section>
 
         {/* 5. Limitation of Liability */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <AlertTriangle className="w-5 h-5" />
             <h2>5. Disclaimer of Employment Warranties & Limitation of Liability</h2>
@@ -103,7 +103,7 @@ export default function TermsOfService() {
         </section>
 
         {/* 6. Governing Law & Dispute Resolution */}
-        <section className="bg-[#E8F0EB]/40 dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border-2 border-[#476550]/30 dark:border-[#2DD4BF]/30 shadow-sm space-y-3">
+        <section className="bg-[#E8F0EB]/40 dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border-2 border-[#476550]/30 dark:border-[#2DD4BF]/30 shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-extrabold text-lg">
             <Scale className="w-5 h-5" />
             <h2>6. Governing Law & Exclusive Territorial Jurisdiction</h2>
@@ -111,7 +111,7 @@ export default function TermsOfService() {
           <p className="text-xs">
             These Terms shall be governed by, interpreted, and construed in accordance with the laws of <strong>India</strong>. The courts located in <strong>Hyderabad, Telangana, India</strong> shall have exclusive territorial jurisdiction over any legal disputes, claims, or arbitration proceedings arising under this agreement.
           </p>
-          <div className="p-4 bg-[#FAF9F6] dark:bg-[#1A2228] rounded-2xl border border-slate-200 dark:border-[#232D36] text-xs">
+          <div className="p-4 bg-[#FAF9F6] dark:bg-[#121E1A] rounded-2xl border border-slate-200 dark:border-[#1A2E26] text-xs">
             <strong>Grievance & Legal Notice Desk:</strong><br />
             Attn: Grievance Officer, Aneevarp Solutions<br />
             Email: <a href="mailto:aneevarpsolutions@gmail.com" className="text-[#476550] dark:text-[#2DD4BF] underline font-bold">aneevarpsolutions@gmail.com</a><br />

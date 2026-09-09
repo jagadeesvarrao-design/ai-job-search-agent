@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sanitizeString, sanitizeAiPromptInput, validateBase64Pdf } from "@/lib/security";
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
+import { getGeminiApiKey } from "@/lib/gemini-config";
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -71,9 +70,10 @@ export async function POST(request: Request) {
     };
 
     // 1. Attempt Gemini 2.5 Flash generation if key is configured
-    const geminiKey = process.env.GEMINI_API_KEY;
-    if (geminiKey && geminiKey.startsWith("AIzaSy")) {
+    const geminiKey = getGeminiApiKey();
+    if (geminiKey && !geminiKey.startsWith("sk-") && geminiKey.length > 20) {
       try {
+        const ai = new GoogleGenAI({ apiKey: geminiKey });
         const prompt = `
           You are an expert career coach and professional copywriter.
           I am applying for the following job:
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
         if (resumeBase64) {
           parts.unshift({
             inlineData: {
-              data: resumeBase64,
+              data: resumeBase64.replace(/^data:application\/pdf;base64,/, "").trim(),
               mimeType: "application/pdf"
             }
           });
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
           });
         }
       } catch (geminiErr) {
-        // Fallback to high-precision cover letter synthesizer
+        console.warn("Gemini cover letter generation error, falling back:", geminiErr);
       }
     }
 

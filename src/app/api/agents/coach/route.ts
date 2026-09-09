@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { sanitizeString, sanitizeAiPromptInput } from "@/lib/security";
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
+import { getGeminiApiKey } from "@/lib/gemini-config";
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -105,9 +104,10 @@ export async function POST(request: Request) {
     const sanitizedExperience = sanitizeString(experience || "Fresher", 50);
 
     // 1. Attempt Gemini 2.5 Flash with Senior Manager persona for Zen Suite users
-    const geminiKey = process.env.GEMINI_API_KEY;
-    if (geminiKey && geminiKey.startsWith("AIzaSy")) {
+    const geminiKey = getGeminiApiKey();
+    if (geminiKey && !geminiKey.startsWith("sk-") && geminiKey.length > 20) {
       try {
+        const ai = new GoogleGenAI({ apiKey: geminiKey });
         let closingInstruction = "";
         if (isFreeTierLastTurn && !isSuiteUser) {
           closingInstruction = `
@@ -157,7 +157,7 @@ export async function POST(request: Request) {
           });
         }
       } catch (geminiErr) {
-        // Fallback to high-EQ interview simulation
+        console.warn("Gemini coach generation error, falling back:", geminiErr);
       }
     }
 

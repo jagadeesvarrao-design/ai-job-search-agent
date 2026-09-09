@@ -8,6 +8,12 @@ export interface AtsAuditResult {
   improvements: string[];
   keyMissingSkills: string[];
   summary: string;
+  candidateProfile?: {
+    name?: string;
+    targetRole?: string;
+    location?: string;
+    experienceLevel?: string;
+  };
   breakdown?: {
     coreSkillsScore: number;
     supportingSkillsScore: number;
@@ -617,6 +623,16 @@ export function evaluateResumeAts(rawText: string, targetRole: string, numPages:
     summary = `Automated corporate ATS filters will flag a domain mismatch (${calculatedScore}/100) for ${cleanTargetRole} roles. Your resume currently lacks core competencies in ${roleMatrix.displayCoreTools.slice(0, 3).join(", ")}.`;
   }
 
+  // 12. Candidate Profile Heuristic Fallback
+  let candidateName = "";
+  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+  if (lines.length > 0) {
+    const firstLine = lines[0].replace(/[^a-zA-Z\s.-]/g, "").trim();
+    if (firstLine.length >= 2 && firstLine.length <= 40 && !firstLine.toLowerCase().includes("resume") && !firstLine.toLowerCase().includes("cv")) {
+      candidateName = firstLine;
+    }
+  }
+
   return {
     score: calculatedScore,
     tier,
@@ -627,6 +643,11 @@ export function evaluateResumeAts(rawText: string, targetRole: string, numPages:
     improvements,
     keyMissingSkills: displayKeyMissing,
     summary,
+    candidateProfile: {
+      name: candidateName || undefined,
+      targetRole: cleanTargetRole,
+      experienceLevel: calculatedScore >= 80 ? "3-5 Years" : calculatedScore >= 60 ? "1-3 Years" : "Fresher"
+    },
     breakdown: {
       coreSkillsScore: coreScore,
       supportingSkillsScore: supportingScore,

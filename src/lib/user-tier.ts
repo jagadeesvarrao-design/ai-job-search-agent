@@ -164,47 +164,93 @@ export function detectDefaultCurrency(): "INR" | "USD" {
   }
 }
 
-export function getUserTierState(): UserTierState {
+export function getDefaultFreeTierState(): UserTierState {
   const isIndia = detectDefaultCurrency() === "INR";
-  const defaultQuarterlyState: UserTierState = {
-    plan: "pro",
+  return {
+    plan: "free",
     currency: isIndia ? "INR" : "USD",
-    billingCycle: "quarterly",
-    expiresAt: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
+    billingCycle: "monthly",
     vipBadge: false,
-    prioritySpeed: true,
-    deepAtsGaps: true,
-    salaryIntel: true,
-    recruiterTemplates: true,
-    voiceAudio: true,
+    prioritySpeed: false,
+    deepAtsGaps: false,
+    salaryIntel: false,
+    recruiterTemplates: false,
+    voiceAudio: false,
     isZenSuite: false,
-    tierTitle: "ZenScout 3-Month Pass"
+    tierTitle: "Free Tier"
   };
+}
+
+export function getUserTierState(): UserTierState {
+  const defaultFreeState = getDefaultFreeTierState();
 
   if (typeof window === "undefined") {
-    return defaultQuarterlyState;
+    return defaultFreeState;
   }
 
   try {
+    // One-time cleanup to ensure any legacy test subscription mock is cleared
+    if (!localStorage.getItem("zenscout_tier_v2_active")) {
+      localStorage.setItem("zenscout_tier_v2_active", "true");
+      // Clean up previous test subscriptions
+      const old = localStorage.getItem("user_tier");
+      if (old && (old.includes("ZenScout 3-Month Pass") || old.includes("quarterly"))) {
+        localStorage.removeItem("user_tier");
+        localStorage.removeItem("zenscout_active_plan");
+        return defaultFreeState;
+      }
+    }
+
     const saved = localStorage.getItem("user_tier");
     if (!saved) {
-      localStorage.setItem("user_tier", JSON.stringify(defaultQuarterlyState));
-      return defaultQuarterlyState;
+      localStorage.setItem("user_tier", JSON.stringify(defaultFreeState));
+      return defaultFreeState;
     }
+
     const parsed: UserTierState = JSON.parse(saved);
+
+    if (!parsed || !parsed.plan) {
+      localStorage.setItem("user_tier", JSON.stringify(defaultFreeState));
+      return defaultFreeState;
+    }
     
-    // Check if subscription has expired - if so, ensure 3-Month active for testing
+    // Check if subscription has expired - strictly downgrade if expiration date has passed
     if (parsed.plan === "pro" && parsed.expiresAt) {
       if (new Date(parsed.expiresAt).getTime() < Date.now()) {
-        parsed.expiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
-        localStorage.setItem("user_tier", JSON.stringify(parsed));
+        const expiredState = getDefaultFreeTierState();
+        localStorage.setItem("user_tier", JSON.stringify(expiredState));
+        localStorage.removeItem("zenscout_active_plan");
+        return expiredState;
       }
     }
     
-    parsed.voiceAudio = parsed.plan === "pro" && (parsed.billingCycle === "quarterly" || parsed.billingCycle === "annual" || parsed.isZenSuite === true);
+    // Strictly compute feature flags matching actual subscription tier
+    if (parsed.plan === "pro") {
+      const isSuite = parsed.isZenSuite === true;
+      const isAnnual = parsed.billingCycle === "annual" || isSuite;
+      const isQuarterly = parsed.billingCycle === "quarterly" || isAnnual;
+
+      parsed.voiceAudio = isQuarterly;
+      parsed.prioritySpeed = isQuarterly;
+      parsed.vipBadge = isAnnual;
+      parsed.salaryIntel = isAnnual;
+      parsed.recruiterTemplates = isAnnual;
+      parsed.deepAtsGaps = true;
+    } else {
+      parsed.plan = "free";
+      parsed.voiceAudio = false;
+      parsed.prioritySpeed = false;
+      parsed.vipBadge = false;
+      parsed.salaryIntel = false;
+      parsed.recruiterTemplates = false;
+      parsed.deepAtsGaps = false;
+      parsed.isZenSuite = false;
+      parsed.tierTitle = "Free Tier";
+    }
+
     return parsed;
   } catch (e) {
-    return defaultQuarterlyState;
+    return defaultFreeState;
   }
 }
 
@@ -213,12 +259,16 @@ export function getUserPlan(): UserPlan {
 }
 
 export function isProSubscriber(): boolean {
-  return getUserPlan() === "pro";
+  const tier = getUserTierState();
+  if (tier.plan !== "pro") return false;
+  if (tier.expiresAt && new Date(tier.expiresAt).getTime() < Date.now()) return false;
+  return true;
 }
 
 export function hasVoiceAudioAccess(): boolean {
   const tier = getUserTierState();
-  return tier.plan === "pro" && (tier.billingCycle === "quarterly" || tier.billingCycle === "annual" || tier.isZenSuite === true);
+  if (!isProSubscriber()) return false;
+  return tier.billingCycle === "quarterly" || tier.billingCycle === "annual" || tier.isZenSuite === true;
 }
 
 export function shouldShowAds(): boolean {
@@ -227,8 +277,8 @@ export function shouldShowAds(): boolean {
 
 export function getCurrentTierLimits() {
   const tier = getUserTierState();
+  if (!isProSubscriber()) return TIER_LIMITS.free;
   if (tier.isZenSuite) return TIER_LIMITS.zen_suite;
-  if (tier.plan === "free") return TIER_LIMITS.free;
   if (tier.billingCycle === "quarterly") return TIER_LIMITS.quarterly;
   if (tier.billingCycle === "annual") return TIER_LIMITS.annual;
   return TIER_LIMITS.monthly;
@@ -236,6 +286,15 @@ export function getCurrentTierLimits() {
 
 export function setUserPlan(plan: UserPlan, billingCycle: BillingCycle = "monthly", isZenSuite: boolean = false) {
   if (typeof window === "undefined") return;
+
+  if (plan === "free") {
+    const freeState = getDefaultFreeTierState();
+    localStorage.setItem("user_tier", JSON.stringify(freeState));
+    localStorage.removeItem("zenscout_active_plan");
+    window.dispatchEvent(new Event("user-tier-updated"));
+    return;
+  }
+
   const isIndia = Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Calcutta") ||
                   Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Kolkata") ||
                   Intl.DateTimeFormat().resolvedOptions().timeZone.includes("Asia/Kolkata");
@@ -395,7 +454,14 @@ export async function syncUserSubscriptionFromFirestore(user: { uid: string; ema
         return newState;
       }
     }
-    return defaultState;
+    // If no active paid subscription exists in Firestore for this account, strictly reset to free tier
+    const freeState = getDefaultFreeTierState();
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user_tier", JSON.stringify(freeState));
+      localStorage.removeItem("zenscout_active_plan");
+      window.dispatchEvent(new Event("user-tier-updated"));
+    }
+    return freeState;
   } catch (globalErr) {
     console.error("Failed to sync subscription entitlement from Firestore:", globalErr);
     return defaultState;

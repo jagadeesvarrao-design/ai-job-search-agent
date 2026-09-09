@@ -30,7 +30,7 @@ export default function PrivacyPolicy() {
       <div className="space-y-6 text-[#596060] dark:text-[#CBD5E1] text-sm md:text-base leading-relaxed">
         
         {/* 1. Operating Entity & Statutory Identifiers */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <Building2 className="w-5 h-5" />
             <h2>1. Operating Entity & Statutory Corporate Details</h2>
@@ -38,7 +38,7 @@ export default function PrivacyPolicy() {
           <p>
             This Privacy Policy and Statutory Notice is published pursuant to <strong>Section 43A of the Information Technology Act, 2000</strong>, the <strong>Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 (SPDI Rules)</strong>, and <strong>Sections 5 & 6 of the Digital Personal Data Protection Act, 2023 (DPDP Act, 2023)</strong>.
           </p>
-          <div className="p-4 bg-[#F4F4F0] dark:bg-[#1A2228] rounded-2xl border border-slate-200 dark:border-[#232D36] text-xs space-y-2 font-medium">
+          <div className="p-4 bg-[#F4F4F0] dark:bg-[#121E1A] rounded-2xl border border-slate-200 dark:border-[#1A2E26] text-xs space-y-2 font-medium">
             <div><strong>Operating Legal Entity:</strong> Aneevarp Solutions</div>
             <div><strong>Registered Jurisdiction:</strong> Hyderabad / Telangana, India (Ministry of Corporate Affairs / Govt of India Framework)</div>
             <div><strong>Product Suite:</strong> ZenScout AI (Autonomous Career Assistant) & ZenResume (ATS Resume Builder)</div>
@@ -48,7 +48,7 @@ export default function PrivacyPolicy() {
         </section>
 
         {/* 2. Zero-Backend Architecture & Data Sovereignty */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <Lock className="w-5 h-5" />
             <h2>2. Zero-Backend Privacy Architecture (How We Protect You)</h2>
@@ -64,7 +64,7 @@ export default function PrivacyPolicy() {
         </section>
 
         {/* 3. DPDP Act 2023 Itemized Notice & Consent */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <FileText className="w-5 h-5" />
             <h2>3. Itemized Notice & Consent Architecture (DPDP Act, 2023 - Sections 5 & 6)</h2>
@@ -73,34 +73,34 @@ export default function PrivacyPolicy() {
             In compliance with Section 5 of the DPDP Act 2023, we provide notice of the categories of digital personal data processed and their specific, limited purposes:
           </p>
           <div className="overflow-x-auto">
-            <table className="w-full text-xs text-left border-collapse border border-slate-200 dark:border-[#232D36] rounded-xl">
+            <table className="w-full text-xs text-left border-collapse border border-slate-200 dark:border-[#1A2E26] rounded-xl">
               <thead>
-                <tr className="bg-slate-100 dark:bg-[#1A2228] text-black dark:text-white">
-                  <th className="p-2.5 border border-slate-200 dark:border-[#232D36]">Data Category</th>
-                  <th className="p-2.5 border border-slate-200 dark:border-[#232D36]">Specific Purpose</th>
-                  <th className="p-2.5 border border-slate-200 dark:border-[#232D36]">Storage Location & Retention</th>
+                <tr className="bg-slate-100 dark:bg-[#121E1A] text-black dark:text-white">
+                  <th className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Data Category</th>
+                  <th className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Specific Purpose</th>
+                  <th className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Storage Location & Retention</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36] font-bold">Resume PDF & Work Profile</td>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36]">Calculating ATS score, custom letterhead generation, and mock interview context</td>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36]">Client-Side LocalStorage only. Erased on cache clear.</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26] font-bold">Resume PDF & Work Profile</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Calculating ATS score, custom letterhead generation, and mock interview context</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Client-Side LocalStorage only. Erased on cache clear.</td>
                 </tr>
                 <tr>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36] font-bold">Job Search Query & Location</td>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36]">Fetching live job listings from Google Jobs / SerpApi</td>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36]">Ephemeral API request. Never linked to identity.</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26] font-bold">Job Search Query & Location</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Fetching live job listings from Google Jobs / SerpApi</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Ephemeral API request. Never linked to identity.</td>
                 </tr>
                 <tr>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36] font-bold">Contact Inbound Inquiries</td>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36]">Customer assistance, feedback ticketing, and technical support</td>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36]">Encrypted Email dispatch to aneevarpsolutions@gmail.com.</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26] font-bold">Contact Inbound Inquiries</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Customer assistance, feedback ticketing, and technical support</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Encrypted Email dispatch to aneevarpsolutions@gmail.com.</td>
                 </tr>
                 <tr>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36] font-bold">Authentication Profile</td>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36]">Single Sign-On (SSO) and binding Pro subscription tier</td>
-                  <td className="p-2.5 border border-slate-200 dark:border-[#232D36]">Encrypted Firebase Auth session token.</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26] font-bold">Authentication Profile</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Single Sign-On (SSO) and binding Pro subscription tier</td>
+                  <td className="p-2.5 border border-slate-200 dark:border-[#1A2E26]">Encrypted Firebase Auth session token.</td>
                 </tr>
               </tbody>
             </table>
@@ -108,7 +108,7 @@ export default function PrivacyPolicy() {
         </section>
 
         {/* 4. Data Principal Statutory Rights Portal */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <UserCheck className="w-5 h-5" />
             <h2>4. Data Principal Rights (DPDP Act 2023 - Sections 11, 12, 13 & GDPR)</h2>
@@ -117,23 +117,23 @@ export default function PrivacyPolicy() {
             As a Data Principal under Indian law and international privacy frameworks, you possess complete autonomous statutory rights:
           </p>
           <div className="grid sm:grid-cols-2 gap-3 text-xs">
-            <div className="p-3 bg-[#F4F4F0] dark:bg-[#1A2228] rounded-xl border border-slate-200 dark:border-[#232D36]">
+            <div className="p-3 bg-[#F4F4F0] dark:bg-[#121E1A] rounded-xl border border-slate-200 dark:border-[#1A2E26]">
               <strong>1. Right to Access & Summary:</strong> You can review all cached resume data and active parameters directly inside your Profile page.
             </div>
-            <div className="p-3 bg-[#F4F4F0] dark:bg-[#1A2228] rounded-xl border border-slate-200 dark:border-[#232D36]">
+            <div className="p-3 bg-[#F4F4F0] dark:bg-[#121E1A] rounded-xl border border-slate-200 dark:border-[#1A2E26]">
               <strong>2. Right to Correction / Updating:</strong> You may edit, replace, or overwrite your resume and personal details at any time in 1-click.
             </div>
-            <div className="p-3 bg-[#F4F4F0] dark:bg-[#1A2228] rounded-xl border border-slate-200 dark:border-[#232D36]">
+            <div className="p-3 bg-[#F4F4F0] dark:bg-[#121E1A] rounded-xl border border-slate-200 dark:border-[#1A2E26]">
               <strong>3. Right to Erasure ("Right to be Forgotten"):</strong> Click "Delete All Local Workspace Data" in the Account drawer to immediately purge 100% of stored data.
             </div>
-            <div className="p-3 bg-[#F4F4F0] dark:bg-[#1A2228] rounded-xl border border-slate-200 dark:border-[#232D36]">
+            <div className="p-3 bg-[#F4F4F0] dark:bg-[#121E1A] rounded-xl border border-slate-200 dark:border-[#1A2E26]">
               <strong>4. Right to Withdraw Consent:</strong> You can withdraw cookie or processing consent at any time via our Cookie Preferences modal.
             </div>
           </div>
         </section>
 
         {/* 5. Google AdSense & Cookies */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <RefreshCw className="w-5 h-5" />
             <h2>5. Google AdSense, DoubleClick Cookies & 100% Ad-Free Guarantee</h2>
@@ -149,7 +149,7 @@ export default function PrivacyPolicy() {
         </section>
 
         {/* 6. Statutory Grievance Redressal Officer (IT Rules 2021 & DPDP Act 2023) */}
-        <section className="bg-[#E8F0EB]/40 dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border-2 border-[#476550]/30 dark:border-[#2DD4BF]/30 shadow-sm space-y-4">
+        <section className="bg-[#E8F0EB]/40 dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border-2 border-[#476550]/30 dark:border-[#2DD4BF]/30 shadow-sm space-y-4">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-extrabold text-lg">
             <Scale className="w-5 h-5" />
             <h2>6. Statutory Grievance Redressal Officer (IT Rules 2021 / 2023 & DPDP Act)</h2>
@@ -158,7 +158,7 @@ export default function PrivacyPolicy() {
             In compliance with <strong>Rule 3(2) of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021</strong> and <strong>Section 13 of the DPDP Act, 2023</strong>, the details of the designated Grievance Officer and Data Protection Officer (DPO) are published below:
           </p>
           
-          <div className="p-5 bg-[#FAF9F6] dark:bg-[#1A2228] rounded-2xl border border-slate-200 dark:border-[#232D36] text-xs space-y-2">
+          <div className="p-5 bg-[#FAF9F6] dark:bg-[#121E1A] rounded-2xl border border-slate-200 dark:border-[#1A2E26] text-xs space-y-2">
             <div><strong>Designated Grievance & Data Protection Officer:</strong> P. JAGADEESWARA RAO</div>
             <div><strong>Official Designation:</strong> Head of Compliance & Technical Operations</div>
             <div><strong>Corporate Entity:</strong> Aneevarp Solutions</div>
@@ -170,7 +170,7 @@ export default function PrivacyPolicy() {
         </section>
 
         {/* 7. CERT-In Cyber Security Vulnerability Disclosure */}
-        <section className="bg-[#FAF9F6] dark:bg-[#141B20] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm space-y-3">
+        <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 md:p-8 rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm space-y-3">
           <div className="flex items-center gap-2 text-[#476550] dark:text-[#2DD4BF] font-bold text-lg">
             <AlertCircle className="w-5 h-5" />
             <h2>7. CERT-In Cyber Security & Vulnerability Reporting Desk</h2>

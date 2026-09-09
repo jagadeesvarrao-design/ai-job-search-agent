@@ -73,7 +73,7 @@ interface Job {
 
 const COLUMNS: { status: JobStatus; icon: any; color: string; bg: string; border: string }[] = [
   { status: "New Matches", icon: Sparkles, color: "text-[#476550] dark:text-[#2DD4BF]", bg: "bg-[#E8F0EB] dark:bg-[#2DD4BF]/15", border: "border-[#A2BCA8]/40 dark:border-[#2DD4BF]/30" },
-  { status: "Saved", icon: Bookmark, color: "text-[#596060] dark:text-[#CBD5E1]", bg: "bg-[#F4F4F0] dark:bg-[#1A2228]", border: "border-[#D8E2DA] dark:border-[#232D36]" },
+  { status: "Saved", icon: Bookmark, color: "text-[#596060] dark:text-[#CBD5E1]", bg: "bg-[#F4F4F0] dark:bg-[#121E1A]", border: "border-[#D8E2DA] dark:border-[#1A2E26]" },
   { status: "Applied", icon: Send, color: "text-[#0284C7] dark:text-sky-400", bg: "bg-sky-50 dark:bg-sky-950/40", border: "border-sky-200 dark:border-sky-800/60" },
   { status: "Interviewing", icon: MessageSquare, color: "text-[#3B82F6] dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-950/40", border: "border-blue-200 dark:border-blue-800/60" },
   { status: "Offers", icon: Award, color: "text-[#22C55E] dark:text-emerald-400", bg: "bg-[#E8F0EB] dark:bg-emerald-950/40", border: "border-[#A2BCA8]/40 dark:border-emerald-800/60" },
@@ -102,7 +102,7 @@ function renderFormattedDescription(desc?: string) {
 
         if (isHeader) {
           return (
-            <h5 key={idx} className="font-extrabold text-xs sm:text-sm text-[#476550] dark:text-[#2DD4BF] pt-3 pb-1 border-t border-[#D8E2DA] dark:border-[#232D36] first:border-0 first:pt-0 uppercase tracking-wider block">
+            <h5 key={idx} className="font-extrabold text-xs sm:text-sm text-[#476550] dark:text-[#2DD4BF] pt-3 pb-1 border-t border-[#D8E2DA] dark:border-[#1A2E26] first:border-0 first:pt-0 uppercase tracking-wider block">
               {line}
             </h5>
           );
@@ -179,12 +179,14 @@ export default function DashboardPage() {
       setTierInfo(getUserTierState());
       setUsageQuota(getUsageQuota());
 
-      const savedJobs = localStorage.getItem("jobs");
+      const savedJobs = typeof window !== "undefined" ? localStorage.getItem("jobs") : null;
       if (savedJobs) {
         const parsedJobs: Job[] = JSON.parse(savedJobs);
         parsedJobs.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
         setJobs(parsedJobs);
       }
+
+      const savedProfile = typeof window !== "undefined" ? localStorage.getItem("my_profile") : null;
 
       // Check URL query parameters for fast-track role presets from Hero
       if (typeof window !== "undefined") {
@@ -544,143 +546,55 @@ export default function DashboardPage() {
   const interviewsCount = jobs.filter(j => j.status === "Interviewing" || j.status === "Offers").length;
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* 0. LIVE SUBSCRIPTION TIER & QUOTA METER */}
-      <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-4 md:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className={`p-2.5 rounded-xl flex items-center justify-center ${
-            isPro 
-              ? "bg-amber-500/20 text-amber-500" 
-              : "bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF]"
-          }`}>
-            {isPro ? <Crown className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-sm text-[#1A1F1F] dark:text-[#F8FAFC]">
-                {isPro 
-                  ? (tierInfo.isZenSuite 
-                      ? "ANEEVARP ZEN SUITE ULTIMATE"
-                      : tierInfo.billingCycle === "annual" 
-                        ? "ZenScout ANNUAL PRO VIP" 
-                        : tierInfo.billingCycle === "quarterly" 
-                          ? "ZenScout 3-MONTH FULL PASS" 
-                          : "ZenScout 1-MONTH STARTER")
-                  : "Free Tier Workspace"}
-              </span>
-              {isPro ? (
-                <span className="text-[10px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black px-2.5 py-0.5 rounded-full">
-                  {tierInfo.isZenSuite ? "👑 ZEN SUITE ULTIMATE VIP" : (tierInfo.billingCycle === "annual" ? "👑 VIP UNLIMITED" : tierInfo.billingCycle === "quarterly" ? "⚡ UNLIMITED AI" : "100% AD-FREE")}
-                </span>
-              ) : (
-                <span className="text-[10px] bg-slate-100 dark:bg-[#1A2228] text-[#596060] dark:text-[#CBD5E1] font-bold px-2.5 py-0.5 rounded-full border border-[#D8E2DA] dark:border-[#232D36]">
-                  Standard Limits (Ads Enabled)
-                </span>
-              )}
-            </div>
-            <p className="text-xs text-[#596060] dark:text-[#94A3B8] mt-0.5">
+    <div className="flex flex-col gap-4">
+      {/* 0. STREAMLINED METRICS & STATUS COMMAND STRIP */}
+      <section className="bg-[#FAF9F6] dark:bg-[#0D1714] p-3 sm:p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm flex flex-wrap items-center justify-between gap-3">
+        {/* Left: Tier Status Pill */}
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => setPricingModalOpen(true)}
+            className={isPro ? "btn-pro py-1 px-3 text-xs" : "btn-secondary py-1 px-3 text-xs"}
+          >
+            {isPro ? <Crown className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> : <Zap className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" />}
+            <span>
               {isPro 
-                ? (tierInfo.isZenSuite
-                    ? `⚡ All-in-One Cross-Suite Pass Active (ZenScout + ZenDoc + ZenResume) • Truly Unlimited AI Scouting, Letters & AI Voice Coach • Priority 2x Server Speed • 100% Ad-Free`
-                    : tierInfo.billingCycle === "monthly"
-                      ? `1-Month Starter Plan: ${usageQuota.scoutRunsToday}/25 Daily Scouts • ${usageQuota.coverLettersGeneratedToday}/10 Letters • 100% Ad-Free`
-                      : tierInfo.billingCycle === "quarterly"
-                        ? `3-Month Pass: ⚡ Truly Unlimited AI Scouting, Letters & Coach • Priority 2x Server Speed • 100% Ad-Free`
-                        : `Annual VIP Member: 👑 VIP Badge Active • Truly Unlimited AI • Recruiter Outreach & Salary Playbooks Active`)
-                : `Daily Free Usage: ${usageQuota.scoutRunsToday}/5 Scouts • ${usageQuota.coverLettersGeneratedToday}/2 Letters • ${usageQuota.interviewMessagesSent}/3 Coach Exchanges`}
-            </p>
-          </div>
-        </div>
-
-        {!isPro ? (
-          <button
-            onClick={() => setPricingModalOpen(true)}
-            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-black py-2.5 px-5 rounded-full shadow-sm btn-tactile active:scale-95 transition-all"
-          >
-            <Crown className="w-3.5 h-3.5" />
-            <span>Upgrade to Pro (Compare Plans)</span>
-          </button>
-        ) : tierInfo.billingCycle === "monthly" ? (
-          <button
-            onClick={() => setPricingModalOpen(true)}
-            className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-500 hover:text-white text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60 text-xs font-bold py-2 px-4 rounded-full btn-tactile transition-all shadow-sm active:scale-95"
-          >
-            <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-            <span>Upgrade to 3-Month Unlimited</span>
-          </button>
-        ) : (
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-[#E8F0EB] dark:bg-emerald-950/40 px-3.5 py-1.5 rounded-full border border-[#A2BCA8]/40 dark:border-emerald-900">
-            <CheckCircle2 className="w-4 h-4" />
-            <span>{tierInfo.billingCycle === "annual" ? "👑 VIP Member Status Active" : "⚡ 3-Month Unlimited Active"}</span>
-          </div>
-        )}
-      </div>
-
-      {/* CONDITIONAL ADSENSE SPONSOR BANNER (Displayed ONLY on Free Tier) */}
-      {!isPro && (
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-3.5 rounded-2xl border border-dashed border-[#D8E2DA] dark:border-[#232D36] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <div className="flex items-center gap-2.5">
-            <span className="text-[9px] font-black uppercase tracking-widest bg-slate-200 dark:bg-[#1A2228] text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded">
-              Ad / Sponsor
+                ? (tierInfo.billingCycle === "annual" ? "Annual VIP Active" : tierInfo.billingCycle === "quarterly" ? "3-Month Pass Active" : "Pro Starter") 
+                : `Free Tier (${usageQuota.scoutRunsToday}/5 Scouts)`}
             </span>
-            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] font-medium">
-              Targeting tech jobs? Level up your profile with verified certifications & ZenResume ATS templates.
-            </p>
-          </div>
-          <button
-            onClick={() => setPricingModalOpen(true)}
-            className="text-[11px] font-bold text-[#476550] dark:text-[#2DD4BF] hover:underline whitespace-nowrap"
-          >
-            Remove ads with ZenScout Pro &rarr;
           </button>
-        </div>
-      )}
-
-      {/* 1. TOP ANALYTICS & STATS BAR */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF]">
-            <Briefcase className="w-5 h-5" />
-          </div>
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block">Total Scouted</span>
-            <span className="text-2xl font-black text-[#1A1F1F] dark:text-[#F8FAFC]">{totalScouted}</span>
-          </div>
+          <span className="text-[11px] text-[#7D8787] dark:text-[#94A3B8] hidden md:inline">
+            {isPro ? "⚡ Unlimited AI Scouting & Voice Coach Active" : "Standard Daily Limits"}
+          </span>
         </div>
 
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-[#E8F0EB] dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
-            <TrendingUp className="w-5 h-5" />
+        {/* Right: Key Metrics in Sleek Horizontal Counter Pills */}
+        <div className="flex flex-wrap items-center gap-2 text-xs">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFFFFF] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26]">
+            <span className="text-[#7D8787] dark:text-[#94A3B8]">Scouted:</span>
+            <span className="font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">{totalScouted}</span>
           </div>
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block">Avg Match Score</span>
-            <span className="text-2xl font-black text-emerald-700 dark:text-emerald-300">{avgMatch > 0 ? `${avgMatch}%` : "—"}</span>
-          </div>
-        </div>
 
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-[#0284C7] dark:text-sky-300">
-            <Send className="w-5 h-5" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFFFFF] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26]">
+            <span className="text-[#7D8787] dark:text-[#94A3B8]">Avg Match:</span>
+            <span className={`font-extrabold ${avgMatch >= 75 ? "text-emerald-700 dark:text-emerald-400" : "text-[#1A1F1F] dark:text-[#F8FAFC]"}`}>
+              {avgMatch > 0 ? `${avgMatch}%` : "—"}
+            </span>
           </div>
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block">Applications Sent</span>
-            <span className="text-2xl font-black text-[#0284C7] dark:text-sky-300">{appliedCount}</span>
-          </div>
-        </div>
 
-        <div className="bg-[#FAF9F6] dark:bg-[#141B20] p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
-            <Award className="w-5 h-5" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFFFFF] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26]">
+            <span className="text-[#7D8787] dark:text-[#94A3B8]">Applied:</span>
+            <span className="font-extrabold text-sky-700 dark:text-sky-400">{appliedCount}</span>
           </div>
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#7D8787] dark:text-[#94A3B8] block">Interviews & Offers</span>
-            <span className="text-2xl font-black text-purple-700 dark:text-purple-300">{interviewsCount}</span>
+
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFFFFF] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26]">
+            <span className="text-[#7D8787] dark:text-[#94A3B8]">Interviews:</span>
+            <span className="font-extrabold text-purple-700 dark:text-purple-400">{interviewsCount}</span>
           </div>
         </div>
       </section>
 
       {/* 2. LIVE SEARCH & FILTER CONTROL BAR */}
-      <section className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft p-5 md:p-6">
+      <section className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft p-5 md:p-6">
         <div className="flex flex-col lg:flex-row items-center gap-4">
           {/* Target Role Input */}
           <div className="flex-1 w-full relative">
@@ -690,7 +604,7 @@ export default function DashboardPage() {
               value={searchRole}
               onChange={(e) => setSearchRole(e.target.value)}
               placeholder="Search Role (e.g. React Developer, Frontend Engineer, Data Scientist)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] rounded-xl text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC] placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#476550]/20 dark:focus:ring-[#2DD4BF]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] rounded-xl text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC] placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#476550]/20 dark:focus:ring-[#2DD4BF]/20"
             />
           </div>
 
@@ -702,7 +616,7 @@ export default function DashboardPage() {
               value={searchLocation}
               onChange={(e) => setSearchLocation(e.target.value)}
               placeholder="City (e.g. Bangalore, Hyderabad)"
-              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] rounded-xl text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC] placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#476550]/20 dark:focus:ring-[#2DD4BF]/20"
+              className="w-full pl-11 pr-4 py-3 bg-[#F4F4F0] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] rounded-xl text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC] placeholder:text-slate-400 focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] focus:ring-2 focus:ring-[#476550]/20 dark:focus:ring-[#2DD4BF]/20"
             />
           </div>
 
@@ -713,7 +627,7 @@ export default function DashboardPage() {
             className={`px-4 py-3 rounded-full border text-xs font-bold flex items-center gap-2 transition-all w-full lg:w-auto justify-center btn-tactile ${
               remoteOnly 
                 ? "bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 border-[#476550] dark:border-[#2DD4BF] text-[#476550] dark:text-[#2DD4BF]" 
-                : "bg-[#F4F4F0] dark:bg-[#1A2228] border-[#D8E2DA] dark:border-[#232D36] text-[#596060] dark:text-[#CBD5E1] hover:text-[#1A1F1F] dark:hover:text-white"
+                : "bg-[#F4F4F0] dark:bg-[#121E1A] border-[#D8E2DA] dark:border-[#1A2E26] text-[#596060] dark:text-[#CBD5E1] hover:text-[#1A1F1F] dark:hover:text-white"
             }`}
           >
             <Globe className="w-4 h-4" />
@@ -725,7 +639,7 @@ export default function DashboardPage() {
             <button
               onClick={handleRunFilter}
               disabled={filtering}
-              className="bg-[#FAF9F6] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] hover:bg-[#F0F5F2] dark:hover:bg-[#232D36] text-[#1A1F1F] dark:text-[#F8FAFC] font-bold text-xs py-3 px-5 rounded-full transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-[#FAF9F6] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] hover:bg-[#F0F5F2] dark:hover:bg-[#1A2E26] text-[#1A1F1F] dark:text-[#F8FAFC] font-bold text-xs py-3 px-5 rounded-full transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
             >
               {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#476550] dark:text-[#2DD4BF]" /> : <Filter className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />}
               <span>Score ATS</span>
@@ -795,7 +709,7 @@ export default function DashboardPage() {
         </div>
 
         {/* View Switcher Segmented Control */}
-        <div className="inline-flex p-1 rounded-2xl bg-[#F0F5F2] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] shadow-inner self-start sm:self-auto">
+        <div className="inline-flex p-1 rounded-2xl bg-[#F0F5F2] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] shadow-inner self-start sm:self-auto">
           <button
             onClick={() => setViewMode("board")}
             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all btn-tactile ${
@@ -825,7 +739,7 @@ export default function DashboardPage() {
       {viewMode === "list" && (
         <section className="space-y-3">
           {jobs.length === 0 ? (
-            <div className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] p-12 text-center text-slate-500 shadow-soft">
+            <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] p-12 text-center text-slate-500 shadow-soft">
               <Search className="w-10 h-10 mx-auto mb-3 text-slate-400 opacity-40" />
               <h3 className="text-base font-bold text-[#1A1F1F] dark:text-[#F8FAFC]">No Opportunities Scouted Yet</h3>
               <p className="text-xs text-[#596060] dark:text-[#94A3B8] mt-1">
@@ -839,7 +753,7 @@ export default function DashboardPage() {
               .map(job => (
                 <div
                   key={job.id}
-                  className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] p-4 sm:p-5 shadow-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                  className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] p-4 sm:p-5 shadow-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between gap-4 group"
                 >
                   <div className="min-w-0 flex-1 space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
@@ -853,12 +767,12 @@ export default function DashboardPage() {
                         <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full flex-shrink-0 ${
                           job.matchScore >= 80 ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800" :
                           job.matchScore >= 60 ? "bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800" :
-                          "bg-slate-200 dark:bg-[#1A2228] text-slate-800 dark:text-slate-300 border border-slate-300 dark:border-[#232D36]"
+                          "bg-slate-200 dark:bg-[#121E1A] text-slate-800 dark:text-slate-300 border border-slate-300 dark:border-[#1A2E26]"
                         }`}>
                           {job.matchScore}% Match
                         </span>
                       )}
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-[#1A2228] text-slate-600 dark:text-slate-300 border border-[#D8E2DA] dark:border-[#232D36]">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-[#121E1A] text-slate-600 dark:text-slate-300 border border-[#D8E2DA] dark:border-[#1A2E26]">
                         {job.status}
                       </span>
                     </div>
@@ -871,11 +785,11 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Actions & Status Dropdown */}
-                  <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-[#D8E2DA] dark:border-[#232D36]">
+                  <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-[#D8E2DA] dark:border-[#1A2E26]">
                     <select
                       value={job.status}
                       onChange={(e) => updateJobStatus(job.id, e.target.value as JobStatus)}
-                      className="text-xs font-bold bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] text-[#1A1F1F] dark:text-[#F8FAFC] px-3 py-2 rounded-xl focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] cursor-pointer"
+                      className="text-xs font-bold bg-[#F4F4F0] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] text-[#1A1F1F] dark:text-[#F8FAFC] px-3 py-2 rounded-xl focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] cursor-pointer"
                     >
                       {COLUMNS.map(c => (
                         <option key={c.status} value={c.status}>{c.status}</option>
@@ -892,7 +806,7 @@ export default function DashboardPage() {
 
                     <button
                       onClick={() => { setSelectedJob(job); setActiveTab("cover_letter"); handleGenerateCoverLetter(job); }}
-                      className="text-xs font-bold bg-slate-100 dark:bg-[#1A2228] hover:bg-slate-200 dark:hover:bg-[#232D36] text-slate-800 dark:text-slate-200 border border-[#D8E2DA] dark:border-[#232D36] px-3 py-2 rounded-full transition-all btn-tactile"
+                      className="text-xs font-bold bg-slate-100 dark:bg-[#121E1A] hover:bg-slate-200 dark:hover:bg-[#1A2E26] text-slate-800 dark:text-slate-200 border border-[#D8E2DA] dark:border-[#1A2E26] px-3 py-2 rounded-full transition-all btn-tactile"
                       title="Draft tailored cover letter"
                     >
                       <FileText className="w-3.5 h-3.5" />
@@ -911,7 +825,7 @@ export default function DashboardPage() {
                         href={job.applyLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs font-bold bg-slate-100 dark:bg-[#1A2228] hover:bg-slate-200 dark:hover:bg-[#232D36] text-slate-700 dark:text-slate-300 border border-[#D8E2DA] dark:border-[#232D36] p-2 rounded-full transition-all btn-tactile"
+                        className="text-xs font-bold bg-slate-100 dark:bg-[#121E1A] hover:bg-slate-200 dark:hover:bg-[#1A2E26] text-slate-700 dark:text-slate-300 border border-[#D8E2DA] dark:border-[#1A2E26] p-2 rounded-full transition-all btn-tactile"
                         title="Apply directly on portal"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -933,17 +847,17 @@ export default function DashboardPage() {
             return (
               <div 
                 key={status} 
-                className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-soft p-5 sm:p-6 flex flex-col min-h-[340px] transition-all hover:shadow-soft-hover"
+                className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-soft p-5 sm:p-6 flex flex-col min-h-[340px] transition-all hover:shadow-soft-hover"
               >
                 {/* Card Header */}
-                <div className="flex justify-between items-center w-full mb-4 pb-3 border-b border-[#D8E2DA] dark:border-[#232D36]">
+                <div className="flex justify-between items-center w-full mb-4 pb-3 border-b border-[#D8E2DA] dark:border-[#1A2E26]">
                   <div className="flex items-center gap-2">
                     <div className={`p-2 rounded-xl ${bg} ${color}`}>
                       <Icon className="w-4 h-4" />
                     </div>
                     <h2 className="font-extrabold text-sm text-[#1A1F1F] dark:text-[#F8FAFC] tracking-tight">{status}</h2>
                   </div>
-                  <span className="bg-[#EAEFED] dark:bg-[#1A2228] text-[#1A1F1F] dark:text-[#F8FAFC] font-extrabold text-xs px-3 py-1 rounded-full border border-[#D8E2DA] dark:border-[#232D36]">
+                  <span className="bg-[#EAEFED] dark:bg-[#121E1A] text-[#1A1F1F] dark:text-[#F8FAFC] font-extrabold text-xs px-3 py-1 rounded-full border border-[#D8E2DA] dark:border-[#1A2E26]">
                     {columnJobs.length}
                   </span>
                 </div>
@@ -961,7 +875,7 @@ export default function DashboardPage() {
                       <div 
                         key={job.id}
                         onClick={() => { setSelectedJob(job); setActiveTab("details"); }}
-                        className="p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] bg-[#F4F4F0] dark:bg-[#1A2228] hover:bg-[#FAF9F6] dark:hover:bg-[#1F2930] hover:border-[#476550]/50 dark:hover:border-[#2DD4BF]/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group flex flex-col gap-2 relative"
+                        className="p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] bg-[#F4F4F0] dark:bg-[#121E1A] hover:bg-[#FAF9F6] dark:hover:bg-[#1F2930] hover:border-[#476550]/50 dark:hover:border-[#2DD4BF]/50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group flex flex-col gap-2 relative"
                       >
                         <div className="flex justify-between items-start gap-2">
                           <h3 className="font-extrabold text-sm text-[#1A1F1F] dark:text-[#F8FAFC] group-hover:text-[#476550] dark:group-hover:text-[#2DD4BF] transition-colors line-clamp-1">
@@ -971,7 +885,7 @@ export default function DashboardPage() {
                             <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full flex-shrink-0 ${
                               job.matchScore >= 80 ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800" :
                               job.matchScore >= 60 ? "bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800" :
-                              "bg-slate-200 dark:bg-[#141B20] text-slate-800 dark:text-slate-300 border border-slate-300 dark:border-[#232D36]"
+                              "bg-slate-200 dark:bg-[#0D1714] text-slate-800 dark:text-slate-300 border border-slate-300 dark:border-[#1A2E26]"
                             }`}>
                               {job.matchScore}% Match
                             </span>
@@ -983,7 +897,7 @@ export default function DashboardPage() {
                           <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-slate-400" /> {job.location}</span>
                         </div>
 
-                        <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 dark:border-[#232D36] mt-1">
+                        <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 dark:border-[#1A2E26] mt-1">
                           <span className="text-[10px] text-[#7D8787] dark:text-[#94A3B8] font-medium">{job.postedAt || "Verified active"}</span>
                           <span className="text-xs font-bold text-[#476550] dark:text-[#2DD4BF] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
                             View details &rarr;
@@ -995,7 +909,7 @@ export default function DashboardPage() {
 
                   {/* Contextual Offer Audit Prompt for Kanban Offers Column */}
                   {status === "Offers" && columnJobs.length > 0 && (
-                    <div className="mt-2 p-3 rounded-2xl bg-[#E8F0EB] dark:bg-[#1A2228] border border-emerald-300 dark:border-emerald-800/60 text-xs">
+                    <div className="mt-2 p-3 rounded-2xl bg-[#E8F0EB] dark:bg-[#121E1A] border border-emerald-300 dark:border-emerald-800/60 text-xs">
                       <div className="flex items-center gap-1.5 font-bold text-emerald-800 dark:text-emerald-300 mb-1">
                         <Award className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                         <span>Audit Offer on ZenDoc AI</span>
@@ -1021,15 +935,20 @@ export default function DashboardPage() {
         </section>
       )}
 
-      {/* 4. JOB DETAIL, COVER LETTER PDF & AI COACH MODAL */}
+      {/* 4. ADAPTIVE JOB DETAIL DRAWER / MODAL */}
       {selectedJob && (
-        <div className="fixed inset-0 bg-[#0B0F12]/80 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-          <div className="bg-[#FAF9F6] dark:bg-[#141B20] rounded-3xl border border-[#D8E2DA] dark:border-[#232D36] shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-end md:items-center justify-center p-0 md:p-4 overflow-y-auto">
+          <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-t-[28px] md:rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-2xl max-w-3xl w-full max-h-[90dvh] md:max-h-[92vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 md:zoom-in-95 duration-300 pb-safe md:pb-0">
+            {/* Mobile Pull / Drag Indicator Handle */}
+            <div className="md:hidden flex items-center justify-center pt-3 pb-1 bg-[#F4F4F0] dark:bg-[#121E1A] w-full cursor-grab">
+              <div className="w-12 h-1.5 rounded-full bg-[#D8E2DA] dark:bg-[#2DD4BF]/40"></div>
+            </div>
+
             {/* Modal Header */}
-            <div className="p-4 sm:p-6 border-b border-[#D8E2DA] dark:border-[#232D36] flex justify-between items-start bg-[#F4F4F0] dark:bg-[#1A2228] gap-3">
+            <div className="p-4 sm:p-6 border-b border-[#D8E2DA] dark:border-[#1A2E26] flex justify-between items-start bg-[#F4F4F0] dark:bg-[#121E1A] gap-3">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                  <h2 className="text-lg sm:text-2xl font-black text-[#1A1F1F] dark:text-[#F8FAFC] leading-snug break-words">{selectedJob.title}</h2>
+                  <h2 className="text-base sm:text-2xl font-black text-[#1A1F1F] dark:text-[#F8FAFC] leading-snug break-words">{selectedJob.title}</h2>
                   {selectedJob.matchScore > 0 && (
                     <span className="text-[11px] sm:text-xs font-black px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
                       {selectedJob.matchScore}% Match
@@ -1047,7 +966,7 @@ export default function DashboardPage() {
                   if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
                   setSelectedJob(null);
                 }}
-                className="p-1.5 sm:p-2 rounded-full text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-[#141B20] transition-colors flex-shrink-0"
+                className="p-2 rounded-full text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-[#0D1714] transition-colors flex-shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
                 aria-label="Close Modal"
               >
                 <X className="w-5 h-5" />
@@ -1055,7 +974,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Navigation Tabs (Scrollable on small screens) */}
-            <div className="flex border-b border-[#D8E2DA] dark:border-[#232D36] px-3 sm:px-6 bg-[#FAF9F6] dark:bg-[#141B20] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
+            <div className="flex border-b border-[#D8E2DA] dark:border-[#1A2E26] px-3 sm:px-6 bg-[#FAF9F6] dark:bg-[#0D1714] overflow-x-auto no-scrollbar gap-1 sm:gap-2">
               <button
                 onClick={() => setActiveTab("details")}
                 className={`py-3 px-3 sm:px-4 font-bold text-xs sm:text-sm border-b-2 transition-all whitespace-nowrap ${
@@ -1102,7 +1021,7 @@ export default function DashboardPage() {
                           className={`px-3.5 py-1.5 rounded-full text-xs transition-all btn-tactile ${
                             selectedJob.status === col.status
                               ? "bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] shadow-md font-black ring-2 ring-[#476550]/30 dark:ring-[#2DD4BF]/30"
-                              : "bg-slate-100 dark:bg-[#1A2228] text-slate-800 dark:text-[#CBD5E1] border border-[#D8E2DA] dark:border-[#232D36] hover:bg-slate-200 dark:hover:bg-[#232D36] font-bold"
+                              : "bg-slate-100 dark:bg-[#121E1A] text-slate-800 dark:text-[#CBD5E1] border border-[#D8E2DA] dark:border-[#1A2E26] hover:bg-slate-200 dark:hover:bg-[#1A2E26] font-bold"
                           }`}
                         >
                           {col.status}
@@ -1113,7 +1032,7 @@ export default function DashboardPage() {
 
                   <div>
                     <h4 className="font-bold text-xs uppercase tracking-wider text-[#596060] dark:text-[#94A3B8] mb-2.5">Role Overview & Responsibilities</h4>
-                    <div className="p-5 sm:p-6 rounded-2xl bg-[#F4F4F0] dark:bg-[#1A2228] border border-[#D8E2DA] dark:border-[#232D36] shadow-sm">
+                    <div className="p-5 sm:p-6 rounded-2xl bg-[#F4F4F0] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] shadow-sm">
                       {renderFormattedDescription(selectedJob.description)}
                     </div>
                   </div>
@@ -1170,14 +1089,14 @@ export default function DashboardPage() {
               {/* TAB 2: COVER LETTER WITH 1-CLICK PDF EXPORT */}
               {activeTab === "cover_letter" && (
                 <div className="space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F4F4F0] dark:bg-[#1A2228] p-3.5 rounded-xl border border-[#D8E2DA] dark:border-[#232D36]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F4F4F0] dark:bg-[#121E1A] p-3.5 rounded-xl border border-[#D8E2DA] dark:border-[#1A2E26]">
                     <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium">Synthesized with Gemini 2.5 Flash mapping your experience.</p>
                     
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleCopyCoverLetter}
                         disabled={factoryLoading || !coverLetter}
-                        className="text-xs bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] hover:bg-slate-100 dark:hover:bg-[#232D36] text-[#1A1F1F] dark:text-[#F8FAFC] font-bold px-3 py-1.5 rounded-full flex items-center gap-1 transition-all btn-tactile"
+                        className="text-xs bg-[#FAF9F6] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1A2E26] hover:bg-slate-100 dark:hover:bg-[#1A2E26] text-[#1A1F1F] dark:text-[#F8FAFC] font-bold px-3 py-1.5 rounded-full flex items-center gap-1 transition-all btn-tactile"
                       >
                         {copiedLetter ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{copiedLetter ? "Copied!" : "Copy"}</span>
@@ -1212,7 +1131,7 @@ export default function DashboardPage() {
                       value={coverLetter}
                       onChange={(e) => setCoverLetter(e.target.value)}
                       rows={13}
-                      className="w-full p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] bg-[#F4F4F0] dark:bg-[#1A2228] text-[#1A1F1F] dark:text-[#CBD5E1] leading-relaxed font-sans text-sm focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
+                      className="w-full p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] bg-[#F4F4F0] dark:bg-[#121E1A] text-[#1A1F1F] dark:text-[#CBD5E1] leading-relaxed font-sans text-sm focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
                     />
                   )}
                 </div>
@@ -1222,7 +1141,7 @@ export default function DashboardPage() {
               {activeTab === "coach" && (
                 <div className="flex flex-col h-[430px]">
                   {/* Coach Controls Bar */}
-                  <div className="flex items-center justify-between pb-3 border-b border-[#D8E2DA] dark:border-[#232D36] mb-3 text-xs">
+                  <div className="flex items-center justify-between pb-3 border-b border-[#D8E2DA] dark:border-[#1A2E26] mb-3 text-xs">
                     <span className="font-bold text-[#1A1F1F] dark:text-[#F8FAFC] flex items-center gap-1.5">
                       <Bot className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" /> Mock Interview Simulation
                     </span>
@@ -1239,7 +1158,7 @@ export default function DashboardPage() {
                         className={`flex items-center gap-1 font-bold px-3 py-1 rounded-full border transition-all btn-tactile ${
                           voiceAudioEnabled 
                             ? "bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 border-[#A2BCA8]/40 dark:border-[#2DD4BF]/40 text-[#476550] dark:text-[#2DD4BF]" 
-                            : "bg-slate-100 dark:bg-[#1A2228] border-slate-300 dark:border-[#232D36] text-slate-500 dark:text-slate-400"
+                            : "bg-slate-100 dark:bg-[#121E1A] border-slate-300 dark:border-[#1A2E26] text-slate-500 dark:text-slate-400"
                         }`}
                       >
                         {voiceAudioEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
@@ -1257,8 +1176,27 @@ export default function DashboardPage() {
                     )}
                   </div>
 
+                  {/* Dynamic Voice Audio Waveform Indicator */}
+                  <div className="flex items-center justify-between px-3 sm:px-4 py-2 rounded-xl bg-[#E8F0EB] dark:bg-[rgba(45,212,191,0.12)] border border-[#A2BCA8]/40 dark:border-[rgba(45,212,191,0.25)] mb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex items-center gap-1 h-6">
+                        <span className={`w-1 rounded-full bg-[#476550] dark:bg-[#2DD4BF] ${isRecording || voiceAudioEnabled ? "animate-wave-1" : "h-2 opacity-40"}`}></span>
+                        <span className={`w-1 rounded-full bg-[#476550] dark:bg-[#2DD4BF] ${isRecording || voiceAudioEnabled ? "animate-wave-2" : "h-3 opacity-40"}`}></span>
+                        <span className={`w-1 rounded-full bg-[#476550] dark:bg-[#2DD4BF] ${isRecording || voiceAudioEnabled ? "animate-wave-3" : "h-4 opacity-40"}`}></span>
+                        <span className={`w-1 rounded-full bg-[#476550] dark:bg-[#2DD4BF] ${isRecording || voiceAudioEnabled ? "animate-wave-4" : "h-3 opacity-40"}`}></span>
+                        <span className={`w-1 rounded-full bg-[#476550] dark:bg-[#2DD4BF] ${isRecording || voiceAudioEnabled ? "animate-wave-5" : "h-2 opacity-40"}`}></span>
+                      </div>
+                      <span className="text-[11px] font-bold text-[#476550] dark:text-[#2DD4BF]">
+                        {isRecording ? "Listening to your answer..." : voiceAudioEnabled ? "Interactive Voice Audio Sparring Active" : "Voice AI Coach Simulator Ready"}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#7D8787] dark:text-[#94A3B8] hidden sm:inline">
+                      Hands-Free Practice
+                    </span>
+                  </div>
+
                   {/* Chat Message Thread */}
-                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F4F4F0] dark:bg-[#1A2228] rounded-2xl border border-[#D8E2DA] dark:border-[#232D36] mb-3">
+                  <div className="flex-1 overflow-y-auto space-y-3 p-4 bg-[#F4F4F0] dark:bg-[#121E1A] rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] mb-3">
                     {chatMessages.length === 0 ? (
                       <div className="text-center py-10 text-[#596060] dark:text-[#94A3B8]">
                         <Bot className="w-10 h-10 mx-auto mb-2 text-[#476550] dark:text-[#2DD4BF]" />
@@ -1280,7 +1218,7 @@ export default function DashboardPage() {
                                   <span>Hiring Scorecard: STAR 9/10 • Technical Depth: High</span>
                                 </div>
                               )}
-                              <div className="p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] text-[#1A1F1F] dark:text-[#CBD5E1] rounded-bl-none shadow-sm font-normal">
+                              <div className="p-3.5 rounded-2xl text-xs md:text-sm leading-relaxed bg-[#FAF9F6] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1A2E26] text-[#1A1F1F] dark:text-[#CBD5E1] rounded-bl-none shadow-sm font-normal">
                                 {msg.content}
                               </div>
                             </div>
@@ -1313,7 +1251,7 @@ export default function DashboardPage() {
 
                     {coachLoading && (
                       <div className="flex justify-start">
-                        <div className="bg-[#FAF9F6] dark:bg-[#141B20] border border-[#D8E2DA] dark:border-[#232D36] p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold shadow-sm">
+                        <div className="bg-[#FAF9F6] dark:bg-[#0D1714] border border-[#D8E2DA] dark:border-[#1A2E26] p-3 rounded-2xl rounded-bl-none text-xs flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold shadow-sm">
                           <Loader2 className="w-3.5 h-3.5 animate-spin text-[#476550] dark:text-[#2DD4BF]" />
                           <span>Hiring Manager is evaluating your answer...</span>
                         </div>
@@ -1322,15 +1260,15 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Chat Input & Mic Tool */}
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={toggleSpeechRecognition}
                       disabled={!isProSubscriber() && usageQuota.interviewMessagesSent >= 3}
-                      className={`p-3 rounded-full border transition-all flex items-center justify-center btn-tactile ${
+                      className={`p-2.5 sm:p-3 rounded-full border transition-all flex items-center justify-center btn-tactile min-h-[44px] min-w-[44px] ${
                         isRecording 
                           ? "bg-rose-500 text-white border-rose-600 animate-pulse" 
-                          : "bg-[#FAF9F6] dark:bg-[#141B20] border-[#D8E2DA] dark:border-[#232D36] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1A2228] disabled:opacity-50"
+                          : "bg-[#FAF9F6] dark:bg-[#0D1714] border-[#D8E2DA] dark:border-[#1A2E26] text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#121E1A] disabled:opacity-50"
                       }`}
                       title={isRecording ? "Listening..." : "Speak response"}
                     >
@@ -1357,7 +1295,7 @@ export default function DashboardPage() {
                             ? "Listening to your voice..." 
                             : "Type or speak your answer..."
                       }
-                      className="flex-1 p-3 rounded-full border border-[#D8E2DA] dark:border-[#232D36] bg-[#FAF9F6] dark:bg-[#141B20] text-sm font-medium text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF]"
+                      className="flex-1 p-3 rounded-full border border-[#D8E2DA] dark:border-[#1A2E26] bg-[#FAF9F6] dark:bg-[#0D1714] text-xs sm:text-sm font-medium text-[#1A1F1F] dark:text-[#F8FAFC] focus:outline-none focus:border-[#476550] dark:focus:border-[#2DD4BF] min-h-[44px]"
                     />
                     <button
                       onClick={() => {
@@ -1368,14 +1306,14 @@ export default function DashboardPage() {
                         }
                       }}
                       disabled={coachLoading || (!chatInput.trim() && isProSubscriber())}
-                      className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white px-6 py-3 rounded-full font-bold text-sm transition-all disabled:opacity-50 btn-tactile flex items-center gap-1.5"
+                      className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm transition-all disabled:opacity-50 btn-tactile flex items-center justify-center gap-1.5 min-h-[44px] cursor-pointer whitespace-nowrap"
                     >
                       <span>{!isProSubscriber() && usageQuota.interviewMessagesSent >= 3 ? "Upgrade" : "Send"}</span>
                     </button>
                   </div>
 
                   {/* Contextual Sister App Integration: Research Company PDFs on ZenDoc AI */}
-                  <div className="mt-3 p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#1A2228] border border-[#A2BCA8]/40 dark:border-[#232D36] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                  <div className="mt-3 p-3 rounded-xl bg-[#E8F0EB] dark:bg-[#121E1A] border border-[#A2BCA8]/40 dark:border-[#1A2E26] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
                     <div className="flex items-center gap-2 text-xs text-[#1A1F1F] dark:text-[#CBD5E1]">
                       <BookOpen className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF] flex-shrink-0" />
                       <span>
