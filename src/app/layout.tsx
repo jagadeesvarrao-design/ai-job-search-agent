@@ -190,7 +190,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#F7F9F6] dark:bg-[#07130E] text-[#1A1F1F] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#476550] selection:text-white dark:selection:bg-[#2DD4BF] dark:selection:text-[#061B18] transition-colors duration-300">
+      <body className="min-h-full flex flex-col bg-[#F7F9F6] dark:bg-[#07130E] text-[#1A1F1F] dark:text-[#F8FAFC] font-sans antialiased selection:bg-[#476550] selection:text-white dark:selection:bg-[#2DD4BF] dark:selection:text-[#061B18] transition-colors duration-300 overflow-x-hidden w-full">
         
         {/* Web Accessibility: Skip to Main Content (RPwD Act 2016 / WCAG 2.1 AA) */}
         <a 

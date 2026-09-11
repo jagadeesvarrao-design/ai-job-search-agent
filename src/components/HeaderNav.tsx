@@ -92,7 +92,7 @@ export default function HeaderNav() {
           </Link>
 
           {/* Center: Clean Uppercase Navigation Links */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8 flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-6 lg:gap-8 flex-shrink-0">
             <nav className="flex items-center gap-5 lg:gap-7 text-xs font-bold uppercase tracking-wider text-[#4B5563] dark:text-[#94A3B8]" aria-label="Main Navigation">
               <Link 
                 href="/#category-blueprints" 
@@ -214,16 +214,16 @@ export default function HeaderNav() {
             {/* Primary Action: Solid Dark Sage Launch App Button */}
             <Link
               href="/dashboard"
-              className="bg-[#3D5644] hover:bg-[#344A3B] dark:bg-[#3D5644] dark:hover:bg-[#476550] text-white text-xs font-extrabold uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-xs flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 whitespace-nowrap"
+              className="hidden sm:flex bg-[#3D5644] hover:bg-[#344A3B] dark:bg-[#3D5644] dark:hover:bg-[#476550] text-white text-xs font-extrabold uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-xs items-center gap-1.5 transition-all hover:scale-105 active:scale-95 whitespace-nowrap"
             >
               <span>Launch App</span>
               <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
             </Link>
 
-            {/* Mobile Hamburger Toggle */}
+            {/* Mobile / Tablet Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-black dark:text-white hover:bg-slate-100 dark:hover:bg-[#0D1714] transition-colors focus:outline-none cursor-pointer flex-shrink-0"
+              className="lg:hidden p-2 rounded-xl text-black dark:text-white hover:bg-slate-100 dark:hover:bg-[#0D1714] transition-colors focus:outline-none cursor-pointer flex-shrink-0"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

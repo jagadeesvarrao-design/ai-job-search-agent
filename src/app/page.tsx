@@ -590,7 +590,7 @@ Part of the Aneevarp Solutions Career Suite`
       {/* ========================================================================= */}
       <section className="flex flex-col items-center justify-center pt-8 sm:pt-14 pb-8 sm:pb-12 relative w-full overflow-hidden">
         {/* Soft Ambient Left Glow (Matching screenshots 1 & 2) */}
-        <div className="absolute top-0 left-10 w-[550px] h-[350px] bg-emerald-600/10 dark:bg-[#2DD4BF]/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <div className="absolute top-0 left-10 w-[min(550px,90vw)] h-[350px] bg-emerald-600/10 dark:bg-[#2DD4BF]/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
         {/* Top Pill Badge (Exact match to screenshots 1 & 2) */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E1ECE3]/80 dark:bg-[#0E2018]/80 border border-[#CBD8CF] dark:border-[#1B3A2B] text-xs font-medium text-[#2E4234] dark:text-[#8CA595] shadow-xs mb-6 hover:scale-105 transition-transform cursor-default">
