@@ -21,7 +21,8 @@ import {
   Building,
   Layers,
   ChevronDown,
-  LogIn
+  LogIn,
+  ArrowUpRight
 } from "lucide-react";
 import { isProSubscriber, getUserTierState } from "@/lib/user-tier";
 import { useAuth } from "@/lib/auth-context";
@@ -77,19 +78,50 @@ export default function HeaderNav() {
 
   return (
     <>
+      {/* Top Parent Company Enterprise Bar (Visible to All Users Across All Devices) */}
+      <aside className="w-full bg-[#344A3B] dark:bg-[#07130E] border-b border-[#2C3E32] dark:border-[#132B20] text-white/90 text-[10.5px] sm:text-xs py-1.5 px-3 sm:px-6 transition-colors z-50">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 truncate">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse flex-shrink-0"></span>
+            <span className="truncate text-white/85">An Official Product of <strong>Aneevarp Solutions</strong> Autonomous Career Suite</span>
+          </div>
+          <a
+            href="https://aneevarpsolutions.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-shrink-0 font-extrabold text-[#9EE8C7] hover:text-white dark:text-[#2DD4BF] dark:hover:text-white inline-flex items-center gap-1 transition-colors hover:underline tracking-tight text-[11px]"
+            title="Visit Official Parent Company Website: Aneevarp Solutions"
+          >
+            <span>Parent Company Website</span>
+            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+          </a>
+        </div>
+      </aside>
+
       <header className="sticky top-0 z-40 bg-[#F7F9F6]/85 dark:bg-[#07130E]/85 backdrop-blur-xl border-b border-[#D8E2DA] dark:border-[#1A2E26] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
           
-          {/* Left: Brand Identity (Green Squircle Logo with Z) */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#3D5644] rounded-xl flex items-center justify-center text-white font-black text-xl shadow-xs group-hover:scale-105 transition-all flex-shrink-0 tracking-tight">
+          {/* Left: Brand Identity (Green Squircle Logo with Z + Clickable Parent Link) */}
+          <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+            <Link href="/" className="w-9 h-9 sm:w-10 sm:h-10 bg-[#3D5644] rounded-xl flex items-center justify-center text-white font-black text-xl shadow-xs hover:scale-105 transition-all flex-shrink-0 tracking-tight" aria-label="ZenScout AI Home">
               Z
-            </div>
+            </Link>
             <div className="flex flex-col text-left truncate">
-              <span className="font-extrabold text-sm sm:text-base md:text-lg text-[#1A1F1F] dark:text-white leading-tight tracking-tight">ZenScout AI</span>
-              <span className="text-[8px] sm:text-[9px] font-extrabold text-[#556055] dark:text-[#8FA796] tracking-[0.16em] uppercase truncate">by Aneevarp Solutions</span>
+              <Link href="/" className="font-extrabold text-sm sm:text-base md:text-lg text-[#1A1F1F] dark:text-white leading-tight tracking-tight hover:opacity-90">
+                ZenScout AI
+              </Link>
+              <a
+                href="https://aneevarpsolutions.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[8px] sm:text-[9px] font-extrabold text-[#556055] dark:text-[#8FA796] hover:text-[#3D5644] dark:hover:text-[#2DD4BF] tracking-[0.16em] uppercase truncate transition-colors inline-flex items-center gap-0.5 group/parent"
+                title="Aneevarp Solutions - Official Parent Company"
+              >
+                <span>by Aneevarp Solutions</span>
+                <ArrowUpRight className="w-2.5 h-2.5 opacity-60 group-hover/parent:opacity-100 transition-opacity" />
+              </a>
             </div>
-          </Link>
+          </div>
 
           {/* Center: Clean Uppercase Navigation Links */}
           <div className="hidden lg:flex items-center gap-6 lg:gap-8 flex-shrink-0">
@@ -118,6 +150,18 @@ export default function HeaderNav() {
               >
                 ATS Audit
               </Link>
+
+              {/* Direct Parent Company Link */}
+              <a 
+                href="https://aneevarpsolutions.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:text-black dark:hover:text-white transition-colors inline-flex items-center gap-1 text-[#3D5644] dark:text-[#2DD4BF]"
+                title="Visit Parent Company: Aneevarp Solutions"
+              >
+                <span>Aneevarp Solutions</span>
+                <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
+              </a>
 
               {/* Zen Suite Dropdown Menu */}
               <div className="relative">

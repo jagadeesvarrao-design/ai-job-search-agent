@@ -5,7 +5,7 @@ import HeaderNav from "@/components/HeaderNav";
 import CookieConsent from "@/components/CookieConsent";
 import { AuthProvider } from "@/lib/auth-context";
 import Link from "next/link";
-import { Briefcase, Building2, Scale, ShieldCheck } from "lucide-react";
+import { Briefcase, Building2, Scale, ShieldCheck, ArrowUpRight } from "lucide-react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -225,12 +225,32 @@ export default function RootLayout({
                   <span>ZenScout AI</span>
                 </div>
                 <span className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium md:border-l md:border-[#D8E2DA] dark:md:border-[#1A2E26] md:pl-3">
-                  © {new Date().getFullYear()} ZenScout AI. Engineered by <strong className="text-black dark:text-white">Aneevarp Solutions</strong>.
+                  © {new Date().getFullYear()} ZenScout AI. Engineered by{" "}
+                  <a
+                    href="https://aneevarpsolutions.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#476550] dark:text-[#2DD4BF] font-extrabold hover:underline inline-flex items-center gap-0.5"
+                    title="Aneevarp Solutions - Parent Company Website"
+                  >
+                    <span>Aneevarp Solutions</span>
+                    <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
+                  </a>.
                 </span>
               </div>
 
               {/* Navigation links */}
-              <nav className="flex flex-wrap justify-center gap-6 text-xs font-bold text-[#1A1F1F] dark:text-[#CBD5E1]" aria-label="Footer Navigation">
+              <nav className="flex flex-wrap justify-center items-center gap-5 text-xs font-bold text-[#1A1F1F] dark:text-[#CBD5E1]" aria-label="Footer Navigation">
+                <a
+                  href="https://aneevarpsolutions.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#476550] dark:text-[#2DD4BF] font-extrabold hover:underline inline-flex items-center gap-1"
+                  title="Official Parent Company Portal"
+                >
+                  <span>Parent Company (Aneevarp Solutions)</span>
+                  <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
+                </a>
                 <Link href="/about" className="hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-colors">About</Link>
                 <Link href="/contact" className="hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-colors">Contact & Grievance</Link>
                 <Link href="/blog" className="hover:text-[#476550] dark:hover:text-[#2DD4BF] transition-colors">Blog</Link>
@@ -242,7 +262,7 @@ export default function RootLayout({
             {/* Bottom Statutory Disclosure Bar */}
             <div className="pt-4 border-t border-slate-200/60 dark:border-[#1A2E26] text-[11px] text-[#7D8787] dark:text-[#94A3B8] flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
               <div>
-                <span>Operating Entity: <strong>Aneevarp Solutions</strong> (Hyderabad, Telangana, India) • Country of Origin: <strong>India</strong></span>
+                <span>Operating Entity: <a href="https://aneevarpsolutions.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-extrabold underline text-[#476550] dark:text-[#2DD4BF]">Aneevarp Solutions</a> (Hyderabad, Telangana, India) • Country of Origin: <strong>India</strong></span>
               </div>
               <div className="flex items-center gap-3">
                 <span>Grievance Desk: <a href="mailto:aneevarpsolutions@gmail.com" className="text-[#476550] dark:text-[#2DD4BF] underline">aneevarpsolutions@gmail.com</a></span>

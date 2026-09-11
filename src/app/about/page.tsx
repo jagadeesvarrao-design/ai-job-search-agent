@@ -164,10 +164,22 @@ export default function AboutPage() {
           Following the launch of <strong>ZenResume</strong>, our team developed <strong>ZenScout AI</strong> to empower candidates with multi-agent automation: scouting live positions, scoring resume compatibility, crafting tailored cover letters, and simulating hiring manager interviews.
         </p>
 
-        <div className="grid sm:grid-cols-3 gap-4 pt-6 border-t border-[#D8E2DA] dark:border-[#1A2E26]">
+        <div className="grid sm:grid-cols-4 gap-4 pt-6 border-t border-[#D8E2DA] dark:border-[#1A2E26]">
           <div className="flex flex-col gap-1">
             <span className="text-xs text-[#7D8787] dark:text-[#94A3B8]">Legal Entity</span>
             <span className="text-sm font-bold text-[#1A1F1F] dark:text-[#F8FAFC]">Aneevarp Solutions</span>
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="text-xs text-[#7D8787] dark:text-[#94A3B8]">Official Website</span>
+            <a 
+              href="https://aneevarpsolutions.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-sm font-bold text-[#476550] dark:text-[#2DD4BF] hover:underline inline-flex items-center gap-1"
+            >
+              <span>aneevarpsolutions.vercel.app</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
           </div>
           <div className="flex flex-col gap-1">
             <span className="text-xs text-[#7D8787] dark:text-[#94A3B8]">Corporate Headquarters</span>
