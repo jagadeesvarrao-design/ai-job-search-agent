@@ -1,4 +1,5 @@
-import { Target, Users, Zap, ShieldCheck, Building2, Award, Scale, Lock, FileCheck, ExternalLink, Sparkles, Code2, Layers, HeartHandshake } from "lucide-react";
+import { Target, Users, Zap, ShieldCheck, Building2, Award, Scale, Lock, FileCheck, ExternalLink, Sparkles, Code2, Layers, HeartHandshake, ArrowRight } from "lucide-react";
+
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
