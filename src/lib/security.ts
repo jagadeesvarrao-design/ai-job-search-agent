@@ -28,6 +28,31 @@ export function sanitizeString(input: unknown, maxLength: number = 500): string 
 }
 
 /**
+ * Strips carriage returns, newlines, and control characters to defend against CRLF and SMTP Header Injection
+ */
+export function sanitizeSingleLine(input: unknown, maxLength: number = 200): string {
+  if (typeof input !== "string") return "";
+  const cleaned = sanitizeString(input, maxLength)
+    .replace(/[\r\n\t\x00-\x1F\x7F]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return cleaned.length > maxLength ? cleaned.substring(0, maxLength) : cleaned;
+}
+
+/**
+ * Escapes characters with special meaning in HTML to prevent HTML injection in emails and rendered templates
+ */
+export function escapeHtml(input: unknown): string {
+  if (typeof input !== "string") return "";
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/**
  * Validates whether an email string follows standard email RFC formats strictly
  */
 export function isValidEmail(email: unknown): boolean {

@@ -181,13 +181,13 @@ export function extractTextFromBase64Pdf(base64Data: string): ExtractedPdfDocume
 
       const streamSlice = buffer.subarray(dataStart, dataEnd);
 
-      // Attempt 1: Decompress zlib stream
+      // Attempt 1: Decompress zlib stream with 2MB bounds (Zip Bomb / Decompression Bomb protection)
       let streamString = "";
       try {
-        streamString = zlib.inflateSync(streamSlice).toString("latin1");
+        streamString = zlib.inflateSync(streamSlice, { maxOutputLength: 2 * 1024 * 1024 }).toString("latin1");
       } catch {
         try {
-          streamString = zlib.inflateRawSync(streamSlice).toString("latin1");
+          streamString = zlib.inflateRawSync(streamSlice, { maxOutputLength: 2 * 1024 * 1024 }).toString("latin1");
         } catch {
           // Uncompressed raw stream
           streamString = streamSlice.toString("latin1");

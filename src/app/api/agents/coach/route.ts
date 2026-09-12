@@ -79,19 +79,25 @@ export async function POST(request: Request) {
     const body = await request.json().catch(() => ({}));
     const { job, resumeBase64, messages, experience, targetRole, isFreeTierLastTurn, isZenSuite, userPlan } = body;
 
-    // Detect Zen Suite entitlement from payload or headers
-    const headerPlan = request.headers.get("x-user-plan");
-    const isSuiteUser = Boolean(isZenSuite || userPlan === "zen_suite" || headerPlan === "zen_suite");
+    // Detect Zen Suite coaching persona request
+    const isSuiteUser = Boolean(isZenSuite || userPlan === "zen_suite");
 
-    // Suite members bypass standard rate limits
-    const maxRequests = isSuiteUser ? 200 : 30;
+    // Enforce strict rate limits on public endpoints to prevent API quota exhaustion
+    const maxRequests = 35;
     const rateCheck = checkRateLimit(`coach:${ip}`, maxRequests, 60000);
     if (!rateCheck.allowed) {
-      return NextResponse.json({ success: false, error: "Too many interview coach messages. Please slow down slightly." }, { status: 429 });
+      return NextResponse.json({ 
+        success: false, 
+        error: "Rate limit reached for interview coach sessions. Please wait a moment before sending another message." 
+      }, { status: 429 });
     }
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json({ success: false, error: "Messages array is required." }, { status: 400 });
+    }
+
+    if (messages.length > 50) {
+      return NextResponse.json({ success: false, error: "Interview transcript exceeds maximum allowed turns (50)." }, { status: 400 });
     }
 
     const sanitizedJob = {

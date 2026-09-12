@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
-import { sanitizeString, isValidEmail } from '@/lib/security';
+import { sanitizeString, sanitizeSingleLine, escapeHtml, isValidEmail } from '@/lib/security';
 
 export async function POST(request: Request) {
   try {
@@ -17,13 +17,26 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json().catch(() => ({}));
+    
+    // Honeypot bot protection: Automated spam scripts populate hidden inputs
+    if (body.honeypot || body._gotcha || body.website) {
+      return NextResponse.json(
+        { 
+          message: 'Message processed successfully',
+          ticketId: `ANV-${Date.now().toString(36).toUpperCase()}`,
+          acknowledgment: 'Your ticket has been logged and assigned to the Aneevarp Solutions support desk.' 
+        },
+        { status: 200 }
+      );
+    }
+
     const rawName = body.name;
     const rawEmail = body.email;
     const rawMessage = body.message;
 
-    // Sanitize & Validate Inputs
-    const name = sanitizeString(rawName, 100);
-    const email = typeof rawEmail === 'string' ? rawEmail.trim().toLowerCase() : '';
+    // Sanitize & Validate Inputs (Single-line defense prevents CRLF SMTP header injection)
+    const name = sanitizeSingleLine(rawName, 100);
+    const email = sanitizeSingleLine(rawEmail, 150).toLowerCase();
     const message = sanitizeString(rawMessage, 2000);
 
     if (!name || !email || !message) {
@@ -68,7 +81,10 @@ export async function POST(request: Request) {
           },
         });
 
-        const safeHtmlMessage = message.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, '<br />');
+        const safeHtmlMessage = escapeHtml(message).replace(/\n/g, '<br />');
+        const safeName = escapeHtml(name);
+        const safeEmail = escapeHtml(email);
+        const safeTicketId = escapeHtml(ticketId);
 
         const mailOptions = {
           from: `"ZenScout AI Support" <${gmailUser}>`,
@@ -85,22 +101,22 @@ export async function POST(request: Request) {
                     <p style="margin: 4px 0 0; color: #64748b; font-size: 13px;">Aneevarp Solutions Legal & Ops Hub</p>
                   </div>
                   <div style="background: #476550; color: #ffffff; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: bold;">
-                    #${ticketId}
+                    #${safeTicketId}
                   </div>
                 </div>
 
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                   <tr>
                     <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold; width: 30%;">Ticket ID:</td>
-                    <td style="padding: 8px 0; color: #476550; font-size: 14px; font-weight: bold;">${ticketId}</td>
+                    <td style="padding: 8px 0; color: #476550; font-size: 14px; font-weight: bold;">${safeTicketId}</td>
                   </tr>
                   <tr>
                     <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold;">Sender Name:</td>
-                    <td style="padding: 8px 0; color: #0f172a; font-size: 14px; font-weight: 600;">${name}</td>
+                    <td style="padding: 8px 0; color: #0f172a; font-size: 14px; font-weight: 600;">${safeName}</td>
                   </tr>
                   <tr>
                     <td style="padding: 8px 0; color: #64748b; font-size: 13px; font-weight: bold;">Sender Email:</td>
-                    <td style="padding: 8px 0; color: #476550; font-size: 14px; font-weight: 600;"><a href="mailto:${email}" style="color: #476550; text-decoration: none;">${email}</a></td>
+                    <td style="padding: 8px 0; color: #476550; font-size: 14px; font-weight: 600;"><a href="mailto:${encodeURIComponent(email)}" style="color: #476550; text-decoration: none;">${safeEmail}</a></td>
                   </tr>
                 </table>
 

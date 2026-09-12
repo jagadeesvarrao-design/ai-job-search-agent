@@ -52,16 +52,26 @@ export function middleware(request: NextRequest) {
   }
 
   // C. Block suspicious URL query attacks (Path Traversal, LFI, SQLi, XSS, Command Injection)
-  const searchParams = request.nextUrl.search.toLowerCase();
+  const rawSearch = request.nextUrl.search.toLowerCase();
+  let decodedSearch = "";
+  try {
+    decodedSearch = decodeURIComponent(rawSearch).toLowerCase();
+  } catch {
+    return new NextResponse("Bad Request: Malformed URI Encoding", { status: 400 });
+  }
+
+  const combinedSearch = `${rawSearch} ${decodedSearch}`;
   if (
-    searchParams.includes("../") ||
-    searchParams.includes("..\\") ||
-    searchParams.includes("%2e%2e") ||
-    searchParams.includes("<script") ||
-    searchParams.includes("union+select") ||
-    searchParams.includes("exec(") ||
-    searchParams.includes("/bin/sh") ||
-    searchParams.includes("/bin/bash")
+    combinedSearch.includes("../") ||
+    combinedSearch.includes("..\\") ||
+    combinedSearch.includes("%2e%2e") ||
+    combinedSearch.includes("<script") ||
+    combinedSearch.includes("%3cscript") ||
+    combinedSearch.includes("union select") ||
+    combinedSearch.includes("union+select") ||
+    combinedSearch.includes("exec(") ||
+    combinedSearch.includes("/bin/sh") ||
+    combinedSearch.includes("/bin/bash")
   ) {
     return new NextResponse("Bad Request: Malicious Pattern Detected", { status: 400 });
   }
@@ -83,17 +93,26 @@ export function middleware(request: NextRequest) {
 
       // Verify Origin matches Host if present (CSRF prevention)
       if (origin && host) {
-        const originUrl = new URL(origin);
-        // Allow localhost and production domains
-        const isAllowedDomain = 
-          originUrl.host === host || 
-          originUrl.host.endsWith("vercel.app") || 
-          originUrl.host.endsWith("zenresume.online") ||
-          originUrl.host.includes("localhost") ||
-          originUrl.host.includes("127.0.0.1");
+        try {
+          const originUrl = new URL(origin);
+          const originHost = originUrl.host.toLowerCase();
+          const originHostname = originUrl.hostname.toLowerCase();
+          const currentHost = host.toLowerCase();
 
-        if (!isAllowedDomain) {
-          return new NextResponse("Cross-Origin Request Blocked", { status: 403 });
+          // Strictly pin authorized production domains and local development hostnames
+          const isAllowedDomain = 
+            originHost === currentHost || 
+            originHostname === "ai-job-search-agent-chi.vercel.app" || 
+            originHostname === "zenresume.online" ||
+            originHostname === "www.zenresume.online" ||
+            originHostname === "localhost" ||
+            originHostname === "127.0.0.1";
+
+          if (!isAllowedDomain) {
+            return new NextResponse("Cross-Origin Request Blocked", { status: 403 });
+          }
+        } catch {
+          return new NextResponse("Bad Request: Malformed Origin Header", { status: 400 });
         }
       }
     }
