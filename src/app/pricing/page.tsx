@@ -209,8 +209,8 @@ export default function PricingPage() {
 
         {/* PLAN 2: 3-MONTH PASS (RECOMMENDED / DEFAULT) */}
         <div className="card-surface p-6 sm:p-8 border-2 border-[#476550] dark:border-[#2DD4BF] bg-emerald-50/20 dark:bg-[rgba(45,212,191,0.06)] shadow-xl relative flex flex-col justify-between lg:scale-105 z-10">
-          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#00846D] to-[#476550] dark:from-[#2DD4BF] dark:to-[#00846D] text-white dark:text-[#061B18] text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-full shadow-md whitespace-nowrap">
-            🔥 MOST POPULAR • COVERS FULL 60–90 DAY HIRING CYCLE
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 max-w-[92%] truncate bg-gradient-to-r from-[#00846D] to-[#476550] dark:from-[#2DD4BF] dark:to-[#00846D] text-white dark:text-[#061B18] text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-3 sm:px-4 py-0.5 sm:py-1 rounded-full shadow-md whitespace-nowrap">
+            🔥 MOST POPULAR • 90-DAY HIRING CYCLE
           </div>
 
           <div>

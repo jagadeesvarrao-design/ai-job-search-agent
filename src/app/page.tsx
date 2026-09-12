@@ -678,7 +678,7 @@ Part of the Aneevarp Solutions Career Suite`
 
         {/* Filter Tabs Carousel with Horizontal Edge Fade Mask */}
         <div className="relative w-full max-w-4xl mx-auto mb-4">
-          <div className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto pb-3 no-scrollbar horizontal-scroll-fade px-3">
+          <div className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto pb-3 no-scrollbar horizontal-scroll-fade px-3 touch-pan-x scroll-smooth snap-x snap-mandatory">
             {[
               { id: "all", label: "All Roles", icon: "☀️" },
               { id: "freshers", label: "Freshers & Students", icon: "🎓" },
@@ -692,7 +692,7 @@ Part of the Aneevarp Solutions Career Suite`
                 <button
                   key={tab.id}
                   onClick={() => setActiveCategory(tab.id)}
-                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer btn-tactile ${
+                  className={`snap-start px-4 sm:px-5 py-2 sm:py-2.5 min-h-[40px] sm:min-h-[44px] rounded-full text-xs sm:text-sm font-bold transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer btn-tactile ${
                     isActive
                       ? "bg-[#2DD4BF] text-[#061B18] shadow-[0_4px_16px_rgba(45,212,191,0.4)] scale-105"
                       : "bg-[#FAF9F6] dark:bg-[#0D1714] text-[#475569] dark:text-[#94A3B8] border border-[#D8E2DA] dark:border-[#1C2E27] hover:text-[#1A1F1F] dark:hover:text-white hover:border-[#476550] dark:hover:border-[#2DD4BF]"

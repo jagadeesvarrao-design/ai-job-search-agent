@@ -168,11 +168,11 @@ export default function HeaderNav() {
                 <button
                   onClick={() => setSuiteMenuOpen(!suiteMenuOpen)}
                   onBlur={() => setTimeout(() => setSuiteMenuOpen(false), 200)}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#D8E2DA] dark:border-[#1A2E26] bg-[#FAF9F6] dark:bg-[#0D1714] text-[11px] font-bold text-[#4B5563] dark:text-[#94A3B8] hover:text-black dark:hover:text-white transition-all cursor-pointer shadow-xs whitespace-nowrap uppercase tracking-wider"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[34px] sm:min-h-[36px] rounded-full border border-[#D8E2DA] dark:border-[#1A2E26] bg-[#FAF9F6] dark:bg-[#0D1714] text-xs font-bold text-[#4B5563] dark:text-[#94A3B8] hover:text-black dark:hover:text-white transition-all cursor-pointer shadow-xs whitespace-nowrap uppercase tracking-wider"
                 >
-                  <Layers className="w-3 h-3 text-amber-500 fill-amber-500" />
+                  <Layers className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                   <span>Zen Suite</span>
-                  <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${suiteMenuOpen ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${suiteMenuOpen ? "rotate-180" : ""}`} />
                 </button>
 
                 {suiteMenuOpen && (
@@ -277,7 +277,12 @@ export default function HeaderNav() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#FAF9F6] dark:bg-[#0D1714] border-b border-[#D8E2DA] dark:border-[rgba(45,212,191,0.15)] px-4 sm:px-6 py-5 shadow-2xl animate-in slide-in-from-top-4 duration-200 max-h-[85vh] overflow-y-auto">
+          <div 
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Navigation Menu"
+            className="lg:hidden bg-[#FAF9F6] dark:bg-[#0D1714] border-b border-[#D8E2DA] dark:border-[rgba(45,212,191,0.15)] px-4 sm:px-6 py-5 shadow-2xl animate-in slide-in-from-top-4 duration-200 max-h-[85vh] overflow-y-auto z-50"
+          >
             <div className="flex flex-col gap-2.5 font-bold text-sm text-black dark:text-white">
               
               {/* Mobile Pro Upgrade Banner */}

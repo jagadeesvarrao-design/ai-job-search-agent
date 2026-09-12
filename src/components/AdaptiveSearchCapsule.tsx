@@ -93,9 +93,9 @@ export default function AdaptiveSearchCapsule({
       </form>
 
       {/* Mobile-Friendly Fast-Tap Location Chips */}
-      <div className="mt-2.5 flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar horizontal-scroll-fade md:justify-center px-1">
-        <span className="text-[10px] font-bold text-[#7D8787] dark:text-[#94A3B8] whitespace-nowrap flex items-center gap-1">
-          <Globe className="w-3 h-3 text-[#476550] dark:text-[#2DD4BF]" />
+      <div className="mt-2.5 flex items-center gap-2 overflow-x-auto pb-1.5 pt-0.5 no-scrollbar scroll-smooth touch-pan-x md:justify-center px-2">
+        <span className="text-[11px] font-bold text-[#7D8787] dark:text-[#94A3B8] whitespace-nowrap flex items-center gap-1 flex-shrink-0">
+          <Globe className="w-3.5 h-3.5 text-[#476550] dark:text-[#2DD4BF]" />
           <span>Quick:</span>
         </span>
         {QUICK_LOCATIONS.map((loc) => {
@@ -105,7 +105,7 @@ export default function AdaptiveSearchCapsule({
               key={loc}
               type="button"
               onClick={() => handleQuickLocation(loc)}
-              className={`text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap transition-all cursor-pointer ${
+              className={`text-[11px] sm:text-xs font-bold px-3 py-1.5 min-h-[32px] sm:min-h-[34px] rounded-full whitespace-nowrap transition-all cursor-pointer flex-shrink-0 ${
                 isSelected
                   ? "bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] shadow-xs"
                   : "bg-[#FAF9F6] dark:bg-[#13221C] text-[#475569] dark:text-[#CBD5E1] border border-[#D8E2DA] dark:border-[#1F352C] hover:border-[#476550] dark:hover:border-[#2DD4BF]"

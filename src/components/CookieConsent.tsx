@@ -47,19 +47,28 @@ export default function CookieConsent() {
     <div
       role="region"
       aria-label="Cookie consent banner"
-      className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50 animate-in fade-in slide-in-from-bottom-5 duration-300"
+      className="fixed bottom-18 md:bottom-4 left-3 right-3 md:left-auto md:right-6 md:max-w-md z-35 animate-in fade-in slide-in-from-bottom-5 duration-300 pointer-events-auto"
     >
-      <div className="bg-[#FAF9F6] dark:bg-[#0D1714] p-6 rounded-3xl border-2 border-[#D8E2DA] dark:border-[#1A2E26] shadow-2xl transition-colors">
-        <div className="flex items-start gap-3.5 mb-3">
-          <div className="p-2.5 bg-[#E8F0EB] dark:bg-[#121E1A] rounded-2xl text-[#476550] dark:text-[#2DD4BF] flex-shrink-0">
-            <Cookie className="w-5 h-5" />
+      <div className="bg-[#FAF9F6] dark:bg-[#0D1714] p-4 sm:p-5 rounded-2xl sm:rounded-3xl border-2 border-[#D8E2DA] dark:border-[#1A2E26] shadow-2xl transition-colors relative">
+        {/* Dismiss X button */}
+        <button
+          onClick={handleDecline}
+          aria-label="Dismiss cookie notice"
+          className="absolute top-2.5 right-2.5 p-2 rounded-xl text-slate-400 hover:text-black dark:hover:text-white transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        <div className="flex items-start gap-3 pr-6 mb-2.5">
+          <div className="p-2 bg-[#E8F0EB] dark:bg-[#121E1A] rounded-xl text-[#476550] dark:text-[#2DD4BF] flex-shrink-0">
+            <Cookie className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="flex-1">
-            <h3 className="font-extrabold text-black dark:text-white text-base tracking-tight">
+            <h3 className="font-extrabold text-black dark:text-white text-sm sm:text-base tracking-tight">
               Privacy & Cookie Preferences
             </h3>
-            <p className="text-xs text-[#1A1F1F] dark:text-[#CBD5E1] font-medium mt-1.5 leading-relaxed">
-              We and our trusted partners (including Google AdSense) use cookies to analyze site traffic, personalize content, and serve relevant advertising. Read our{" "}
+            <p className="text-[11px] sm:text-xs text-[#596060] dark:text-[#CBD5E1] font-medium mt-1 leading-relaxed">
+              We use cookies to analyze site traffic, personalize content, and serve relevant advertising. Read our{" "}
               <Link href="/privacy" className="text-[#476550] dark:text-[#2DD4BF] hover:underline font-bold">
                 Privacy Policy
               </Link>{" "}
@@ -68,18 +77,18 @@ export default function CookieConsent() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 mt-4 pt-3 border-t border-[#D8E2DA] dark:border-[#1A2E26]">
+        <div className="flex items-center gap-2 sm:gap-3 mt-3 pt-2.5 border-t border-[#D8E2DA] dark:border-[#1A2E26]">
           <button
             onClick={handleAccept}
-            className="flex-1 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:hover:bg-[#5EEAD4] text-white dark:text-[#061B18] text-xs font-bold py-3 px-4 rounded-full transition-all shadow-sm active:scale-95 btn-tactile cursor-pointer"
+            className="flex-1 bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:hover:bg-[#5EEAD4] text-white dark:text-[#061B18] text-xs font-bold py-2.5 px-3 rounded-full transition-all shadow-sm active:scale-95 btn-tactile cursor-pointer"
           >
             Accept All
           </button>
           <button
             onClick={handleDecline}
-            className="flex-1 bg-[#F4F4F0] hover:bg-slate-200 dark:bg-[#121E1A] dark:hover:bg-[#1A2E26] text-black dark:text-[#CBD5E1] border border-[#D8E2DA] dark:border-[#1A2E26] text-xs font-bold py-3 px-4 rounded-full transition-all active:scale-95 btn-tactile cursor-pointer"
+            className="flex-1 bg-[#F4F4F0] hover:bg-slate-200 dark:bg-[#121E1A] dark:hover:bg-[#1A2E26] text-black dark:text-[#CBD5E1] border border-[#D8E2DA] dark:border-[#1A2E26] text-xs font-bold py-2.5 px-3 rounded-full transition-all active:scale-95 btn-tactile cursor-pointer"
           >
-            Decline Non-Essential
+            Decline
           </button>
         </div>
       </div>

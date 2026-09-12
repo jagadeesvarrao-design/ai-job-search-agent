@@ -639,7 +639,7 @@ export default function DashboardPage() {
             <button
               onClick={handleRunFilter}
               disabled={filtering}
-              className="bg-[#FAF9F6] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] hover:bg-[#F0F5F2] dark:hover:bg-[#1A2E26] text-[#1A1F1F] dark:text-[#F8FAFC] font-bold text-xs py-3 px-5 rounded-full transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-[#FAF9F6] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] hover:bg-[#F0F5F2] dark:hover:bg-[#1A2E26] text-[#1A1F1F] dark:text-[#F8FAFC] font-bold text-xs py-3 px-3.5 sm:px-5 rounded-full transition-all shadow-soft flex items-center justify-center gap-1.5 btn-tactile disabled:opacity-50 flex-1 lg:flex-none whitespace-nowrap min-h-[44px]"
             >
               {filtering ? <Loader2 className="w-4 h-4 animate-spin text-[#476550] dark:text-[#2DD4BF]" /> : <Filter className="w-4 h-4 text-[#476550] dark:text-[#2DD4BF]" />}
               <span>Score ATS</span>
@@ -648,7 +648,7 @@ export default function DashboardPage() {
             <button
               onClick={handleRunScout}
               disabled={scouting}
-              className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white font-bold text-xs py-3 px-6 rounded-full transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 flex-1 lg:flex-none"
+              className="bg-[#476550] hover:bg-[#3A5342] dark:bg-[#2DD4BF] dark:text-[#061B18] dark:hover:bg-[#5EEAD4] text-white font-bold text-xs py-3 px-4 sm:px-6 rounded-full transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 btn-tactile disabled:opacity-50 flex-1 lg:flex-none whitespace-nowrap min-h-[44px]"
             >
               {scouting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
               <span>Search Live Jobs</span>
@@ -699,7 +699,7 @@ export default function DashboardPage() {
 
       {/* 3. OPPORTUNITY PIPELINE HEADER & VIEW TOGGLE */}
       <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
           <h2 className="text-lg sm:text-xl font-black text-[#1A1F1F] dark:text-[#F8FAFC] tracking-tight">
             {viewMode === "board" ? "Pipeline Kanban Board" : "Opportunity Feed & Scoreboard"}
           </h2>
@@ -709,10 +709,10 @@ export default function DashboardPage() {
         </div>
 
         {/* View Switcher Segmented Control */}
-        <div className="inline-flex p-1 rounded-2xl bg-[#F0F5F2] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] shadow-inner self-start sm:self-auto">
+        <div className="inline-flex p-1 rounded-2xl bg-[#F0F5F2] dark:bg-[#121E1A] border border-[#D8E2DA] dark:border-[#1A2E26] shadow-inner w-full sm:w-auto justify-center sm:justify-start">
           <button
             onClick={() => setViewMode("board")}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all btn-tactile ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-1.5 min-h-[36px] rounded-xl text-xs font-black transition-all btn-tactile ${
               viewMode === "board"
                 ? "bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] shadow-sm"
                 : "text-[#596060] dark:text-[#94A3B8] hover:text-[#1A1F1F] dark:hover:text-white"
@@ -723,7 +723,7 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setViewMode("list")}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all btn-tactile ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-1.5 min-h-[36px] rounded-xl text-xs font-black transition-all btn-tactile ${
               viewMode === "list"
                 ? "bg-[#476550] dark:bg-[#2DD4BF] text-white dark:text-[#061B18] shadow-sm"
                 : "text-[#596060] dark:text-[#94A3B8] hover:text-[#1A1F1F] dark:hover:text-white"

@@ -4,11 +4,11 @@
 
 @theme {
   --breakpoint-xs: 375px;
-  --breakpoint-sm: 481px;
-  --breakpoint-md: 769px;
-  --breakpoint-lg: 1025px;
-  --breakpoint-xl: 1441px;
-  --breakpoint-2xl: 1921px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
 }
 
 @layer base {
@@ -492,10 +492,10 @@
     bottom: max(0.75rem, env(safe-area-inset-bottom, 12px));
   }
 
-  /* Frictionless Horizontal Scroll Fade Mask */
+  /* Frictionless Horizontal Scroll Fade Mask (Fades trailing edge on overflow) */
   .horizontal-scroll-fade {
-    mask-image: linear-gradient(to right, transparent 0%, black 16px, black calc(100% - 24px), transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 16px, black calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
   }
 
   /* Mobile Touch Target Guarantees */
