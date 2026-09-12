@@ -837,7 +837,7 @@ Part of the Aneevarp Solutions Career Suite`
         {/* ========================================================================= */}
         {/* 6. LUXURY JOB CARDS & AI MATCH RESULT GRID */}
         {/* ========================================================================= */}
-        <div className="w-full max-w-5xl text-left my-4">
+        <section className="w-full max-w-5xl mx-auto text-left my-6 sm:my-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <div>
               <div className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#476550] dark:text-[#2DD4BF] mb-1">
@@ -998,12 +998,12 @@ Part of the Aneevarp Solutions Career Suite`
               );
             })}
           </div>
-        </div>
+        </section>
 
         {/* ========================================================================= */}
         {/* INTERACTIVE ANIMATED JOB SCANNER WORKSPACE */}
         {/* ========================================================================= */}
-        <div className="w-full max-w-4xl mx-auto my-8 relative">
+        <section id="pipeline" className="w-full max-w-5xl mx-auto my-6 sm:my-8 relative scroll-mt-20">
           <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-[rgba(162,188,168,0.4)] dark:border-[rgba(45,212,191,0.25)] shadow-2xl p-5 sm:p-7 md:p-8 text-left relative overflow-hidden">
             {/* Animated Laser Scanning Beam */}
             <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#476550] dark:via-[#2DD4BF] to-transparent opacity-80 animate-scan pointer-events-none shadow-[0_0_15px_#476550] dark:shadow-[0_0_15px_#2DD4BF]"></div>
@@ -1123,7 +1123,7 @@ Part of the Aneevarp Solutions Career Suite`
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
       {/* ========================================================================= */}
       {/* HOW IT WORKS SECTION */}
@@ -1196,7 +1196,7 @@ Part of the Aneevarp Solutions Career Suite`
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 w-full max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 w-full max-w-5xl text-left">
           {[
             { icon: Target, title: "1. Agent Scout", badge: "Discovery", desc: "Monitors live Google Jobs data to uncover high-relevancy job postings matching your title and location." },
             { icon: BrainCircuit, title: "2. Agent Filter", badge: "Analysis", desc: "Compares your PDF resume directly with job descriptions, scoring skill matches from 0 to 100." },
@@ -1324,7 +1324,7 @@ Part of the Aneevarp Solutions Career Suite`
       {/* ========================================================================= */}
       {/* FAQ SECTION */}
       {/* ========================================================================= */}
-      <section className="py-12 sm:py-16 w-full max-w-4xl mx-auto text-left">
+      <section className="py-12 sm:py-16 w-full max-w-5xl mx-auto text-left">
         <div className="text-center mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 bg-[#FAF9F6] dark:bg-[#0D1714] border border-[rgba(162,188,168,0.4)] dark:border-[rgba(45,212,191,0.2)] shadow-sm px-4 py-1.5 rounded-full text-xs text-[#476550] dark:text-[#2DD4BF] font-semibold mb-3">
             <HelpCircle className="w-4 h-4" />
@@ -1366,8 +1366,8 @@ Part of the Aneevarp Solutions Career Suite`
       {/* ========================================================================= */}
       {/* FINAL CALL TO ACTION */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-20 flex flex-col items-center">
-        <div className="bg-gradient-to-br from-[#00846D] to-[#476550] dark:from-[#0D1714] dark:to-[#13221C] dark:border-2 dark:border-[rgba(45,212,191,0.3)] p-8 sm:p-12 md:p-16 rounded-3xl max-w-4xl w-full text-center relative overflow-hidden shadow-2xl text-white">
+      <section className="py-14 sm:py-20 flex flex-col items-center w-full">
+        <div className="bg-gradient-to-br from-[#00846D] to-[#476550] dark:from-[#0D1714] dark:to-[#13221C] dark:border-2 dark:border-[rgba(45,212,191,0.3)] p-8 sm:p-12 md:p-16 rounded-3xl max-w-5xl w-full text-center mx-auto relative overflow-hidden shadow-2xl text-white">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-black mb-4 sm:mb-6">Accelerate Your Job Hunt with ZenScout AI</h2>
           <p className="text-teal-100 dark:text-[#CBD5E1] mb-8 sm:mb-10 max-w-xl mx-auto text-xs sm:text-sm md:text-base">
             Stop wasting hours on manual job applications. Let Aneevarp Solutions' autonomous ZenScout agent suite do the heavy lifting for you.
