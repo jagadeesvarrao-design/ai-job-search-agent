@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   Save, 
   MapPin, 
@@ -220,6 +220,7 @@ export default function ProfilePage() {
   const [usageQuota, setUsageQuota] = useState({ atsAuditsToday: 0 });
   const [copiedKeywords, setCopiedKeywords] = useState(false);
   const [atsError, setAtsError] = useState<string | null>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const [formData, setFormData] = useState({
     role: "",
@@ -300,6 +301,9 @@ export default function ProfilePage() {
 
     setAtsError(null);
     setAnalyzingAts(true);
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
 
     const activeRole = (roleTitle || formData.role || "Software Engineer").trim();
 
@@ -336,6 +340,10 @@ export default function ProfilePage() {
           return updated;
         });
 
+        setTimeout(() => {
+          resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+
         if (candProf?.targetRole && !formData.role) {
           showToast(
             "success", 
@@ -353,6 +361,9 @@ export default function ProfilePage() {
     } catch (err: any) {
       console.error("ATS Analysis error:", err);
       setAtsError(err.message || "Could not complete ATS analysis. Please upload a standard 1-2 page PDF resume.");
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
     } finally {
       setAnalyzingAts(false);
     }
@@ -511,230 +522,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* EXPLICIT ATS ERROR BANNER */}
-      {atsError && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-[#1A1F1F] dark:text-[#F8FAFC] flex items-start gap-3 animate-in fade-in">
-          <div className="p-2 rounded-xl bg-rose-500/20 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5">
-            <AlertTriangle className="w-5 h-5" />
-          </div>
-          <div className="space-y-1">
-            <h4 className="font-extrabold text-sm text-rose-800 dark:text-rose-300">ATS Audit Notice</h4>
-            <p className="text-xs text-[#596060] dark:text-[#CBD5E1] leading-relaxed">
-              {atsError}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* SECTION 2: HIGH-CONVERTING ATS SCORE & KEYWORD DIAGNOSTICS CARD */}
-      {atsAnalysis && (
-        (atsAnalysis.isNonResume || atsAnalysis.score === 0) ? (
-          /* Non-Resume Notice */
-          <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-amber-300 dark:border-amber-800/60 p-5 sm:p-7 space-y-4 animate-in fade-in">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-amber-200 dark:border-amber-900/40">
-              <div>
-                <span className="badge-warning-chip mb-2">
-                  <AlertTriangle className="w-3.5 h-3.5" /> Non-Resume Document Detected
-                </span>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">
-                  No Candidate Work History Found
-                </h2>
-                <p className="text-xs text-[#7D8787] dark:text-[#94A3B8] mt-1">
-                  File uploaded: <strong>{formData.resumeFileName || "Uploaded_Document.pdf"}</strong>
-                </p>
-              </div>
-
-              <div className="flex items-center gap-4 bg-[#FFFFFF] dark:bg-[#121E1A] p-3 rounded-2xl border border-amber-300 dark:border-amber-800 self-start md:self-auto">
-                <div className="text-center px-4 py-1">
-                  <div className="text-3xl font-black text-amber-600 dark:text-amber-400">0/100</div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-[#7D8787] dark:text-[#94A3B8]">
-                    Invalid Format
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-xs sm:text-sm text-[#475569] dark:text-[#CBD5E1] leading-relaxed">
-              Modern corporate ATS filters reject non-standard document formats within 3 seconds. Please upload your official candidate resume (PDF) to view verified matching keywords and score.
-            </p>
-
-            <button
-              type="button"
-              onClick={() => document.getElementById("resume-file-input")?.click()}
-              className="btn-primary text-xs sm:text-sm"
-            >
-              <UploadCloud className="w-4 h-4" />
-              <span>Upload Official Resume PDF</span>
-            </button>
-          </div>
-        ) : (
-          /* STANDARD ATS ANALYSIS CARD */
-          <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-emerald-300/80 dark:border-[#2DD4BF]/40 p-5 sm:p-7 space-y-5 shadow-soft animate-in fade-in">
-            {/* Score & Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 pb-5 border-b border-[#D8E2DA] dark:border-[#1A2E26]">
-              <div className="space-y-1.5">
-                <div className="inline-flex items-center gap-1.5 text-emerald-800 dark:text-[#2DD4BF] text-xs font-bold">
-                  <Flame className="w-3.5 h-3.5 text-emerald-600 dark:text-[#2DD4BF]" />
-                  <span>Real-Time ATS Screening Score</span>
-                </div>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">
-                  Resume Match for &ldquo;{formData.role || "Target Role"}&rdquo;
-                </h2>
-                <p className="text-xs text-[#7D8787] dark:text-[#94A3B8]">
-                  Scored against current enterprise recruiter algorithms and required technical skills.
-                </p>
-              </div>
-
-              {/* Animated SVG Radial Gauge */}
-              <div className="self-center md:self-auto bg-[#FFFFFF] dark:bg-[#121E1A] p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-xs">
-                <AtsRadialGauge score={atsAnalysis.score} tier={atsAnalysis.tier} />
-              </div>
-            </div>
-
-            {/* Executive Summary */}
-            <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26]">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#476550] dark:text-[#2DD4BF] block mb-1">
-                Executive ATS Diagnostic Summary
-              </span>
-              <p className="text-xs sm:text-sm text-[#1A1F1F] dark:text-[#CBD5E1] leading-relaxed">
-                <HighlightedAtsText 
-                  text={atsAnalysis.summary} 
-                  missingKeywords={atsAnalysis.missingCoreSkills || atsAnalysis.keyMissingSkills || []}
-                  matchedKeywords={atsAnalysis.matchedCoreSkills || []}
-                  variant="neutral"
-                />
-              </p>
-            </div>
-
-            {/* Strengths & Missing Elements Breakdown */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Strengths Column */}
-              <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-emerald-200/80 dark:border-emerald-800/50 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 mb-3 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Detected Strengths & Matched Skills
-                  </h3>
-
-                  {/* Verified Skills Pill Cloud */}
-                  {(atsAnalysis.matchedCoreSkills && atsAnalysis.matchedCoreSkills.length > 0) && (
-                    <div className="mb-3 p-3 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/50">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 block mb-1.5">
-                        ✓ Verified Matching Keywords:
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {atsAnalysis.matchedCoreSkills.map((skill, i) => (
-                          <span key={i} className="badge-success-chip text-[11px]">
-                            <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                            <span>{skill}</span>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <ul className="space-y-2 text-xs text-[#475569] dark:text-[#CBD5E1]">
-                    {atsAnalysis.strengths.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 leading-relaxed">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                        <span>
-                          <HighlightedAtsText 
-                            text={item} 
-                            matchedKeywords={atsAnalysis.matchedCoreSkills || []} 
-                            variant="strength" 
-                          />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Missing Keywords Column */}
-              <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-amber-300/80 dark:border-amber-800/60 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
-                      <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" /> Critical Filter Risks & Gaps
-                    </h3>
-
-                    {missingKeywordsList.length > 0 && (
-                      <button
-                        type="button"
-                        onClick={() => handleCopyKeywords(missingKeywordsList)}
-                        className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 dark:text-amber-300 hover:text-amber-700 dark:hover:text-amber-100 bg-amber-100/80 dark:bg-amber-950/60 px-2 py-1 rounded-md border border-amber-300 dark:border-amber-700/60 cursor-pointer transition-all"
-                        title="Copy missing keywords to clipboard"
-                      >
-                        {copiedKeywords ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                        <span>{copiedKeywords ? "Copied!" : "Copy Keywords"}</span>
-                      </button>
-                    )}
-                  </div>
-
-                  {missingKeywordsList.length > 0 && (
-                    <div className="mb-3 p-3 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 dark:text-amber-300 block mb-1.5">
-                        ⚠️ High-Priority Missing Keywords for {formData.role || "Target Role"}:
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {missingKeywordsList.map((skill, i) => (
-                          <span key={i} className="badge-warning-chip text-[11px]">
-                            <span>+</span>
-                            <span>{skill}</span>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <ul className="space-y-2 text-xs text-[#475569] dark:text-[#CBD5E1]">
-                    {atsAnalysis.improvements.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-amber-950 dark:text-amber-200 leading-relaxed">
-                        <span className="text-amber-600 dark:text-amber-400 font-bold">•</span>
-                        <span>
-                          <HighlightedAtsText 
-                            text={item} 
-                            missingKeywords={missingKeywordsList} 
-                            variant="missing" 
-                          />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* ZenResume Sister App Deep Link */}
-                <a
-                  href={`https://zenresume.online/?target_role=${encodeURIComponent(formData.role || "Software Engineer")}&utm_source=zenscout_ai&utm_medium=ats_audit_gaps`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 w-full bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 font-bold text-xs py-2.5 px-4 rounded-full transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
-                >
-                  <span>⚡ Auto-Inject Missing Keywords on ZenResume Free</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
-            </div>
-
-            {/* Direct Dashboard Scout CTA */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950 to-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div>
-                <h4 className="font-bold text-sm sm:text-base text-white">
-                  ATS Verified. Ready to scout live openings?
-                </h4>
-                <p className="text-xs text-slate-300 mt-0.5">
-                  Launch autonomous crawler bots to match high-compatibility roles on your Dashboard.
-                </p>
-              </div>
-              <Link href="/dashboard" className="btn-primary text-xs sm:text-sm whitespace-nowrap">
-                <span>Go to Dashboard</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        )
-      )}
-
-      {/* SECTION 3: CANDIDATE CAREER PROFILE FORM (FULLY EDITABLE) */}
+      {/* SECTION 2: CANDIDATE CAREER PROFILE FORM (FULLY EDITABLE: ROLE, LOCATION, EXPERIENCE, SALARY) */}
       <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] p-5 sm:p-7 shadow-sm">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-8 h-8 rounded-full bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xs">
@@ -867,6 +655,257 @@ export default function ProfilePage() {
             </div>
           </div>
         </form>
+      </div>
+
+      {/* SECTION 3: ATS SCREENING RESULTS & DIAGNOSTICS (LOCATED BELOW ROLE SELECTION & SALARY) */}
+      <div ref={resultsRef} className="space-y-6 scroll-mt-20">
+        {/* EXPLICIT ATS ERROR BANNER */}
+        {atsError && (
+          <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-[#1A1F1F] dark:text-[#F8FAFC] flex items-start gap-3 animate-in fade-in">
+            <div className="p-2 rounded-xl bg-rose-500/20 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-extrabold text-sm text-rose-800 dark:text-rose-300">ATS Audit Notice</h4>
+              <p className="text-xs text-[#596060] dark:text-[#CBD5E1] leading-relaxed">
+                {atsError}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* LOADING INDICATOR WHILE AUDITING */}
+        {analyzingAts && (
+          <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-[#D8E2DA] dark:border-[#1A2E26] p-6 sm:p-8 text-center space-y-3 animate-in fade-in shadow-sm">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF]">
+              <Loader2 className="w-6 h-6 animate-spin" />
+            </div>
+            <h3 className="font-extrabold text-base text-[#1A1F1F] dark:text-white">
+              Auditing ATS Compatibility for &ldquo;{formData.role || "Target Role"}&rdquo;...
+            </h3>
+            <p className="text-xs text-[#7D8787] dark:text-[#94A3B8] max-w-md mx-auto">
+              Extracting candidate skills, evaluating keyword densities against recruiter algorithms, and calculating your ATS match score.
+            </p>
+          </div>
+        )}
+
+        {/* ATS ANALYSIS RESULTS */}
+        {atsAnalysis && (
+          (atsAnalysis.isNonResume || atsAnalysis.score === 0) ? (
+            /* Non-Resume Notice */
+            <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-amber-300 dark:border-amber-800/60 p-5 sm:p-7 space-y-4 animate-in fade-in">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-amber-200 dark:border-amber-900/40">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 flex items-center justify-center font-bold text-xs">
+                      3
+                    </div>
+                    <span className="badge-warning-chip">
+                      <AlertTriangle className="w-3.5 h-3.5" /> Non-Resume Document Detected
+                    </span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">
+                    No Candidate Work History Found
+                  </h2>
+                  <p className="text-xs text-[#7D8787] dark:text-[#94A3B8] mt-1">
+                    File uploaded: <strong>{formData.resumeFileName || "Uploaded_Document.pdf"}</strong>
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4 bg-[#FFFFFF] dark:bg-[#121E1A] p-3 rounded-2xl border border-amber-300 dark:border-amber-800 self-start md:self-auto">
+                  <div className="text-center px-4 py-1">
+                    <div className="text-3xl font-black text-amber-600 dark:text-amber-400">0/100</div>
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-[#7D8787] dark:text-[#94A3B8]">
+                      Invalid Format
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xs sm:text-sm text-[#475569] dark:text-[#CBD5E1] leading-relaxed">
+                Modern corporate ATS filters reject non-standard document formats within 3 seconds. Please upload your official candidate resume (PDF) to view verified matching keywords and score.
+              </p>
+
+              <button
+                type="button"
+                onClick={() => document.getElementById("resume-file-input")?.click()}
+                className="btn-primary text-xs sm:text-sm"
+              >
+                <UploadCloud className="w-4 h-4" />
+                <span>Upload Official Resume PDF</span>
+              </button>
+            </div>
+          ) : (
+            /* STANDARD ATS ANALYSIS CARD */
+            <div className="bg-[#FAF9F6] dark:bg-[#0D1714] rounded-3xl border border-emerald-300/80 dark:border-[#2DD4BF]/40 p-5 sm:p-7 space-y-5 shadow-soft animate-in fade-in">
+              {/* Score & Header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 pb-5 border-b border-[#D8E2DA] dark:border-[#1A2E26]">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-8 h-8 rounded-full bg-[#E8F0EB] dark:bg-[#2DD4BF]/15 text-[#476550] dark:text-[#2DD4BF] flex items-center justify-center font-bold text-xs">
+                      3
+                    </div>
+                    <div className="inline-flex items-center gap-1.5 text-emerald-800 dark:text-[#2DD4BF] text-xs font-bold">
+                      <Flame className="w-3.5 h-3.5 text-emerald-600 dark:text-[#2DD4BF]" />
+                      <span>Real-Time ATS Screening Score & Diagnostics</span>
+                    </div>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A1F1F] dark:text-[#F8FAFC]">
+                    Resume Match for &ldquo;{formData.role || "Target Role"}&rdquo;
+                  </h2>
+                  <p className="text-xs text-[#7D8787] dark:text-[#94A3B8]">
+                    Scored against current enterprise recruiter algorithms and required technical skills.
+                  </p>
+                </div>
+
+                {/* Animated SVG Radial Gauge */}
+                <div className="self-center md:self-auto bg-[#FFFFFF] dark:bg-[#121E1A] p-4 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26] shadow-xs">
+                  <AtsRadialGauge score={atsAnalysis.score} tier={atsAnalysis.tier} />
+                </div>
+              </div>
+
+              {/* Executive Summary */}
+              <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-[#D8E2DA] dark:border-[#1A2E26]">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#476550] dark:text-[#2DD4BF] block mb-1">
+                  Executive ATS Diagnostic Summary
+                </span>
+                <p className="text-xs sm:text-sm text-[#1A1F1F] dark:text-[#CBD5E1] leading-relaxed">
+                  <HighlightedAtsText 
+                    text={atsAnalysis.summary} 
+                    missingKeywords={atsAnalysis.missingCoreSkills || atsAnalysis.keyMissingSkills || []}
+                    matchedKeywords={atsAnalysis.matchedCoreSkills || []}
+                    variant="neutral"
+                  />
+                </p>
+              </div>
+
+              {/* Strengths & Missing Elements Breakdown */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Strengths Column */}
+                <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-emerald-200/80 dark:border-emerald-800/50 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 mb-3 flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Detected Strengths & Matched Skills
+                    </h3>
+
+                    {/* Verified Skills Pill Cloud */}
+                    {(atsAnalysis.matchedCoreSkills && atsAnalysis.matchedCoreSkills.length > 0) && (
+                      <div className="mb-3 p-3 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/50">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 block mb-1.5">
+                          ✓ Verified Matching Keywords:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {atsAnalysis.matchedCoreSkills.map((skill, i) => (
+                            <span key={i} className="badge-success-chip text-[11px]">
+                              <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                              <span>{skill}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <ul className="space-y-2 text-xs text-[#475569] dark:text-[#CBD5E1]">
+                      {atsAnalysis.strengths.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 leading-relaxed">
+                          <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                          <span>
+                            <HighlightedAtsText 
+                              text={item} 
+                              matchedKeywords={atsAnalysis.matchedCoreSkills || []} 
+                              variant="strength" 
+                            />
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Missing Keywords Column */}
+                <div className="bg-[#FFFFFF] dark:bg-[#121E1A] p-4 sm:p-5 rounded-2xl border border-amber-300/80 dark:border-amber-800/60 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
+                        <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" /> Critical Filter Risks & Gaps
+                      </h3>
+
+                      {missingKeywordsList.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => handleCopyKeywords(missingKeywordsList)}
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 dark:text-amber-300 hover:text-amber-700 dark:hover:text-amber-100 bg-amber-100/80 dark:bg-amber-950/60 px-2 py-1 rounded-md border border-amber-300 dark:border-amber-700/60 cursor-pointer transition-all"
+                          title="Copy missing keywords to clipboard"
+                        >
+                          {copiedKeywords ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                          <span>{copiedKeywords ? "Copied!" : "Copy Keywords"}</span>
+                        </button>
+                      )}
+                    </div>
+
+                    {missingKeywordsList.length > 0 && (
+                      <div className="mb-3 p-3 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 dark:text-amber-300 block mb-1.5">
+                          ⚠️ High-Priority Missing Keywords for {formData.role || "Target Role"}:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {missingKeywordsList.map((skill, i) => (
+                            <span key={i} className="badge-warning-chip text-[11px]">
+                              <span>+</span>
+                              <span>{skill}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <ul className="space-y-2 text-xs text-[#475569] dark:text-[#CBD5E1]">
+                      {atsAnalysis.improvements.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-amber-950 dark:text-amber-200 leading-relaxed">
+                          <span className="text-amber-600 dark:text-amber-400 font-bold">•</span>
+                          <span>
+                            <HighlightedAtsText 
+                              text={item} 
+                              missingKeywords={missingKeywordsList} 
+                              variant="missing" 
+                            />
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* ZenResume Sister App Deep Link */}
+                  <a
+                    href={`https://zenresume.online/?target_role=${encodeURIComponent(formData.role || "Software Engineer")}&utm_source=zenscout_ai&utm_medium=ats_audit_gaps`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 w-full bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700/80 font-bold text-xs py-2.5 px-4 rounded-full transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                  >
+                    <span>⚡ Auto-Inject Missing Keywords on ZenResume Free</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Direct Dashboard Scout CTA */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950 to-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <h4 className="font-bold text-sm sm:text-base text-white">
+                    ATS Verified. Ready to scout live openings?
+                  </h4>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Launch autonomous crawler bots to match high-compatibility roles on your Dashboard.
+                  </p>
+                </div>
+                <Link href="/dashboard" className="btn-primary text-xs sm:text-sm whitespace-nowrap">
+                  <span>Go to Dashboard</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          )
+        )}
       </div>
 
       {/* MARKETING SISTER APP BANNER (ZenResume) */}
