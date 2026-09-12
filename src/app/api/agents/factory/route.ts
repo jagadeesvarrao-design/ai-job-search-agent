@@ -62,6 +62,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Job details are required." }, { status: 400 });
     }
 
+    // Validate Resume PDF Payload if attached (max 5MB, genuine PDF magic bytes)
+    if (resumeBase64) {
+      const pdfValidation = validateBase64Pdf(resumeBase64, 5 * 1024 * 1024);
+      if (!pdfValidation.valid) {
+        return NextResponse.json({ 
+          success: false, 
+          error: pdfValidation.error || "Valid PDF resume file is required." 
+        }, { status: 400 });
+      }
+    }
+
     const sanitizedJob = {
       title: sanitizeString(job.title, 150),
       company: sanitizeString(job.company, 150),

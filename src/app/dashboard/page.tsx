@@ -820,7 +820,7 @@ export default function DashboardPage() {
                       <Bot className="w-3.5 h-3.5" />
                     </button>
 
-                    {job.applyLink && (
+                    {job.applyLink && /^https?:\/\//i.test(job.applyLink) && (
                       <a
                         href={job.applyLink}
                         target="_blank"

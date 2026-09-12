@@ -64,6 +64,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, jobs: [] });
     }
 
+    // Protect server CPU & event loop from unbounded batch exhaustion
+    if (jobs.length > 50) {
+      return NextResponse.json({ 
+        success: false, 
+        error: "Batch size exceeds maximum limit (maximum 50 jobs allowed per scoring request)." 
+      }, { status: 400 });
+    }
+
     const userExperience = sanitizeString(experience || "Fresher", 50);
 
     // Extract text from resume for scoring

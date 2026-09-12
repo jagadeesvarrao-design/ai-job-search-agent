@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
-import { sanitizeString } from "@/lib/security";
+import { sanitizeString, sanitizeUrl } from "@/lib/security";
 
 /**
  * Generates verified, authentic market opportunities when external APIs encounter rate limits
@@ -110,7 +110,10 @@ export async function POST(request: Request) {
               description: sanitizeString(job.description || "", 8000),
               matchScore: 0,
               status: "New Matches",
-              applyLink: typeof job.related_links?.[0]?.link === "string" ? job.related_links[0].link : `https://www.google.com/search?q=${encodeURIComponent(job.title + " " + job.company_name)}`,
+              applyLink: sanitizeUrl(
+                typeof job.related_links?.[0]?.link === "string" ? job.related_links[0].link : "",
+                `https://www.google.com/search?q=${encodeURIComponent(job.title + " " + job.company_name)}`
+              ),
               source: sanitizeString(job.via || "Direct Employer", 100)
             }));
 

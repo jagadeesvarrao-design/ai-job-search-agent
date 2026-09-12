@@ -114,6 +114,28 @@ export function middleware(request: NextRequest) {
         } catch {
           return new NextResponse("Bad Request: Malformed Origin Header", { status: 400 });
         }
+      } else if (request.headers.get("referer") && host) {
+        // Fallback: If Origin is omitted by browser, validate Referer host
+        try {
+          const refUrl = new URL(request.headers.get("referer")!);
+          const refHost = refUrl.host.toLowerCase();
+          const refHostname = refUrl.hostname.toLowerCase();
+          const currentHost = host.toLowerCase();
+
+          const isAllowedRef = 
+            refHost === currentHost ||
+            refHostname === "ai-job-search-agent-chi.vercel.app" ||
+            refHostname === "zenresume.online" ||
+            refHostname === "www.zenresume.online" ||
+            refHostname === "localhost" ||
+            refHostname === "127.0.0.1";
+
+          if (!isAllowedRef) {
+            return new NextResponse("Cross-Origin Request Blocked", { status: 403 });
+          }
+        } catch {
+          return new NextResponse("Bad Request: Malformed Referer Header", { status: 400 });
+        }
       }
     }
   }

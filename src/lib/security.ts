@@ -53,6 +53,27 @@ export function escapeHtml(input: unknown): string {
 }
 
 /**
+ * Strictly validates URLs to ensure they use safe web protocols (http/https).
+ * Neutralizes javascript:, data:, vbscript:, and malicious execution vectors.
+ */
+export function sanitizeUrl(url: unknown, fallbackUrl: string = "#"): string {
+  if (typeof url !== "string") return fallbackUrl;
+  const trimmed = url.trim();
+  if (!trimmed) return fallbackUrl;
+
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+      return trimmed;
+    }
+  } catch {
+    return fallbackUrl;
+  }
+
+  return fallbackUrl;
+}
+
+/**
  * Validates whether an email string follows standard email RFC formats strictly
  */
 export function isValidEmail(email: unknown): boolean {

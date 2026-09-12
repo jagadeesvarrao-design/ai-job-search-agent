@@ -113,12 +113,12 @@ Return ONLY valid JSON matching this schema:
         }
         parts.push({ text: prompt });
 
-        console.log("Analyzing with Gemini API Key prefix:", apiKey ? `${apiKey.substring(0, 6)}... (length ${apiKey.length})` : "NONE");
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+        const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
         const response = await fetch(url, {
           method: "POST",
           headers: { 
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-goog-api-key": apiKey
           },
           body: JSON.stringify({
             contents: [

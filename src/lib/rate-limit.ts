@@ -94,12 +94,36 @@ export function checkRateLimit(
 }
 
 /**
- * Helper to extract client IP safely from Next.js request headers
+ * Helper to extract client IP safely from Next.js request headers.
+ * Prioritizes platform-verified headers (Vercel, Cloudflare) that cannot be spoofed by clients.
  */
 export function getClientIp(request: Request): string {
+  // 1. Vercel-verified client IP
+  const vercelIp = request.headers.get("x-vercel-forwarded-for");
+  if (vercelIp) {
+    return vercelIp.split(",")[0].trim();
+  }
+
+  // 2. Cloudflare-verified client IP
+  const cfIp = request.headers.get("cf-connecting-ip");
+  if (cfIp) {
+    return cfIp.trim();
+  }
+
+  // 3. Direct reverse-proxy real IP
+  const realIp = request.headers.get("x-real-ip");
+  if (realIp) {
+    return realIp.trim();
+  }
+
+  // 4. Standard X-Forwarded-For fallback (validated against IP characters)
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
-    return forwarded.split(",")[0].trim();
+    const candidate = forwarded.split(",")[0].trim();
+    if (/^[0-9a-fA-F:.]+$/.test(candidate)) {
+      return candidate;
+    }
   }
-  return request.headers.get("x-real-ip") || "127.0.0.1";
+
+  return "127.0.0.1";
 }
